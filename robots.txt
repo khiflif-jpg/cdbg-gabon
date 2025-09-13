@@ -1,9 +1,0 @@
-User-agent: *
-Allow: /
-
-# Sitemap
-Sitemap: https://cdbg-gabon.com/sitemap.xml
-
-# Crawl-delay
-Crawl-delay: 1
-
