@@ -1,34 +1,41 @@
-/* Reset et styles de base */
+/* Reset de base */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+/* --- Style général --- */
 body {
   font-family: 'Arial', sans-serif;
   line-height: 1.6;
-  background-color: #f5f5f5;
-  color: #333;
+  background-color: #f7f7f7; /* fond clair */
+  color: #333; /* texte sombre pour bonne lisibilité */
 }
 
 .container {
   width: 90%;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 15px;
 }
 
 /* --- Header --- */
 header {
-  background-color: #1a1a1a;
-  padding: 15px 0;
+  background-color: #2c3e50;
   color: white;
+  padding: 15px 0;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
 }
 
 .logo img {
@@ -36,49 +43,53 @@ header {
   width: auto;
 }
 
+.logo span {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: white;
+}
+
 nav ul {
   list-style: none;
   display: flex;
   gap: 25px;
-  justify-content: flex-end;
-  align-items: center;
 }
 
 nav a {
   color: white;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 500;
   transition: color 0.3s ease;
 }
 
 nav a:hover {
-  color: #27ae60; /* vert Manus */
+  color: #27ae60; /* couleur accent */
 }
 
-/* --- Hero Section --- */
+/* --- Hero section --- */
 .hero {
-  background-color: #eaeaea;
-  padding: 70px 0;
+  background-color: #e7f3e7;
+  padding: 60px 0;
   text-align: center;
 }
 
 .hero h1 {
-  font-size: 3rem;
+  font-size: 2.8rem;
   margin-bottom: 15px;
   color: #222;
 }
 
 .hero h2 {
   font-size: 1.8rem;
-  color: #555;
   margin-bottom: 25px;
+  color: #555;
 }
 
 .hero p {
-  font-size: 1.2rem;
-  color: #666;
-  max-width: 600px;
+  font-size: 1.1rem;
+  max-width: 700px;
   margin: 0 auto 40px;
+  color: #666;
 }
 
 .hero-buttons a {
@@ -109,133 +120,89 @@ nav a:hover {
   background-color: #216fa0;
 }
 
-/* --- Sections générales --- */
+/* --- Sections --- */
 section {
   padding: 50px 0;
+}
+
+.about,
+.services,
+.gallery,
+.commitments,
+.partnerships,
+.contact {
   background-color: white;
   margin-bottom: 30px;
   border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-h2 {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  color: #222;
-  text-align: center;
-}
-
-h3 {
-  font-size: 1.4rem;
-  margin-bottom: 15px;
-  color: #444;
-}
-
-/* --- About --- */
-.about p {
-  max-width: 700px;
-  margin: 0 auto 30px;
-  color: #555;
-  font-size: 1.1rem;
-  text-align: center;
-}
-
-/* --- Services --- */
-.service-grid {
-  display: flex;
-  gap: 25px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.service-item {
-  background: #f7f7f7;
-  border-radius: 8px;
-  padding: 20px;
-  flex: 1 1 30%;
-  max-width: 350px;
-  text-align: center;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-}
-
-.service-item img {
-  max-width: 100%;
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
-
-.service-item h4 {
-  margin-bottom: 10px;
-  color: #27ae60;
-  font-weight: 700;
-}
-
-.service-item p {
-  color: #555;
-}
-
-/* --- Gallery --- */
+/* --- Services / Gallery layout --- */
+.service-grid,
 .gallery-grid {
   display: flex;
-  gap: 25px;
-  justify-content: center;
   flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 
+.service-item,
 .gallery-item {
-  background: #f7f7f7;
-  border-radius: 8px;
+  flex: 1 1 calc(33.333% - 20px);
+  max-width: calc(33.333% - 20px);
+  background-color: #f9f9f9;
   padding: 15px;
-  flex: 1 1 30%;
-  max-width: 350px;
-  text-align: center;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-}
-
-.gallery-item img {
-  max-width: 100%;
   border-radius: 8px;
-  margin-bottom: 10px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+.service-item img,
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.service-item h4,
 .gallery-item h3 {
-  color: #2980b9;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  color: #2c3e50;
+  font-size: 1.2rem;
 }
 
+.service-item p,
 .gallery-item p {
   color: #555;
   font-size: 1rem;
 }
 
-/* --- Commitments --- */
-.commitments ul {
+/* --- Commitments & Partnerships --- */
+.commitments ul,
+.partnerships ul {
   max-width: 600px;
-  margin: 20px auto 0;
-  list-style: disc inside;
+  margin: 0 auto;
+  padding-left: 20px;
   color: #555;
   font-size: 1.1rem;
 }
 
-/* --- Partnerships --- */
-.partnerships p,
-.partnerships ul {
+.commitments p,
+.partnerships p {
   max-width: 600px;
-  margin: 10px auto;
-  color: #555;
+  margin: 0 auto 20px;
+  color: #666;
   font-size: 1.1rem;
+  text-align: center;
 }
 
-.partnerships ul {
-  list-style: disc inside;
-}
-
-/* --- Contact --- */
+/* --- Contact Section --- */
 .contact-grid {
   display: flex;
-  gap: 50px;
-  justify-content: center;
   flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
 }
 
 .contact-form,
@@ -249,10 +216,14 @@ h3 {
   width: 100%;
   padding: 12px;
   margin-bottom: 15px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   font-size: 1rem;
+}
+
+.contact-form textarea {
   resize: vertical;
+  min-height: 120px;
 }
 
 .contact-form button {
@@ -260,9 +231,9 @@ h3 {
   color: white;
   padding: 12px 25px;
   border: none;
-  border-radius: 6px;
+  border-radius: 5px;
   cursor: pointer;
-  font-weight: 700;
+  font-weight: 600;
   transition: background-color 0.3s ease;
 }
 
@@ -271,26 +242,29 @@ h3 {
 }
 
 .contact-info h3 {
+  color: #2c3e50;
   margin-bottom: 8px;
-  color: #444;
 }
 
 .contact-info p {
   color: #555;
-  font-size: 1rem;
   line-height: 1.4;
   margin-bottom: 15px;
 }
 
 /* --- Footer --- */
 footer {
-  background-color: #1a1a1a;
+  background-color: #2c3e50;
   color: white;
   text-align: center;
-  padding: 20px 0;
-  font-size: 0.9rem;
+  padding: 25px 0;
   margin-top: 50px;
   border-top: 3px solid #27ae60;
+}
+
+footer p {
+  margin: 0;
+  font-size: 0.9rem;
 }
 
 /* --- Responsive --- */
