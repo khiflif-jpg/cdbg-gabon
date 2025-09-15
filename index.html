@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MonSite</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Font Awesome via CDN -->
+  <!-- Font Awesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -20,3 +20,117 @@
         <li><a href="#hero" class="nav-link">Accueil</a></li>
         <li><a href="#about" class="nav-link">À propos</a></li>
         <li><a href="#services" class="nav-link">Services</a></li>
+        <li><a href="#commitments" class="nav-link">Engagements</a></li>
+        <li><a href="#partners" class="nav-link">Partenariats</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <img src="images/hero.jpg" alt="Hero background" class="hero-bg-img">
+    <div class="hero-content">
+      <h1 class="hero-title">Bienvenue sur MonSite</h1>
+      <p class="hero-subtitle">Reproduction fidèle de Manus</p>
+      <div class="hero-buttons">
+        <a href="#about" class="btn btn-primary">Découvrir</a>
+        <a href="#services" class="btn btn-secondary">Nos Services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <h2 class="section-title">À propos de nous</h2>
+    <p class="section-subtitle">Notre mission et vision</p>
+    <div class="about-container">
+      <div class="about-card">
+        <img src="images/about1.jpg" alt="About 1">
+        <h3>Notre Mission</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </div>
+      <div class="about-card">
+        <img src="images/about2.jpg" alt="About 2">
+        <h3>Notre Vision</h3>
+        <p>Phasellus euismod libero in neque molestie et elementum.</p>
+      </div>
+      <div class="about-card">
+        <img src="images/about3.jpg" alt="About 3">
+        <h3>Nos Valeurs</h3>
+        <p>Curabitur tincidunt, erat nec mollis fermentum, massa ligula.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services">
+    <h2 class="section-title">Nos Services</h2>
+    <p class="section-subtitle">Découvrez ce que nous proposons</p>
+    <div class="services-container">
+      <div class="service-card">
+        <img src="images/service1.jpg" alt="Service 1">
+        <h3>Service 1</h3>
+        <p>Description du service 1.</p>
+      </div>
+      <div class="service-card">
+        <img src="images/service2.jpg" alt="Service 2">
+        <h3>Service 2</h3>
+        <p>Description du service 2.</p>
+      </div>
+      <div class="service-card">
+        <img src="images/service3.jpg" alt="Service 3">
+        <h3>Service 3</h3>
+        <p>Description du service 3.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Commitments -->
+  <section id="commitments">
+    <h2 class="section-title">Nos Engagements</h2>
+    <div class="commitments-container">
+      <img src="images/commitment.jpg" alt="Commitment" class="commitment-img">
+      <ul class="commitment-list">
+        <li><i class="fa-solid fa-leaf"></i> Engagement 1</li>
+        <li><i class="fa-solid fa-bolt"></i> Engagement 2</li>
+        <li><i class="fa-solid fa-heart"></i> Engagement 3</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Partnerships -->
+  <section id="partners">
+    <h2 class="section-title">Partenariats</h2>
+    <div class="partners-container">
+      <img src="images/partner1.jpg" alt="Partner 1">
+      <img src="images/partner2.jpg" alt="Partner 2">
+      <img src="images/partner3.jpg" alt="Partner 3">
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2 class="section-title">Contactez-nous</h2>
+    <div class="contact-form">
+      <input type="text" class="contact-input" placeholder="Votre nom">
+      <input type="email" class="contact-input" placeholder="Votre email">
+      <textarea class="contact-input" placeholder="Votre message"></textarea>
+      <button class="btn btn-primary">Envoyer</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer-container">
+    <p>&copy; 2025 MonSite. Tous droits réservés. | <a href="#hero">Haut de page</a></p>
+  </footer>
+
+  <!-- Script JS -->
+  <script src="script.js"></script>
+</body>
+</html>
