@@ -1,11 +1,15 @@
-/* --- Style général --- */
-body {
-  font-family: Arial, sans-serif;
+/* Reset et styles de base */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
   line-height: 1.6;
-  background-color: #f0f0f0; /* Couleur d’arrière-plan claire */
-  color: #333; /* Couleur de texte plus sombre pour meilleure lisibilité */
+  background-color: #f5f5f5;
+  color: #333;
 }
 
 .container {
@@ -16,15 +20,15 @@ body {
 
 /* --- Header --- */
 header {
-  background-color: #2c3e50;
+  background-color: #1a1a1a;
+  padding: 15px 0;
   color: white;
-  padding: 10px 0;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
 }
 
 .logo img {
@@ -35,40 +39,55 @@ header {
 nav ul {
   list-style: none;
   display: flex;
-  gap: 20px;
-  padding: 0;
-  margin: 0;
+  gap: 25px;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 nav a {
   color: white;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 600;
+  transition: color 0.3s ease;
 }
 
 nav a:hover {
-  text-decoration: underline;
+  color: #27ae60; /* vert Manus */
 }
 
-/* --- Hero section --- */
+/* --- Hero Section --- */
 .hero {
-  background-color: #e7f3e7; /* couleur légèrement verte pour un effet nature */
-  padding: 50px 0;
+  background-color: #eaeaea;
+  padding: 70px 0;
   text-align: center;
-  color: #1b4d1b; /* texte vert foncé */
 }
 
-.hero h1, .hero h2, .hero p {
-  margin: 0 0 15px 0;
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  color: #222;
 }
 
-.hero-buttons .btn {
-  padding: 10px 20px;
-  margin: 10px;
+.hero h2 {
+  font-size: 1.8rem;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto 40px;
+}
+
+.hero-buttons a {
   display: inline-block;
-  text-decoration: none;
+  padding: 12px 30px;
+  margin: 0 10px;
   border-radius: 5px;
-  font-weight: bold;
+  font-weight: 600;
+  text-decoration: none;
   transition: background-color 0.3s ease;
 }
 
@@ -87,67 +106,210 @@ nav a:hover {
 }
 
 .btn.secondary:hover {
-  background-color: #216899;
+  background-color: #216fa0;
+}
+
+/* --- Sections générales --- */
+section {
+  padding: 50px 0;
+  background-color: white;
+  margin-bottom: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.05);
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #222;
+  text-align: center;
+}
+
+h3 {
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  color: #444;
+}
+
+/* --- About --- */
+.about p {
+  max-width: 700px;
+  margin: 0 auto 30px;
+  color: #555;
+  font-size: 1.1rem;
+  text-align: center;
 }
 
 /* --- Services --- */
-.service-grid,
-.gallery-grid,
-.contact-grid {
+.service-grid {
   display: flex;
+  gap: 25px;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 20px;
 }
 
-.service-item,
-.gallery-item {
+.service-item {
+  background: #f7f7f7;
+  border-radius: 8px;
+  padding: 20px;
   flex: 1 1 30%;
-  background: white;
-  padding: 15px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  max-width: 350px;
   text-align: center;
-  border-radius: 5px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
 }
 
-.service-item img,
+.service-item img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.service-item h4 {
+  margin-bottom: 10px;
+  color: #27ae60;
+  font-weight: 700;
+}
+
+.service-item p {
+  color: #555;
+}
+
+/* --- Gallery --- */
+.gallery-grid {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.gallery-item {
+  background: #f7f7f7;
+  border-radius: 8px;
+  padding: 15px;
+  flex: 1 1 30%;
+  max-width: 350px;
+  text-align: center;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
 .gallery-item img {
-  width: 100%;
-  height: auto;
-  border-radius: 5px;
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.gallery-item h3 {
+  color: #2980b9;
+  margin-bottom: 8px;
+}
+
+.gallery-item p {
+  color: #555;
+  font-size: 1rem;
+}
+
+/* --- Commitments --- */
+.commitments ul {
+  max-width: 600px;
+  margin: 20px auto 0;
+  list-style: disc inside;
+  color: #555;
+  font-size: 1.1rem;
+}
+
+/* --- Partnerships --- */
+.partnerships p,
+.partnerships ul {
+  max-width: 600px;
+  margin: 10px auto;
+  color: #555;
+  font-size: 1.1rem;
+}
+
+.partnerships ul {
+  list-style: disc inside;
 }
 
 /* --- Contact --- */
 .contact-grid {
   display: flex;
+  gap: 50px;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 40px;
 }
 
 .contact-form,
 .contact-info {
   flex: 1 1 45%;
+  max-width: 500px;
 }
 
 .contact-form input,
 .contact-form textarea {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1em;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  resize: vertical;
 }
 
-.contact-form textarea {
-  resize: vertical;
-  min-height: 100px;
+.contact-form button {
+  background-color: #27ae60;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+}
+
+.contact-form button:hover {
+  background-color: #219150;
+}
+
+.contact-info h3 {
+  margin-bottom: 8px;
+  color: #444;
+}
+
+.contact-info p {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.4;
+  margin-bottom: 15px;
 }
 
 /* --- Footer --- */
 footer {
-  background-color: #2c3e50;
+  background-color: #1a1a1a;
   color: white;
   text-align: center;
   padding: 20px 0;
+  font-size: 0.9rem;
   margin-top: 50px;
+  border-top: 3px solid #27ae60;
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .service-item,
+  .gallery-item,
+  .contact-form,
+  .contact-info {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .container {
+    width: 95%;
+  }
 }
