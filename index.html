@@ -3,24 +3,84 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Compagnie Durable du Bois au Gabon - Exploitation Forestière Responsable</title>
-  <link rel="stylesheet" href="style/style.css">
+  <title>Mon Site</title>
+
+  <!-- Lien vers CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Font Awesome via CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-  <header>
-    <div class="container">
-      <div class="logo">
-        <img src="images/logo.png" alt="CDBG Logo">
-        <span>CDBG</span>
-      </div>
-      <nav>
-        <ul>
-          <li><a href="#hero">Accueil</a></li>
-          <li><a href="#about">À propos</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#partnerships">Partenariats</a></li>
-          <li><a href="#contact">Contact</a></li>
+  <!-- Header -->
+  <header class="header">
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <span class="logo-text">MonSite</span>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="#hero" class="nav-link">Accueil</a></li>
+          <li><a href="#about" class="nav-link">À propos</a></li>
+          <li><a href="#services" class="nav-link">Services</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
         </ul>
-      </nav>
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <img src="https://picsum.photos/1920/1080?grayscale" alt="Hero background" class="hero-bg-img">
+    <div class="hero-content">
+      <h1 class="hero-title">Bienvenue</h1>
+      <p class="hero-subtitle">Un site moderne avec HTML, CSS et JS</p>
+      <div class="hero-buttons">
+        <a href="#about" class="btn btn-primary">Découvrir</a>
+        <a href="#services" class="btn btn-secondary">Nos Services</a>
+      </div>
     </div>
-  <
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <h2 class="section-title">À propos</h2>
+    <div class="container">
+      <p>Voici une section à propos. Tu peux y mettre du texte descriptif sur ton projet.</p>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services">
+    <h2 class="section-title">Nos Services</h2>
+    <div class="container">
+      <ul>
+        <li><i class="fa-solid fa-leaf"></i> Service 1</li>
+        <li><i class="fa-solid fa-bolt"></i> Service 2</li>
+        <li><i class="fa-solid fa-heart"></i> Service 3</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2 class="section-title">Contact</h2>
+    <div class="container">
+      <p><i class="fa-solid fa-envelope"></i> contact@monsite.com</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 MonSite. Tous droits réservés. | <a href="#hero">Haut de page</a></p>
+  </footer>
+
+  <!-- Script JS -->
+  <script src="script.js"></script>
+</body>
+</html>
