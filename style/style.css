@@ -4,6 +4,8 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.6;
+  background-color: #f0f0f0; /* Couleur d’arrière-plan claire */
+  color: #333; /* Couleur de texte plus sombre pour meilleure lisibilité */
 }
 
 .container {
@@ -41,6 +43,7 @@ nav ul {
 nav a {
   color: white;
   text-decoration: none;
+  font-weight: bold;
 }
 
 nav a:hover {
@@ -49,9 +52,14 @@ nav a:hover {
 
 /* --- Hero section --- */
 .hero {
-  background-color: #f4f4f4;
+  background-color: #e7f3e7; /* couleur légèrement verte pour un effet nature */
   padding: 50px 0;
   text-align: center;
+  color: #1b4d1b; /* texte vert foncé */
+}
+
+.hero h1, .hero h2, .hero p {
+  margin: 0 0 15px 0;
 }
 
 .hero-buttons .btn {
@@ -60,6 +68,8 @@ nav a:hover {
   display: inline-block;
   text-decoration: none;
   border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
 .btn.primary {
@@ -67,9 +77,17 @@ nav a:hover {
   color: white;
 }
 
+.btn.primary:hover {
+  background-color: #219150;
+}
+
 .btn.secondary {
   background-color: #2980b9;
   color: white;
+}
+
+.btn.secondary:hover {
+  background-color: #216899;
 }
 
 /* --- Services --- */
@@ -84,15 +102,18 @@ nav a:hover {
 .service-item,
 .gallery-item {
   flex: 1 1 30%;
-  background: #f9f9f9;
-  padding: 10px;
+  background: white;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   text-align: center;
+  border-radius: 5px;
 }
 
 .service-item img,
 .gallery-item img {
   width: 100%;
   height: auto;
+  border-radius: 5px;
 }
 
 /* --- Contact --- */
@@ -112,6 +133,14 @@ nav a:hover {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 100px;
 }
 
 /* --- Footer --- */
@@ -122,4 +151,3 @@ footer {
   padding: 20px 0;
   margin-top: 50px;
 }
-
