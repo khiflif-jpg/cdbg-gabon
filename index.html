@@ -1,172 +1,170 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Compagnie Durable du Bois au Gabon - Exploitation Forestière Responsable</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Inter', sans-serif; line-height:1.6; color:#333; background:#fff; }
-    .header { position:fixed; top:0; width:100%; background:rgba(255,255,255,.95); box-shadow:0 2px 10px rgba(0,0,0,0.1); z-index:1000; }
-    .navbar { display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; }
-    .nav-logo img { height:42px; }
-    .nav-menu { display:flex; gap:1.5rem; list-style:none; }
-    .nav-link { text-decoration:none; color:#333; font-weight:500; transition:.3s; }
-    .nav-link:hover { color:#00703c; }
-    .hamburger { display:none; flex-direction:column; gap:.3rem; cursor:pointer; }
-    .bar { width:25px; height:3px; background:#333; border-radius:3px; }
-    .hero { position:relative; height:100vh; display:flex; justify-content:center; align-items:center; text-align:center; color:#fff; }
-    .hero img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-1; }
-    .hero-content { max-width:800px; padding:1rem; }
-    .hero-title { font-size:2.5rem; font-weight:700; margin-bottom:.5rem; }
-    .hero-subtitle { font-size:1.5rem; margin-bottom:1rem; }
-    .btn { padding:.8rem 1.5rem; border-radius:30px; font-weight:600; text-decoration:none; transition:.3s; }
-    .btn-primary { background:#00703c; color:#fff; }
-    .btn-primary:hover { background:#00582f; }
-    .btn-secondary { background:#fff; color:#00703c; border:2px solid #00703c; }
-    .btn-secondary:hover { background:#00703c; color:#fff; }
-    section { padding:5rem 2rem; }
-    .container { max-width:1200px; margin:0 auto; }
-    .section-header { text-align:center; margin-bottom:3rem; }
-    .section-title { font-size:2rem; font-weight:700; margin-bottom:.5rem; }
-    .section-subtitle { color:#666; }
-    .about-grid, .services-grid, .gallery-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem; }
-    .about-card, .service-card { background:#f9f9f9; padding:2rem; border-radius:12px; text-align:center; transition:.3s; }
-    .about-card:hover, .service-card:hover { transform:translateY(-5px); box-shadow:0 5px 15px rgba(0,0,0,.1); }
-    .gallery-item img { width:100%; border-radius:12px; }
-    .contact-content { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:2rem; }
-    .contact-form form { display:grid; gap:1rem; }
-    .form-group input, .form-group textarea { padding:.8rem; border:1px solid #ccc; border-radius:8px; }
-    .footer { background:#222; color:#fff; padding:3rem 2rem; }
-    .footer-bottom { text-align:center; font-size:.9rem; color:#aaa; }
-    @media(max-width:768px){
-      .nav-menu { position:absolute; top:70px; right:0; background:#fff; flex-direction:column; gap:1rem; padding:1rem; border-radius:12px; display:none; }
-      .nav-menu.active { display:flex; }
-      .hamburger { display:flex; }
-    }
-  </style>
+<!DOCTYPE html><html lang="fr"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compagnie Durable du Bois au Gabon - Exploitation Forestière Responsable</title>
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <header class="header">
-    <nav class="navbar">
-      <div class="nav-logo"><img src="images/logo.png" alt="CDBG Logo"></div>
-      <ul class="nav-menu">
-        <li><a href="#about" class="nav-link">À propos</a></li>
-        <li><a href="#services" class="nav-link">Services</a></li>
-        <li><a href="#gallery" class="nav-link">Galerie</a></li>
-        <li><a href="#partnerships" class="nav-link">Partenariats</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
-      </ul>
-      <div class="hamburger"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
-    </nav>
-  </header>
-  <section class="hero">
-    <img src="images/hero.jpg" alt="Forêt gabonaise">
-    <div class="hero-content">
-      <h1 class="hero-title">Compagnie Durable du Bois au Gabon</h1>
-      <h2 class="hero-subtitle">Exploitation Forestière Responsable</h2>
-      <p>Garantir aux générations futures une gestion durable des ressources forestières du Gabon.</p>
-      <a href="#about" class="btn btn-primary">Découvrir notre mission</a>
-      <a href="#contact" class="btn btn-secondary">Nous contacter</a>
-    </div>
-  </section>
-  <section id="about">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">À propos de nous</h2>
-        <p class="section-subtitle">Un acteur engagé pour la préservation et la valorisation des forêts gabonaises.</p>
-      </div>
-      <div class="about-grid">
-        <div class="about-card">
-          <i class="fa-solid fa-tree fa-2x" style="color:#00703c;"></i>
-          <h3>Gestion durable</h3>
-          <p>Nous exploitons la forêt tout en respectant la biodiversité et les écosystèmes.</p>
-        </div>
-        <div class="about-card">
-          <i class="fa-solid fa-users fa-2x" style="color:#00703c;"></i>
-          <h3>Communautés locales</h3>
-          <p>Nous collaborons étroitement avec les communautés pour un développement partagé.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section id="services" style="background:#f9f9f9;">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">Nos Services</h2>
-      </div>
-      <div class="services-grid">
-        <div class="service-card">
-          <i class="fa-solid fa-industry fa-2x" style="color:#00703c;"></i>
-          <h3>Exploitation Forestière</h3>
-          <p>Une exploitation respectueuse et contrôlée.</p>
-        </div>
-        <div class="service-card">
-          <i class="fa-solid fa-box fa-2x" style="color:#00703c;"></i>
-          <h3>Transformation du Bois</h3>
-          <p>Des produits dérivés de qualité pour les marchés locaux et internationaux.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section id="gallery">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">Galerie</h2>
-      </div>
-      <div class="gallery-grid">
-        <div class="gallery-item"><img src="images/elephants.jpg" alt="Éléphants"></div>
-        <div class="gallery-item"><img src="images/logs.jpg" alt="Grumes"></div>
-        <div class="gallery-item"><img src="images/planks.jpg" alt="Planches de bois"></div>
-      </div>
-    </div>
-  </section>
-  <section id="partnerships" style="background:#f9f9f9;">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">Collaborations et Partenariats</h2>
-      </div>
-      <p style="text-align:center;">Nous travaillons avec des partenaires locaux et internationaux pour promouvoir la durabilité.</p>
-      <div style="text-align:center; margin-top:2rem;">
-        <img src="images/bitam-oyem.jpg" alt="Partenariat Bitam Oyem" style="max-width:500px; border-radius:12px;">
-      </div>
-    </div>
-  </section>
-  <section id="contact">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">Contact</h2>
-      </div>
-      <div class="contact-content">
-        <div class="contact-form">
-          <form>
-            <div class="form-group"><input type="text" placeholder="Votre nom" required></div>
-            <div class="form-group"><input type="email" placeholder="Votre email" required></div>
-            <div class="form-group"><textarea rows="5" placeholder="Votre message"></textarea></div>
-            <button class="btn btn-primary" type="submit">Envoyer</button>
-          </form>
-        </div>
-        <div>
-          <p><i class="fa-solid fa-map-marker-alt"></i> Libreville, Gabon</p>
-          <p><i class="fa-solid fa-phone"></i> +241 XX XX XX</p>
-          <p><i class="fa-solid fa-envelope"></i> contact@cdbg-gabon.com</p>
-        </div>
-      </div>
-    </div>
-  </section>
-  <footer class="footer">
-    <div class="footer-bottom">
-      © <span id="year"></span> Compagnie Durable du Bois au Gabon - Tous droits réservés
-    </div>
-  </footer>
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-    const hamburger = document.querySelector(".hamburger");
-    const navMenu = document.querySelector(".nav-menu");
-    hamburger.addEventListener("click", ()=> navMenu.classList.toggle("active"));
-  </script>
-</body>
-</html> 
-<!-- rebuild GitHub Pages -->
+<header>
+<div class="container">
+<div class="logo">
+<img src="/logo.png" alt="CDBG Logo">
+<span>CDBG</span>
+</div>
+<nav>
+<ul>
+<li><a href="#hero">Accueil</a></li>
+<li><a href="#about">À propos</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#partnerships">Partenariats</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+</nav>
+</div>
+</header>
+
+<section id="hero" class="hero">
+<div class="container">
+<h1>Compagnie Durable du Bois au Gabon</h1>
+<h2>Exploitation Forestière Responsable</h2>
+<p>Garantir aux générations futures une forêt préservée tout en valorisant le patrimoine forestier gabonais</p>
+<div class="hero-buttons">
+<a href="#about" class="btn primary">Découvrir notre mission</a>
+<a href="#contact" class="btn secondary">Nous contacter</a>
+</div>
+</div>
+</section>
+
+<section id="about" class="about">
+<div class="container">
+<h3>Implantés à Bitam</h3>
+<p>Située au nord du Gabon, Bitam est le cœur de nos opérations forestières. Cette région riche en biodiversité nous permet de développer une exploitation durable sur 10 000 hectares de propriété privée.</p>
+<h2>À propos de nous</h2>
+<p>Une expertise au service de la forêt gabonaise</p>
+<h3>Notre ambition</h3>
+<p>Maîtriser toute la chaîne de valeur du bois gabonais, de la forêt jusqu'à l'exportation internationale, en combinant efficacité économique, impact social positif, et respect profond de l'environnement.</p>
+</div>
+</section>
+
+<section id="services" class="services">
+<div class="container">
+<h2>Nos services</h2>
+<p>Une chaîne de valeur complète</p>
+<div class="service-grid">
+<div class="service-item">
+<img src="/service1.jpg" alt="Abattage durable">
+<h4>Abattage durable</h4>
+<p>Techniques respectueuses de l'environnement pour une exploitation raisonnée.</p>
+</div>
+<div class="service-item">
+<img src="/service2.jpg" alt="Transformation du bois">
+<h4>Transformation du bois</h4>
+<p>Sciage et traitement pour des produits de haute qualité.</p>
+</div>
+<div class="service-item">
+<img src="/service3.jpg" alt="Exportation internationale">
+<h4>Exportation internationale</h4>
+<p>Distribution de nos produits vers les marchés mondiaux.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="gallery" class="gallery">
+<div class="container">
+<h2>Notre Galerie</h2>
+<p>Découvrez nos produits et notre savoir-faire en images</p>
+<div class="gallery-grid">
+<div class="gallery-item">
+<img src="/gallery1.jpg" alt="Grumes de bois">
+<h3>Grumes de bois</h3>
+<p>Sélectionnées avec soin</p>
+</div>
+<div class="gallery-item">
+<img src="/gallery2.jpg" alt="Planches de bois">
+<h3>Planches de bois</h3>
+<p>Produits de qualité</p>
+</div>
+<div class="gallery-item">
+<img src="/gallery3.jpg" alt="Forêt gabonaise">
+<h3>Forêt gabonaise</h3>
+<p>Notre environnement de travail</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="commitments" class="commitments">
+<div class="container">
+<h2>Nos engagements</h2>
+<p>🌱 Préserver la forêt, valoriser le bois, soutenir les communautés</p>
+<ul>
+<li>Gestion forestière certifiée</li>
+<li>Développement local et emploi</li>
+<li>Contribution à la biodiversité</li>
+</ul>
+</div>
+</section>
+
+<section id="partnerships" class="partnerships">
+<div class="container">
+<h2>Collaborations et Partenariats</h2>
+<p>Ouverts à toutes les opportunités</p>
+<p>Notre compagnie est ouverte à toute demande de collaboration et de partenariat dans les domaines suivants :</p>
+<ul>
+<li>Abattage</li>
+<li>Sciage</li>
+<li>Logistique et transport</li>
+</ul>
+</div>
+</section>
+
+<section id="contact" class="contact">
+<div class="container">
+<h2>Contact</h2>
+<p>Contactez-nous pour vos projets</p>
+<div class="contact-grid">
+<div class="contact-form">
+<h3>Envoyez-nous un message</h3>
+<form>
+<input type="text" placeholder="Nom">
+<input type="email" placeholder="Email">
+<input type="text" placeholder="Sujet">
+<textarea placeholder="Message"></textarea>
+<button type="submit" class="btn primary">Envoyer le message</button>
+</form>
+</div>
+<div class="contact-info">
+<h3>Adresse</h3>
+<p>Rue Sobraga, Libreville, Gabon <br> BP 4447</p>
+<h3>Email</h3>
+<p>contact@cdbg.ga</p>
+<h3>Téléphone</h3>
+<p>+241 77 25 9169</p>
+</div>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="container">
+<p>&copy; 2023 Compagnie Durable du Bois au Gabon. Tous droits réservés.</p>
+</div>
+</footer>
+
+
+<script>
+// Smooth scrolling for navigation links
+document.querySelectorAll('nav a').forEach(anchor => {
+anchor.addEventListener('click', function (e) {
+e.preventDefault();
+
+document.querySelector(this.getAttribute('href')).scrollIntoView({
+behavior: 'smooth'
+});
+});
+});
+</script>
+
+
+</body></html>
