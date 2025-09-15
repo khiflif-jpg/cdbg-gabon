@@ -1,16 +1,20 @@
-// Menu hamburger
+// ================== Menu Hamburger ==================
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
+
 hamburger.addEventListener('click', () => {
   hamburger.classList.toggle('active');
   navMenu.classList.toggle('active');
 });
-document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
-  hamburger.classList.remove('active');
-  navMenu.classList.remove('active');
-}));
 
-// Effet header au scroll
+document.querySelectorAll('.nav-link').forEach(link => 
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    navMenu.classList.remove('active');
+  })
+);
+
+// ================== Header scroll ==================
 window.addEventListener('scroll', () => {
   const header = document.querySelector('.header');
   if (window.scrollY > 100) {
@@ -22,7 +26,7 @@ window.addEventListener('scroll', () => {
   }
 });
 
-// Animations au scroll
+// ================== Animations au scroll ==================
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -30,7 +34,8 @@ const observer = new IntersectionObserver((entries) => {
       entry.target.style.transform = 'translateY(0)';
     }
   });
-}, {threshold: 0.1, rootMargin: '0px 0px -50px 0px'});
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
 document.querySelectorAll('section').forEach(el => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(30px)';
@@ -38,11 +43,32 @@ document.querySelectorAll('section').forEach(el => {
   observer.observe(el);
 });
 
-// Effet fondu au chargement
+// ================== Hero & About images fade-in ==================
+const images = document.querySelectorAll('img');
+images.forEach(img => {
+  img.style.opacity = '0';
+  img.style.transition = 'opacity 1s ease';
+  img.addEventListener('load', () => {
+    img.style.opacity = '1';
+  });
+});
+
+// ================== Effet fondu au chargement ==================
 window.addEventListener('load', () => {
   document.body.style.opacity = '1';
 });
+
 document.addEventListener('DOMContentLoaded', () => {
   document.body.style.opacity = '0';
   document.body.style.transition = 'opacity 0.3s ease';
 });
+
+// ================== Formulaire Contact ==================
+const contactForm = document.querySelector('.contact-form');
+if (contactForm) {
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Merci ! Votre message a été envoyé.');
+    contactForm.reset();
+  });
+}
