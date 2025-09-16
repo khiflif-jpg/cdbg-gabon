@@ -17,8 +17,17 @@ header {
 }
 
 .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* espace entre le texte et le logo si nécessaire */
     font-weight: bold;
     font-size: 1.5rem;
+}
+
+.logo img {
+    max-height: 60px; /* limite la hauteur du logo */
+    width: auto;      /* conserve les proportions */
+    display: block;
 }
 
 nav ul {
@@ -135,4 +144,3 @@ footer {
     padding: 1rem;
     margin-top: 2rem;
 }
-
