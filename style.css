@@ -1,1 +1,138 @@
+/* Style général */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+header {
+    background-color: #2e7d32;
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 1rem;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.hero {
+    background-color: #a5d6a7;
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+.hero h1, .hero h2 {
+    margin: 0.2rem 0;
+}
+
+.hero p {
+    margin: 1rem 0;
+}
+
+.hero button {
+    margin: 0.5rem;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    background-color: #2e7d32;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+section {
+    padding: 2rem 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+section h3 {
+    color: #2e7d32;
+    margin-bottom: 1rem;
+}
+
+ul {
+    list-style: disc inside;
+}
+
+.gallery div {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.gallery img {
+    width: 45%;
+    max-width: 400px;
+    border-radius: 8px;
+}
+
+.commitments img {
+    width: 100%;
+    max-width: 600px;
+    margin: 1rem 0;
+    border-radius: 8px;
+}
+
+.contact form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    max-width: 400px;
+    margin-bottom: 1rem;
+}
+
+.contact label {
+    font-weight: bold;
+}
+
+.contact input, .contact textarea {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.contact button {
+    padding: 0.7rem;
+    background-color: #2e7d32;
+    border: none;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.contact-info p {
+    margin: 0.3rem 0;
+}
+
+footer {
+    background-color: #2e7d32;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+}
 
