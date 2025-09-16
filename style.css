@@ -7,6 +7,7 @@ body {
     background-color: #f9f9f9;
 }
 
+/* Header */
 header {
     background-color: #2e7d32;
     color: white;
@@ -16,20 +17,22 @@ header {
     align-items: center;
 }
 
+/* Logo */
 .logo {
     display: flex;
     align-items: center;
-    gap: 0.5rem; /* espace entre le texte et le logo */
+    gap: 0.5rem; /* espace entre logo et texte si nécessaire */
     font-weight: bold;
     font-size: 1.5rem;
 }
 
 .logo img {
-    height: 60px !important; /* fixe la hauteur à 60px */
-    width: auto !important;  /* conserve les proportions */
+    height: 60px !important; /* fixe la hauteur */
+    width: auto !important;  /* garde les proportions */
     display: block;
 }
 
+/* Navigation */
 nav ul {
     list-style: none;
     margin: 0;
@@ -44,6 +47,7 @@ nav a {
     font-weight: 600;
 }
 
+/* Hero section */
 .hero {
     background-color: #a5d6a7;
     text-align: center;
@@ -68,6 +72,7 @@ nav a {
     border-radius: 4px;
 }
 
+/* Sections */
 section {
     padding: 2rem 1rem;
     max-width: 900px;
@@ -82,3 +87,28 @@ section h3 {
 ul {
     list-style: disc inside;
 }
+
+/* Gallery */
+.gallery div {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.gallery img {
+    width: 45%;
+    max-width: 400px;
+    border-radius: 8px;
+}
+
+/* Commitments */
+.commitments img {
+    width: 100%;
+    max-width: 600px;
+    margin: 1rem 0;
+    border-radius: 8px;
+}
+
+/* Contact */
+.contact form {
