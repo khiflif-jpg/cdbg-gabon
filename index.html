@@ -11,16 +11,15 @@
       line-height: 1.6;
     }
     header {
-      background: #004d00; /* vert foncé ou couleur à définir */
+      background: #004d00;
       color: white;
-      padding: 20px;
+      padding: 15px 30px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-    header .logo {
-      font-size: 1.5em;
-      font-weight: bold;
+    header img {
+      height: 60px;
     }
     nav ul {
       list-style: none;
@@ -37,7 +36,7 @@
       font-weight: bold;
     }
     .banner {
-      background: url('ton-image-de-banniere.jpg') no-repeat center center;
+      background: url('forest_hero.jpg') no-repeat center center;
       background-size: cover;
       height: 400px;
       display: flex;
@@ -52,7 +51,7 @@
     }
     .section {
       padding: 60px 20px;
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 0 auto;
     }
     .section:nth-child(even) {
@@ -61,6 +60,7 @@
     .section h2 {
       text-align: center;
       margin-bottom: 20px;
+      color: #004d00;
     }
     .services {
       display: flex;
@@ -75,9 +75,22 @@
       background: white;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       border-radius: 5px;
+      text-align: center;
     }
-    .service-item h3 {
-      margin-top: 0;
+    .service-item img {
+      max-width: 100%;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+    .gallery img {
+      max-width: 45%;
+      margin: 10px;
+      border-radius: 5px;
     }
     .contact-form {
       max-width: 600px;
@@ -120,20 +133,23 @@
       nav ul li {
         margin: 10px 0;
       }
+      .gallery img {
+        max-width: 100%;
+      }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">CDBG</div>
+  <img src="logo.jpg" alt="Logo CDBG">
   <nav>
     <ul>
       <li><a href="#">Accueil</a></li>
-      <li><a href="#">À propos</a></li>
-      <li><a href="#">Services</a></li>
-      <li><a href="#">Galerie</a></li>
-      <li><a href="#">Contact</a></li>
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Galerie</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
 </header>
@@ -151,25 +167,28 @@
   <h2>Nos Services</h2>
   <div class="services">
     <div class="service-item">
-      <h3>Abattage</h3>
-      <p>Techniques respectueuses de l'environnement pour préserver la biodiversité.</p>
+      <img src="grumes_generiques.jpg" alt="Grumes">
+      <h3>Exploitation forestière</h3>
+      <p>Abattage et extraction réalisés avec des techniques respectueuses de l’environnement.</p>
     </div>
     <div class="service-item">
-      <h3>Sciage</h3>
-      <p>Transformation primaire avec équipements modernes et main d’œuvre locale.</p>
+      <img src="planches_generiques.jpg" alt="Planches de bois">
+      <h3>Transformation</h3>
+      <p>Usinage et sciage du bois avec des équipements modernes et main d’œuvre locale.</p>
     </div>
     <div class="service-item">
+      <img src="bitam_panneau.jpg" alt="Panneau routier Bitam">
       <h3>Logistique</h3>
-      <p>Transport adapté pour acheminer le bois en toute sécurité.</p>
+      <p>Transport adapté pour acheminer le bois en toute sécurité au Gabon et à l’international.</p>
     </div>
   </div>
 </section>
 
 <section class="section" id="gallery">
   <h2>Galerie</h2>
-  <div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
-    <img src="photo1.jpg" alt="Photo 1" style="max-width:45%; margin:10px; border-radius:5px;">
-    <img src="photo2.jpg" alt="Photo 2" style="max-width:45%; margin:10px; border-radius:5px;">
+  <div class="gallery">
+    <img src="elephant_forest.jpg" alt="Éléphants de forêt">
+    <img src="forest_hero.jpg" alt="Forêt gabonaise">
   </div>
 </section>
 
