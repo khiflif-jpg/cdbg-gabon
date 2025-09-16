@@ -19,14 +19,14 @@ header {
 .logo {
     display: flex;
     align-items: center;
-    gap: 0.5rem; /* espace entre le texte et le logo si nécessaire */
+    gap: 0.5rem; /* espace entre le texte et le logo */
     font-weight: bold;
     font-size: 1.5rem;
 }
 
 .logo img {
-    max-height: 60px; /* limite la hauteur du logo */
-    width: auto;      /* conserve les proportions */
+    height: 60px !important; /* fixe la hauteur à 60px */
+    width: auto !important;  /* conserve les proportions */
     display: block;
 }
 
@@ -81,66 +81,4 @@ section h3 {
 
 ul {
     list-style: disc inside;
-}
-
-.gallery div {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.gallery img {
-    width: 45%;
-    max-width: 400px;
-    border-radius: 8px;
-}
-
-.commitments img {
-    width: 100%;
-    max-width: 600px;
-    margin: 1rem 0;
-    border-radius: 8px;
-}
-
-.contact form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    max-width: 400px;
-    margin-bottom: 1rem;
-}
-
-.contact label {
-    font-weight: bold;
-}
-
-.contact input, .contact textarea {
-    padding: 0.5rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    resize: vertical;
-}
-
-.contact button {
-    padding: 0.7rem;
-    background-color: #2e7d32;
-    border: none;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-.contact-info p {
-    margin: 0.3rem 0;
-}
-
-footer {
-    background-color: #2e7d32;
-    color: white;
-    text-align: center;
-    padding: 1rem;
-    margin-top: 2rem;
 }
