@@ -1,0 +1,105 @@
+:root{
+  --green:#004d00;
+  --ambition:#1a6d1a;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Inter',sans-serif;color:#222;display:flex;flex-direction:column;min-height:100vh}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+
+/* Header */
+.site-header{background:var(--green);color:#fff;position:sticky;top:0;z-index:40}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+.site-logo{height:56px}
+.main-nav a{color:#fff;text-decoration:none;margin-left:18px;font-weight:600}
+
+/* Hero */
+.hero{background-image:url('forest_hero.jpg');background-size:cover;background-position:center;position:relative;color:#fff;min-height:78vh;display:flex;align-items:center}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.35),rgba(0,0,0,0.45))}
+.hero-inner{position:relative;z-index:2;text-align:center;padding:40px 20px;max-width:1000px;margin:0 auto}
+.hero-title{font-size:24px;margin:0 0 8px;font-weight:700}
+.hero-sub{font-size:20px;margin:0 0 12px;font-weight:400;color:#fff}
+.hero-desc{font-size:18px;margin:0 0 22px;max-width:900px;margin-left:auto;margin-right:auto}
+
+/* Buttons */
+.hero-ctas{display:flex;gap:12px;justify-content:center;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:28px;padding:12px 26px;font-weight:700;text-decoration:none}
+.btn-olive{background:var(--green);color:#fff;border:0;min-height:48px}
+.btn-ghost{background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.9);min-height:48px}
+.btn:hover{opacity:0.95;transform:translateY(-2px);transition:all .18s ease}
+
+/* Scroll */
+.hero-scroll{position:relative;margin-top:40px}
+.scroll-text{font-weight:700;letter-spacing:0.3px}
+.scroll-arrow{width:28px;height:28px;margin:8px auto 0;border-left:3px solid white;border-bottom:3px solid white;transform:rotate(-45deg);animation:arrowbounce 1.6s infinite}
+@keyframes arrowbounce{0%,100%{transform:translateY(0) rotate(-45deg)}50%{transform:translateY(10px) rotate(-45deg)}}
+
+/* Bitam */
+.bitam{padding:60px 20px}
+.bitam-inner{display:flex;align-items:center;gap:30px;justify-content:center;max-width:1200px;margin:0 auto}
+.bitam-image img{width:420px;max-width:42vw;border-radius:10px;display:block;margin-left:10px}
+.bitam-content{flex:1;padding-right:20px}
+.bitam-content h2{text-align:right;color:var(--green);margin:0 0 12px}
+@media(max-width:900px){.bitam-inner{flex-direction:column;text-align:center}.bitam-content h2{text-align:center}.bitam-image img{max-width:90%;margin-left:0}}
+
+/* About */
+.about{padding:60px 20px}
+.about .subtitle{color:#555;margin-top:6px;margin-bottom:24px;text-align:center}
+.row-cards{display:flex;gap:20px;justify-content:center;align-items:stretch;flex-wrap:wrap}
+.card{background:white;border-radius:12px;padding:22px;box-shadow:0 6px 18px rgba(0,0,0,0.08);width:300px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.icon-circle{width:64px;height:64px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+
+/* Ambition */
+.ambition{padding:60px 20px}
+.ambition-box{background:var(--ambition);color:white;padding:40px;border-radius:12px;max-width:1000px;margin:0 auto;text-align:center}
+.ambition-box h2{margin-top:0;font-size:22px}
+.ambition-box p{font-size:18px;margin:12px 0 0}
+
+/* Services */
+.services{padding:60px 20px}
+.services .subtitle{margin-bottom:24px}
+
+/* Gallery */
+.gallery{padding:60px 20px}
+.large-title{font-size:26px;text-align:center;margin-bottom:20px}
+.gallery-row{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+.gallery-item img{max-width:520px;border-radius:10px;width:100%;height:auto;display:block}
+
+/* Engagements */
+.engagements{padding:60px 20px}
+.engagement-row{display:flex;gap:30px;align-items:flex-start;justify-content:center;flex-wrap:wrap}
+.engagement-hero{max-width:520px;width:100%;border-radius:10px}
+.engagement-cards{display:flex;flex-direction:column;gap:12px;max-width:520px}
+.eng-card{background:white;border-radius:10px;padding:14px;box-shadow:0 6px 18px rgba(0,0,0,0.06);display:flex;gap:12px;align-items:flex-start}
+.small-icon{width:40px;height:40px;background:var(--green);display:flex;align-items:center;justify-content:center;border-radius:8px;color:white}
+
+/* Collab */
+.collab .pill-row{display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.btn.pill{border-radius:40px;padding:10px 22px;background:var(--green);color:white}
+
+/* Contact */
+.contact{padding:60px 20px}
+.contact-inner{max-width:1000px;margin:0 auto}
+.contact-grid{display:flex;gap:30px;align-items:flex-start;justify-content:center;flex-wrap:wrap}
+.contact-form{flex:1;min-width:280px}
+.contact-info{flex:1;min-width:260px}
+.contact-form input,.contact-form textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #ddd;margin-bottom:12px}
+.contact-form button{background:var(--green);color:white;padding:12px 20px;border-radius:8px;border:0;cursor:pointer}
+
+/* Footer */
+footer{background:var(--green);color:white;margin-top:40px}
+.footer-container{display:flex;gap:20px;justify-content:space-between;max-width:1200px;margin:0 auto;padding:36px 20px;border-bottom:1px solid rgba(255,255,255,0.14);flex-wrap:wrap}
+.footer-col{flex:1;min-width:200px}
+.footer-bottom{text-align:center;padding:14px;color:rgba(255,255,255,0.9)}
+
+/* Fade */
+.fade-up{opacity:0;transform:translateY(30px);animation:fadeUp .9s forwards}
+.delay1{animation-delay:.25s}.delay2{animation-delay:.45s}.delay3{animation-delay:.7s}.delay4{animation-delay:1s}
+
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+/* Responsive */
+@media(max-width:900px){
+  .row-cards{flex-direction:column;align-items:center}
+  .engagement-cards{flex-direction:column}
+  .main-nav{display:none}
+}
