@@ -1,0 +1,297 @@
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  color: #333;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main {
+  flex: 1;
+}
+
+/* Header */
+header {
+  background: #004d00;
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+header img {
+  height: 60px;
+}
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+nav ul li {
+  margin-left: 20px;
+}
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Banner */
+.banner {
+  background: url('forest_hero.jpg') no-repeat center center;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.banner-content h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.banner-content h2 {
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 15px;
+}
+.banner-content p {
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 25px;
+}
+
+/* Buttons */
+.banner-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+.banner-buttons .btn {
+  display: inline-block;
+  padding: 12px 25px;
+  min-height: 48px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s;
+  line-height: 24px;
+}
+.btn-green {
+  background: #004d00;
+  color: white;
+}
+.btn-green:hover {
+  background: #006600;
+}
+.btn-transparent {
+  border: 2px solid white;
+  background: transparent;
+  color: white;
+}
+.btn-transparent:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* Scroll Down */
+.scroll-down {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+.scroll-down span {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.scroll-down .arrow {
+  width: 20px;
+  height: 20px;
+  border-left: 3px solid white;
+  border-bottom: 3px solid white;
+  transform: rotate(-45deg);
+  margin: 0 auto;
+  animation: bounce 1.5s infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) rotate(-45deg); }
+  50% { transform: translateY(10px) rotate(-45deg); }
+}
+
+/* Fade-up animations */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 1s forwards;
+}
+.delay1 { animation-delay: 0.5s; }
+.delay2 { animation-delay: 1s; }
+.delay3 { animation-delay: 1.5s; }
+.delay4 { animation-delay: 2s; }
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Sections */
+.section {
+  padding: 60px 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #004d00;
+}
+.section .subtitle {
+  text-align: center;
+  margin-bottom: 40px;
+  font-style: italic;
+}
+
+/* Bitam section */
+.bitam-container {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+.bitam-image img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+.bitam-text {
+  flex: 1;
+}
+.bitam-text h2 {
+  text-align: right;
+  color: #004d00;
+}
+
+/* Cards */
+.cards {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.card {
+  flex: 0 0 30%;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+}
+.icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  font-size: 24px;
+}
+.icon.green {
+  background: #004d00;
+  color: white;
+}
+.card h3 {
+  color: #004d00;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+/* Ambition box */
+.ambition-box {
+  background: #004d00;
+  color: white;
+  border-radius: 10px;
+  padding: 40px;
+  text-align: center;
+}
+
+/* Gallery */
+.gallery-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+}
+.gallery-container img {
+  max-width: 45%;
+  border-radius: 8px;
+}
+
+/* Contact form */
+.contact-form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.contact-form input, .contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #aaa;
+  border-radius: 3px;
+}
+.contact-form button {
+  padding: 10px 20px;
+  border: none;
+  background: #006600;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+/* Footer */
+footer {
+  background: #004d00;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .bitam-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .cards {
+    flex-direction: column;
+    align-items: center;
+  }
+  .card {
+    flex: 0 0 100%;
+  }
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+  nav ul {
+    flex-direction: column;
+    margin-top: 15px;
+  }
+  nav ul li {
+    margin: 10px 0;
+  }
+  .gallery-container img {
+    max-width: 100%;
+  }
+}
