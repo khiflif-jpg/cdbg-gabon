@@ -1,0 +1,48 @@
+body {margin:0;font-family:Inter, sans-serif;color:#333}
+h2 {text-align:center;color:#1a6d1a;font-size:28px;margin-bottom:10px}
+.subtitle{text-align:center;color:#555;margin-bottom:30px}
+section{padding:60px 20px}
+
+/* Hero */
+.hero {background:#222 url('forest.jpg') center/cover no-repeat;height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center}
+.hero .overlay{background:rgba(0,0,0,0.5);padding:20px;border-radius:10px}
+.hero h1{font-size:32px;margin-bottom:10px}
+.hero h2{font-size:24px;margin-bottom:10px;color:#fff}
+.hero p{font-size:18px;margin-bottom:20px}
+.buttons a{margin:0 5px;padding:10px 20px;border-radius:20px;text-decoration:none}
+.btn-primary{background:#1a6d1a;color:#fff}
+.btn-secondary{background:#fff;color:#1a6d1a;border:2px solid #1a6d1a}
+
+/* Bitam */
+.bitam-content{display:flex;justify-content:center;gap:30px;flex-wrap:wrap}
+.bitam-img img{width:400px;border-radius:10px}
+.bitam-text{max-width:500px}
+
+/* Cards */
+.cards{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+.card{background:#fff;padding:20px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.1);max-width:280px;text-align:center}
+
+/* Ambition */
+.ambition{background:#1a6d1a;color:#fff;padding:30px;border-radius:10px;margin-top:30px;text-align:center}
+
+/* Services */
+.services .cards .card{flex:1}
+
+/* Galerie */
+.gallery-row{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+.gallery-item{background:#fff;padding:10px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.1);flex:1;max-width:400px;text-align:center}
+.gallery-item img{width:100%;height:250px;object-fit:cover;border-radius:10px;margin-bottom:10px}
+.gallery-item h3{color:#1a6d1a}
+
+/* Contact */
+.contact-container{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin-top:30px}
+.contact-form,.contact-info{flex:1;max-width:400px}
+.contact-form input,.contact-form textarea{width:100%;padding:10px;margin-bottom:12px;border:1px solid #ccc;border-radius:6px}
+.contact-form button{background:#1a6d1a;color:#fff;border:none;padding:12px 20px;border-radius:20px;cursor:pointer}
+
+/* Footer */
+footer{background:#1a6d1a;color:#fff;font-weight:normal;padding:20px 10px;font-size:14px}
+.footer-container{display:flex;justify-content:space-between;flex-wrap:wrap;max-width:1200px;margin:auto}
+.footer-col{flex:1;min-width:200px;margin:5px}
+.footer-col h4{margin-bottom:8px;font-size:15px;font-weight:normal}
+.footer-bottom{text-align:center;margin-top:10px;font-size:12px;border-top:1px solid rgba(255,255,255,0.2);padding-top:8px}
