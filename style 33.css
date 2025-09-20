@@ -1,0 +1,44 @@
+
+/* ==================================
+   Base style.css (inchangé sauf Contact)
+   ================================== */
+
+/* Section Contact - mise en page en deux colonnes */
+.contact-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.contact-form {
+  flex: 1;
+}
+
+.contact-info {
+  flex: 1;
+}
+
+.contact-info p {
+  display: flex;
+  align-items: center;
+  margin: 0 0 12px;
+}
+
+.contact-info p img {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+
+/* Responsive: mobile - une seule colonne */
+@media (max-width: 768px) {
+  .contact-container {
+    flex-direction: column;
+  }
+  .contact-info, .contact-form {
+    width: 100%;
+  }
+}
