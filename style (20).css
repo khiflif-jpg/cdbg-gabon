@@ -1,0 +1,226 @@
+
+/* Styles généraux */
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Header (inclus dans Hero) */
+.hero {
+    position: relative;
+    background: url('forest_hero.jpg') no-repeat center center/cover;
+    color: white;
+    text-align: center;
+    padding: 120px 20px;
+}
+
+.hero .logo {
+    width: 120px;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.hero h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: background 0.3s;
+    font-size: 14px;
+}
+
+.btn-primary {
+    background-color: #2f4f26;
+    color: white;
+}
+
+.btn-secondary {
+    border: 2px solid white;
+    color: white;
+    background: transparent;
+}
+
+.btn-primary:hover {
+    background-color: #25641d;
+}
+
+.btn-secondary:hover {
+    background: white;
+    color: #2f4f26;
+}
+
+.scroll-down {
+    text-align: center;
+    animation: bounce 2s infinite;
+    font-size: 16px;
+}
+
+.scroll-down span {
+    display: block;
+    margin-top: 5px;
+    font-size: 20px;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+}
+
+/* Sections */
+section {
+    padding: 80px 20px;
+    text-align: center;
+}
+
+section h2 {
+    font-size: 28px;
+    color: #2f4f26;
+    margin-bottom: 15px;
+}
+
+section p {
+    color: #555;
+    max-width: 800px;
+    margin: 0 auto 40px;
+}
+
+/* Cartes génériques */
+.cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 20px;
+    width: 280px;
+    text-align: center;
+}
+
+.card .icon {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+}
+
+.card .icon img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+}
+
+.card h3 {
+    font-size: 18px;
+    color: #2f4f26;
+    margin-bottom: 10px;
+}
+
+/* Galerie */
+.gallery-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.gallery-item {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    max-width: 400px;
+}
+
+.gallery-item img {
+    width: 100%;
+    display: block;
+}
+
+/* Engagements */
+.engagements img {
+    width: 80%;
+    margin: 20px auto;
+    border-radius: 10px;
+}
+
+/* Contact */
+.contact-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.contact-form {
+    flex: 1;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.contact-info {
+    flex: 1;
+    max-width: 400px;
+    text-align: left;
+}
+
+.contact-info p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.contact-info img {
+    width: 48px;
+    height: 48px;
+}
+
+/* Footer */
+footer {
+    background: #2f4f26;
+    color: white;
+    text-align: center;
+    padding: 20px 10px;
+    font-size: 12px;
+    font-weight: normal;
+}
