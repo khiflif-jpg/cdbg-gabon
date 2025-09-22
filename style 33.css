@@ -1,0 +1,79 @@
+
+/* ---- Global Styles for FR & EN ---- */
+
+/* Section Nos engagements / Our Commitments */
+.engagements-section {
+  padding: 90px 20px;
+  background: linear-gradient(180deg, #f0f8f4 0%, #ffffff 100%);
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #2d2d2d;
+  margin-bottom: 10px;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #3D6B35;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 60px;
+}
+
+.engagements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+.engagement-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 35px 25px;
+  border: 1px solid rgba(61,107,53,0.15);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.engagement-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 20px rgba(61,107,53,0.25);
+}
+
+.icon-circle {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: rgba(61,107,53,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #3D6B35;
+}
+
+.engagement-card h3 {
+  font-size: 1.4rem;
+  color: #3D6B35;
+  margin-bottom: 15px;
+}
+
+.engagement-card p {
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.6;
+}
