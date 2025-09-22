@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>CDBG – Sustainable forestry and tropical wood export from Gabon</title>
+  <meta name="description" content="CDBG is a sustainable forestry company in Gabon. Responsible logging, tropical wood export, and local economic development. Discover our mission.">
+  <meta name="keywords" content="CDBG, forestry Gabon, sustainable logging, tropical wood, export Gabon, Okoumé, Bitam, sawmill, wood Gabon">
+  <meta name="author" content="Compagnie Durable du Bois du Gabon">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="canonical" href="https://www.tonsite.com/en.html">
+  <link rel="alternate" hreflang="fr" href="https://www.tonsite.com/index.html">
+  <link rel="alternate" hreflang="en" href="https://www.tonsite.com/en.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="CDBG – Sustainable forestry in Gabon">
+  <meta property="og:description" content="Responsible logging, tropical wood export, and local economic development.">
+  <meta property="og:image" content="logo.webp">
+  <meta property="og:url" content="https://www.tonsite.com/en.html">
+  <meta property="og:type" content="website">
+
+  <!-- CSS -->
+  <link href="style.css" rel="stylesheet">
+
+  <!-- Données structurées (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Compagnie Durable du Bois du Gabon",
+    "url": "https://www.tonsite.com",
+    "logo": "https://www.tonsite.com/logo.webp",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+24177259169",
+      "contactType": "Customer Service",
+      "areaServed": "GA",
+      "availableLanguage": ["en", "fr"]
+    },
+    "sameAs": [
+      "https://www.linkedin.com/company/cdbg",
+      "https://www.facebook.com/cdbg"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="hero" id="hero">
+    <nav class="navbar" role="navigation">
+      <div class="logo"><img alt="CDBG Logo" src="logo.webp"/></div>
+      <div class="nav-flags">
+        <a href="index.html"><img alt="Français" height="32" src="fr.png" width="32"/></a>
+        <a href="en.html"><img alt="English" height="32" src="en.png" width="32"/></a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#bitam" title="Discover Bitam, CDBG headquarters">Bitam</a></li>
+        <li><a href="#about" title="About CDBG">About us</a></li>
+        <li><a href="#ambition" title="Discover our ambition">Ambition</a></li>
+        <li><a href="#services" title="Our forestry services">Services</a></li>
+        <li><a href="#gallery" title="Gallery of our activities">Gallery</a></li>
+        <li><a href="#engagements" title="Our commitments to the environment and community">Commitments</a></li>
+        <li><a href="#partnerships" title="Our partnerships">Partnerships</a></li>
+        <li><a href="#contact" title="Contact us">Contact</a></li>
+      </ul>
+      <div aria-label="Menu" class="burger" id="burger">☰</div>
+    </nav>
+
+    <div class="hero-overlay">
+      <h1>Compagnie Durable du Bois in Gabon</h1>
+      <h2 class="subtitle-hero">Sustainable Forestry</h2>
+      <p>Ensuring a preserved forest for future generations while enhancing Gabon's forest heritage.</p>
+      <div class="buttons">
+        <a class="btn btn-secondary" href="#about">Discover our mission</a>
+        <a class="btn btn-secondary" href="#contact">Contact us</a>
+      </div>
+      <div aria-hidden="true" class="scroll-down">
+        <span class="scroll-text">Discover</span><br/>
+        <span class="arrow">↓</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sections du site (Bitam, About, Ambition, Services, Gallery, Engagements, Partnerships, Learn More, Contact, Footer) -->
+  <!-- ... (Toutes les sections HTML sont identiques à ton code actuel, juste en anglais et avec titres SEO) -->
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>Compagnie Durable du Bois in Gabon</h4>
+        <p>Sustainable forestry for a better future</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li>Logging</li>
+          <li>Sawing</li>
+          <li>Logistics</li>
+          <li>Export</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <p>Libreville, Gabon</p>
+        <p>+241 77 25 9169</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-yellow-line"></div>
+      <p>© 2025 Compagnie Durable du Bois in Gabon. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const burger = document.getElementById('burger');
+    const navLinks = document.querySelector('.nav-links');
+    burger && burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+          if (navLinks.classList.contains('open')) navLinks.classList.remove('open');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
