@@ -1,0 +1,80 @@
+
+/* === HERO FIX === */
+.hero {
+  min-height: 100vh;
+  padding-top: 0;
+}
+.navbar + .hero {
+  padding-top: 120px;
+}
+
+/* === CONTACT FIX === */
+.contact-info p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.contact-info p img {
+  width: 28px;
+  height: 28px;
+}
+
+/* === CONTACT MAP === */
+.contact-map {
+  flex: 1;
+  max-width: 400px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.contact-map iframe {
+  width: 100%;
+  height: 300px;
+  border: 0;
+}
+
+/* === AMBITION FIX === */
+.ambition {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ambition-title {
+  color: #3D6B35;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.ambition-box {
+  background: #3D6B35;
+  color: #fff;
+  border-radius: 12px;
+  padding: 30px 20px;
+  text-align: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+/* === LEARN GABON GRID === */
+.learn-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+.learn-card {
+  background: #3D6B35;
+  color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.learn-card:hover {
+  background: #2c4d26;
+  transform: translateY(-6px);
+}
