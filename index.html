@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>– Exploitation forestière durable et exportation de bois tropicaux au Gabon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&amp;family=Lato:wght@300&amp;display=swap" rel="stylesheet"/>
+  <link href="style.css" rel="stylesheet"/>
+  <link href="logo.png" rel="icon" type="image/png"/>
+  <meta name="description" content="Compagnie Durable du Bois  — exploitation forestière responsable et exportation de bois tropicaux depuis le Gabon. Basé à Bitam : sciage, logistique et export.">
+  <style>
+    /* Modale + footer tweaks (intégrées localement pour éviter d'éditer style.css si tu préfères) */
+    .footer-container { display:flex; gap:20px; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; }
+    .footer-col { flex:1 1 200px; min-width:180px; color:#fff; text-align:left; }
+    .footer-col h4 { margin-bottom:12px; font-size:16px; color:#fff; font-weight:600; }
+    .footer-col ul { list-style: disc; margin-left:20px; color:#ccc; padding-left:0; }
+    .footer-col ul li { margin-bottom:8px; }
+    .footer-col a { color:#ccc; text-decoration:none; }
+    .footer-col a:hover { color:#fff; text-decoration:underline; }
+    .footer-bottom { margin-top:18px; text-align:center; color:#fff; border-top:2px solid #e6d36f; padding-top:12px; }
+
+    /* Modales */
+    .modal { display:none; position:fixed; z-index:3000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); overflow:auto; padding:30px 20px; }
+    .modal-content { background:#fff; margin:40px auto; padding:22px; border-radius:10px; max-width:940px; width:100%; box-shadow:0 10px 30px rgba(0,0,0,0.2); position:relative; }
+    .modal .close { position:absolute; right:14px; top:12px; font-size:26px; color:#333; cursor:pointer; border:none; background:none; }
+    .modal h2 { margin-top:0; color:#3D6B35; }
+    .modal p, .modal li { color:#222; line-height:1.5; }
+    .modal .modal-actions { margin-top:16px; display:flex; gap:10px; justify-content:flex-end; }
+    .btn-modal { display:inline-block; padding:8px 14px; border-radius:8px; background:#3D6B35; color:#fff; text-decoration:none; font-weight:600; font-size:14px; }
+    .btn-secondary-modal { background:#fff; color:#3D6B35; border:1px solid #3D6B35; }
+
+    /* Cookie banner */
+    .cookie-banner { position:fixed; left:16px; right:16px; bottom:16px; background:#fff; color:#111; border-radius:10px; box-shadow:0 6px 20px rgba(0,0,0,.15); padding:14px; z-index:4000; display:flex; gap:12px; align-items:center; justify-content:space-between; max-width:1100px; margin:auto; }
+    .cookie-banner p { margin:0; font-size:14px; color:#222; }
+    .cookie-actions { display:flex; gap:8px; align-items:center; }
+    .btn-cookie { padding:8px 12px; border-radius:8px; border:1px solid #3D6B35; background:#3D6B35; color:#fff; cursor:pointer; text-decoration:none; }
+    .btn-cookie.secondary { background:#fff; color:#3D6B35; border:1px solid #ccc; }
+    @media (max-width:700px){ .cookie-banner{ flex-direction:column; align-items:flex-start; } .cookie-actions{ width:100%; justify-content:flex-end;} }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="hero" id="hero">
+  <nav class="navbar">
+    <div class="logo"><img alt="Logo" loading="lazy" src="logo.webp"/></div>
+
+    <div class="nav-flags">
+      <a href="index.html"><img alt="Français" height="32" src="fr.png" width="32"/></a>
+      <a href="en.html"><img alt="English" height="32" src="en.png" width="32"/></a>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#bitam">Bitam</a></li>
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#ambition">Ambition</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Galerie</a></li>
+      <li><a href="#engagements">Engagements</a></li>
+      <li><a href="#partnerships">Partenariats</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div aria-label="Menu" class="burger" id="burger">☰</div>
+  </nav>
+
+  <div class="hero-overlay">
+    <h1>Compagnie Durable du Bois au Gabon </h1>
+    <h2 class="subtitle-hero">Exploitation Forestière Responsable</h2>
+    <p>Garantir aux générations futures une forêt préservée tout en valorisant le patrimoine forestier gabonais</p>
+
+    <div class="buttons">
+      <a class="btn btn-secondary" href="#about">À PROPOS DE NOUS</a>
+      <a class="btn btn-secondary" href="#contact">Nous contacter</a>
+    </div>
+
+    <div aria-hidden="true" class="scroll-down">
+      <span class="scroll-text">Bienvenue</span><br/>
+      <span class="arrow">↓</span>
+    </div>
+  </div>
+</header>
+
+<!-- Bitam -->
+<section class="bitam fade-in" id="bitam">
+  <div class="bitam-content">
+    <div class="bitam-img"><img alt="Panneau Bitam Gabon" loading="lazy" src="bitam_panneau.jpg"/></div>
+    <div class="bitam-text">
+      <h2>CDBG est Implantée à Bitam au Nord du Gabon</h2>
+      <div class="bitam-box">
+        Située au nord du Gabon, Bitam est le cœur de nos opérations forestières.<br/>
+        Cette région riche en biodiversité nous permet de développer une exploitation durable<br/>
+        sur 10 000 hectares de propriété privée.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- À propos -->
+<section class="about fade-in" id="about">
+  <h2>À propos de nous</h2>
+  <p class="subtitle">Une expertise au service de la forêt gabonaise</p>
+  <div class="cards">
+    <div class="card">
+      <div class="icon"><img alt="Icône arbre sapin" loading="lazy" src="sapin.png"/></div>
+      <h3>10000 hectares</h3>
+      <p>de propriété privée gérée de manière durable à Bitam, au nord du Gabon.</p>
+    </div>
+    <div class="card">
+      <div class="icon"><img alt="Icône bois tropicaux" loading="lazy" src="bois.png"/></div>
+      <h3>Bois tropicaux</h3>
+      <p>Sélection et commercialisation d'essences nobles : Okoumé, Azobé, Kevazingo, Padouk, Ebène, Moabi, Tali, Iroko, Movingui, Bilinga...</p>
+    </div>
+    <div class="card">
+      <div class="icon"><img alt="Icône emploi" loading="lazy" src="emploi.png"/></div>
+      <h3>Emploi local</h3>
+      <p>Développement d'une activité de sciage avec la main-d'œuvre locale pour favoriser l'économie de Bitam.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Ambition -->
+<section class="ambition fade-in" id="ambition">
+  <h2 class="ambition-title">Notre ambition</h2>
+  <div class="ambition-box">
+    <p>Maîtriser toute la chaîne de valeur du bois gabonais, de la forêt jusqu'à l'exportation internationale.</p>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="services fade-in" id="services">
+  <h2>Nos services</h2>
+  <p class="subtitle">Une chaîne de valeur complète</p>
+  <div class="cards">
+    <div class="card">
+      <div class="icon"><img alt="Icône abattage" loading="lazy" src="ciseaux.png"/></div>
+      <h3>Abattage</h3>
+      <p>Techniques respectueuses de l'environnement et de la biodiversité.</p>
+    </div>
+    <div class="card">
+      <div class="icon"><img alt="Icône sciage" loading="lazy" src="scie.png"/></div>
+      <h3>Sciage</h3>
+      <p>Transformation primaire avec équipements modernes et main-d'œuvre qualifiée.</p>
+    </div>
+    <div class="card">
+      <div class="icon"><img alt="Icône logistique" loading="lazy" src="logistique.png"/></div>
+      <h3>Logistique</h3>
+      <p>Transport et logistique adaptés aux contraintes du marché national.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Engagements -->
+<section class="engagements fade-in" id="engagements">
+  <h2>Nos engagements</h2>
+  <div class="engagement-img"><img alt="Éléphant dans la forêt du Gabon" loading="lazy" src="elephant_forest.jpg"/></div>
+  <div class="cards">
+    <div class="card">
+      <div class="icon"><img alt="Icône environnement" loading="lazy" src="environnement.png"/></div>
+      <h3>Respect de l'environnement</h3>
+      <p>Notre projet place l'écologie, la faune et la flore au cœur de chaque action.</p>
+    </div>
+    <div class="card">
+      <div class="icon"><img alt="Icône emploi local" loading="lazy" src="emploi.png"/></div>
+      <h3>Développement socio-économique</h3>
+      <p>La création d'emploi locale et le développement socio-économique de la population de Bitam sont au cœur de nos préoccupations.</p>
+    </div>
+    <div class="card">
+      <div class="icon"><img alt="Icône chaîne de valeur" loading="lazy" src="chaine.png"/></div>
+      <h3>Maîtrise de la chaîne</h3>
+      <p>Contrôler toute la chaîne du bois de la forêt à l'exportation internationale.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Galerie -->
+<section class="gallery fade-in" id="gallery">
+  <h2>Galerie</h2>
+  <div class="gallery-row">
+    <div class="gallery-item"><img alt="Grumes de bois tropicaux" loading="lazy" src="grumes_generiques.jpg"/></div>
+    <div class="gallery-item"><img alt="Planches de bois tropicaux" loading="lazy" src="planches_generiques.jpg"/></div>
+  </div>
+</section>
+
+<!-- Partenariats -->
+<section class="partnerships fade-in" id="partnerships">
+  <h2 class="partnership-title">Partenariats</h2>
+  <div class="cards">
+    <div class="card">
+      <div class="icon"><img alt="Icône développement durable" loading="lazy" src="developpement-se.png"/></div>
+      <p>Notre compagnie est ouverte à toute demande de collaboration ou de partenariat dans l’exploitation forestière, le sciage, la logistique et le transport.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Learn Gabon -->
+<section class="learn-gabon fade-in" id="learn-gabon">
+  <h2 class="learn-title">Savoir plus sur le Gabon</h2>
+  <div class="learn-grid">
+    <a class="learn-card" href="https://www.gouvernement.ga/" target="_blank" rel="noopener">Gouvernement du Gabon</a>
+    <a class="learn-card" href="https://www.eaux-forets.gouv.ga/" target="_blank" rel="noopener">Ministère des Eaux et Forêts</a>
+    <a class="learn-card" href="https://www.wwfgabon.org/" target="_blank" rel="noopener">WWF</a>
+    <a class="learn-card" href="https://gabon.wcs.org/fr-ca/" target="_blank" rel="noopener">WCS Gabon</a>
+    <a class="learn-card" href="https://fpbg.org/" target="_blank" rel="noopener">FPBG au Gabon</a>
+    <a class="learn-card" href="https://brainforest-gabon.org/" target="_blank" rel="noopener">Brainforest au Gabon</a>
+    <a class="learn-card" href="https://fr.fsc.org/fr-fr/gabon" target="_blank" rel="noopener">FSC au Gabon</a>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact fade-in" id="contact">
+  <h2>Contact</h2>
+  <div class="contact-container">
+    <form class="contact-form">
+      <input placeholder="Nom" type="text"/>
+      <input placeholder="Email" type="email"/>
+      <input placeholder="Sujet" type="text"/>
+      <textarea placeholder="Message"></textarea>
+      <input name="website" style="display:none" type="text"/>
+      <button class="btn btn-primary" type="submit">Envoyer votre message</button>
+    </form>
+
+    <div class="contact-info">
+      <p><img alt="Adresse" src="adresse.png"/><span>Ancien Sobraga, Libreville<br/>BP 4447, Gabon</span></p>
+      <p><img alt="Téléphone" src="tel.png"/><span>+241 77 25 9169</span></p>
+    </div>
+
+    <div class="contact-map">
+      <iframe allowfullscreen="" loading="lazy" src="https://www.google.com/maps?q=Bitam%20Gabon&amp;output=embed"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- Footer (avec 4e colonne Mentions légales) -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-col">
+      <h4>Compagnie Durable du Bois au Gabon </h4>
+      <p>Exploitation forestière responsable pour un avenir durable</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li>Abattage</li>
+        <li>Sciage</li>
+        <li>Logistique</li>
+        <li>Exportation</li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p>Libreville, Gabon</p>
+      <p>+241 77 25 9169</p>
+      <p><a href="mailto:cdbg.gabon@gmail.com">cdbg.gabon@gmail.com</a></p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Mentions légales</h4>
+      <ul>
+        <li><a href="#" class="open-modal" data-modal="mentions">Mentions légales</a></li>
+        <li><a href="#" class="open-modal" data-modal="cgu">Conditions Générales d’Utilisation</a></li>
+        <li><a href="#" class="open-modal" data-modal="confidentialite">Politique de Confidentialité</a></li>
+        <li><a href="#" class="open-modal" data-modal="cookies">Politique des Cookies</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 Compagnie Durable du Bois au Gabon. Tous droits réservés.</p>
+  </div>
+</footer>
+
+<!-- --- MODALES COMPLÈTES (FR) --- -->
+
+<!-- Modal: Mentions légales -->
+<div id="modal-mentions" class="modal" aria-hidden="true" role="dialog" aria-labelledby="mentionsTitle">
+  <div class="modal-content" role="document">
+    <button class="close" aria-label="Fermer">&times;</button>
+    <h2 id="mentionsTitle">Mentions légales</h2>
+
+    <p><strong>Dénomination sociale :</strong> COMPAGNIE DURABLE DU BOIS AU GABON (CDBG)</p>
+    <p><strong>Forme juridique :</strong> Société par Actions Simplifiée (SAS)</p>
+    <p><strong>N° RCCM :</strong> GA-LBV-01-2025-B16-00034</p>
+    <p><strong>Date d’immatriculation :</strong> 16/05/2025</p>
+    <p><strong>Siège social :</strong> Ancien Sobraga, Libreville – BP 4447, Gabon</p>
+    <p><strong>Téléphone :</strong> +241 77 25 9169</p>
+    <p><strong>Email :</strong> <a href="mailto:cdbg.gabon@gmail.com">cdbg.gabon@gmail.com</a></p>
+    <p><strong>Site web :</strong> <a href="https://www.cdbg-gabon.com">https://www.cdbg-gabon.com</a></p>
+
+    <h3>Directeur de la publication</h3>
+    <p>[Nom du représentant légal — à renseigner]</p>
+
+    <h3>Hébergement</h3>
+    <p>Le site est hébergé sur GitHub Pages (GitHub, Inc.).</p>
+    <p>Hébergeur : GitHub, Inc. — <a href="https://pages.github.com/">pages.github.com</a></p>
+
+    <h3>Propriété intellectuelle</h3>
+    <p>Tous les contenus présents sur ce site (textes, images, logos, vidéos, icônes, etc.) sont la propriété exclusive de CDBG ou sont utilisés avec autorisation. Toute reproduction, représentation, modification, adaptation, retransmission ou publication, même partielle, est strictement interdite sans l’accord exprès du propriétaire.</p>
+
+    <h3>Responsabilité</h3>
+    <p>CDBG met en œuvre tous les moyens raisonnables pour maintenir l’exactitude des informations publiées. Toutefois, CDBG ne peut garantir l’absence d’erreurs, d’omissions ou d’interruptions. L’utilisateur reconnaît utiliser le site à ses propres risques. CDBG ne saurait être tenue responsable des dommages directs ou indirects résultant de l’accès ou de l’utilisation du site.</p>
+
+    <h3>Droit applicable</h3>
+    <p>Le présent site est soumis au droit gabonais. Tout litige relatif à son utilisation sera soumis à la compétence des tribunaux gabonais compétents.</p>
+
+    <div class="modal-actions">
+      <a class="btn-modal btn-secondary-modal" href="#" onclick="document.getElementById('modal-mentions').style.display='none';return false;">Fermer</a>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: CGU -->
+<div id="modal-cgu" class="modal" aria-hidden="true" role="dialog" aria-labelledby="cguTitle">
+  <div class="modal-content" role="document">
+    <button class="close" aria-label="Fermer">&times;</button>
+    <h2 id="cguTitle">Conditions Générales d'Utilisation (CGU)</h2>
+
+    <p>Les présentes Conditions Générales d'Utilisation (CGU) ont pour objet de définir les modalités d'accès et d'utilisation du site internet <strong>https://www.cdbg-gabon.com</strong> (ci-après le « Site ») édité par COMPAGNIE DURABLE DU BOIS AU GABON (CDBG). Toute navigation sur le Site vaut acceptation pleine et entière des présentes CGU.</p>
+
+    <h3>1 — Accès au site</h3>
+    <p>Le Site est accessible gratuitement à tout utilisateur disposant d’un accès internet. Les frais liés à la connexion demeurent à la charge de l’utilisateur. L’accès peut être interrompu pour des opérations de maintenance ou pour des raisons techniques.</p>
+
+    <h3>2 — Objet</h3>
+    <p>Le Site a pour objet de présenter les activités de CDBG : exploitation forestière responsable, sciage, logistique et exportation. Les services et informations présentées ne constituent pas une offre contractuelle en l’absence d’accord écrit préalable.</p>
+
+    <h3>3 — Propriété intellectuelle</h3>
+    <p>L’ensemble des contenus (textes, images, logos, documents téléchargeables, bases de données) publiés sur le Site sont protégés par le droit de la propriété intellectuelle. Toute reproduction, représentation, adaptation ou exploitation, même partielle, est interdite sans l’autorisation préalable de CDBG.</p>
+
+    <h3>4 — Contenu & responsabilité</h3>
+    <p>CDBG met en œuvre les moyens raisonnables pour assurer l’exactitude des informations. Toutefois, CDBG ne garantit pas l’exactitude, la complétude ou l’actualisation des informations. CDBG ne pourra être tenue responsable des dommages directs ou indirects résultant de l’accès ou de l’utilisation du Site.</p>
+
+    <h3>5 — Données personnelles</h3>
+    <p>La collecte et le traitement des données personnelles sont décrits dans la Politique de Confidentialité accessible via le Site. En utilisant le formulaire de contact, l’utilisateur consent au traitement de ses données pour les finalités indiquées.</p>
+
+    <h3>6 — Liens externes</h3>
+    <p>Le Site peut contenir des liens vers des ressources externes. CDBG n’exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu ou politique de confidentialité.</p>
+
+    <h3>7 — Modification des CGU</h3>
+    <p>CDBG se réserve le droit de modifier à tout moment les présentes CGU. Les modifications sont publiées sur le Site et prennent effet dès leur publication. Il est conseillé de consulter régulièrement cette page.</p>
+
+    <h3>8 — Loi applicable</h3>
+    <p>Les présentes CGU sont régies par le droit gabonais. En cas de litige, compétence exclusive est attribuée aux juridictions gabonaises compétentes.</p>
+
+    <div class="modal-actions">
+      <a class="btn-modal btn-secondary-modal" href="#" onclick="document.getElementById('modal-cgu').style.display='none';return false;">Fermer</a>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Politique de confidentialité -->
+<div id="modal-confidentialite" class="modal" aria-hidden="true" role="dialog" aria-labelledby="privacyTitle">
+  <div class="modal-content" role="document">
+    <button class="close" aria-label="Fermer">&times;</button>
+    <h2 id="privacyTitle">Politique de confidentialité</h2>
+
+    <p>La présente politique détaille la manière dont COMPAGNIE DURABLE DU BOIS AU GABON (CDBG) collecte, utilise et protège les données personnelles des utilisateurs du site <a href="https://www.cdbg-gabon.com">www.cdbg-gabon.com</a>, conformément à la loi gabonaise n° 001/2011 relative à la protection des données à caractère personnel.</p>
+
+    <h3>Responsable du traitement</h3>
+    <p><strong>COMPAGNIE DURABLE DU BOIS AU GABON (CDBG)</strong><br/>
+      Siège : Ancien Sobraga, Libreville – BP 4447, Gabon<br/>
+      Email : <a href="mailto:cdbg.gabon@gmail.com">cdbg.gabon@gmail.com</a></p>
+
+    <h3>Données collectées</h3>
+    <p>Nous collectons les données que vous nous transmettez volontairement via le formulaire de contact : nom, adresse e-mail, téléphone (éventuel) et message. Nous recueillons également des données techniques (adresse IP, informations de navigation) via des cookies techniques et analytiques.</p>
+
+    <h3>Finalités du traitement</h3>
+    <ul>
+      <li>Répondre aux demandes envoyées via le formulaire de contact ;</li>
+      <li>Gérer la relation commerciale et les demandes d’informations ;</li>
+      <li>Améliorer la navigation et la sécurité du Site ;</li>
+      <li>Respecter les obligations légales et réglementaires.</li>
+    </ul>
+
+    <h3>Base juridique</h3>
+    <p>Le traitement repose sur le consentement de la personne concernée (formulaire, cookies) et, le cas échéant, sur l’intérêt légitime de CDBG pour la sécurité du site et l’amélioration des services.</p>
+
+    <h3>Destinataires</h3>
+    <p>Les données sont accessibles au personnel autorisé de CDBG et aux prestataires techniques (hébergement, maintenance). Aucune cession à des tiers à finalité commerciale n’est effectuée sans le consentement explicite de la personne.</p>
+
+    <h3>Durée de conservation</h3>
+    <p>Les données issues du formulaire de contact sont conservées pendant une durée maximale de <strong>3 ans</strong> à compter du dernier contact, sauf obligation légale contraire.</p>
+
+    <h3>Droits des personnes</h3>
+    <p>Conformément à la loi gabonaise n° 001/2011, vous disposez d’un droit d’accès, de rectification, d’effacement, d’opposition et de limitation du traitement. Pour exercer vos droits, contactez : <a href="mailto:cdbg.gabon@gmail.com">cdbg.gabon@gmail.com</a>. Vous pouvez également saisir l’autorité de contrôle compétente (CNPDCP).</p>
+
+    <h3>Sécurité</h3>
+    <p>CDBG met en place des mesures techniques et organisationnelles appropriées pour protéger les données personnelles contre les accès non autorisés, la perte, l’altération ou la divulgation.</p>
+
+    <div class="modal-actions">
+      <a class="btn-modal btn-secondary-modal" href="#" onclick="document.getElementById('modal-confidentialite').style.display='none';return false;">Fermer</a>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Politique des Cookies -->
+<div id="modal-cookies" class="modal" aria-hidden="true" role="dialog" aria-labelledby="cookiesTitle">
+  <div class="modal-content" role="document">
+    <button class="close" aria-label="Fermer">&times;</button>
+    <h2 id="cookiesTitle">Politique des Cookies</h2>
+
+    <p>Le site <a href="https://www.cdbg-gabon.com">www.cdbg-gabon.com</a> utilise des cookies et autres traceurs pour assurer son fonctionnement et améliorer l'expérience utilisateur. Cette politique explique les types de cookies utilisés, leur finalité et la manière de les gérer.</p>
+
+    <h3>Qu'est-ce qu'un cookie ?</h3>
+    <p>Un cookie est un petit fichier texte déposé sur votre terminal (ordinateur, mobile) par le site que vous visitez. Il permet de reconnaître votre navigateur lors d'une visite ultérieure et d'améliorer l'expérience utilisateur.</p>
+
+    <h3>Cookies utilisés</h3>
+    <ul>
+      <li><strong>Cookies strictement nécessaires :</strong> nécessaires au fonctionnement du site (navigation, sécurité). Ils ne requièrent pas de consentement explicite.</li>
+      <li><strong>Cookies analytiques :</strong> permettent de mesurer l'audience et d'améliorer la performance du site. Leur activation nécessite le consentement de l'utilisateur.</li>
+      <li><strong>Cookies tiers :</strong> certains contenus embarqués (ex : cartes Google Maps) peuvent utiliser des cookies tiers fournis par ces services.</li>
+    </ul>
+
+    <h3>Consentement</h3>
+    <p>Lors de votre première visite, une bannière vous informe de l’utilisation des cookies et vous permet d'accepter ou de refuser les cookies analytiques. Les cookies strictement nécessaires ne sont pas soumis au consentement car indispensables au bon fonctionnement du site.</p>
+
+    <h3>Gérer et supprimer les cookies</h3>
+    <p>Vous pouvez à tout moment gérer vos préférences via votre navigateur (paramètres de confidentialité) ou via la bannière. La suppression des cookies peut impacter certaines fonctionnalités du site.</p>
+
+    <h3>Durée de conservation</h3>
+    <p>Les cookies sont conservés pour une durée maximale de <strong>12 mois</strong> sauf obligation légale différente.</p>
+
+    <div class="modal-actions">
+      <a class="btn-modal btn-secondary-modal" href="#" onclick="document.getElementById('modal-cookies').style.display='none';return false;">Fermer</a>
+    </div>
+  </div>
+</div>
+
+<!-- Cookie banner (si pas déjà accepté/refusé) -->
+<div id="cookie-banner" class="cookie-banner" style="display:none" role="region" aria-label="Bannière cookies">
+  <p>Nous utilisons des cookies pour améliorer votre expérience. Acceptez-vous les cookies analytiques ?</p>
+  <div class="cookie-actions">
+    <button id="accept-cookies" class="btn-cookie">Accepter</button>
+    <button id="reject-cookies" class="btn-cookie secondary">Refuser</button>
+    <a href="#" id="open-cookies" style="margin-left:8px; font-size:13px; color:#3D6B35; text-decoration:none;">En savoir plus</a>
+  </div>
+</div>
+
+<!-- Modals & scripts -->
+<script>
+  // Burger
+  const burger = document.getElementById('burger');
+  const navLinks = document.querySelector('.nav-links');
+  burger && burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+  // Smooth scroll for anchors
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+        if (navLinks && navLinks.classList.contains('open')) navLinks.classList.remove('open');
+      }
+    });
+  });
+
+  // Form anti-spam
+  document.querySelector(".contact-form").addEventListener("submit", function(e){
+    if(document.querySelector("input[name='website']").value !== ""){
+      e.preventDefault();
+      alert("Spam détecté.");
+    }
+  });
+
+  // Modal logic: open by data-modal attribute
+  document.querySelectorAll('.open-modal').forEach(link => {
+    link.addEventListener('click', function(e){
+      e.preventDefault();
+      const key = this.dataset.modal;
+      const modal = document.getElementById('modal-' + key);
+      if(modal) {
+        modal.style.display = 'block';
+        modal.setAttribute('aria-hidden','false');
+        // trap focus could be added here for accessibility
+      }
+    });
+  });
+
+  // Close modals with X
+  document.querySelectorAll('.modal .close').forEach(btn => {
+    btn.addEventListener('click', function(){
+      const modal = this.closest('.modal');
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden','true');
+    });
+  });
+
+  // Close modals by clicking outside the .modal-content
+  window.addEventListener('click', function(e){
+    if(e.target.classList.contains('modal')){
+      e.target.style.display = 'none';
+      e.target.setAttribute('aria-hidden','true');
+    }
+  });
+
+  // Close modals on Escape
+  window.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.modal').forEach(m => {
+        if(m.style.display === 'block') { m.style.display = 'none'; m.setAttribute('aria-hidden','true'); }
+      });
+    }
+  });
+
+  // Cookie banner: store choice in localStorage
+  (function(){
+    const key = 'cdbg_cookies_choice';
+    const banner = document.getElementById('cookie-banner');
+    const openCookies = document.getElementById('open-cookies');
+    if(!localStorage.getItem(key)){
+      banner.style.display = 'flex';
+    }
+    document.getElementById('accept-cookies').addEventListener('click', function(){
+      localStorage.setItem(key,'accepted');
+      banner.remove();
+      // if you add analytics, load it here
+    });
+    document.getElementById('reject-cookies').addEventListener('click', function(){
+      localStorage.setItem(key,'rejected');
+      banner.remove();
+    });
+    openCookies.addEventListener('click', function(e){
+      e.preventDefault();
+      // open the cookies modal
+      const modal = document.getElementById('modal-cookies');
+      modal.style.display = 'block';
+      modal.setAttribute('aria-hidden','false');
+      banner.remove();
+    });
+  })();
+</script>
+
+</body>
+</html>
