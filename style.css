@@ -94,6 +94,10 @@ body {
   border-radius: 20px;
 }
 
+.hero h1, .hero h2, section h2, .card h3, .ambition-title, .learn-title, .footer-col h4 {
+  font-weight: 300;
+}
+
 .hero h1 { font-size: 40px; margin-bottom: 20px; line-height: 1.4; }
 .hero h2 { font-size: 26px; margin-bottom: 20px; color: #ffffff; }
 .hero p { margin-bottom: 30px; font-size: 18px; }
@@ -114,7 +118,7 @@ body {
    ======================== */
 section { padding: 80px 20px; scroll-margin-top: 120px; }
 section h2 { font-size: 28px; margin-bottom: 20px; color: #3D6B35; }
-section .subtitle { font-size: 18px; margin-bottom: 40px; color: #666; }
+section .subtitle { font-size: 18px; margin-bottom: 40px; color: #666; font-weight: 300; }
 
 /* Bitam */
 .bitam-content {
@@ -136,12 +140,12 @@ section .subtitle { font-size: 18px; margin-bottom: 40px; color: #666; }
 .cards { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
 .card { background: #fff; padding: 20px; border-radius: 15px; width: 280px; box-shadow: 0 6px 12px rgba(0,0,0,0.1); transition: transform 0.3s ease; text-align: center; }
 .card:hover { transform: translateY(-10px); }
-.card h3 { color: #A0522D; margin: 15px 0; }
+.card h3 { color: #A0522D; margin: 15px 0; font-weight: 300; }
 .card .icon { width: 80px; height: 80px; margin: 0 auto 15px; }
 .card .icon img { width: 56px; height: 56px; }
 
 /* Ambition */
-.ambition-title { text-align: center; color: #3D6B35; margin-bottom: 20px; }
+.ambition-title { text-align: center; color: #3D6B35; margin-bottom: 20px; font-weight: 300; }
 .ambition-box { background: #3D6B35; color: #fff; border-radius: 12px; padding: 30px 20px; text-align: center; width: 100%; max-width: 800px; margin: auto; }
 
 /* Gallery */
@@ -175,7 +179,7 @@ section .subtitle { font-size: 18px; margin-bottom: 40px; color: #666; }
 footer { background: #3D6B35; color: white; padding: 40px 20px; }
 .footer-container { display: flex; justify-content: flex-start; flex-wrap: wrap; gap: 40px; }
 .footer-col { flex: 1; min-width: 220px; text-align: left; }
-.footer-col h4 { font-weight: 400; margin-bottom: 10px; }
+.footer-col h4 { font-weight: 300; margin-bottom: 10px; }
 .footer-col p, .footer-col ul { font-size: 14px; font-weight: 300; line-height: 1.4; }
 .footer-col ul { list-style-position: inside; padding-left: 0; }
 .footer-col li { margin-bottom: 6px; }
@@ -188,7 +192,7 @@ footer { background: #3D6B35; color: white; padding: 40px 20px; }
    ======================== */
 .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background: rgba(0,0,0,0.6); }
 .modal-content { background: #fff; margin: 10% auto; padding: 20px; border-radius: 12px; width: 90%; max-width: 700px; position: relative; }
-.modal-content h2 { color: #3D6B35; margin-bottom: 20px; }
+.modal-content h2 { color: #3D6B35; margin-bottom: 20px; font-weight: 300; }
 .modal-content p { margin-bottom: 15px; }
 .modal .close { position: absolute; top: 10px; right: 15px; color: #333; font-size: 28px; font-weight: bold; cursor: pointer; }
 .modal .close:hover { color: #3D6B35; }
@@ -202,4 +206,5 @@ footer { background: #3D6B35; color: white; padding: 40px 20px; }
   .contact-info, .contact-form { width: 100%; text-align: center; }
   .hero-overlay { width: 92%; padding: 18px; margin: 0 auto; }
   .hero h1 { font-size: 22px; line-height: 1.25; margin-bottom: 8px; }
-  .hero h2 { font-size: 18px; margin-bottom: 10px;
+  .hero h2 { font-size: 18px; margin-bottom: 10px; }
+}
