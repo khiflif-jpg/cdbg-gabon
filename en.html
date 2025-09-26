@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#3D6B35"/>
+
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -24,18 +26,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="google-site-verification" content="FEBQeG1IDewx3f75y0Qnc_TxT38uutnoooN1dTw5IE8" />
 <link rel="alternate" hreflang="fr" href="https://tonsite.com/index.html">
 <link rel="alternate" hreflang="en" href="https://tonsite.com/en.html">
+
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet" media="all">
+
+<!-- Open Graph -->
 <meta property="og:title" content="Compagnie Durable du Bois in Gabon – Responsible Forestry">
 <meta property="og:description" content="Sustainable forestry operations, sawing, and logistics in Gabon.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://tonsite.com/en.html">
 <meta property="og:image" content="https://tonsite.com/logo.webp">
+
+<!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Compagnie Durable du Bois in Gabon – Responsible Forestry">
 <meta name="twitter:description" content="Sustainable forestry operations, sawing, and logistics in Gabon.">
 <meta name="twitter:image" content="https://tonsite.com/logo.webp">
+
 <title>CDBG – Responsible Forestry in Gabon</title>
+<link rel="preload" href="style.css" as="style"/>
 <link href="style.css" rel="stylesheet"/>
 <link href="logo.png" rel="icon" type="image/png"/>
 </head>
@@ -48,10 +59,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- Header -->
 <header class="hero" id="hero">
 <nav class="navbar">
-<div class="logo"><img alt="CDBG Logo" loading="lazy" src="logo.webp"/></div>
+<div class="logo"><img alt="CDBG Logo" src="logo.webp" width="80" height="80"/></div>
 <div class="nav-flags">
-<a href="index.html"><img alt="Français" height="32" src="fr.png" width="32"/></a>
-<a href="en.html"><img alt="English" height="32" src="en.png" width="32"/></a>
+<a href="index.html"><img alt="Français" src="fr.png" width="32" height="32" loading="lazy"/></a>
+<a href="en.html"><img alt="English" src="en.png" width="32" height="32" loading="lazy"/></a>
 </div>
 <ul class="nav-links">
 <li><a href="#bitam">Bitam</a></li>
@@ -332,13 +343,11 @@ Mastering the full value chain of Gabonese wood, from the forest to internationa
 </div>
 
 <!-- Scripts -->
-<script>
-// Burger menu transparent
+<script defer>
 const burger = document.getElementById('burger');
 const navLinks = document.querySelector('.nav-links');
 burger && burger.addEventListener('click', () => navLinks.classList.toggle('open'));
 
-// Smooth scroll for anchors
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     const target = document.querySelector(this.getAttribute('href'));
@@ -350,7 +359,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// Modals
 const openModalButtons = document.querySelectorAll('.open-modal');
 const modals = document.querySelectorAll('.modal');
 const closeModalButtons = document.querySelectorAll('.modal .close');
@@ -370,13 +378,11 @@ closeModalButtons.forEach(btn => {
   });
 });
 
-// Close modals when clicking outside
 window.addEventListener('click', e => {
   modals.forEach(modal => {
     if (e.target === modal) modal.style.display = 'none';
   });
 });
 </script>
-
 </body>
 </html>
