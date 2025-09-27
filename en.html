@@ -284,6 +284,54 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a href="actualites-en.html" class="learn-card btn btn-primary">See all news</a>
   </div>
 </section>
+
+  <script>
+  async function loadForestNewsEN() {
+    const container = document.getElementById("news-en");
+    if (!container) return;
+
+    try {
+      const rssUrl = "https://www.cdbg-gabon.com/actualites.xml"; // English RSS feed
+      const response = await fetch(rssUrl);
+      const text = await response.text();
+
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(text, "text/xml");
+      const items = xml.querySelectorAll("item");
+
+      for (let i = 0; i < Math.min(5, items.length); i++) {
+        const item = items[i];
+        const title = item.querySelector("title")?.textContent || "No title";
+        const link = item.querySelector("link")?.textContent || "#";
+        const date = item.querySelector("pubDate")?.textContent || "";
+        const description = item.querySelector("description")?.textContent || "";
+        const imageUrl = item.querySelector("enclosure")?.getAttribute("url") || "default-image.jpg"; // Default image if not found
+
+        const card = document.createElement("a");
+        card.className = "actus-card";
+        card.href = link;
+        card.target = "_blank";
+
+        card.innerHTML = `
+          <img src="${imageUrl}" alt="${title}">
+          <div class="actus-card-content">
+            <h3>${title}</h3>
+            <p class="date">${new Date(date).toLocaleDateString("en-GB")}</p>
+            <p class="excerpt">${description.substring(0, 120)}...</p>
+            <p class="source">Source: ${item.querySelector("source") ? item.querySelector("source").textContent : "Unknown"}</p>
+          </div>
+        `;
+        container.appendChild(card);
+      }
+    } catch (error) {
+      console.error("Error loading English news:", error);
+    }
+  }
+
+  // Appel de la fonction pour charger les articles en anglais
+  document.addEventListener("DOMContentLoaded", loadForestNewsEN);
+</script>
+
 <!-- Contact -->
 <section class="contact fade-in" id="contact">
   <h2>Contact</h2>
