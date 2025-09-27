@@ -1,10 +1,9 @@
-async function loadForestNewsEN() {
-    const container = document.getElementById("actus-cards-en");
+async function loadForestNewsFR() {
+    const container = document.getElementById("actus-cards-fr"); // Assurez-vous que l'ID du conteneur est correct
     if (!container) return;
 
     try {
-        console.log("Chargement du flux RSS...");
-        const rssUrl = "https://www.cdbg-gabon.com/actualites.xml"; // Flux RSS avec le bon fichier
+        const rssUrl = "https://www.cdbg-gabon.com/actualites.xml"; // Flux RSS en français
         const response = await fetch(rssUrl);
         if (!response.ok) {
             console.error("Erreur lors du chargement du flux RSS");
@@ -18,64 +17,38 @@ async function loadForestNewsEN() {
 
         if (items.length === 0) {
             console.log("Aucun article trouvé.");
-            container.innerHTML = "<p>No articles available at the moment.</p>";
+            container.innerHTML = "<p>Aucun article disponible pour le moment.</p>";
             return;
         }
 
         for (let i = 0; i < Math.min(5, items.length); i++) {
             const item = items[i];
-            const title = item.querySelector("title")?.textContent || "No title";
+            const title = item.querySelector("title")?.textContent || "Pas de titre";
             const link = item.querySelector("link")?.textContent || "#";
             const date = item.querySelector("pubDate")?.textContent || "";
-            const source = item.querySelector("source")?.textContent || "Unknown source";
+            const source = item.querySelector("source")?.textContent || "Source inconnue";
             const description = item.querySelector("description")?.textContent || "";
             const image = item.querySelector("enclosure")?.getAttribute("url") || "foret.webp";
 
-            // Fonction de traduction avec l'API Deepl
-            const translate = async (text) => {
-                const apiKey = '198OD6Uy1QaRs2i9f'; // Votre clé API Deepl
-                const url = `https://api-free.deepl.com/v2/translate?auth_key=${apiKey}&text=${encodeURIComponent(text)}&target_lang=EN`;
-
-                try {
-                    const res = await fetch(url, { method: 'POST' });
-                    const data = await res.json();
-
-                    if (data.translations && data.translations[0]) {
-                        return data.translations[0].text; // Retourne la traduction en anglais
-                    } else {
-                        console.error("Erreur de traduction Deepl", data);
-                        return text; // Retourne le texte original si la traduction échoue
-                    }
-                } catch (error) {
-                    console.error("Erreur de connexion à l'API Deepl", error);
-                    return text; // Retourne le texte original si une erreur se produit
-                }
-            };
-
-            const translatedTitle = await translate(title);
-            const translatedDescription = await translate(description.substring(0, 120));
-
-            console.log("Article chargé:", translatedTitle);
-
             const card = document.createElement("a");
             card.className = "actus-card";
-            card.href = link && link !== "#" ? link : "#";
+            card.href = link && link !== "#" ? link : "#"; // Si le lien est invalide, on redirige vers la même page.
             card.target = "_blank";
 
             card.innerHTML = `
-                <img src="${image}" alt="${translatedTitle}">
+                <img src="${image}" alt="${title}">
                 <div class="actus-card-content">
-                    <h3>${translatedTitle}</h3>
-                    <p>${translatedDescription}...</p>
-                    <p class="source">${new Date(date).toLocaleDateString("en-GB")} — ${source}</p>
+                    <h3>${title}</h3>
+                    <p>${description.substring(0, 120)}...</p>
+                    <p class="source">${new Date(date).toLocaleDateString("fr-FR")} — ${source}</p>
                 </div>
             `;
 
             container.appendChild(card);
         }
     } catch (error) {
-        console.error("Error loading English news:", error);
+        console.error("Erreur lors du chargement des actualités françaises :", error);
     }
 }
 
-document.addEventListener("DOMContentLoaded", loadForestNewsEN);
+document.addEventListener("DOMContentLoaded", loadForestNewsFR);
