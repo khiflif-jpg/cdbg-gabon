@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actualités forestières – CDBG</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="navbar">
+<div class="logo"><a href="index.html"><img src="logo.webp" alt="CDBG"></a></div>
+<ul class="nav-links">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="#about">À propos</a></li>
+<li><a href="#contact">Contact</a></li>
+<li><a href="actualites.html">Actualités</a></li>
+</ul>
+</header>
+
+<main class="news-page">
+<h1>Actualités forestières</h1>
+<p class="subtitle">Les dernières informations sur les forêts du Gabon et d’Afrique centrale</p>
+<div id="news-list" class="news-grid"></div>
+<button id="load-more-btn" class="btn">Voir plus</button>
+</main>
+
+<footer>
+<div class="footer-container">
+<div class="footer-col">
+<h4>CDBG</h4>
+<p>Centre de Documentation sur les Forêts du Gabon</p>
+</div>
+</div>
+<div class="footer-bottom">© 2025 CDBG – Tous droits réservés</div>
+</footer>
+
+<script src="news.js"></script>
+<script>
+loadNews({
+xmlUrl: "actualites.xml",
+containerId: "news-list",
+loadMoreBtnId: "load-more-btn",
+batch: 10,
+lang: "fr"
+});
+</script>
+</body>
+</html>
