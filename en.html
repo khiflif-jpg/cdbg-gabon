@@ -262,14 +262,27 @@ Mastering the full value chain of Gabonese wood, from the forest to internationa
   </div>
 </section>
 
-<!-- Scripts -->
+<!-- Forest News Section -->
+<section class="news-section fade-in" id="forest-news">
+  <h2>Forest News</h2>
+  <div class="news-container" id="news-en">
+    <!-- The 5 latest articles will be injected here -->
+  </div>
+  
+  <!-- "See all news" link styled as a card -->
+  <div class="more-link">
+    <a href="actualites-en.html" class="learn-card btn btn-primary">See all news</a>
+  </div>
+</section>
+
+<!-- Script for loading and translating articles -->
 <script>
   async function loadForestNewsEN() {
     const container = document.getElementById("news-en");
     if (!container) return;
 
     try {
-      const rssUrl = "https://www.cdbg-gabon.com/flux-fusionne-en.xml";
+      const rssUrl = "https://www.cdbg-gabon.com/flux-fusionne-en.xml"; // English RSS feed
       const response = await fetch(rssUrl);
       const text = await response.text();
 
@@ -282,39 +295,53 @@ Mastering the full value chain of Gabonese wood, from the forest to internationa
         const title = item.querySelector("title")?.textContent || "No title";
         const link = item.querySelector("link")?.textContent || "#";
         const date = item.querySelector("pubDate")?.textContent || "";
-        const source = item.querySelector("source")?.textContent || "Unknown source";
         const description = item.querySelector("description")?.textContent || "";
-        const image = item.querySelector("enclosure")?.getAttribute("url") || "foret.webp";
+        const imageUrl = item.querySelector("enclosure")?.getAttribute("url") || "default-image.jpg"; // Default image if not found
 
-        const translate = async (text) => {
-          const res = await fetch(
-            "https://translate.googleapis.com/translate_a/single?client=gtx&sl=fr&tl=en&dt=t&q=" + encodeURIComponent(text)
-          );
-          const data = await res.json();
-          return data[0][0][0];
-        };
+        // Translate the title and description using DeepL
+        const translatedTitle = await translateText(title);
+        const translatedDescription = await translateText(description.substring(0, 120)); // Short description
 
-        const translatedTitle = await translate(title);
-        const translatedDescription = await translate(description.substring(0, 120));
-
+        // Create article card with translated content
         const card = document.createElement("a");
         card.className = "actus-card";
         card.href = link;
         card.target = "_blank";
 
         card.innerHTML = `
-        <img src="${image}" alt="${translatedTitle}">
-        <div class="actus-card-content">
-          <h3>${translatedTitle}</h3>
-          <p>${translatedDescription}...</p>
-          <p class="source">${new Date(date).toLocaleDateString("en-GB")} — ${source}</p>
-        </div>
+          <img src="${imageUrl}" alt="${translatedTitle}">
+          <div class="actus-card-content">
+            <h3>${translatedTitle}</h3>
+            <p class="date">${new Date(date).toLocaleDateString("en-GB")}</p>
+            <p class="excerpt">${translatedDescription}...</p>
+            <p class="source">Source: ${item.querySelector("source") ? item.querySelector("source").textContent : "Unknown"}</p>
+          </div>
         `;
-
         container.appendChild(card);
       }
     } catch (error) {
       console.error("Error loading English news:", error);
+    }
+  }
+
+  // DeepL translation function
+  async function translateText(text) {
+    const apiKey = 'YOUR_API_KEY';  // Replace with your DeepL API key
+    const url = `https://api-free.deepl.com/v2/translate?auth_key=${apiKey}&text=${encodeURIComponent(text)}&target_lang=EN`;
+
+    try {
+      const response = await fetch(url, { method: 'POST' });
+      const data = await response.json();
+
+      if (data.translations && data.translations[0]) {
+        return data.translations[0].text;  // Return translated text
+      } else {
+        console.error("Translation error", data);
+        return null;
+      }
+    } catch (error) {
+      console.error("Connection error with DeepL API", error);
+      return null;
     }
   }
 
