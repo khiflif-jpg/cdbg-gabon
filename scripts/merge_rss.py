@@ -1,37 +1,36 @@
 import feedparser
-import datetime
 import json
+from datetime import datetime
 
 # Liste des flux RSS à fusionner
-rss_feeds = [
+RSS_FEEDS = [
 "https://www.france24.com/fr/rss",
 "https://www.rfi.fr/fr/rss"
 ]
 
-def parse_date(entry):
-try:
-return datetime.datetime(*entry.published_parsed[:6])
-except:
-return datetime.datetime.min
+def fusionner_flux():
+articles = []
 
-all_entries = []
-
-# Parcours des flux RSS
-for url in rss_feeds:
+for url in RSS_FEEDS:
 feed = feedparser.parse(url)
 for entry in feed.entries:
-all_entries.append({
-"title": entry.get("title", "Sans titre"),
-"link": entry.get("link", ""),
-"published": str(parse_date(entry)),
-"source": feed.feed.get("title", url)
+articles.append({
+"titre": entry.get("title", ""),
+"lien": entry.get("link", ""),
+"date": entry.get("published", ""),
+"source": feed.feed.get("title", "")
 })
 
-# Trier par date décroissante
-all_entries.sort(key=lambda x: x["published"], reverse=True)
+# Trier les articles par date si possible
+articles.sort(key=lambda x: x["date"], reverse=True)
 
 # Sauvegarder en JSON
 with open("merged_feed.json", "w", encoding="utf-8") as f:
-json.dump(all_entries, f, ensure_ascii=False, indent=2)
+json.dump({
+"derniere_mise_a_jour": datetime.utcnow().isoformat() + "Z",
+"articles": articles
+}, f, ensure_ascii=False, indent=2)
 
-print("✅ Flux RSS fusionnés → merged_feed.json")
+if __name__ == "__main__":
+fusionner_flux()
+print("✅ Fichier merged_feed.json généré avec succès")
