@@ -1,10 +1,9 @@
 async function loadForestNewsEN() {
-    const container = document.getElementById("actus-cards-en"); // Assurez-vous que l'ID du conteneur est correct
+    const container = document.getElementById("news-en");
     if (!container) return;
 
     try {
-        console.log("Chargement du flux RSS...");
-        const rssUrl = "https://www.cdbg-gabon.com/actualites.xml"; // Flux RSS en français
+        const rssUrl = "https://www.cdbg-gabon.com/actualites.xml"; // Flux RSS en anglais
         const response = await fetch(rssUrl);
         if (!response.ok) {
             console.error("Erreur lors du chargement du flux RSS");
@@ -22,22 +21,6 @@ async function loadForestNewsEN() {
             return;
         }
 
-        // Traduction via DeepL
-        const translate = async (text) => {
-            const apiKey = '198OD6Uy1QaRs2i9f'; // Votre clé API DeepL
-            const url = `https://api-free.deepl.com/v2/translate?auth_key=${apiKey}&text=${encodeURIComponent(text)}&target_lang=EN`;
-
-            try {
-                const res = await fetch(url, { method: 'POST' });
-                const data = await res.json();
-                return data.translations[0].text; // Retourne la traduction
-            } catch (error) {
-                console.error("Erreur de traduction DeepL", error);
-                return text; // Retourne le texte original en cas d'erreur
-            }
-        };
-
-        // Chargement et traduction des articles
         for (let i = 0; i < Math.min(5, items.length); i++) {
             const item = items[i];
             const title = item.querySelector("title")?.textContent || "No title";
@@ -47,21 +30,16 @@ async function loadForestNewsEN() {
             const description = item.querySelector("description")?.textContent || "";
             const image = item.querySelector("enclosure")?.getAttribute("url") || "foret.webp";
 
-            const translatedTitle = await translate(title);
-            const translatedDescription = await translate(description.substring(0, 120));
-
-            console.log("Article chargé:", translatedTitle);
-
             const card = document.createElement("a");
             card.className = "actus-card";
             card.href = link && link !== "#" ? link : "#";
             card.target = "_blank";
 
             card.innerHTML = `
-                <img src="${image}" alt="${translatedTitle}">
+                <img src="${image}" alt="${title}">
                 <div class="actus-card-content">
-                    <h3>${translatedTitle}</h3>
-                    <p>${translatedDescription}...</p>
+                    <h3>${title}</h3>
+                    <p>${description.substring(0, 120)}...</p>
                     <p class="source">${new Date(date).toLocaleDateString("en-GB")} — ${source}</p>
                 </div>
             `;
