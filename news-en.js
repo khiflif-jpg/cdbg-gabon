@@ -3,7 +3,7 @@ async function loadForestNewsEN() {
     if (!container) return;
 
     try {
-        const rssUrl = "https://www.cdbg-gabon.com/flux-fusionne.xml"; // Le flux RSS français
+        const rssUrl = "https://www.cdbg-gabon.com/actualites.xml"; // Le flux RSS français actualisé
         const response = await fetch(rssUrl);
         if (!response.ok) {
             console.error("Erreur lors du chargement du flux RSS");
@@ -26,7 +26,7 @@ async function loadForestNewsEN() {
 
             // Traduction FR -> EN via l'API DeepL
             const translate = async (text) => {
-                const apiKey = '198OD6Uy1QaRs2i9f'; // Votre clé API DeepL
+                const apiKey = '198OD6Uy1QaRs2i9f'; // Votre clé API Deepl
                 const url = `https://api-free.deepl.com/v2/translate?auth_key=${apiKey}&text=${encodeURIComponent(text)}&target_lang=EN`;
 
                 try {
