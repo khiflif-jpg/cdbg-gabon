@@ -3,10 +3,11 @@ import json
 from datetime import datetime
 from feedgen.feed import FeedGenerator
 
-# Liste des flux RSS à fusionner (modifie ici avec tes sources)
+# Liste des flux RSS à fusionner (modifiée avec les bonnes sources)
 RSS_FEEDS = [
-    "https://www.france24.com/fr/rss",
-    "https://www.rfi.fr/fr/rss"
+    "https://www.atibt.org/en/news/feed",
+    "https://forestsnews.cifor.org/feed",
+    "https://comifac.org/feed/"
 ]
 
 def fusionner_flux():
@@ -39,7 +40,7 @@ def fusionner_flux():
     fg.description("Flux RSS fusionné CDBG")
     fg.language("fr")
 
-    for article in articles[:20]:  # <= on limite à 20 articles
+    for article in articles[:20]:  # Limité à 20 articles
         fe = fg.add_entry()
         fe.title(article["titre"])
         fe.link(href=article["lien"])
