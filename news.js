@@ -3,7 +3,8 @@ async function loadForestNewsEN() {
     if (!container) return;
 
     try {
-        const rssUrl = "https://www.cdbg.com/flux-fusionne.xml";
+        console.log("Chargement du flux RSS...");
+        const rssUrl = "https://www.cdbg-gabon.com/flux-fusionne.xml"; // Flux RSS avec votre domaine
         const response = await fetch(rssUrl);
         if (!response.ok) {
             console.error("Erreur lors du chargement du flux RSS");
@@ -15,6 +16,12 @@ async function loadForestNewsEN() {
         const xml = parser.parseFromString(text, "text/xml");
         const items = xml.querySelectorAll("item");
 
+        if (items.length === 0) {
+            console.log("Aucun article trouvé.");
+            container.innerHTML = "<p>No articles available at the moment.</p>";
+            return;
+        }
+
         for (let i = 0; i < Math.min(5, items.length); i++) {
             const item = items[i];
             const title = item.querySelector("title")?.textContent || "No title";
@@ -24,7 +31,6 @@ async function loadForestNewsEN() {
             const description = item.querySelector("description")?.textContent || "";
             const image = item.querySelector("enclosure")?.getAttribute("url") || "foret.webp";
 
-            // Traduction FR -> EN via Google Translate API
             const translate = async (text) => {
                 const res = await fetch(
                     "https://translate.googleapis.com/translate_a/single?client=gtx&sl=fr&tl=en&dt=t&q=" + encodeURIComponent(text)
@@ -36,10 +42,11 @@ async function loadForestNewsEN() {
             const translatedTitle = await translate(title);
             const translatedDescription = await translate(description.substring(0, 120));
 
-            // Création de la carte
+            console.log("Article chargé:", translatedTitle);
+
             const card = document.createElement("a");
             card.className = "actus-card";
-            card.href = link && link !== "#" ? link : "#"; // Si le lien est invalide, on redirige vers la même page.
+            card.href = link && link !== "#" ? link : "#";
             card.target = "_blank";
 
             card.innerHTML = `
