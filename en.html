@@ -16,12 +16,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DCRFLHR1TQ"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-DCRFLHR1TQ');
+  loadNews({
+    xmlUrl: "https://www.cdbg-gabon.com/actualites.xml",  // Flux RSS en anglais corrigé
+    containerId: "news-en",
+    loadMoreBtnId: null,
+    batch: 5,
+    lang: "en"
+  });
 </script>
-
 <!-- Inserted meta description and alternate links -->
 <meta name="description" content="CDBG – Sustainable forestry in Gabon. Responsible forest management, sawing, and logistics.">
 <meta name="google-site-verification" content="FEBQeG1IDewx3f75y0Qnc_TxT38uutnoooN1dTw5IE8" />
