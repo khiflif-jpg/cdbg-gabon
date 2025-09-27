@@ -2,37 +2,42 @@ name: Build RSS Feed
 
 on:
   schedule:
-    - cron: "0 */6 * * *"   # Toutes les 6 heures
-  workflow_dispatch:       # Lancement manuel depuis l'interface GitHub
+    - cron: "0 */6 * * *"  # Toutes les 6 heures
+  workflow_dispatch:        # Lancement manuel depuis l'interface GitHub
 
 permissions:
-  contents: write          # Nécessaire pour pousser les changements
+  contents: write  # Nécessaire pour pousser les changements
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Récupérer le code du dépôt
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # 2. Installer Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
+      # 3. Installer les dépendances nécessaires
       - name: Install dependencies
         run: |
           pip install feedparser feedgen pytz requests
 
+      # 4. Exécuter ton script qui fusionne les flux RSS
       - name: Run script to merge feeds
         run: |
           python scripts/merge_rss.py
 
+      # 5. Commit et push du JSON généré
       - name: Commit and push changes
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add actualites.xml
-          git commit -m "Mise à jour du flux RSS fusionné" || echo "Aucun changement à committer"
+          git add merged_feed.json
+          git commit -m "Mise à jour du flux RSS fusionné (JSON)" || echo "Aucun changement à committer"
           git push
