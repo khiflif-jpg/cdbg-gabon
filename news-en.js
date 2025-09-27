@@ -1,9 +1,10 @@
 async function loadForestNewsEN() {
-    const container = document.getElementById("actus-cards-en");
+    const container = document.getElementById("actus-cards-en"); // Assurez-vous que l'ID du conteneur est correct
     if (!container) return;
 
     try {
-        const rssUrl = "https://www.cdbg-gabon.com/actualites.xml"; // Le fichier RSS actualites.xml
+        console.log("Chargement du flux RSS...");
+        const rssUrl = "https://www.cdbg-gabon.com/actualites.xml"; // Flux RSS en français
         const response = await fetch(rssUrl);
         if (!response.ok) {
             console.error("Erreur lors du chargement du flux RSS");
@@ -15,6 +16,28 @@ async function loadForestNewsEN() {
         const xml = parser.parseFromString(text, "text/xml");
         const items = xml.querySelectorAll("item");
 
+        if (items.length === 0) {
+            console.log("Aucun article trouvé.");
+            container.innerHTML = "<p>No articles available at the moment.</p>";
+            return;
+        }
+
+        // Traduction via DeepL
+        const translate = async (text) => {
+            const apiKey = '198OD6Uy1QaRs2i9f'; // Votre clé API DeepL
+            const url = `https://api-free.deepl.com/v2/translate?auth_key=${apiKey}&text=${encodeURIComponent(text)}&target_lang=EN`;
+
+            try {
+                const res = await fetch(url, { method: 'POST' });
+                const data = await res.json();
+                return data.translations[0].text; // Retourne la traduction
+            } catch (error) {
+                console.error("Erreur de traduction DeepL", error);
+                return text; // Retourne le texte original en cas d'erreur
+            }
+        };
+
+        // Chargement et traduction des articles
         for (let i = 0; i < Math.min(5, items.length); i++) {
             const item = items[i];
             const title = item.querySelector("title")?.textContent || "No title";
@@ -24,28 +47,14 @@ async function loadForestNewsEN() {
             const description = item.querySelector("description")?.textContent || "";
             const image = item.querySelector("enclosure")?.getAttribute("url") || "foret.webp";
 
-            // Traduction via l'API DeepL
-            const translate = async (text) => {
-                const apiKey = '198OD6Uy1QaRs2i9f'; // Votre clé API Deepl
-                const url = `https://api-free.deepl.com/v2/translate?auth_key=${apiKey}&text=${encodeURIComponent(text)}&target_lang=EN`;
-
-                try {
-                    const res = await fetch(url, { method: 'POST' });
-                    const data = await res.json();
-                    return data.translations[0].text; // Retourne la traduction
-                } catch (error) {
-                    console.error("Erreur de traduction DeepL", error);
-                    return text; // Retourne le texte original en cas d'erreur
-                }
-            };
-
             const translatedTitle = await translate(title);
-            const translatedDescription = await translate(description.substring(0, 120)); // Résumé de 120 caractères
+            const translatedDescription = await translate(description.substring(0, 120));
 
-            // Création de la carte d'article
+            console.log("Article chargé:", translatedTitle);
+
             const card = document.createElement("a");
             card.className = "actus-card";
-            card.href = link && link !== "#" ? link : "#"; // Si le lien est invalide, on redirige vers la même page.
+            card.href = link && link !== "#" ? link : "#";
             card.target = "_blank";
 
             card.innerHTML = `
