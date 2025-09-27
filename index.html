@@ -247,70 +247,18 @@ Maîtriser l'ensemble de la chaîne de valeur du bois gabonais, de la forêt à 
     </a>
   </div>
 </section>
-  
-<!-- Actualités forestières -->
-<section class="news-section fade-in" id="actualites">
-  <h2>Actualités forestières</h2>
+ <!-- Forest News Section -->
+<section class="news-section fade-in" id="forest-news">
+  <h2>Actualités Forestières</h2>
   <div class="news-container" id="news-fr">
     <!-- Les 5 derniers articles seront injectés ici -->
   </div>
+
+  <!-- "Voir toutes les actualités" lien stylisé comme une carte -->
   <div class="more-link">
     <a href="actualites.html" class="learn-card btn btn-primary">Voir toutes les actualités</a>
   </div>
-</section>
-
-<!-- Script pour charger les articles -->
-<script>
-  async function loadForestNewsFR() {
-    const container = document.getElementById("news-fr");
-    if (!container) return;
-
-    try {
-      const rssUrl = "https://www.cdbg-gabon.com/flux-fusionne-fr.xml"; // Flux RSS français
-      const response = await fetch(rssUrl);
-      const text = await response.text();
-
-      const parser = new DOMParser();
-      const xml = parser.parseFromString(text, "text/xml");
-      const items = xml.querySelectorAll("item");
-
-      for (let i = 0; i < Math.min(5, items.length); i++) {
-        const item = items[i];
-        const title = item.querySelector("title")?.textContent || "Pas de titre";
-        const link = item.querySelector("link")?.textContent || "#";
-        const date = item.querySelector("pubDate")?.textContent || "";
-        const source = item.querySelector("source")?.textContent || "Source inconnue";
-        const description = item.querySelector("description")?.textContent || "";
-        const image = item.querySelector("enclosure")?.getAttribute("url") || "foret.webp";
-
-        const card = document.createElement("a");
-        card.className = "actus-card";
-        card.href = link;
-        card.target = "_blank";
-
-        card.innerHTML = `
-        <img src="${image}" alt="${title}">
-        <div class="actus-card-content">
-          <h3>${title}</h3>
-          <p>${description.substring(0, 120)}...</p>
-          <p class="source">${new Date(date).toLocaleDateString("fr-FR")} — ${source}</p>
-        </div>
-        `;
-
-        container.appendChild(card);
-      }
-    } catch (error) {
-      console.error("Erreur lors du chargement des actualités françaises :", error);
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", loadForestNewsFR);
-</script>
-
-<!-- Insert RSS script for French news -->
-<script>
-  loadForestNewsFR();  // Appel correct à la fonction pour charger les articles en français
-</script>
+</section> 
 
 <!-- Contact -->
 <section class="contact fade-in" id="contact">
