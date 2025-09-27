@@ -36,7 +36,7 @@ def fusionner_flux():
     # --- Sauvegarde RSS XML ---
     fg = FeedGenerator()
     fg.title("Actualités CDBG")
-    fg.link(href="https://www.cdbg.com/", rel="alternate")
+    fg.link(href="https://www.cdbg-gabon.com/", rel="alternate")
     fg.description("Flux RSS fusionné CDBG")
     fg.language("fr")
 
