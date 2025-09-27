@@ -1,3 +1,22 @@
+async function translateText(text) {
+  const apiKey = '310347c5-d45a-492a-bfae-65f6bd19c98f:fx';  // Ta clé API Deepl
+  const url = `https://api-free.deepl.com/v2/translate?auth_key=${apiKey}&text=${encodeURIComponent(text)}&target_lang=EN`;
+
+  try {
+    const response = await fetch(url, { method: 'POST' });
+    const data = await response.json();
+    if (data.translations && data.translations[0]) {
+      return data.translations[0].text;  // Retourne le texte traduit
+    } else {
+      console.error("Erreur de traduction", data);
+      return text;
+    }
+  } catch (error) {
+    console.error("Erreur avec l'API Deepl", error);
+    return text;  // Retourne le texte original en cas d'erreur
+  }
+}
+
 async function loadForestNewsEN() {
     const container = document.getElementById("news-en");
     if (!container) return;
@@ -23,11 +42,11 @@ async function loadForestNewsEN() {
 
         for (let i = 0; i < Math.min(5, items.length); i++) {
             const item = items[i];
-            const title = item.querySelector("title")?.textContent || "No title";
+            const title = await translateText(item.querySelector("title")?.textContent || "No title");
             const link = item.querySelector("link")?.textContent || "#";
             const date = item.querySelector("pubDate")?.textContent || "";
             const source = item.querySelector("source")?.textContent || "Unknown source";
-            const description = item.querySelector("description")?.textContent || "";
+            const description = await translateText(item.querySelector("description")?.textContent || "");
             const image = item.querySelector("enclosure")?.getAttribute("url") || "foret.webp";
 
             const card = document.createElement("a");
