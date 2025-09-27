@@ -3,7 +3,7 @@ async function loadForestNewsEN() {
     if (!container) return;
 
     try {
-        const rssUrl = "https://www.cdbg-gabon.com/actualites.xml"; // Le flux RSS français actualisé
+        const rssUrl = "https://www.cdbg-gabon.com/actualites.xml"; // Le fichier RSS actualites.xml
         const response = await fetch(rssUrl);
         if (!response.ok) {
             console.error("Erreur lors du chargement du flux RSS");
@@ -24,7 +24,7 @@ async function loadForestNewsEN() {
             const description = item.querySelector("description")?.textContent || "";
             const image = item.querySelector("enclosure")?.getAttribute("url") || "foret.webp";
 
-            // Traduction FR -> EN via l'API DeepL
+            // Traduction via l'API DeepL
             const translate = async (text) => {
                 const apiKey = '198OD6Uy1QaRs2i9f'; // Votre clé API Deepl
                 const url = `https://api-free.deepl.com/v2/translate?auth_key=${apiKey}&text=${encodeURIComponent(text)}&target_lang=EN`;
@@ -40,7 +40,7 @@ async function loadForestNewsEN() {
             };
 
             const translatedTitle = await translate(title);
-            const translatedDescription = await translate(description.substring(0, 120));
+            const translatedDescription = await translate(description.substring(0, 120)); // Résumé de 120 caractères
 
             // Création de la carte d'article
             const card = document.createElement("a");
