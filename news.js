@@ -1,52 +1,61 @@
-async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 5, lang = "fr" }) {
-const container = document.getElementById(containerId);
-const loadMoreBtn = document.getElementById(loadMoreBtnId);
+async function loadForestNewsEN() {
+    const container = document.getElementById("actus-cards-en");
+    if (!container) return;
 
-try {
-const res = await fetch(xmlUrl + "?t=" + Date.now()); // éviter cache
-if (!res.ok) throw new Error("Erreur réseau");
-const text = await res.text();
-const xml = new DOMParser().parseFromString(text, "application/xml");
-const items = Array.from(xml.querySelectorAll("item"));
+    try {
+        const rssUrl = "https://www.cdbg.com/flux-fusionne.xml";
+        const response = await fetch(rssUrl);
+        if (!response.ok) {
+            console.error("Erreur lors du chargement du flux RSS");
+            return;
+        }
+        const text = await response.text();
 
-let shown = 0;
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(text, "text/xml");
+        const items = xml.querySelectorAll("item");
 
-function extractImage(desc) {
-const match = desc.match(/<img[^>]+src=["']([^"']+)["']/i);
-return match ? match[1] : null;
+        for (let i = 0; i < Math.min(5, items.length); i++) {
+            const item = items[i];
+            const title = item.querySelector("title")?.textContent || "No title";
+            const link = item.querySelector("link")?.textContent || "#";
+            const date = item.querySelector("pubDate")?.textContent || "";
+            const source = item.querySelector("source")?.textContent || "Unknown source";
+            const description = item.querySelector("description")?.textContent || "";
+            const image = item.querySelector("enclosure")?.getAttribute("url") || "foret.webp";
+
+            // Traduction FR -> EN via Google Translate API
+            const translate = async (text) => {
+                const res = await fetch(
+                    "https://translate.googleapis.com/translate_a/single?client=gtx&sl=fr&tl=en&dt=t&q=" + encodeURIComponent(text)
+                );
+                const data = await res.json();
+                return data[0][0][0]; // Résultat traduit
+            };
+
+            const translatedTitle = await translate(title);
+            const translatedDescription = await translate(description.substring(0, 120));
+
+            // Création de la carte
+            const card = document.createElement("a");
+            card.className = "actus-card";
+            card.href = link && link !== "#" ? link : "#"; // Si le lien est invalide, on redirige vers la même page.
+            card.target = "_blank";
+
+            card.innerHTML = `
+                <img src="${image}" alt="${translatedTitle}">
+                <div class="actus-card-content">
+                    <h3>${translatedTitle}</h3>
+                    <p>${translatedDescription}...</p>
+                    <p class="source">${new Date(date).toLocaleDateString("en-GB")} — ${source}</p>
+                </div>
+            `;
+
+            container.appendChild(card);
+        }
+    } catch (error) {
+        console.error("Error loading English news:", error);
+    }
 }
 
-function renderNext() {
-const slice = items.slice(shown, shown + batch);
-
-slice.forEach(it => {
-const title = it.querySelector("title")?.textContent || "";
-const link = it.querySelector("link")?.textContent || "#";
-const date = it.querySelector("pubDate")?.textContent || "";
-const desc = it.querySelector("description")?.textContent || "";
-const sourceMatch = desc.match(/<em>Source: (.*?)<\/em>/i);
-const source = sourceMatch ? sourceMatch[1] : "Source inconnue";
-const imgUrl = extractImage(desc);
-
-const cleanDesc = desc
-.replace(/<[^>]*>/g, "") // enlever balises HTML
-.replace(/Source:.*/i, "")
-.trim();
-
-const card = document.createElement("article");
-card.className = "news-card";
-card.innerHTML = `
-${imgUrl ? `<div class="news-img"><img src="${imgUrl}" alt=""></div>` : ""}
-<div class="news-content">
-<h3><a href="${link}" target="_blank" rel="noopener">${title}</a></h3>
-<p class="date">${date ? new Date(date).toLocaleDateString() : ""}</p>
-<p class="excerpt">${cleanDesc}</p>
-<p class="source"><em>${source}</em></p>
-</div>
-`;
-container.appendChild(card);
-});
-
-shown += slice.length;
-if (shown >= items.length) loadMoreBtn.style.display = "none";
-}
+document.addEventListener("DOMContentLoaded", loadForestNewsEN);
