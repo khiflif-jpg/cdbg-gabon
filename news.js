@@ -1,27 +1,38 @@
 async function loadForestNewsFR() {
-    console.log("Chargement du flux RSS en français...");  // Ajoutez ici le message pour vérifier que la fonction est bien appelée
+    console.log("Chargement du flux RSS en français...");
 
     const container = document.getElementById("news-fr");  // Assurez-vous que l'ID du conteneur est correct
-    if (!container) return;
+    if (!container) {
+        console.error("Le conteneur pour les actualités n'a pas été trouvé.");
+        return;
+    }
 
     try {
         const rssUrl = "https://www.cdbg-gabon.com/actualites.xml"; // Flux RSS français
+        console.log("Tentative de récupération du flux RSS à l'URL:", rssUrl);
         const response = await fetch(rssUrl);
+
+        // Vérifier si la récupération du flux a réussi
         if (!response.ok) {
-            console.error("Erreur lors du chargement du flux RSS");
+            console.error("Erreur lors du chargement du flux RSS. Statut:", response.status);
             return;
         }
+        
         const text = await response.text();
+        console.log("Flux RSS récupéré:", text);
 
         const parser = new DOMParser();
         const xml = parser.parseFromString(text, "text/xml");
         const items = xml.querySelectorAll("item");
 
         if (items.length === 0) {
-            console.log("Aucun article trouvé.");
+            console.log("Aucun article trouvé dans le flux RSS.");
             container.innerHTML = "<p>Aucun article disponible pour le moment.</p>";
             return;
         }
+
+        // Afficher tous les articles récupérés pour voir si la structure est correcte
+        console.log("Articles récupérés:", items);
 
         for (let i = 0; i < Math.min(5, items.length); i++) {
             const item = items[i];
@@ -30,6 +41,8 @@ async function loadForestNewsFR() {
             const date = item.querySelector("pubDate")?.textContent || "";
             const description = item.querySelector("description")?.textContent || "";
             const image = item.querySelector("enclosure")?.getAttribute("url") || "default-image.jpg"; // Image par défaut
+
+            console.log("Article", i + 1, ":", title, date, link);
 
             // Créer une carte pour chaque article
             const card = document.createElement("a");
