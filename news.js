@@ -1,4 +1,6 @@
 async function loadForestNewsFR() {
+    console.log("Chargement du flux RSS en français...");  // Ajoutez ici le message pour vérifier que la fonction est bien appelée
+
     const container = document.getElementById("news-fr");  // Assurez-vous que l'ID du conteneur est correct
     if (!container) return;
 
