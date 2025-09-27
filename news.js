@@ -4,7 +4,7 @@ async function loadForestNewsEN() {
 
     try {
         console.log("Chargement du flux RSS...");
-        const rssUrl = "https://www.cdbg-gabon.com/flux-fusionne.xml"; // Flux RSS avec votre domaine
+        const rssUrl = "https://www.cdbg-gabon.com/actualites.xml"; // Flux RSS avec le bon fichier
         const response = await fetch(rssUrl);
         if (!response.ok) {
             console.error("Erreur lors du chargement du flux RSS");
@@ -31,12 +31,25 @@ async function loadForestNewsEN() {
             const description = item.querySelector("description")?.textContent || "";
             const image = item.querySelector("enclosure")?.getAttribute("url") || "foret.webp";
 
+            // Fonction de traduction avec l'API Deepl
             const translate = async (text) => {
-                const res = await fetch(
-                    "https://translate.googleapis.com/translate_a/single?client=gtx&sl=fr&tl=en&dt=t&q=" + encodeURIComponent(text)
-                );
-                const data = await res.json();
-                return data[0][0][0]; // Résultat traduit
+                const apiKey = '198OD6Uy1QaRs2i9f'; // Votre clé API Deepl
+                const url = `https://api-free.deepl.com/v2/translate?auth_key=${apiKey}&text=${encodeURIComponent(text)}&target_lang=EN`;
+
+                try {
+                    const res = await fetch(url, { method: 'POST' });
+                    const data = await res.json();
+
+                    if (data.translations && data.translations[0]) {
+                        return data.translations[0].text; // Retourne la traduction en anglais
+                    } else {
+                        console.error("Erreur de traduction Deepl", data);
+                        return text; // Retourne le texte original si la traduction échoue
+                    }
+                } catch (error) {
+                    console.error("Erreur de connexion à l'API Deepl", error);
+                    return text; // Retourne le texte original si une erreur se produit
+                }
             };
 
             const translatedTitle = await translate(title);
