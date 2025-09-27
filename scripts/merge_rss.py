@@ -5,7 +5,7 @@ from feedgen.feed import FeedGenerator
 
 # Liste des flux RSS à fusionner (modifiée avec les bonnes sources)
 RSS_FEEDS = [
-    "https://www.atibt.org/en/news/feed",
+    "https://https://www.gabonreview.com/feed",
     "https://forestsnews.cifor.org/feed",
     "https://comifac.org/feed/"
 ]
