@@ -1,5 +1,5 @@
 async function loadForestNewsFR() {
-    const container = document.getElementById("actus-cards-fr"); // Assurez-vous que l'ID du conteneur est correct
+    const container = document.getElementById("news-fr");
     if (!container) return;
 
     try {
@@ -32,7 +32,7 @@ async function loadForestNewsFR() {
 
             const card = document.createElement("a");
             card.className = "actus-card";
-            card.href = link && link !== "#" ? link : "#"; // Si le lien est invalide, on redirige vers la même page.
+            card.href = link && link !== "#" ? link : "#";
             card.target = "_blank";
 
             card.innerHTML = `
