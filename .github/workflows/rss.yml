@@ -26,18 +26,30 @@ jobs:
       # 3. Installer les dépendances nécessaires
       - name: Install dependencies
         run: |
-          pip install feedparser feedgen
+          # Si un fichier requirements.txt existe, installer les dépendances
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            pip install feedparser feedgen  # Installer les paquets requis
+          fi
 
-      # 4. Exécuter le script qui fusionne les flux RSS
-      - name: Run script to merge feeds
+      # 4. Exécuter le script qui génère les flux RSS
+      - name: Run script to generate RSS feeds
         run: |
           python scripts/merge_rss.py
 
       # 5. Commit et push des fichiers générés
       - name: Commit and push changes
         run: |
+          # Configure Git user pour éviter d'avoir besoin d'entrer un utilisateur manuellement
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
+          
+          # Ajoute les fichiers générés
           git add merged_feed.json actualites.xml
-          git commit -m "Mise à jour des flux (JSON + XML)" || echo "Aucun changement à committer"
+          
+          # Commit les changements avec un message de mise à jour
+          git commit -m "Mise à jour des flux RSS (JSON + XML) - $(date)" || echo "Aucun changement à committer"
+          
+          # Push les modifications sur le dépôt
           git push
