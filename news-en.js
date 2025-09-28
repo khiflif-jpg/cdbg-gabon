@@ -3,7 +3,7 @@ async function loadForestNewsEN() {
     if (!container) return;
 
     try {
-        const rssUrl = "https://www.cdbg-gabon.com/flux-fusionne-fr.xml"; // Flux RSS
+        const rssUrl = "https://www.cdbg-gabon.com/actualites.xml"; // Flux RSS
         const response = await fetch(rssUrl);
         const text = await response.text();
 
