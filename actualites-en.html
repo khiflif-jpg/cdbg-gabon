@@ -46,16 +46,77 @@ autoDisplay: false
 }
 </script>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-<script src="news.js"></script>
 <script>
-loadNews({
-xmlUrl: "actualites.xml",
-containerId: "news-list",
-loadMoreBtnId: "load-more-btn",
-batch: 10,
-lang: "en"
-});
+async function loadForestNewsPageEN() {
+  const container = document.getElementById("news-list");
+  const loadMoreBtn = document.getElementById("load-more-btn");
+  if (!container) return;
+
+  try {
+    const rssUrl = "https://www.cdbg-gabon.com/actualites.xml"; // URL absolue vers ton flux
+    const response = await fetch(rssUrl);
+    const text = await response.text();
+
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(text, "text/xml");
+    const items = xml.querySelectorAll("item");
+
+    if (items.length === 0) {
+      container.innerHTML = "<p>No articles available at the moment.</p>";
+      loadMoreBtn.style.display = "none";
+      return;
+    }
+
+    let currentIndex = 0;
+    const batch = 10;
+
+    function renderBatch() {
+      for (let i = currentIndex; i < Math.min(currentIndex + batch, items.length); i++) {
+        const item = items[i];
+        const title = item.querySelector("title")?.textContent || "No title";
+        const link = item.querySelector("link")?.textContent || "#";
+        const date = item.querySelector("pubDate")?.textContent || "";
+
+        const formattedDate = new Date(date).toLocaleDateString("en-GB", {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        });
+
+        const card = document.createElement("a");
+        card.className = "actus-card";
+        card.href = link;
+        card.target = "_blank";
+        card.innerHTML = `
+          <div class="actus-card-content">
+            <h3>${title}</h3>
+            <p class="date">${formattedDate}</p>
+            <p class="source">Source: Congo Basin Forest Partnership</p>
+          </div>
+        `;
+        container.appendChild(card);
+      }
+
+      currentIndex += batch;
+      if (currentIndex >= items.length) {
+        loadMoreBtn.style.display = "none";
+      }
+    }
+
+    // Chargement initial
+    renderBatch();
+
+    // Bouton "Load more"
+    loadMoreBtn.addEventListener("click", renderBatch);
+
+  } catch (error) {
+    console.error("Error loading English news:", error);
+    container.innerHTML = "<p>Error loading the articles. Please try again later.</p>";
+    loadMoreBtn.style.display = "none";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadForestNewsPageEN);
 </script>
 </body>
 </html>
