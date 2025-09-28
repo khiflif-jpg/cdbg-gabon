@@ -4,7 +4,7 @@ from datetime import datetime
 from feedgen.feed import FeedGenerator
 
 # URL du flux RSS unique
-RSS_FEED = "https://pfbc-cbfp.org/fr/feed/"  # Flux RSS du Partenariat pour les Forêts du Bassin du Congo
+RSS_FEED = "https://feedfry.com/rss/11f09c60ca0751419b73c43573c94c6e"  # Flux RSS du Partenariat pour les Forêts du Bassin du Congo
 
 def parse_date(date_str):
     """Essaie plusieurs formats de date avant de renvoyer une date valide."""
