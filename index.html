@@ -17,83 +17,49 @@
     </script>
     <!-- End Google Tag Manager -->
 
-    <!-- Fichier CSS pour styliser les articles -->
+    <!-- Fichier CSS -->
     <link rel="stylesheet" href="style.css">
 
-</head>
-
-<body>
-    <!-- Le reste du contenu de la page -->
-
-    <!-- Conteneur où les articles seront affichés -->
-    <div id="news-fr"></div>
-
-    <!-- Script pour charger les actualités depuis le RSS -->
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DCRFLHR1TQ"></script>
     <script>
-  loadNews({
-    xmlUrl: "https://www.cdbg-gabon.com/actualites.xml",  // Flux RSS en français
-    containerId: "news-fr",
-    loadMoreBtnId: null,
-    batch: 5,
-    lang: "fr"
-  });
-</script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-DCRFLHR1TQ');
+    </script>
 
-    <!-- Ton fichier script.js avec la logique pour récupérer et afficher les articles -->
-    <script src="script.js"></script> <!-- Assurez-vous que script.js contient le bon code JS -->
-  
-<!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DCRFLHR1TQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-DCRFLHR1TQ');
-</script>
+    <!-- Meta Description and Alternate Links -->
+    <meta name="description" content="CDBG – Gestion forestière durable au Gabon. Gestion responsable des forêts, sciage et logistique.">
+    <meta name="google-site-verification" content="FEBQeG1IDewx3f75y0Qnc_TxT38uutnoooN1dTw5IE8" />
+    <link rel="alternate" hreflang="fr" href="https://tonsite.com/index.html">
+    <link rel="alternate" hreflang="en" href="https://tonsite.com/en.html">
 
-<!-- Meta Description and Alternate Links -->
-<meta name="description" content="CDBG – Gestion forestière durable au Gabon. Gestion responsable des forêts, sciage et logistique.">
-<meta name="google-site-verification" content="FEBQeG1IDewx3f75y0Qnc_TxT38uutnoooN1dTw5IE8" />
-<link rel="alternate" hreflang="fr" href="https://tonsite.com/index.html">
-<link rel="alternate" hreflang="en" href="https://tonsite.com/en.html">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet" media="all">
 
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet" media="all">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Compagnie Durable du Bois au Gabon – Gestion responsable des forêts">
+    <meta property="og:description" content="Opérations forestières durables, sciage et logistique au Gabon.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tonsite.com/index.html">
+    <meta property="og:image" content="https://tonsite.com/logo.webp">
 
-<!-- Open Graph -->
-<meta property="og:title" content="Compagnie Durable du Bois au Gabon – Gestion responsable des forêts">
-<meta property="og:description" content="Opérations forestières durables, sciage et logistique au Gabon.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://tonsite.com/index.html">
-<meta property="og:image" content="https://tonsite.com/logo.webp">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Compagnie Durable du Bois au Gabon – Gestion responsable des forêts">
+    <meta name="twitter:description" content="Opérations forestières durables, sciage et logistique au Gabon.">
+    <meta name="twitter:image" content="https://tonsite.com/logo.webp">
 
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Compagnie Durable du Bois au Gabon – Gestion responsable des forêts">
-<meta name="twitter:description" content="Opérations forestières durables, sciage et logistique au Gabon.">
-<meta name="twitter:image" content="https://tonsite.com/logo.webp">
-
-<!-- Preload hero background images -->
-<link rel="preload" as="image" href="foret_small.webp" media="(max-width:768px)">
-<link rel="preload" as="image" href="foret.webp" media="(min-width:769px)">
-<title>CDBG – Gestion responsable des forêts au Gabon</title>
-<link rel="preload" href="style.css" as="style"/>
-<link href="style.css" rel="stylesheet"/>
-<link href="logo.png" rel="icon" type="image/png"/>
-
-<!-- Inserted Script for loading RSS -->
-<script>
-  loadNews({
-    xmlUrl: "https://www.cdbg-gabon.com/flux-fusionne-fr.xml",  // Flux RSS en français
-    containerId: "news-fr",
-    loadMoreBtnId: null,
-    batch: 5,
-    lang: "fr"
-  });
-</script>
-
+    <!-- Preload hero background images -->
+    <link rel="preload" as="image" href="foret_small.webp" media="(max-width:768px)">
+    <link rel="preload" as="image" href="foret.webp" media="(min-width:769px)">
+    <title>CDBG – Gestion responsable des forêts au Gabon</title>
+    <link rel="preload" href="style.css" as="style"/>
+    <link href="style.css" rel="stylesheet"/>
+    <link href="logo.png" rel="icon" type="image/png"/>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
