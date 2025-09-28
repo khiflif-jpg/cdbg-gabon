@@ -1,61 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Forest News – CDBG</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#3D6B35"/>
+  <title>CDBG – Responsible Forestry in Gabon</title>
+  <link href="style.css" rel="stylesheet"/>
 </head>
 <body>
-<header class="navbar">
-  <div class="logo"><a href="en.html"><img src="logo.webp" alt="CDBG"></a></div>
-  <ul class="nav-links">
-    <li><a href="en.html">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="actualites-en.html">News</a></li>
-  </ul>
-</header>
+  <!-- Header -->
+  <header class="navbar">
+    <div class="logo"><a href="en.html"><img src="logo.webp" alt="CDBG Logo" width="80" height="80"></a></div>
+    <ul class="nav-links">
+      <li><a href="en.html">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="actualites-en.html">News</a></li>
+    </ul>
+  </header>
 
-<main class="news-page">
-  <h1>Forest News</h1>
-  <p class="subtitle">Latest updates on Gabonese and Central African forests</p>
-  <div id="news-list" class="news-grid"></div>
-  <button id="load-more-btn" class="btn">Load more</button>
-</main>
-
-<footer>
-  <div class="footer-container">
-    <div class="footer-col">
-      <h4>CDBG</h4>
-      <p>Documentation Center on Gabon’s Forests</p>
+  <!-- Section des news -->
+  <section class="news-section fade-in" id="forest-news">
+    <h2>News</h2>
+    <div class="news-container" id="news-en">
+      <!-- Articles injectés ici -->
     </div>
-  </div>
-  <div class="footer-bottom">© 2025 CDBG – All rights reserved</div>
-</footer>
+    <div class="more-link">
+      <a href="actualites-en.html" class="learn-card btn btn-primary">See all news</a>
+    </div>
+  </section>
 
-<!-- Bouton traduction automatique -->
-<div id="google_translate_element" style="display:none;"></div>
-<script type="text/javascript">
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-      pageLanguage: 'fr',
-      includedLanguages: 'en',
-      autoDisplay: false
-    }, 'google_translate_element');
+  <!-- Footer -->
+  <footer>
+    <div class="footer-bottom">© 2025 CDBG – All rights reserved</div>
+  </footer>
+
+  <!-- Script pour charger les actualités -->
+  <script>
+  async function loadForestNewsEN() {
+      const container = document.getElementById("news-en");
+      if (!container) return;
+
+      try {
+          const rssUrl = "actualites.xml"; // On pointe sur ton flux généré
+          const response = await fetch(rssUrl);
+          const text = await response.text();
+          const parser = new DOMParser();
+          const xml = parser.parseFromString(text, "text/xml");
+          const items = xml.querySelectorAll("item");
+
+          if (items.length === 0) {
+              container.innerHTML = "<p>No articles available at the moment.</p>";
+              return;
+          }
+
+          container.innerHTML = "";
+          for (let i = 0; i < Math.min(5, items.length); i++) {
+              const item = items[i];
+              const title = item.querySelector("title")?.textContent || "No title";
+              const link = item.querySelector("link")?.textContent || "#";
+              const date = item.querySelector("pubDate")?.textContent || "";
+
+              const formattedDate = new Date(date).toLocaleDateString("en-GB", {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric'
+              });
+
+              const card = document.createElement("a");
+              card.className = "actus-card";
+              card.href = link;
+              card.target = "_blank";
+              card.innerHTML = `
+                  <div class="actus-card-content">
+                      <h3>${title}</h3>
+                      <p class="date">${formattedDate}</p>
+                      <p class="source">Source: Congo Basin Forest Partnership</p>
+                  </div>
+              `;
+              container.appendChild(card);
+          }
+      } catch (error) {
+          console.error("Error loading English news:", error);
+          container.innerHTML = "<p>Error loading the articles. Please try again later.</p>";
+      }
   }
-</script>
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  document.addEventListener("DOMContentLoaded", loadForestNewsEN);
+  </script>
 
-<script src="news.js"></script>
-<script>
-  loadNews({
-    xmlUrl: "actualites.xml",  // même flux que FR
-    containerId: "news-list",
-    loadMoreBtnId: "load-more-btn",
-    batch: 10,
-    lang: "en"
-  });
-</script>
+  <!-- Google Translate widget -->
+  <div id="google_translate_element" style="display:none;"></div>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'fr',       // langue originale de ton flux
+        includedLanguages: 'en',  // langues de traduction dispo
+        autoDisplay: true
+      }, 'google_translate_element');
+    }
+  </script>
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
