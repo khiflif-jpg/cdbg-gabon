@@ -1,18 +1,47 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="theme-color" content="#3D6B35"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="theme-color" content="#3D6B35"/>
 
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-K8VBV9ZJ');</script>
-<!-- End Google Tag Manager -->
+    <title>Actualités CDBG</title>
 
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-K8VBV9ZJ');
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Fichier CSS pour styliser les articles -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <!-- Le reste du contenu de la page -->
+
+    <!-- Conteneur où les articles seront affichés -->
+    <div id="news-fr"></div>
+
+    <!-- Script pour charger les actualités depuis le RSS -->
+    <script>
+        loadNews({
+            xmlUrl: "https://www.cdbg-gabon.com/flux-fusionne-fr.xml",  // Flux RSS en français
+            containerId: "news-fr",  // Conteneur où afficher les articles
+            loadMoreBtnId: null,  // Pas de bouton "Charger plus"
+            batch: 5,  // Nombre d'articles à afficher par chargement
+            lang: "fr"  // Langue des articles
+        });
+    </script>
+
+    <!-- Ton fichier script.js avec la logique pour récupérer et afficher les articles -->
+    <script src="script.js"></script> <!-- Assurez-vous que script.js contient le bon code JS -->
+  
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DCRFLHR1TQ"></script>
 <script>
