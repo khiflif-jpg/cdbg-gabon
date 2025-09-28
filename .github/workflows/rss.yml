@@ -17,20 +17,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Installer Python
+      # 2. Installer Python (forcer une version compatible avec feedparser)
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: '3.11'
 
       # 3. Installer les dépendances nécessaires
       - name: Install dependencies
         run: |
-          # Si un fichier requirements.txt existe, installer les dépendances
           if [ -f requirements.txt ]; then
             pip install -r requirements.txt
           else
-            pip install feedparser feedgen  # Installer les paquets requis
+            pip install feedparser feedgen
           fi
 
       # 4. Exécuter le script qui génère les flux RSS
@@ -41,15 +40,8 @@ jobs:
       # 5. Commit et push des fichiers générés
       - name: Commit and push changes
         run: |
-          # Configure Git user pour éviter d'avoir besoin d'entrer un utilisateur manuellement
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          
-          # Ajoute les fichiers générés
           git add merged_feed.json actualites.xml
-          
-          # Commit les changements avec un message de mise à jour
           git commit -m "Mise à jour des flux RSS (JSON + XML) - $(date)" || echo "Aucun changement à committer"
-          
-          # Push les modifications sur le dépôt
           git push
