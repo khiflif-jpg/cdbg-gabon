@@ -433,7 +433,7 @@ async function loadForestNewsEN() {
     const container = document.getElementById("news-en");
     if (!container) return;
     try {
-        const rssUrl = "https://www.cdbg-gabon.com/actualites.xml"; // Flux RSS en anglais
+        const rssUrl = const rssUrl = "https://feedfry.com/rss/11f09c60ca0751419b73c43573c94c6e"; // Flux RSS en anglais
         const response = await fetch(rssUrl);
         const text = await response.text();
         const parser = new DOMParser();
