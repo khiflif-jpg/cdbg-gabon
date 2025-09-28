@@ -5,17 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="#3D6B35"/>
 
-  <!-- Inserted Script for loading RSS -->
-  <script>
-    loadNews({
-      xmlUrl: "https://www.cdbg-gabon.com/actualites.xml",  // Flux RSS en anglais
-      containerId: "news-en",  // Conteneur pour afficher les articles
-      loadMoreBtnId: null,  // Pas de bouton "Load more"
-      batch: 5,  // Nombre d'articles à afficher par chargement
-      lang: "en"  // Langue des articles
-    });
-  </script>
-
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -372,60 +361,50 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
   });
 
-  // Function to load news dynamically
-  function loadNews(options) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', options.xmlUrl, true);
-    xhr.onload = function() {
-      if (xhr.status === 200) {
+  <script>
+async function loadForestNewsEN() {
+    const container = document.getElementById("news-en");
+    if (!container) return;
+    try {
+        const rssUrl = "https://feedfry.com/rss/11f09c60ca0751419b73c43573c94c6e"; // Flux RSS en anglais
+        const response = await fetch(rssUrl);
+        const text = await response.text();
         const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xhr.responseText, 'application/xml');
-        const items = xmlDoc.getElementsByTagName('item');
-        const newsContainer = document.getElementById(options.containerId);
-        let count = 0;
-        for (let i = 0; i < items.length && count < options.batch; i++) {
-          const title = items[i].getElementsByTagName('title')[0].textContent;
-          const link = items[i].getElementsByTagName('link')[0].textContent;
-          const pubDate = items[i].getElementsByTagName('pubDate')[0].textContent;
-          const description = items[i].getElementsByTagName('description')[0].textContent;
-          
-          const newsItem = document.createElement('div');
-          newsItem.classList.add('news-item');
-          
-          const titleElement = document.createElement('h3');
-          const linkElement = document.createElement('a');
-          linkElement.href = link;
-          linkElement.textContent = title;
-          titleElement.appendChild(linkElement);
-          
-          const descriptionElement = document.createElement('p');
-          descriptionElement.textContent = description;
-          
-          const pubDateElement = document.createElement('small');
-          pubDateElement.textContent = new Date(pubDate).toLocaleDateString();
-          
-          newsItem.appendChild(titleElement);
-          newsItem.appendChild(descriptionElement);
-          newsItem.appendChild(pubDateElement);
-          
-          newsContainer.appendChild(newsItem);
-          count++;
+        const xml = parser.parseFromString(text, "text/xml");
+        const items = xml.querySelectorAll("item");
+        if (items.length === 0) {
+            container.innerHTML = "<p>No articles available at the moment.</p>";
+            return;
         }
-      }
-    };
-    xhr.send();
-  }
-
-  // Example call for loading news
-  loadNews({
-    xmlUrl: "https://www.cdbg-gabon.com/actualites.xml",  // English RSS feed
-    containerId: "news-en",
-    loadMoreBtnId: null,
-    batch: 5,
-    lang: "en"
-  });
+        container.innerHTML = "";
+        for (let i = 0; i < Math.min(5, items.length); i++) {
+            const item = items[i];
+            const title = item.querySelector("title")?.textContent || "No title";
+            const link = item.querySelector("link")?.textContent || "#";
+            const date = item.querySelector("pubDate")?.textContent || "";
+            const formattedDate = new Date(date).toLocaleDateString("en-GB", {
+                year: 'numeric', month: 'short', day: 'numeric'
+            });
+            const card = document.createElement("a");
+            card.className = "actus-card";
+            card.href = link;
+            card.target = "_blank";
+            card.innerHTML = `
+                <div class="actus-card-content">
+                    <h3>${title}</h3>
+                    <p class="date">${formattedDate}</p>
+                    <p class="source">Source: Congo Basin Forest Partnership</p>
+                </div>
+            `;
+            container.appendChild(card);
+        }
+    } catch (error) {
+        console.error("Error loading English news:", error);
+        container.innerHTML = "<p>Error loading the articles. Please try again later.</p>";
+    }
+}
+document.addEventListener("DOMContentLoaded", loadForestNewsEN);
 </script>
-
 
 <!-- Script pour charger les actualités depuis le RSS -->
 <script>
