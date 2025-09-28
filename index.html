@@ -30,14 +30,14 @@
 
     <!-- Script pour charger les actualités depuis le RSS -->
     <script>
-        loadNews({
-            xmlUrl: "https://www.cdbg-gabon.com/flux-fusionne-fr.xml",  // Flux RSS en français
-            containerId: "news-fr",  // Conteneur où afficher les articles
-            loadMoreBtnId: null,  // Pas de bouton "Charger plus"
-            batch: 5,  // Nombre d'articles à afficher par chargement
-            lang: "fr"  // Langue des articles
-        });
-    </script>
+  loadNews({
+    xmlUrl: "https://www.cdbg-gabon.com/actualites.xml",  // Flux RSS en français
+    containerId: "news-fr",
+    loadMoreBtnId: null,
+    batch: 5,
+    lang: "fr"
+  });
+</script>
 
     <!-- Ton fichier script.js avec la logique pour récupérer et afficher les articles -->
     <script src="script.js"></script> <!-- Assurez-vous que script.js contient le bon code JS -->
