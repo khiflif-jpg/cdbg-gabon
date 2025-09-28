@@ -33,16 +33,78 @@
 </div>
 <div class="footer-bottom">© 2025 CDBG – Tous droits réservés</div>
 </footer>
-
-<script src="news.js"></script>
+  
 <script>
-loadNews({
-xmlUrl: "actualites.xml",
-containerId: "news-list",
-loadMoreBtnId: "load-more-btn",
-batch: 10,
-lang: "fr"
-});
+async function loadForestNewsPageFR() {
+  const container = document.getElementById("news-list");
+  const loadMoreBtn = document.getElementById("load-more-btn");
+  if (!container) return;
+
+  try {
+    const rssUrl = "https://www.cdbg-gabon.com/actualites.xml"; // URL absolue
+    const response = await fetch(rssUrl);
+    const text = await response.text();
+
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(text, "text/xml");
+    const items = xml.querySelectorAll("item");
+
+    if (items.length === 0) {
+      container.innerHTML = "<p>Aucun article disponible pour le moment.</p>";
+      loadMoreBtn.style.display = "none";
+      return;
+    }
+
+    let currentIndex = 0;
+    const batch = 10;
+
+    function renderBatch() {
+      for (let i = currentIndex; i < Math.min(currentIndex + batch, items.length); i++) {
+        const item = items[i];
+        const title = item.querySelector("title")?.textContent || "Pas de titre";
+        const link = item.querySelector("link")?.textContent || "#";
+        const date = item.querySelector("pubDate")?.textContent || "";
+
+        const formattedDate = new Date(date).toLocaleDateString("fr-FR", {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        });
+
+        const card = document.createElement("a");
+        card.className = "actus-card";
+        card.href = link;
+        card.target = "_blank";
+        card.innerHTML = `
+          <div class="actus-card-content">
+            <h3>${title}</h3>
+            <p class="date">${formattedDate}</p>
+            <p class="source">Source: Partenariat pour les forêts du bassin du Congo</p>
+          </div>
+        `;
+        container.appendChild(card);
+      }
+
+      currentIndex += batch;
+      if (currentIndex >= items.length) {
+        loadMoreBtn.style.display = "none";
+      }
+    }
+
+    // Initial load
+    renderBatch();
+
+    // Load more on click
+    loadMoreBtn.addEventListener("click", renderBatch);
+
+  } catch (error) {
+    console.error("Erreur lors du chargement des actualités :", error);
+    container.innerHTML = "<p>Impossible de charger les articles. Veuillez réessayer plus tard.</p>";
+    loadMoreBtn.style.display = "none";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadForestNewsPageFR);
 </script>
 </body>
 </html>
