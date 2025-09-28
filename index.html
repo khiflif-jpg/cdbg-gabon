@@ -438,34 +438,45 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 <!-- Script pour charger les actualités depuis le RSS -->
+<!-- Script pour charger les actualités depuis le RSS -->
 <script>
 async function loadForestNewsFR() {
     const container = document.getElementById("news-fr");
     if (!container) return;
+
     try {
-        const rssUrl = const rssUrl = "https://feedfry.com/rss/11f09c60ca0751419b73c43573c94c6e"; // Flux RSS en français
+        const rssUrl = "https://feedfry.com/rss/11f09c60ca0751419b73c43573c94c6e"; // Flux RSS en français
         const response = await fetch(rssUrl);
         const text = await response.text();
+
         const parser = new DOMParser();
         const xml = parser.parseFromString(text, "text/xml");
         const items = xml.querySelectorAll("item");
+
         if (items.length === 0) {
             container.innerHTML = "<p>Aucun article disponible pour le moment.</p>";
             return;
         }
+
         container.innerHTML = "";
+
         for (let i = 0; i < Math.min(5, items.length); i++) {
             const item = items[i];
             const title = item.querySelector("title")?.textContent || "Pas de titre";
             const link = item.querySelector("link")?.textContent || "#";
             const date = item.querySelector("pubDate")?.textContent || "";
+
             const formattedDate = new Date(date).toLocaleDateString("fr-FR", {
-                year: 'numeric', month: 'short', day: 'numeric'
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
             });
+
             const card = document.createElement("a");
             card.className = "actus-card";
             card.href = link;
             card.target = "_blank";
+
             card.innerHTML = `
                 <div class="actus-card-content">
                     <h3>${title}</h3>
@@ -480,8 +491,8 @@ async function loadForestNewsFR() {
         container.innerHTML = "<p>Impossible de charger les articles. Veuillez réessayer plus tard.</p>";
     }
 }
+
 document.addEventListener("DOMContentLoaded", loadForestNewsFR);
 </script>
-
 </body>
 </html>
