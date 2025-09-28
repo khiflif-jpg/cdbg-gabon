@@ -3,7 +3,7 @@ async function loadForestNewsEN() {
     if (!container) return;
 
     try {
-        const rssUrl = "https://www.cdbg-gabon.com/actualites.xml"; // Flux RSS
+        const rssUrl = "https://www.cdbg-gabon.com/flux-fusionne-fr.xml"; // Flux RSS
         const response = await fetch(rssUrl);
         const text = await response.text();
 
@@ -16,7 +16,6 @@ async function loadForestNewsEN() {
             return;
         }
 
-        // Vider le conteneur avant de charger les nouveaux articles
         container.innerHTML = "";
 
         for (let i = 0; i < Math.min(5, items.length); i++) {
@@ -25,20 +24,17 @@ async function loadForestNewsEN() {
             const link = item.querySelector("link")?.textContent || "#";
             const date = item.querySelector("pubDate")?.textContent || "";
 
-            // Convertir la date en format lisible
             const formattedDate = new Date(date).toLocaleDateString("en-GB", {
                 year: 'numeric',
                 month: 'short',
                 day: 'numeric'
             });
 
-            // Créer la carte d'article sans image et sans description
             const card = document.createElement("a");
             card.className = "actus-card";
             card.href = link;
             card.target = "_blank";
 
-            // Remplir la carte avec le titre, la date et la source fixe
             card.innerHTML = `
                 <div class="actus-card-content">
                     <h3>${title}</h3>
