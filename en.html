@@ -222,10 +222,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="news-section fade-in" id="forest-news">
   <h2>News</h2>
   <div class="news-container" id="news-en">
-    <!-- The 5 latest articles will be injected here -->
+    <!-- Articles injectés automatiquement -->
   </div>
-  
-  <!-- "See all news" link styled as a card -->
+
+  <!-- Lien vers la page actualites-en.html -->
   <div class="more-link">
     <a href="actualites-en.html" class="learn-card btn btn-primary">See all news</a>
   </div>
@@ -344,13 +344,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       this.closest('.modal').style.display = 'none';
     });
   });
+  
 <script>
 async function loadForestNewsEN() {
     const container = document.getElementById("news-en");
     if (!container) return;
 
     try {
-        const rssUrl = "https://feedfry.com/rss/11f09c60ca0751419b73c43573c94c6e"; // Flux RSS en anglais
+        const rssUrl = "actualites.xml"; // même flux que la version FR
         const response = await fetch(rssUrl);
         const text = await response.text();
 
@@ -364,8 +365,7 @@ async function loadForestNewsEN() {
         }
 
         container.innerHTML = "";
-
-        for (let i = 0; i < Math.min(5, items.length); i++) {
+        for (let i = 0; i < Math.min(5, items.length); i++) { // seulement 5 actus sur la home
             const item = items[i];
             const title = item.querySelector("title")?.textContent || "No title";
             const link = item.querySelector("link")?.textContent || "#";
@@ -396,8 +396,21 @@ async function loadForestNewsEN() {
         container.innerHTML = "<p>Error loading the articles. Please try again later.</p>";
     }
 }
-
 document.addEventListener("DOMContentLoaded", loadForestNewsEN);
 </script>
+  
+  <!-- Google Translate widget -->
+<div id="google_translate_element" style="display:none;"></div>
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'fr',       // le flux est en français
+      includedLanguages: 'en',  // traduire en anglais
+      autoDisplay: true
+    }, 'google_translate_element');
+  }
+</script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 </body>
 </html>
