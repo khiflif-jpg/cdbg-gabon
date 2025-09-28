@@ -404,14 +404,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 <!-- Script pour charger les actualités depuis le RSS -->
-<!-- Script pour charger les actualités depuis le RSS -->
 <script>
 async function loadForestNewsFR() {
     const container = document.getElementById("news-fr");
     if (!container) return;
 
     try {
-        const rssUrl = "https://feedfry.com/rss/11f09c60ca0751419b73c43573c94c6e"; // Flux RSS en français
+        const rssUrl = "https://www.cdbg-gabon.com/actualites.xml"; 
         const response = await fetch(rssUrl);
         const text = await response.text();
 
@@ -460,5 +459,6 @@ async function loadForestNewsFR() {
 
 document.addEventListener("DOMContentLoaded", loadForestNewsFR);
 </script>
+
 </body>
 </html>
