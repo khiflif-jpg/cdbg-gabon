@@ -22,383 +22,419 @@
     gtag('config', 'G-DCRFLHR1TQ');
   </script>
 
-  <!-- Meta Description et Balises Alternates -->
-  <meta name="description" content="CDBG – Exploitation forestière durable au Gabon. Gestion responsable des forêts, sciage et logistique.">
+  <!-- Meta Description and Alternate Links -->
+  <meta name="description" content="CDBG – Sustainable forestry in Gabon. Responsible forest management, sawing, and logistics.">
   <meta name="google-site-verification" content="FEBQeG1IDewx3f75y0Qnc_TxT38uutnoooN1dTw5IE8" />
   <link rel="alternate" hreflang="fr" href="https://tonsite.com/index.html">
   <link rel="alternate" hreflang="en" href="https://tonsite.com/en.html">
 
-  <!-- Flux RSS français -->
-  <script>
-    loadNews({
-      xmlUrl: "https://www.cdbg-gabon.com/actualites.xml",  // Flux RSS français corrigé
-      containerId: "news-fr",
-      loadMoreBtnId: null,
-      batch: 5,
-      lang: "fr"
-    });
-  </script>
-
-  <!-- Preconnect pour les polices -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet" media="all">
 
-  <!-- Open Graph et Twitter -->
-  <meta property="og:title" content="Compagnie Durable du Bois au Gabon – Exploitation forestière responsable">
-  <meta property="og:description" content="Gestion durable des forêts, sciage et logistique au Gabon.">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Compagnie Durable du Bois in Gabon – Responsible Forestry">
+  <meta property="og:description" content="Sustainable forestry operations, sawing, and logistics in Gabon.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://tonsite.com/index.html">
+  <meta property="og:url" content="https://tonsite.com/en.html">
   <meta property="og:image" content="https://tonsite.com/logo.webp">
+
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Compagnie Durable du Bois au Gabon – Exploitation forestière responsable">
-  <meta name="twitter:description" content="Gestion durable des forêts, sciage et logistique au Gabon.">
+  <meta name="twitter:title" content="Compagnie Durable du Bois in Gabon – Responsible Forestry">
+  <meta name="twitter:description" content="Sustainable forestry operations, sawing, and logistics in Gabon.">
   <meta name="twitter:image" content="https://tonsite.com/logo.webp">
 
-  <!-- Favicon et autres liens -->
+  <!-- Preload hero background images -->
+  <link rel="preload" as="image" href="foret_small.webp" media="(max-width:768px)">
+  <link rel="preload" as="image" href="foret.webp" media="(min-width:769px)">
+  <title>CDBG – Responsible Forestry in Gabon</title>
+  <link rel="preload" href="style.css" as="style"/>
   <link href="style.css" rel="stylesheet"/>
   <link href="logo.png" rel="icon" type="image/png"/>
 
-  <title>CDBG – Exploitation forestière responsable au Gabon</title>
+  <!-- Inserted Script for loading RSS -->
+  <script>
+    loadNews({
+      xmlUrl: "https://www.cdbg-gabon.com/actualites.xml",  // English RSS feed
+      containerId: "news-en",
+      loadMoreBtnId: null,
+      batch: 5,
+      lang: "en"
+    });
+  </script>
+
 </head>
 <body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K8VBV9ZJ"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
-  <!-- Header -->
-  <header class="hero" id="hero">
-    <nav class="navbar">
-      <div class="logo"><img alt="CDBG Logo" loading="lazy" src="logo.webp"/></div>
-      <div class="nav-flags">
-        <a href="index.html"><img alt="Français" height="32" src="fr.png" width="32"/></a>
-        <a href="en.html"><img alt="English" height="32" src="en.png" width="32"/></a>
-      </div>
-      <ul class="nav-links">
-        <li><a href="#bitam">Bitam</a></li>
-        <li><a href="#about">À propos</a></li>
-        <li><a href="#ambition">Ambition</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#gallery">Galerie</a></li>
-        <li><a href="#engagements">Engagements</a></li>
-        <li><a href="#partnerships">Partenariats</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <div aria-label="Menu" class="burger" id="burger">☰</div>
-    </nav>
-    <div class="hero-overlay">
-      <h1>Compagnie Durable du Bois au Gabon</h1>
-      <h2 class="subtitle-hero">Exploitation forestière responsable</h2>
-      <p>Assurer une forêt préservée pour les générations futures tout en valorisant le patrimoine forestier gabonais.</p>
-      <div class="buttons">
-        <a class="btn btn-secondary" href="#about">À propos</a>
-        <a class="btn btn-secondary" href="#contact">Contact</a>
-      </div>
-      <div aria-hidden="true" class="scroll-down">
-        <span class="scroll-text">Bienvenue</span><br/>
-        <span class="arrow">↓</span>
-      </div>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K8VBV9ZJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- Header -->
+<header class="hero" id="hero">
+  <nav class="navbar">
+    <div class="logo"><img alt="CDBG Logo" src="logo.webp" width="80" height="80"/></div>
+    <div class="nav-flags">
+      <a href="index.html"><img alt="Français" src="fr.png" width="32" height="32" loading="lazy"/></a>
+      <a href="en.html"><img alt="English" src="en.png" width="32" height="32" loading="lazy"/></a>
     </div>
-  </header>
-
-  <!-- Bitam -->
-  <section class="bitam fade-in" id="bitam">
-    <div class="bitam-content">
-      <div class="bitam-img">
-        <picture>
-          <source media="(max-width: 768px)" srcset="bitam_panneau_small.webp"/>
-          <img alt="Bitam Gabon" loading="lazy" src="bitam_panneau.webp"/>
-        </picture>
-      </div>
-      <div class="bitam-text">
-        <h2>CDBG est basée à Bitam, dans le nord du Gabon</h2>
-        <div class="bitam-box">
-          Située dans le nord du Gabon, Bitam est le cœur de nos opérations forestières.<br/>
-          Cette région riche en biodiversité nous permet de développer une exploitation durable<br/>
-          sur 10 000 hectares de propriété privée.
-        </div>
-      </div>
+    <ul class="nav-links">
+      <li><a href="#bitam">Bitam</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#ambition">Ambition</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#engagements">Commitments</a></li>
+      <li><a href="#partnerships">Partnerships</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div aria-label="Menu" class="burger" id="burger">☰</div>
+  </nav>
+  <div class="hero-overlay">
+    <h1>Compagnie Durable du Bois in Gabon</h1>
+    <h2 class="subtitle-hero">Responsible Forestry</h2>
+    <p>Ensuring a preserved forest for future generations while promoting Gabon's forest heritage.</p>
+    <div class="buttons">
+      <a class="btn btn-secondary" href="#about">About</a>
+      <a class="btn btn-secondary" href="#contact">Contact</a>
     </div>
-  </section>
-  <!-- About -->
-  <section class="about fade-in" id="about">
-    <h2>À propos de nous</h2>
-    <p class="subtitle">Expertise dédiée à la forêt gabonaise</p>
-    <div class="cards">
-      <div class="card">
-        <div class="icon"><img alt="Tree icon" loading="lazy" src="sapin.webp"/></div>
-        <h3>10 000 hectares</h3>
-        <p>de terres privées gérées de manière durable à Bitam, au nord du Gabon.</p>
-      </div>
-      <div class="card">
-        <div class="icon"><img alt="Tropical woods icon" loading="lazy" src="bois.webp"/></div>
-        <h3>Bois tropicaux</h3>
-        <p>Sélection et commerce des essences nobles : Okoumé, Azobé, Kevazingo, Padouk, Ébène, Moabi, Tali, Iroko, Movingui, Bilinga...</p>
-      </div>
-      <div class="card">
-        <div class="icon"><img alt="Employment icon" loading="lazy" src="emploi.webp"/></div>
-        <h3>Emploi local</h3>
-        <p>Développement d’une activité de sciage avec de la main-d’œuvre locale pour renforcer l’économie de Bitam.</p>
-      </div>
+    <div aria-hidden="true" class="scroll-down">
+      <span class="scroll-text">Welcome</span><br/>
+      <span class="arrow">↓</span>
     </div>
-  </section>
+  </div>
+</header>
 
-  <!-- Ambition -->
-  <section class="ambition fade-in" id="ambition">
-    <h2 class="ambition-title">Notre ambition</h2>
-    <div class="ambition-box">
-      Maîtriser l'ensemble de la chaîne de valeur du bois gabonais, de la forêt à l’exportation internationale.
-    </div>
-  </section>
-
-  <!-- Services -->
-  <section class="services fade-in" id="services">
-    <h2>Nos services</h2>
-    <p class="subtitle">Une chaîne de valeur complète</p>
-    <div class="cards">
-      <div class="card">
-        <div class="icon"><img alt="Logging icon" loading="lazy" src="ciseaux.webp"/></div>
-        <h3>Exploitation forestière</h3>
-        <p>Techniques respectueuses de l'environnement et de la biodiversité.</p>
-      </div>
-      <div class="card">
-        <div class="icon"><img alt="Sawing icon" loading="lazy" src="scie.webp"/></div>
-        <h3>Sciage</h3>
-        <p>Transformation primaire avec équipement moderne et main-d’œuvre qualifiée.</p>
-      </div>
-      <div class="card">
-        <div class="icon"><img alt="Logistics icon" loading="lazy" src="logistique.webp"/></div>
-        <h3>Logistique</h3>
-        <p>Transport et logistique adaptés aux besoins du marché national.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Commitments -->
-  <section class="engagements fade-in" id="engagements">
-    <h2>Nos engagements</h2>
-    <div class="engagement-img">
+<!-- Bitam -->
+<section class="bitam fade-in" id="bitam">
+  <div class="bitam-content">
+    <div class="bitam-img">
       <picture>
-        <source media="(max-width: 768px)" srcset="elephant_forest_small.webp"/>
-        <img alt="Éléphant dans la forêt du Gabon" loading="lazy" src="elephant_forest.webp"/>
+        <source media="(max-width: 768px)" srcset="bitam_panneau_small.webp"/>
+        <img alt="Bitam Gabon" loading="lazy" src="bitam_panneau.webp"/>
       </picture>
     </div>
-    <div class="cards">
-      <div class="card">
-        <div class="icon"><img alt="Environnement icon" loading="lazy" src="environnement.webp"/></div>
-        <h3>Respect de l'environnement</h3>
-        <p>Notre projet place l’écologie, la faune et la flore au cœur de chaque action.</p>
-      </div>
-      <div class="card">
-        <div class="icon"><img alt="Local jobs icon" loading="lazy" src="emploi.webp"/></div>
-        <h3>Développement socio-économique</h3>
-        <p>Créer des emplois locaux et soutenir le développement socio-économique de la population de Bitam.</p>
-      </div>
-      <div class="card">
-        <div class="icon"><img alt="Value chain icon" loading="lazy" src="chaine.webp"/></div>
-        <h3>Maîtrise de la chaîne de valeur</h3>
-        <p>Notre ambition est de contrôler toute la chaîne de valeur du bois, de la forêt à l’exportation internationale.</p>
+    <div class="bitam-text">
+      <h2>CDBG is based in Bitam, northern Gabon</h2>
+      <div class="bitam-box">
+        Located in northern Gabon, Bitam is the heart of our forestry operations.<br/>
+        This biodiversity-rich region allows us to develop sustainable operations<br/>
+        across 10,000 hectares of private land.
       </div>
     </div>
-  </section>
-
-  <!-- Gallery -->
-  <section class="gallery fade-in" id="gallery">
-    <h2>Galerie</h2>
-    <div class="gallery-row">
-      <div class="gallery-item">
-        <picture>
-          <source media="(max-width: 768px)" srcset="grumes_generiques_small.webp"/>
-          <img alt="Grumes de bois tropical" loading="lazy" src="grumes_generiques.webp"/>
-        </picture>
-      </div>
-      <div class="gallery-item">
-        <picture>
-          <source media="(max-width: 768px)" srcset="planches_generiques_small.webp"/>
-          <img alt="Planches de bois tropical" loading="lazy" src="planches_generiques.webp"/>
-        </picture>
-      </div>
-    </div>
-  </section>
-  <!-- Partnerships -->
-  <section class="partnerships fade-in" id="partnerships">
-    <h2>Partenariats</h2>
-    <div class="cards">
-      <div class="card">
-        <div class="icon"><img alt="Sustainable development icon" loading="lazy" src="developpement-se.webp"/></div>
-        <p>Notre entreprise est ouverte à toute demande de collaboration ou de partenariat dans l'exploitation forestière, le sciage, la logistique et le transport.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Learn Gabon -->
-  <section class="learn-gabon fade-in" id="learn-gabon">
-    <h2 class="learn-title">Savoir plus sur le Gabon</h2>
-    <div class="learn-grid">
-      <a class="learn-card" href="https://www.gouvernement.ga/" target="_blank">Gouvernement du Gabon</a>
-      <a class="learn-card" href="https://www.eaux-forets.gouv.ga/" target="_blank">Ministère de l’Eau et des Forêts</a>
-      <a class="learn-card" href="https://www.wwfgabon.org/" target="_blank">WWF</a>
-      <a class="learn-card" href="https://gabon.wcs.org/fr-ca/" target="_blank">WCS Gabon</a>
-      <a class="learn-card" href="https://fpbg.org/" target="_blank">FPBG au Gabon</a>
-      <a class="learn-card" href="https://brainforest-gabon.org/" target="_blank">Brainforest au Gabon</a>
-      <a class="learn-card" href="https://fr.fsc.org/fr-fr/gabon" target="_blank">FSC au Gabon</a>
-      <a class="learn-card" href="https://youtu.be/Fd89uelmQ3k?feature=shared" target="_blank">
-        Richesse naturelle du Gabon en vidéo
-      </a>
-    </div>
-  </section>
-
- <!-- Forest News Section -->
-<section class="news-section fade-in" id="forest-news">
-  <h2>Actualités Forestières</h2>
-  <div class="news-container" id="news-fr">
-    <!-- Les articles seront injectés ici -->
-  </div>
-  
-  <!-- "Voir toutes les actualités" lien stylisé comme une carte -->
-  <div class="more-link">
-    <a href="actualites.html" class="learn-card btn btn-primary">Voir toutes les actualités</a>
   </div>
 </section>
 
-  <!-- Contact -->
-  <section class="contact fade-in" id="contact">
-    <h2>Contact</h2>
-    <div class="contact-container">
-      <form class="contact-form">
-        <input placeholder="Nom" type="text"/>
-        <input placeholder="Email" type="email"/>
-        <input placeholder="Objet" type="text"/>
-        <textarea placeholder="Message"></textarea>
-        <button class="btn btn-primary" type="submit">Envoyer</button>
-      </form>
-      <div class="contact-info">
-        <p><img alt="Adresse" src="adresse.webp"/><span>Ancien Sobraga, Libreville<br/>BP 4447, Gabon</span></p>
-        <p><img alt="Téléphone" src="tel.webp"/><span>+241 77 25 9169</span></p>
-      </div>
-      <div class="contact-map">
-        <iframe allowfullscreen="" loading="lazy" src="https://www.google.com/maps?q=Bitam%20Gabon&amp;output=embed"></iframe>
-      </div>
+<!-- About -->
+<section class="about fade-in" id="about">
+  <h2>About Us</h2>
+  <p class="subtitle">Expertise dedicated to Gabon's forests</p>
+  <div class="cards">
+    <div class="card">
+      <div class="icon"><img alt="Tree icon" loading="lazy" src="sapin.webp"/></div>
+      <h3>10,000 hectares</h3>
+      <p>of privately managed land in Bitam, northern Gabon, handled sustainably.</p>
     </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-container">
-      <div class="footer-col">
-        <h4>Compagnie Durable du Bois au Gabon</h4>
-        <p>Exploitation forestière responsable pour un avenir durable</p>
-        <p>N° RCCM : GA-LBV-01-2025-B16-00034</p>
-      </div>
-
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <p>Libreville, Gabon</p>
-        <p>+241 77 25 9169</p>
-      </div>
-      <div class="footer-col">
-        <h4>Mentions légales</h4>
-        <ul>
-          <li><a href="#" class="open-modal" data-modal="modal-cgu-fr">Conditions Générales d’Utilisation</a></li>
-          <li><a href="#" class="open-modal" data-modal="modal-privacy-fr">Politique de confidentialité</a></li>
-          <li><a href="#" class="open-modal" data-modal="modal-cookies-fr">Cookies</a></li>
-        </ul>
-      </div>
+    <div class="card">
+      <div class="icon"><img alt="Tropical woods icon" loading="lazy" src="bois.webp"/></div>
+      <h3>Tropical Wood</h3>
+      <p>Selecting and trading noble species: Okoumé, Azobé, Kevazingo, Padouk, Ebony, Moabi, Tali, Iroko, Movingui, Bilinga...</p>
     </div>
-    <div class="footer-bottom"><p>© 2025 Compagnie Durable du Bois au Gabon. Tous droits réservés.</p></div>
-  </footer>
-
-  <!-- Modals -->
-  <div id="modal-cgu-fr" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Conditions Générales d’Utilisation</h2>
-      <p>Les présentes Conditions Générales d’Utilisation (CGU) régissent l’accès et l’utilisation du site de la Compagnie Durable du Bois au Gabon (CDBG). En accédant au site, vous acceptez sans réserve les présentes conditions.</p>
-      <p>Tout contenu est protégé par le droit de la propriété intellectuelle et toute utilisation non autorisée est interdite.</p>
-      <p>Éditeur du site : Compagnie Durable du Bois au Gabon (CDBG), RCCM n° GA-LBV-01-2025-B16-00034, siège social : Ancien Sobraga, Libreville, BP 4447
-      <p>Hébergement : Ce site est hébergé par GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.</p>
-      <p>Accès au site : L’accès est gratuit, hors coûts de connexion à Internet supportés par l’utilisateur.</p>
-      <p>Propriété intellectuelle : L’ensemble du contenu (textes, images, logos, vidéos, etc.) est protégé par le droit d’auteur et le droit de la propriété intellectuelle en vigueur au Gabon. Toute reproduction ou utilisation non autorisée est strictement interdite.</p>
-      <p>Responsabilité : CDBG met tout en œuvre pour assurer l’exactitude des informations publiées mais ne saurait être tenue responsable en cas d’erreurs, d’omissions ou d’indisponibilité du site.</p>
-      <p>Droit applicable : Les présentes CGU sont régies par la législation gabonaise. Tout litige relève de la compétence exclusive des juridictions gabonaises.</p>
+    <div class="card">
+      <div class="icon"><img alt="Employment icon" loading="lazy" src="emploi.webp"/></div>
+      <h3>Local Jobs</h3>
+      <p>Developing a sawing business with local workforce to strengthen Bitam's economy.</p>
     </div>
   </div>
-
-  <div id="modal-privacy-fr" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Politique de confidentialité</h2>
-      <p>Conformément à la loi n°001/2011 relative à la protection des données à caractère personnel en République Gabonaise, la Compagnie Durable du Bois au Gabon (CDBG) s’engage à protéger les données personnelles des utilisateurs de son site.</p>
-      <p>Données collectées : nom, adresse email, numéro de téléphone, objet du message et tout autre renseignement fourni volontairement par l’utilisateur via le formulaire de contact.</p>
-      <p>Finalités : répondre aux demandes de contact, gérer les relations commerciales et assurer le suivi des partenariats.</p>
-      <p>Conservation : les données sont conservées uniquement pour la durée nécessaire aux finalités pour lesquelles elles ont été collectées, conformément aux délais légaux.</p>
-      <p>Destinataires : les données sont traitées uniquement par CDBG et ne sont transmises à aucun tiers sans le consentement de l’utilisateur, sauf obligation légale.</p>
-      <p>Droits des utilisateurs : tout utilisateur dispose d’un droit d’accès, de rectification, de suppression et d’opposition concernant ses données personnelles. Ces droits peuvent être exercés par demande écrite à l’adresse suivante : Compagnie Durable du Bois au Gabon, BP 4447, Libreville, Gabon ou par email (à préciser).</p>
-      <p>Sécurité : CDBG met en place des mesures techniques et organisationnelles adaptées pour protéger les données contre tout accès non autorisé, perte ou altération.</p>
+</section>
+<!-- Ambition -->
+<section class="ambition fade-in" id="ambition">
+  <h2 class="ambition-title">Our Ambition</h2>
+  <div class="ambition-box">
+    Mastering the full value chain of Gabonese wood, from the forest to international export.
+  </div>
+</section>
+<!-- Services -->
+<section class="services fade-in" id="services">
+  <h2>Our Services</h2>
+  <p class="subtitle">A complete value chain</p>
+  <div class="cards">
+    <div class="card">
+      <div class="icon"><img alt="Logging icon" loading="lazy" src="ciseaux.webp"/></div>
+      <h3>Forestry Operations</h3>
+      <p>Techniques respectful of the environment and biodiversity.</p>
+    </div>
+    <div class="card">
+      <div class="icon"><img alt="Sawing icon" loading="lazy" src="scie.webp"/></div>
+      <h3>Sawing</h3>
+      <p>Primary processing with modern equipment and skilled workforce.</p>
+    </div>
+    <div class="card">
+      <div class="icon"><img alt="Logistics icon" loading="lazy" src="logistique.webp"/></div>
+      <h3>Logistics</h3>
+      <p>Transport and logistics adapted to national market needs.</p>
     </div>
   </div>
+</section>
 
-  <div id="modal-cookies-fr" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Cookies</h2>
-      <p>Lors de la navigation sur le site de la Compagnie Durable du Bois au Gabon (CDBG), des cookies peuvent être déposés sur l’ordinateur ou l’appareil de l’utilisateur.</p>
-      <p>Définition : un cookie est un petit fichier texte enregistré par le navigateur Internet, permettant de faciliter la navigation et de mesurer l’audience du site.</p>
-      <p>Types de cookies utilisés :</p>
+<!-- Commitments -->
+<section class="engagements fade-in" id="engagements">
+  <h2>Our Commitments</h2>
+  <div class="engagement-img">
+    <picture>
+      <source media="(max-width: 768px)" srcset="elephant_forest_small.webp"/>
+      <img alt="Elephant in Gabon forest" loading="lazy" src="elephant_forest.webp"/>
+    </picture>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <div class="icon"><img alt="Environment icon" loading="lazy" src="environnement.webp"/></div>
+      <h3>Environmental Respect</h3>
+      <p>Our project puts ecology, wildlife, and flora at the heart of each action.</p>
+    </div>
+    <div class="card">
+      <div class="icon"><img alt="Local jobs icon" loading="lazy" src="emploi.webp"/></div>
+      <h3>Socio-economic Development</h3>
+      <p>Creating local jobs and supporting socio-economic development in Bitam.</p>
+    </div>
+    <div class="card">
+      <div class="icon"><img alt="Value chain icon" loading="lazy" src="chaine.webp"/></div>
+      <h3>Value Chain Mastery</h3>
+      <p>Our ambition is to control the entire wood value chain, from forest to international export.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section class="gallery fade-in" id="gallery">
+  <h2>Gallery</h2>
+  <div class="gallery-row">
+    <div class="gallery-item">
+      <picture>
+        <source media="(max-width: 768px)" srcset="grumes_generiques_small.webp"/>
+        <img alt="Tropical logs" loading="lazy" src="grumes_generiques.webp"/>
+      </picture>
+    </div>
+    <div class="gallery-item">
+      <picture>
+        <source media="(max-width: 768px)" srcset="planches_generiques_small.webp"/>
+        <img alt="Tropical planks" loading="lazy" src="planches_generiques.webp"/>
+      </picture>
+    </div>
+  </div>
+</section>
+
+<!-- Partnerships -->
+<section class="partnerships fade-in" id="partnerships">
+  <h2>Partnerships</h2>
+  <div class="cards">
+    <div class="card">
+      <div class="icon"><img alt="Sustainable development icon" loading="lazy" src="developpement-se.webp"/></div>
+      <p>Our company is open to all collaboration or partnership requests in forestry, sawing, logistics, and transport.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Learn Gabon -->
+<section class="learn-gabon fade-in" id="learn-gabon">
+  <h2 class="learn-title">Learn more about Gabon</h2>
+  <div class="learn-grid">
+    <a class="learn-card" href="https://www.gouvernement.ga/" target="_blank">Government of Gabon</a>
+    <a class="learn-card" href="https://www.eaux-forets.gouv.ga/" target="_blank">Ministry of Water and Forests</a>
+    <a class="learn-card" href="https://www.wwfgabon.org/" target="_blank">WWF</a>
+    <a class="learn-card" href="https://gabon.wcs.org/en-us/" target="_blank">WCS Gabon</a>
+    <a class="learn-card" href="https://fpbg.org/" target="_blank">FPBG in Gabon</a>
+    <a class="learn-card" href="https://brainforest-gabon.org/" target="_blank">Brainforest in Gabon</a>
+    <a class="learn-card" href="https://fsc.org/en/gabon" target="_blank">FSC in Gabon</a>
+    <!-- Video link -->
+    <a class="learn-card" href="https://youtu.be/Fd89uelmQ3k?feature=shared" target="_blank">
+      Natural wealth of Gabon in video
+    </a>
+  </div>
+</section>
+
+<!-- Forest News Section -->
+<section class="news-section fade-in" id="forest-news">
+  <h2>Forest News</h2>
+  <div class="news-container" id="news-en">
+    <!-- The 5 latest articles will be injected here -->
+  </div>
+  
+  <!-- "See all news" link styled as a card -->
+  <div class="more-link">
+    <a href="actualites-en.html" class="learn-card btn btn-primary">See all news</a>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact fade-in" id="contact">
+  <h2>Contact</h2>
+  <div class="contact-container">
+    <form class="contact-form">
+      <input placeholder="Nom" type="text"/>
+      <input placeholder="Email" type="email"/>
+      <input placeholder="Objet" type="text"/>
+      <textarea placeholder="Message"></textarea>
+      <button class="btn btn-primary" type="submit">Envoyer</button>
+    </form>
+    <div class="contact-info">
+      <p><img alt="Adresse" src="adresse.webp"/><span>Ancien Sobraga, Libreville<br/>BP 4447, Gabon</span></p>
+      <p><img alt="Téléphone" src="tel.webp"/><span>+241 77 25 9169</span></p>
+    </div>
+    <div class="contact-map">
+      <iframe allowfullscreen="" loading="lazy" src="https://www.google.com/maps?q=Bitam%20Gabon&amp;output=embed"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-col">
+      <h4>Compagnie Durable du Bois au Gabon</h4>
+      <p>Exploitation forestière responsable pour un avenir durable</p>
+      <p>N° RCCM : GA-LBV-01-2025-B16-00034</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p>Libreville, Gabon</p>
+      <p>+241 77 25 9169</p>
+    </div>
+    <div class="footer-col">
+      <h4>Mentions légales</h4>
       <ul>
-        <li>Cookies techniques nécessaires au fonctionnement du site.</li>
-        <li>Cookies de mesure d’audience (statistiques anonymisées).</li>
+        <li><a href="#" class="open-modal" data-modal="modal-cgu-fr">Conditions Générales d’Utilisation</a></li>
+        <li><a href="#" class="open-modal" data-modal="modal-privacy-fr">Politique de confidentialité</a></li>
+        <li><a href="#" class="open-modal" data-modal="modal-cookies-fr">Cookies</a></li>
       </ul>
-      <p>Finalité : améliorer l’expérience utilisateur et optimiser la performance du site.</p>
-      <p>Paramétrage : l’utilisateur peut à tout moment désactiver les cookies en configurant son navigateur (Chrome, Firefox, Safari, Edge, etc.). Toutefois, certaines fonctionnalités du site peuvent être affectées.</p>
-      <p>Consentement : en poursuivant votre navigation sur ce site, vous acceptez l’utilisation des cookies conformément à la présente politique.</p>
     </div>
   </div>
+  <div class="footer-bottom">
+    <p>© 2025 Compagnie Durable du Bois au Gabon. Tous droits réservés.</p>
+  </div>
+</footer>
 
-  <!-- Scripts -->
-  <script>
-    // Burger menu transparent
-    const burger = document.getElementById('burger');
-    const navLinks = document.querySelector('.nav-links');
-    burger && burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+<!-- Modals -->
+<div id="modal-cgu-fr" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Conditions Générales d’Utilisation</h2>
+    <p>Les présentes Conditions Générales d’Utilisation (CGU) régissent l’accès et l’utilisation du site de la Compagnie Durable du Bois au Gabon (CDBG). En accédant au site, vous acceptez sans réserve les présentes conditions.</p>
+    <p>Tout contenu est protégé par le droit de la propriété intellectuelle et toute utilisation non autorisée est interdite.</p>
+    <p>Éditeur du site : Compagnie Durable du Bois au Gabon (CDBG), RCCM n° GA-LBV-01-2025-B16-00034, siège social : Ancien Sobraga, Libreville, BP 4447, Gabon.</p>
+        <p>Pour toute question relative à l’utilisation du site, vous pouvez nous contacter à l’adresse suivante : info@cdbg-gabon.com.</p>
+  </div>
+</div>
 
-    // Smooth scroll pour les ancres
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth' });
-          if (navLinks.classList.contains('open')) navLinks.classList.remove('open');
+<!-- Modal Privacy Policy -->
+<div id="modal-privacy-fr" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Politique de Confidentialité</h2>
+    <p>Nous prenons la protection de vos données personnelles très au sérieux. La présente politique de confidentialité explique comment nous recueillons, utilisons et protégeons vos informations.</p>
+    <p>En utilisant notre site, vous consentez à la collecte et à l’utilisation de vos données personnelles conformément à cette politique.</p>
+    <p>Pour toute question concernant la confidentialité, veuillez nous contacter à l'adresse info@cdbg-gabon.com.</p>
+  </div>
+</div>
+
+<!-- Modal Cookies Policy -->
+<div id="modal-cookies-fr" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Politique des Cookies</h2>
+    <p>Nous utilisons des cookies pour améliorer votre expérience sur notre site. En poursuivant votre navigation, vous acceptez l'utilisation de ces cookies conformément à notre politique de cookies.</p>
+    <p>Pour en savoir plus sur l’utilisation des cookies et comment les gérer, consultez notre politique complète.</p>
+  </div>
+</div>
+
+<!-- JavaScript pour gérer les modals et autres interactions -->
+<script>
+  document.querySelectorAll('.open-modal').forEach(function(button) {
+    button.addEventListener('click', function(event) {
+      event.preventDefault();
+      var modalId = button.getAttribute('data-modal');
+      var modal = document.getElementById(modalId);
+      modal.style.display = 'block';
+    });
+  });
+
+  document.querySelectorAll('.close').forEach(function(span) {
+    span.addEventListener('click', function() {
+      var modal = span.closest('.modal');
+      modal.style.display = 'none';
+    });
+  });
+
+  window.addEventListener('click', function(event) {
+    if (event.target.classList.contains('modal')) {
+      event.target.style.display = 'none';
+    }
+  });
+
+  // Script for loading RSS feeds dynamically
+  function loadNews(options) {
+    var xmlUrl = options.xmlUrl;
+    var containerId = options.containerId;
+    var loadMoreBtnId = options.loadMoreBtnId;
+    var batch = options.batch || 5;
+    var lang = options.lang || 'fr';
+
+    fetch(xmlUrl)
+      .then(response => response.text())
+      .then(data => {
+        var parser = new DOMParser();
+        var xmlDoc = parser.parseFromString(data, 'text/xml');
+        var items = xmlDoc.getElementsByTagName('item');
+        var articles = Array.from(items).slice(0, batch);
+
+        var container = document.getElementById(containerId);
+        articles.forEach(function(item) {
+          var article = document.createElement('div');
+          article.classList.add('news-item');
+
+          var title = item.getElementsByTagName('title')[0].textContent;
+          var link = item.getElementsByTagName('link')[0].textContent;
+          var description = item.getElementsByTagName('description')[0].textContent;
+
+          article.innerHTML = `
+            <h3><a href="${link}" target="_blank">${title}</a></h3>
+            <p>${description}</p>
+          `;
+
+          container.appendChild(article);
+        });
+
+        // Hide or show load more button
+        if (loadMoreBtnId && articles.length < items.length) {
+          var loadMoreButton = document.getElementById(loadMoreBtnId);
+          loadMoreButton.style.display = 'block';
+          loadMoreButton.addEventListener('click', function() {
+            loadNews({
+              xmlUrl: xmlUrl,
+              containerId: containerId,
+              loadMoreBtnId: loadMoreBtnId,
+              batch: batch + 5,
+              lang: lang
+            });
+          });
         }
-      });
-    });
+      })
+      .catch(error => console.error('Error loading RSS feed:', error));
+  }
 
-    // Gestion des modales
-    const openModalButtons = document.querySelectorAll('.open-modal');
-    const modals = document.querySelectorAll('.modal');
-    const closeModalButtons = document.querySelectorAll('.modal .close');
+  // Initialize RSS loading
+  loadNews({
+    xmlUrl: "https://www.cdbg-gabon.com/actualites.xml",
+    containerId: "news-en",
+    loadMoreBtnId: null,
+    batch: 5,
+    lang: "fr"
+  });
+</script>
 
-    openModalButtons.forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.preventDefault();
-        const modalId = btn.getAttribute('data-modal');
-        const modal = document.getElementById(modalId);
-        modal && (modal.style.display = 'block');
-      });
-    });
-
-    closeModalButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        btn.closest('.modal').style.display = 'none';
-      });
-    });
-
-    window.addEventListener('click', e => {
-      modals.forEach(modal => {
-        if (e.target === modal) modal.style.display = 'none';
-      });
-    });
-  </script>
 </body>
 </html>
+
+
