@@ -3,7 +3,7 @@ async function loadForestNewsEN() {
     if (!container) return;
 
     try {
-        const rssUrl = "https://www.cdbg-gabon.com/actualites.xml"; // Flux RSS en français (pour la version anglaise aussi)
+        const rssUrl = "https://www.cdbg-gabon.com/actualites.xml"; // Flux RSS
         const response = await fetch(rssUrl);
         const text = await response.text();
 
@@ -16,32 +16,41 @@ async function loadForestNewsEN() {
             return;
         }
 
+        // Vider le conteneur avant de charger les nouveaux articles
+        container.innerHTML = "";
+
         for (let i = 0; i < Math.min(5, items.length); i++) {
             const item = items[i];
             const title = item.querySelector("title")?.textContent || "No title";
             const link = item.querySelector("link")?.textContent || "#";
             const date = item.querySelector("pubDate")?.textContent || "";
-            const description = item.querySelector("description")?.textContent || "";
-            const imageUrl = item.querySelector("enclosure")?.getAttribute("url") || "default-image.jpg";
 
+            // Convertir la date en format lisible
+            const formattedDate = new Date(date).toLocaleDateString("en-GB", {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+
+            // Créer la carte d'article sans image et sans description
             const card = document.createElement("a");
             card.className = "actus-card";
             card.href = link;
             card.target = "_blank";
 
+            // Remplir la carte avec le titre, la date et la source fixe
             card.innerHTML = `
-                <img src="${imageUrl}" alt="${title}">
                 <div class="actus-card-content">
                     <h3>${title}</h3>
-                    <p class="date">${new Date(date).toLocaleDateString("en-GB")}</p>
-                    <p class="excerpt">${description.substring(0, 120)}...</p>
-                    <p class="source">Source: ${item.querySelector("source") ? item.querySelector("source").textContent : "Unknown"}</p>
+                    <p class="date">${formattedDate}</p>
+                    <p class="source">Source: Partenariat pour les forêts du bassin du Congo</p>
                 </div>
             `;
             container.appendChild(card);
         }
     } catch (error) {
         console.error("Error loading English news:", error);
+        container.innerHTML = "<p>Error loading the articles. Please try again later.</p>";
     }
 }
 
