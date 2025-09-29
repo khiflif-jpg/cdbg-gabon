@@ -57,7 +57,6 @@
   <link href="style.css" rel="stylesheet"/>
   <link href="logo.png" rel="icon" type="image/png"/>
 </head>
-</head>
 <body>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K8VBV9ZJ"
@@ -98,6 +97,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 </header>
+
 <!-- Bitam -->
 <section class="bitam fade-in" id="bitam">
   <div class="bitam-content">
@@ -148,6 +148,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     Mastering the full value chain of Gabonese wood, from the forest to international export.
   </div>
 </section>
+
 <!-- Services -->
 <section class="services fade-in" id="services">
   <h2>Our Services</h2>
@@ -170,6 +171,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 </section>
+
 <!-- Gallery -->
 <section class="gallery fade-in" id="gallery">
   <h2>Gallery</h2>
@@ -219,7 +221,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </section>
 
 <!-- News Section -->
-<!-- === Forest News Section (EN) === -->
 <section class="news-section fade-in" id="forest-news-en">
   <h2>News</h2>
   <div class="news-container" id="news-en">
@@ -229,94 +230,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a href="actualites-en.html" class="learn-card btn btn-primary">See all news</a>
   </div>
 </section>
-
-<!-- === CSS (re-use the same as FR, already in index.html) === -->
-
-<!-- === Script for loading EN news === -->
-<script>
-  async function loadNews({ xmlUrl, containerId, batch = 5, lang = "en" }) {
-    const container = document.getElementById(containerId);
-
-    try {
-      const res = await fetch(xmlUrl);
-      const text = await res.text();
-      const parser = new DOMParser();
-      const xml = parser.parseFromString(text, "application/xml");
-      const items = [...xml.querySelectorAll("item")].slice(0, batch);
-
-      items.forEach(item => {
-        const title = item.querySelector("title")?.textContent || "No title";
-        const link = item.querySelector("link")?.textContent || "#";
-        const description = item.querySelector("description")?.textContent || "";
-        const pubDate = new Date(item.querySelector("pubDate")?.textContent);
-        const source = item.querySelector("source")?.textContent || "RSS Feed";
-
-        // Check image
-        let imageUrl = "";
-        const enclosure = item.querySelector("enclosure");
-        if (enclosure && enclosure.getAttribute("url")) {
-          imageUrl = enclosure.getAttribute("url");
-        } else {
-          const content = item.getElementsByTagName("content:encoded")[0];
-          if (content && content.textContent.match(/<img[^>]+src="([^">]+)"/)) {
-            imageUrl = RegExp.$1;
-          }
-        }
-
-        // Create card
-        const card = document.createElement("a");
-        card.href = link;
-        card.target = "_blank";
-        card.className = "news-card";
-
-        if (imageUrl) {
-          card.innerHTML = `
-            <div class="news-image">
-              <img src="${imageUrl}" alt="${title}">
-            </div>
-            <div class="news-content">
-              <h3 class="news-title">${title}</h3>
-              <p class="news-desc">${description}</p>
-              <div class="news-meta">${pubDate.toLocaleDateString(lang)} – ${source}</div>
-            </div>
-          `;
-        } else {
-          card.innerHTML = `
-            <div class="news-placeholder">${title}</div>
-            <div class="news-content">
-              <p class="news-desc">${description}</p>
-              <div class="news-meta">${pubDate.toLocaleDateString(lang)} – ${source}</div>
-            </div>
-          `;
-        }
-
-        container.appendChild(card);
-      });
-    } catch (err) {
-      console.error("Error loading RSS feed:", err);
-    }
-  }
-
-  // Load 5 articles for EN homepage
-  loadNews({
-    xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml", /* 🔁 Remplace avec flux EN */
-    containerId: "news-en",
-    batch: 5,
-    lang: "en"
-  });
-</script>
-
-<!-- Script for RSS -->
-<script src="news.js"></script>
-<script>
-  loadNews({
-    xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml", // ✅ same RSS feed
-    containerId: "news-en",  // matches the div id above
-    loadMoreBtnId: null,     // no button on homepage
-    batch: 5,                // 5 articles on homepage
-    lang: "en"               // English mode
-  });
-</script>
 
 <!-- Contact -->
 <section class="contact fade-in" id="contact">
@@ -401,51 +314,63 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2>Cookies</h2>
-    <p>While browsing the website of Compagnie Durable du Bois in Gabon (CDBG), cookies may be placed on the user's computer or device.</p>
-    <p>Definition: A cookie is a small text file stored by the web browser to facilitate navigation and measure site traffic.</p>
-        <p>Types of cookies used:</p>
-    <ul>
-      <li>Essential cookies: Required for the proper functioning of the website and its features.</li>
-      <li>Performance cookies: Used to analyze site usage and improve user experience.</li>
-      <li>Advertising cookies: Used to offer relevant advertisements based on your preferences.</li>
-    </ul>
-    <p>By using the website, you consent to the placement of cookies on your device. You can manage your cookie preferences through your browser settings. However, disabling cookies may affect your experience on the site.</p>
-    <p>For more information on cookies and how we use them, please refer to our Privacy Policy.</p>
+    <p>Cookies are text files stored on your device when you visit a website. They enable us to improve site functionality and analyze traffic.</p>
+    <p>Types of cookies used: session cookies (for site operation) and analytics cookies (to measure audience and usage).</p>
+    <p>You can manage cookies in your browser settings. Refusing cookies may affect your browsing experience.</p>
   </div>
 </div>
 
-<!-- Scripts for Modal and RSS -->
-<script>
-  // Function to open modals
-  document.querySelectorAll('.open-modal').forEach(button => {
-    button.addEventListener('click', function(e) {
-      e.preventDefault();
-      const modalId = this.getAttribute('data-modal');
-      document.getElementById(modalId).style.display = 'block';
-    });
-  });
-
-  // Close modals when clicking the close button
-  document.querySelectorAll('.close').forEach(closeBtn => {
-    closeBtn.addEventListener('click', function() {
-      this.closest('.modal').style.display = 'none';
-    });
-  });
-
- <!-- Script for RSS -->
+<!-- Scripts -->
 <script src="news.js"></script>
 <script>
-  loadNews({
-    xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml", // ✅ correct RSS feed
-    containerId: "news-en",  // ✅ corresponds to <div id="news-en">
-    loadMoreBtnId: null,     // ✅ no button on homepage
-    batch: 5,                // ✅ only 5 articles on homepage
-    lang: "en"               // ✅ English
+  // Load 5 latest English news articles
+  document.addEventListener("DOMContentLoaded", () => {
+    loadNews("en", "news-en", 5);
+  });
+
+  // Navbar burger menu
+  document.getElementById("burger").addEventListener("click", () => {
+    document.querySelector(".nav-links").classList.toggle("open");
+  });
+
+  // Intersection Observer for fade-in
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
+
+  // Modal handling
+  const modals = document.querySelectorAll(".modal");
+  const modalTriggers = document.querySelectorAll(".open-modal");
+  const modalCloses = document.querySelectorAll(".close");
+
+  modalTriggers.forEach(trigger => {
+    trigger.addEventListener("click", e => {
+      e.preventDefault();
+      const modalId = trigger.getAttribute("data-modal");
+      document.getElementById(modalId).style.display = "block";
+    });
+  });
+
+  modalCloses.forEach(closeBtn => {
+    closeBtn.addEventListener("click", () => {
+      closeBtn.closest(".modal").style.display = "none";
+    });
+  });
+
+  window.addEventListener("click", e => {
+    modals.forEach(modal => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    });
   });
 </script>
-
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
 </body>
 </html>
-
