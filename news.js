@@ -24,8 +24,8 @@ async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang =
                 const title = item.querySelector("title")?.textContent || (lang === "fr" ? "Pas de titre" : "No title");
                 const link = item.querySelector("link")?.textContent || "#";
                 const date = item.querySelector("pubDate")?.textContent || "";
-                const description = item.querySelector("description")?.textContent || "";
 
+                // formatage date
                 const formattedDate = date
                     ? new Date(date).toLocaleDateString(lang === "fr" ? "fr-FR" : "en-GB", {
                           year: "numeric",
@@ -34,14 +34,16 @@ async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang =
                       })
                     : "";
 
-                // 🔎 Extraction d'une éventuelle image depuis <enclosure> ou <description>
-                let imageUrl = item.querySelector("enclosure")?.getAttribute("url") || "";
-                if (!imageUrl && description.includes("<img")) {
-                    const match = description.match(/<img[^>]+src="([^">]+)"/i);
-                    if (match) imageUrl = match[1];
-                }
+                // recherche image (balise <media:content> ou <enclosure>)
+                let imageUrl =
+                    item.querySelector("media\\:content, enclosure")?.getAttribute("url") || "";
 
-                // ✅ Carte cliquable
+                // si pas d'image → on ne met rien (pas de placeholder)
+                const imageHtml = imageUrl
+                    ? `<img class="news-img" src="${imageUrl}" alt="Illustration">`
+                    : "";
+
+                // carte cliquable
                 const card = document.createElement("a");
                 card.className = "actus-card";
                 card.href = link;
@@ -50,7 +52,7 @@ async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang =
 
                 card.innerHTML = `
                     <div class="actus-card-content">
-                        ${imageUrl ? `<div class="news-img"><img src="${imageUrl}" alt="${title}" loading="lazy"></div>` : ""}
+                        ${imageHtml}
                         <h3>${title}</h3>
                         <p class="date">${formattedDate}</p>
                         <p class="source">${lang === "fr"
@@ -61,13 +63,16 @@ async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang =
                 container.appendChild(card);
             }
 
+            // cacher le bouton si plus rien
             if (index >= items.length && loadMoreBtnId) {
                 document.getElementById(loadMoreBtnId).style.display = "none";
             }
         }
 
+        // premier lot
         renderBatch();
 
+        // gestion du bouton
         if (loadMoreBtnId) {
             const btn = document.getElementById(loadMoreBtnId);
             btn.addEventListener("click", renderBatch);
