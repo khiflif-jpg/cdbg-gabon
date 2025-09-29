@@ -2,52 +2,33 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Actualités forestières – CDBG</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Actualités</title>
 </head>
 <body>
-<header class="navbar">
-  <div class="logo"><a href="index.html"><img src="logo.webp" alt="CDBG"></a></div>
-  <ul class="nav-links">
-    <li><a href="index.html">Accueil</a></li>
-    <li><a href="#about">À propos</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="actualites.html" class="active">Actualités</a></li>
-  </ul>
-</header>
 
-<main class="news-page">
-  <h1>Actualités forestières</h1>
-  <p class="subtitle">Les dernières informations sur les forêts du Gabon et d’Afrique centrale</p>
-
-  <!-- Conteneur des articles -->
-  <div id="news-fr" class="news-grid"></div>
-
-  <!-- Bouton Voir plus -->
-  <button id="loadMoreBtnFr" class="btn">Voir plus</button>
-</main>
-
-<footer>
-  <div class="footer-container">
-    <div class="footer-col">
-      <h4>CDBG</h4>
-      <p>Centre de Documentation sur les Forêts du Gabon</p>
+  <!-- Section des actualités -->
+  <section class="news-section fade-in" id="forest-news">
+    <h2>Actualités</h2>
+    <div class="news-container" id="news-list">
+      <!-- Articles injectés ici -->
     </div>
-  </div>
-  <div class="footer-bottom">© 2025 CDBG – Tous droits réservés</div>
-</footer>
 
-<!-- Script principal -->
-<script src="news.js"></script>
-<script>
-  loadNews({
-    xmlUrl: "https://rss.app/feeds/yP7WRGmRBIe1fycP.xml",
-    containerId: "news-fr",
-    loadMoreBtnId: "loadMoreBtnFr",
-    batch: 10,
-    lang: "fr"
-  });
-</script>
+    <!-- Bouton "Voir plus" -->
+    <div class="load-more">
+      <button id="load-more-btn">Voir plus</button>
+    </div>
+  </section>
+
+  <!-- Scripts -->
+  <script src="news.js"></script>
+  <script>
+    loadNews({
+      xmlUrl: "https://feedfry.com/rss/11f09c60ca0751419b73c43573c94c6e",
+      containerId: "news-list",
+      batch: 12,                  // combien d’articles à charger par lot
+      loadMoreBtnId: "load-more-btn",
+      lang: "fr"
+    });
+  </script>
 </body>
 </html>
