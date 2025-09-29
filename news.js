@@ -49,15 +49,14 @@ async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang =
     let index = 0;
     function renderBatch() {
       for (let i = 0; i < batch && index < items.length; i++, index++) {
-        const item = items[i];
+        const item = items[index];
         const title = item.querySelector("title")?.textContent || (lang === "fr" ? "Pas de titre" : "No title");
         const link = item.querySelector("link")?.textContent || "#";
         const date = item.querySelector("pubDate")?.textContent || "";
 
-        // ✅ Extraire image depuis enclosure ou media:content
-        let imageUrl = item.querySelector("enclosure")?.getAttribute("url")
-          || item.querySelector("media\\:content")?.getAttribute("url")
-          || null;
+        // ✅ Extraire image depuis media:content
+        const media = item.getElementsByTagName("media:content")[0];
+        let imageUrl = media ? media.getAttribute("url") : "placeholder.webp";
 
         const formattedDate = date
           ? new Date(date).toLocaleDateString(lang === "fr" ? "fr-FR" : "en-GB", {
@@ -74,27 +73,28 @@ async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang =
         card.target = "_blank"; 
         card.rel = "noopener noreferrer";
 
-        // ✅ Construction du contenu avec fallback
+        // ✅ Construction du contenu
         card.innerHTML = `
-          ${imageUrl ? `<div class="news-img">
-              <img src="${imageUrl}" alt="${title}" loading="lazy"
-                   onerror="this.onerror=null; this.src='placeholder.webp';">
-            </div>` : ""}
+          <div class="news-img">
+            <img src="${imageUrl}" alt="${title}" loading="lazy"
+                 onerror="this.onerror=null; this.src='placeholder.webp';">
+          </div>
           <div class="actus-card-content">
             <h3>${title}</h3>
             <p class="date">${formattedDate}</p>
             <p class="source">${lang === "fr"
-              ? "Source: Partenariat pour les forêts du bassin du Congo"
-              : "Source: Congo Basin Forest Partnership"}</p>
+              ? "Source : Partenariat pour les forêts du bassin du Congo"
+              : "Source : Congo Basin Forest Partnership"}</p>
           </div>
         `;
 
         container.appendChild(card);
       }
 
-      // ✅ Si plus rien à afficher → cacher le bouton
+      // ✅ Cacher le bouton si plus rien à charger
       if (index >= items.length && loadMoreBtnId) {
-        document.getElementById(loadMoreBtnId).style.display = "none";
+        const btn = document.getElementById(loadMoreBtnId);
+        if (btn) btn.style.display = "none";
       }
     }
 
@@ -104,7 +104,7 @@ async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang =
     // ✅ Gérer le bouton "Voir plus" / "Load more"
     if (loadMoreBtnId) {
       const btn = document.getElementById(loadMoreBtnId);
-      btn.addEventListener("click", renderBatch);
+      if (btn) btn.addEventListener("click", renderBatch);
     }
   } catch (error) {
     console.error("Erreur lors du chargement des actualités :", error);
