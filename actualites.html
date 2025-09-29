@@ -13,7 +13,7 @@
     <li><a href="index.html">Accueil</a></li>
     <li><a href="#about">À propos</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="actualites.html">Actualités</a></li>
+    <li><a href="actualites.html" class="active">Actualités</a></li>
   </ul>
 </header>
 
@@ -34,17 +34,16 @@
   <div class="footer-bottom">© 2025 CDBG – Tous droits réservés</div>
 </footer>
 
-<!-- Script intégré pour charger les actualités -->
+<!-- Script principal -->
 <script src="news.js"></script>
 <script>
   loadNews({
-    xmlUrl: "actualites.xml",        // ton flux généré
-    containerId: "news-list",        // ou "news-fr" / "news-en"
-    loadMoreBtnId: "load-more-btn",  // bouton si tu en as un
-    batch: 10,                       // nombre d’articles par lot
-    lang: "fr"                       // "fr" pour FR, "en" pour EN
+    xmlUrl: "actualites.xml",       // ton flux généré par merge_rss.py
+    containerId: "news-list",
+    loadMoreBtnId: "load-more-btn",
+    batch: 10,
+    lang: "fr"
   });
 </script>
-
 </body>
 </html>
