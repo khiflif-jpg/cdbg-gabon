@@ -36,13 +36,12 @@
 
 <!-- Script pour charger les actualités -->
 <script>
-async function loadForestNewsEN() {
-    const container = document.getElementById("news-list");
+async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang = "en" }) {
+    const container = document.getElementById(containerId);
     if (!container) return;
 
     try {
-        const rssUrl = "actualites.xml"; // flux principal FR
-        const response = await fetch(rssUrl);
+        const response = await fetch(xmlUrl);
         const text = await response.text();
 
         const parser = new DOMParser();
@@ -54,53 +53,60 @@ async function loadForestNewsEN() {
             return;
         }
 
-        container.innerHTML = "";
-        for (let i = 0; i < Math.min(20, items.length); i++) { // afficher plus d’articles ici
-            const item = items[i];
-            const title = item.querySelector("title")?.textContent || "No title";
-            const link = item.querySelector("link")?.textContent || "#";
-            const date = item.querySelector("pubDate")?.textContent || "";
+        let index = 0;
+        function renderBatch() {
+            for (let i = 0; i < batch && index < items.length; i++, index++) {
+                const item = items[index];
+                const title = item.querySelector("title")?.textContent || "No title";
+                const link = item.querySelector("link")?.textContent || "#";
+                const date = item.querySelector("pubDate")?.textContent || "";
+                const formattedDate = date
+                    ? new Date(date).toLocaleDateString("en-GB", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                      })
+                    : "";
 
-            const formattedDate = new Date(date).toLocaleDateString("en-GB", {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-            });
+                const card = document.createElement("a");
+                card.className = "actus-card";
+                card.href = link;
+                card.target = "_blank";
+                card.rel = "noopener noreferrer";
 
-            const card = document.createElement("a");
-            card.className = "actus-card";
-            card.href = link;
-            card.target = "_blank";
+                card.innerHTML = `
+                    <div class="actus-card-content">
+                        <h3>${title}</h3>
+                        <p class="date">${formattedDate}</p>
+                        <p class="source">Source: Congo Basin Forest Partnership</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            }
 
-            card.innerHTML = `
-                <div class="actus-card-content">
-                    <h3>${title}</h3>
-                    <p class="date">${formattedDate}</p>
-                    <p class="source">Source: Congo Basin Forest Partnership</p>
-                </div>
-            `;
-            container.appendChild(card);
+            if (index >= items.length && loadMoreBtnId) {
+                document.getElementById(loadMoreBtnId).style.display = "none";
+            }
+        }
+
+        renderBatch();
+
+        if (loadMoreBtnId) {
+            document.getElementById(loadMoreBtnId).addEventListener("click", renderBatch);
         }
     } catch (error) {
-        console.error("Error loading news:", error);
+        console.error("Error loading the articles:", error);
         container.innerHTML = "<p>Error loading the articles. Please try again later.</p>";
     }
 }
-document.addEventListener("DOMContentLoaded", loadForestNewsEN);
-</script>
 
-<!-- Google Translate widget -->
-<div id="google_translate_element" style="display:none;"></div>
-<script type="text/javascript">
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-      pageLanguage: 'fr',       // langue originale du flux
-      includedLanguages: 'en',  // traduire en anglais
-      autoDisplay: true
-    }, 'google_translate_element');
-  }
+loadNews({
+    xmlUrl: "actualites.xml",
+    containerId: "news-list",
+    loadMoreBtnId: "load-more-btn",
+    batch: 10,
+    lang: "en"
+});
 </script>
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
 </body>
 </html>
