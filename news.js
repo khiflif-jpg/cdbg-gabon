@@ -25,13 +25,44 @@ async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang =
                 const link = item.querySelector("link")?.textContent || "#";
                 const date = item.querySelector("pubDate")?.textContent || "";
 
-                // ✅ On essaie de récupérer une image
+                // ✅ Recherche d'image
                 let imageUrl = "";
-                const mediaContent = item.querySelector("media\\:content, content\\:encoded, enclosure");
+                let originalImage = "";
+
+                // 1. media:content ou enclosure
+                const mediaContent = item.querySelector("media\\:content, enclosure");
                 if (mediaContent) {
-                    imageUrl = mediaContent.getAttribute("url") || "";
+                    originalImage = mediaContent.getAttribute("url") || "";
                 }
 
+                // 2. content:encoded
+                if (!originalImage) {
+                    const encoded = item.querySelector("content\\:encoded");
+                    if (encoded) {
+                        const html = encoded.textContent;
+                        const match = html.match(/<img[^>]+src="([^">]+)"/i);
+                        if (match) originalImage = match[1];
+                    }
+                }
+
+                // 3. description
+                if (!originalImage) {
+                    const desc = item.querySelector("description");
+                    if (desc) {
+                        const html = desc.textContent;
+                        const match = html.match(/<img[^>]+src="([^">]+)"/i);
+                        if (match) originalImage = match[1];
+                    }
+                }
+
+                // ✅ Tentative WebP
+                if (originalImage && (originalImage.endsWith(".jpg") || originalImage.endsWith(".jpeg") || originalImage.endsWith(".png"))) {
+                    imageUrl = originalImage.replace(/\.(jpg|jpeg|png)$/i, ".webp");
+                } else {
+                    imageUrl = originalImage;
+                }
+
+                // Format date
                 const formattedDate = date
                     ? new Date(date).toLocaleDateString(lang === "fr" ? "fr-FR" : "en-GB", {
                           year: "numeric",
@@ -49,7 +80,13 @@ async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang =
 
                 card.innerHTML = `
                     <div class="actus-card-content">
-                        ${imageUrl ? `<div class="news-img"><img src="${imageUrl}" alt="Aperçu de l'article"></div>` : ""}
+                        ${imageUrl ? `
+                            <div class="news-img">
+                                <img src="${imageUrl}" 
+                                     alt="Aperçu de l'article" 
+                                     loading="lazy"
+                                     onerror="this.onerror=null;this.src='${originalImage}'">
+                            </div>` : ""}
                         <h3>${title}</h3>
                         <p class="date">${formattedDate}</p>
                         <p class="source">${lang === "fr"
