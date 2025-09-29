@@ -401,15 +401,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
   });
 </script>
-
-<!-- Script pour charger les actualités depuis le RSS -->
 <script src="news.js"></script>
 <script>
   loadNews({
-    xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml", // ✅ ton flux RSS
-    containerId: "news-fr", // correspond bien au <div id="news-fr">
-    loadMoreBtnId: null,    // pas de bouton sur la page d’accueil
-    batch: 5,               // seulement 5 articles sur la home
+    xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml", // ✅ bon flux RSS
+    containerId: "news-fr", // correspond au <div id="news-fr">
+    loadMoreBtnId: null,    // pas de bouton "voir plus" sur la home
+    batch: 5,               // seulement 5 articles sur la page d’accueil
     lang: "fr"              // affichage en français
   });
 </script>
