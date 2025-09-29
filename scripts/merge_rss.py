@@ -3,11 +3,11 @@ import json
 from datetime import datetime, timezone
 from feedgen.feed import FeedGenerator
 
-# Flux source (FeedFry qui agrège RFI, CIFOR, etc.)
+# URL du flux RSS Feedfry
 RSS_FEED = "https://feedfry.com/rss/11f09c60ca0751419b73c43573c94c6e"
 
 def parse_date(date_str):
-    """Convertit une date RSS en datetime avec timezone UTC."""
+    """Convertit une date en datetime avec timezone UTC."""
     formats = [
         "%a, %d %b %Y %H:%M:%S %Z",
         "%a, %d %b %Y %H:%M:%S %z",
@@ -21,8 +21,7 @@ def parse_date(date_str):
             return dt.astimezone(timezone.utc)
         except Exception:
             continue
-    # Fallback si parsing impossible
-    return datetime.now(timezone.utc)
+    return datetime.now(timezone.utc)  # fallback si erreur
 
 def traiter_flux():
     articles = []
@@ -34,11 +33,16 @@ def traiter_flux():
         return
 
     for entry in feed.entries:
-        titre = entry.get("title", "").strip()
-        lien = entry.get("link", "").strip()   # 🔹 garde le lien original
+        titre = entry.get("title", "")
+        lien = entry.get("link", "")
+        guid = entry.get("guid", "")
         date_str = entry.get("published", "")
 
-        # Fallback sur date si absente
+        # Si pas de lien, on génère un lien Feedfry depuis le guid
+        if not lien and guid:
+            lien = f"https://feedfry.com/entry/{guid}"
+
+        # Si pas de date → fallback maintenant
         if not date_str:
             parsed_date = datetime.now(timezone.utc)
         else:
@@ -63,21 +67,19 @@ def traiter_flux():
             "articles": articles
         }, f, ensure_ascii=False, indent=2)
 
-    # Sauvegarde XML (RSS standard)
+    # Sauvegarde XML (pour ton site)
     fg = FeedGenerator()
     fg.title("Actualités CDBG")
     fg.link(href="https://www.cdbg-gabon.com/", rel="alternate")
     fg.description("Flux RSS du Partenariat pour les forêts du bassin du Congo")
     fg.language("fr")
 
-    for article in articles[:20]:  # garder les 20 plus récents
+    for article in articles[:20]:
         fe = fg.add_entry()
         fe.title(article["titre"])
-        fe.link(href=article["lien"])  # 🔹 lien réel
+        fe.link(href=article["lien"])
         fe.description(article["source"])
-
-        pub_date = datetime.fromisoformat(article["date"])
-        fe.pubDate(pub_date)
+        fe.pubDate(datetime.fromisoformat(article["date"]))
 
     fg.rss_file("actualites.xml")
 
