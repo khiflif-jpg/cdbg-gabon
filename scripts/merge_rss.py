@@ -3,11 +3,11 @@ import json
 from datetime import datetime, timezone
 from feedgen.feed import FeedGenerator
 
-# URL du flux RSS source (Feedfry)
+# Flux source (FeedFry qui agrège RFI, CIFOR, etc.)
 RSS_FEED = "https://feedfry.com/rss/11f09c60ca0751419b73c43573c94c6e"
 
 def parse_date(date_str):
-    """Convertit une date en datetime UTC, avec fallback si format inconnu."""
+    """Convertit une date RSS en datetime avec timezone UTC."""
     formats = [
         "%a, %d %b %Y %H:%M:%S %Z",
         "%a, %d %b %Y %H:%M:%S %z",
@@ -21,7 +21,8 @@ def parse_date(date_str):
             return dt.astimezone(timezone.utc)
         except Exception:
             continue
-    return datetime.now(timezone.utc)  # fallback
+    # Fallback si parsing impossible
+    return datetime.now(timezone.utc)
 
 def traiter_flux():
     articles = []
@@ -29,18 +30,15 @@ def traiter_flux():
     try:
         feed = feedparser.parse(RSS_FEED)
     except Exception as e:
-        print(f"Erreur lors de la récupération du flux RSS : {e}")
+        print(f"❌ Erreur lors de la récupération du flux RSS : {e}")
         return
 
-    for i, entry in enumerate(feed.entries):
-        titre = entry.get("title", "")
-        lien = entry.get("link", "").strip()
-
-        # Si pas de lien dans le flux source → fallback vers une page interne
-        if not lien:
-            lien = f"https://www.cdbg-gabon.com/actualite-{i+1}.html"
-
+    for entry in feed.entries:
+        titre = entry.get("title", "").strip()
+        lien = entry.get("link", "").strip()   # 🔹 garde le lien original
         date_str = entry.get("published", "")
+
+        # Fallback sur date si absente
         if not date_str:
             parsed_date = datetime.now(timezone.utc)
         else:
@@ -65,18 +63,19 @@ def traiter_flux():
             "articles": articles
         }, f, ensure_ascii=False, indent=2)
 
-    # Sauvegarde XML
+    # Sauvegarde XML (RSS standard)
     fg = FeedGenerator()
     fg.title("Actualités CDBG")
     fg.link(href="https://www.cdbg-gabon.com/", rel="alternate")
     fg.description("Flux RSS du Partenariat pour les forêts du bassin du Congo")
     fg.language("fr")
 
-    for article in articles[:20]:
+    for article in articles[:20]:  # garder les 20 plus récents
         fe = fg.add_entry()
         fe.title(article["titre"])
-        fe.link(href=article["lien"])  # ✅ lien toujours présent
+        fe.link(href=article["lien"])  # 🔹 lien réel
         fe.description(article["source"])
+
         pub_date = datetime.fromisoformat(article["date"])
         fe.pubDate(pub_date)
 
@@ -84,4 +83,4 @@ def traiter_flux():
 
 if __name__ == "__main__":
     traiter_flux()
-    print("✅ Flux généré avec succès : actualites.xml + merged_feed.json")
+    print("✅ Flux générés avec succès (merged_feed.json + actualites.xml)")
