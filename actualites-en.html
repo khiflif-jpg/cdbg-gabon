@@ -38,11 +38,11 @@
 <script src="news.js"></script>
 <script>
   loadNews({
-    xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml",   // ✅ Ton flux RSS
+    xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml",
     containerId: "news-list",
-    loadMoreBtnId: "load-more-btn",
-    batch: 10,
-    lang: "en"
+    loadMoreBtnId: "load-more-btn", // ✅ bouton déjà dans ton HTML
+    batch: 10,                      // 10 articles par lot
+    lang: "en"                      // affichage en anglais
   });
 </script>
 </body>
