@@ -1,27 +1,27 @@
-// ✅ Injecter styles spécifiques aux news
+// ✅ Injection du style directement depuis news.js
 (function() {
   const style = document.createElement("style");
   style.innerHTML = `
-    /* Grille responsive */
+    /* Grille des news */
     .news-container, .news-grid {
       display: grid;
-      grid-template-columns: 1fr; /* mobile par défaut */
+      grid-template-columns: 1fr;
       gap: 20px;
     }
 
     @media (min-width: 768px) {
       .news-container, .news-grid {
-        grid-template-columns: repeat(2, 1fr); /* tablette */
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
     @media (min-width: 1024px) {
       .news-container, .news-grid {
-        grid-template-columns: repeat(3, 1fr); /* desktop */
+        grid-template-columns: repeat(3, 1fr);
       }
     }
 
-    /* Carte */
+    /* Cartes */
     .news-card {
       display: flex;
       flex-direction: column;
@@ -32,48 +32,53 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       text-decoration: none;
       color: inherit;
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    .news-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity 0.6s ease, transform 0.6s ease;
     }
 
     .news-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-      border-left: 4px solid #2e7d32; /* liseré vert forêt */
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
     }
 
     /* Image */
     .news-image {
       width: 100%;
-      height: 200px;
+      height: 180px;
       overflow: hidden;
       background: #f0f0f0;
+      position: relative;
     }
 
     .news-image img {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* ✅ évite les bandes étirées */
+      object-fit: cover;
       display: block;
-      transition: transform 0.3s ease;
     }
 
-    .news-card:hover .news-image img {
-      transform: scale(1.05);
+    /* Cas sans image */
+    .news-image.no-image {
+      background: #3D6B35;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .news-image.no-image h3 {
+      color: #fff;
+      font-size: 1rem;
+      line-height: 1.3em;
+      margin: 0;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
 
     /* Contenu */
     .news-content {
       padding: 15px;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
     }
 
     .news-title {
@@ -83,44 +88,25 @@
       line-height: 1.4em;
       overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 2; /* ✅ tronque à 2 lignes */
+      -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
     }
 
     .news-desc {
       font-size: 0.9rem;
       color: #666;
-      margin: 0 0 10px;
+      margin: 0 0 8px;
       line-height: 1.4em;
       overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 3; /* ✅ tronque à 3 lignes */
+      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
-      flex-grow: 1;
     }
 
-    .date {
+    .date, .source {
       font-size: 0.8rem;
       color: #999;
-      margin-top: auto;
-    }
-
-    /* Bouton voir plus */
-    .btn {
-      display: inline-block;
-      margin: 20px auto;
-      padding: 10px 20px;
-      background: #2e7d32;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease;
-    }
-
-    .btn:hover {
-      background: #256428;
-      transform: scale(1.05);
+      margin: 0;
     }
   `;
   document.head.appendChild(style);
@@ -147,7 +133,6 @@ async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang =
     }
 
     let index = 0;
-
     function renderBatch() {
       for (let i = 0; i < batch && index < items.length; i++, index++) {
         const item = items[index];
@@ -156,7 +141,7 @@ async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang =
         const date = item.querySelector("pubDate")?.textContent || "";
         const description = item.querySelector("description")?.textContent || "";
 
-        // ✅ Extraire image depuis enclosure ou media:content
+        // ✅ Extraire image
         let imageUrl = item.querySelector("enclosure")?.getAttribute("url")
           || item.querySelector("media\\:content")?.getAttribute("url")
           || null;
@@ -169,42 +154,56 @@ async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang =
             })
           : "";
 
-        // ✅ Carte cliquable
+        // ✅ Carte
         const card = document.createElement("a");
         card.className = "news-card";
         card.href = link;
         card.target = "_blank"; 
         card.rel = "noopener noreferrer";
 
-        // ✅ Contenu
-        card.innerHTML = `
-          <div class="news-image">
-            <img src="${imageUrl || "placeholder.webp"}" alt="${title}" loading="lazy"
-                 onerror="this.onerror=null; this.src='placeholder.webp';">
-          </div>
-          <div class="news-content">
-            <h3 class="news-title">${title}</h3>
-            <p class="news-desc">${description}</p>
-            <p class="date">${formattedDate}</p>
-          </div>
-        `;
+        if (imageUrl) {
+          // ✅ Cas avec image
+          card.innerHTML = `
+            <div class="news-image">
+              <img src="${imageUrl}" alt="${title}" loading="lazy"
+                   onerror="this.onerror=null; this.src='placeholder.webp';">
+            </div>
+            <div class="news-content">
+              <h3 class="news-title">${title}</h3>
+              <p class="news-desc">${description}</p>
+              <p class="date">${formattedDate}</p>
+              <p class="source">${lang === "fr"
+                ? "Source: Partenariat pour les forêts du bassin du Congo"
+                : "Source: Congo Basin Forest Partnership"}</p>
+            </div>
+          `;
+        } else {
+          // ✅ Cas sans image
+          card.innerHTML = `
+            <div class="news-image no-image">
+              <h3>${title}</h3>
+            </div>
+            <div class="news-content">
+              <p class="news-desc">${description}</p>
+              <p class="date">${formattedDate}</p>
+              <p class="source">${lang === "fr"
+                ? "Source: Partenariat pour les forêts du bassin du Congo"
+                : "Source: Congo Basin Forest Partnership"}</p>
+            </div>
+          `;
+        }
 
         container.appendChild(card);
-
-        // ✅ Animation fade-in progressive
-        setTimeout(() => card.classList.add("visible"), 100 * i);
       }
 
-      // ✅ Cacher le bouton si plus rien
       if (index >= items.length && loadMoreBtnId) {
         document.getElementById(loadMoreBtnId).style.display = "none";
       }
     }
 
-    // Premier lot
+    // ✅ Premier lot
     renderBatch();
 
-    // ✅ Bouton "Voir plus"
     if (loadMoreBtnId) {
       const btn = document.getElementById(loadMoreBtnId);
       btn.addEventListener("click", renderBatch);
