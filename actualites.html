@@ -34,8 +34,73 @@
   <div class="footer-bottom">© 2025 CDBG – Tous droits réservés</div>
 </footer>
 
-<script src="news.js"></script>
+<!-- Script intégré pour charger les actualités -->
 <script>
+async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang = "fr" }) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    try {
+        const response = await fetch(xmlUrl);
+        const text = await response.text();
+
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(text, "text/xml");
+        const items = xml.querySelectorAll("item");
+
+        if (items.length === 0) {
+            container.innerHTML = "<p>Aucun article disponible pour le moment.</p>";
+            return;
+        }
+
+        let index = 0;
+        function renderBatch() {
+            for (let i = 0; i < batch && index < items.length; i++, index++) {
+                const item = items[index];
+                const title = item.querySelector("title")?.textContent || "Pas de titre";
+                const link = item.querySelector("link")?.textContent || "#";
+                const date = item.querySelector("pubDate")?.textContent || "";
+                const formattedDate = date
+                    ? new Date(date).toLocaleDateString("fr-FR", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                      })
+                    : "";
+
+                const card = document.createElement("a");
+                card.className = "actus-card";
+                card.href = link;
+                card.target = "_blank";
+                card.rel = "noopener noreferrer";
+
+                card.innerHTML = `
+                    <div class="actus-card-content">
+                        <h3>${title}</h3>
+                        <p class="date">${formattedDate}</p>
+                        <p class="source">Source: Partenariat pour les forêts du bassin du Congo</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            }
+
+            if (index >= items.length && loadMoreBtnId) {
+                document.getElementById(loadMoreBtnId).style.display = "none";
+            }
+        }
+
+        renderBatch();
+
+        if (loadMoreBtnId) {
+            document.getElementById(loadMoreBtnId).addEventListener("click", renderBatch);
+        }
+    } catch (error) {
+        console.error("Erreur lors du chargement des actualités :", error);
+        container.innerHTML = "<p>Impossible de charger les articles. Veuillez réessayer plus tard.</p>";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
   loadNews({
     xmlUrl: "actualites.xml",
     containerId: "news-list",
@@ -43,6 +108,8 @@
     batch: 10,
     lang: "fr"
   });
+});
 </script>
+
 </body>
 </html>
