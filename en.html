@@ -358,14 +358,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
   });
 
- <script src="news.js"></script>
+ <!-- Script for RSS -->
+<script src="news.js"></script>
 <script>
   loadNews({
-    const rssUrl = "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml";       // ton flux généré
-    containerId: "news-list",        // ou "news-fr" / "news-en"
-    loadMoreBtnId: "load-more-btn",  // bouton si tu en as un
-    batch: 10,                       // nombre d’articles par lot
-    lang: "fr"                       // "fr" pour FR, "en" pour EN
+    xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml", // ✅ correct RSS feed
+    containerId: "news-en",  // ✅ corresponds to <div id="news-en">
+    loadMoreBtnId: null,     // ✅ no button on homepage
+    batch: 5,                // ✅ only 5 articles on homepage
+    lang: "en"               // ✅ English
   });
 </script>
 
