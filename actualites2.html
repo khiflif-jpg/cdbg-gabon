@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Actualités forestières – CDBG
+  </title>
+  <!-- ✅ Styles spécifiques injectés -->
+ </head>
+ <body>
+  <header class="navbar">
+   <div class="logo">
+    <a href="index.html">
+     <img alt="CDBG" src="logo.webp"/>
+    </a>
+   </div>
+   <ul class="nav-links">
+    <li>
+     <a href="index.html">
+      Accueil
+     </a>
+    </li>
+    <li>
+     <a href="#about">
+      À propos
+     </a>
+    </li>
+    <li>
+     <a href="#contact">
+      Contact
+     </a>
+    </li>
+    <li>
+     <a class="active" href="actualites.html">
+      Actualités
+     </a>
+    </li>
+   </ul>
+  </header>
+  <main class="news-page">
+   <h1>
+    Actualités forestières
+   </h1>
+   <p class="subtitle">
+    Les dernières informations sur les forêts du Gabon et d’Afrique centrale
+   </p>
+   <div class="news-grid" id="news-list">
+   </div>
+   <button class="btn" id="load-more-btn">
+    Voir plus
+   </button>
+  </main>
+  <footer>
+   <div class="footer-container">
+    <div class="footer-col">
+     <h4>
+      CDBG
+     </h4>
+     <p>
+      Centre de Documentation sur les Forêts du Gabon
+     </p>
+    </div>
+   </div>
+   <div class="footer-bottom">
+    © 2025 CDBG – Tous droits réservés
+   </div>
+  </footer>
+  <!-- ✅ Script news.js fusionné -->
+  <script>
+   async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang = "fr" }) {
+  const container = document.getElementById(containerId);
+  const loadMoreBtn = loadMoreBtnId ? document.getElementById(loadMoreBtnId) : null;
+  let items = [];
+  let currentIndex = 0;
+
+  try {
+    const res = await fetch(xmlUrl);
+    const text = await res.text();
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(text, "application/xml");
+    items = [...xml.querySelectorAll("item")];
+  } catch (e) {
+    container.innerHTML = "<p>Impossible de charger les actualités.</p>";
+    return;
+  }
+
+  function renderBatch() {
+    const slice = items.slice(currentIndex, currentIndex + batch);
+    slice.forEach(item => {
+      const title = item.querySelector("title")?.textContent ?? "";
+      const link = item.querySelector("link")?.textContent ?? "#";
+      const description = item.querySelector("description")?.textContent ?? "";
+      const pubDate = new Date(item.querySelector("pubDate")?.textContent ?? Date.now());
+      const source = item.querySelector("source")?.textContent ?? "Source inconnue";
+
+      // Cherche une image
+      let imageUrl = null;
+      const enclosure = item.querySelector("enclosure");
+      if (enclosure && enclosure.getAttribute("url")) {
+        imageUrl = enclosure.getAttribute("url");
+      } else {
+        const descMatch = description.match(/<img[^>]+src="([^">]+)"/i);
+        if (descMatch) imageUrl = descMatch[1];
+      }
+
+      // Crée la carte
+      const card = document.createElement("a");
+      card.href = link;
+      card.target = "_blank";
+      card.className = "news-card";
+
+      // Bloc image ou bloc "no image"
+      const imgDiv = document.createElement("div");
+      imgDiv.className = "news-image";
+      if (imageUrl) {
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.alt = title;
+        imgDiv.appendChild(img);
+      } else {
+        imgDiv.classList.add("no-image");
+        imgDiv.textContent = title; // ✅ Titre affiché dans le bloc
+      }
+      card.appendChild(imgDiv);
+
+      // Bloc contenu
+      const content = document.createElement("div");
+      content.className = "news-content";
+
+      if (imageUrl) {
+        const h3 = document.createElement("h3");
+        h3.className = "news-title";
+        h3.textContent = title;
+        content.appendChild(h3);
+      }
+
+      const descP = document.createElement("p");
+      descP.className = "news-desc";
+      descP.textContent = description.replace(/<[^>]*>/g, "").substring(0, 200);
+      content.appendChild(descP);
+
+      const meta = document.createElement("p");
+      meta.className = "news-meta";
+      meta.textContent = `${pubDate.toLocaleDateString(lang)} – ${source}`;
+      content.appendChild(meta);
+
+      card.appendChild(content);
+      container.appendChild(card);
+    });
+
+    currentIndex += slice.length;
+    if (loadMoreBtn && currentIndex >= items.length) {
+      loadMoreBtn.style.display = "none";
+    }
+  }
+
+  renderBatch();
+  if (loadMoreBtn) loadMoreBtn.addEventListener("click", renderBatch);
+}
+
+// ✅ Chargement du flux FR
+loadNews({
+  xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml",
+  containerId: "news-list",
+  loadMoreBtnId: "load-more-btn",
+  batch: 9,
+  lang: "fr"
+});
+  </script>
+ </body>
+</html>
