@@ -219,18 +219,92 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </section>
 
 <!-- News Section -->
-<!-- Forest News Section -->
-<section class="news-section fade-in" id="forest-news">
+<!-- === Forest News Section (EN) === -->
+<section class="news-section fade-in" id="forest-news-en">
   <h2>News</h2>
   <div class="news-container" id="news-en">
-    <!-- Latest 5 articles will be injected here -->
+    <!-- Articles injected here -->
   </div>
-  
-  <!-- "See all news" link styled as a card -->
   <div class="more-link">
     <a href="actualites-en.html" class="learn-card btn btn-primary">See all news</a>
   </div>
 </section>
+
+<!-- === CSS (re-use the same as FR, already in index.html) === -->
+
+<!-- === Script for loading EN news === -->
+<script>
+  async function loadNews({ xmlUrl, containerId, batch = 5, lang = "en" }) {
+    const container = document.getElementById(containerId);
+
+    try {
+      const res = await fetch(xmlUrl);
+      const text = await res.text();
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(text, "application/xml");
+      const items = [...xml.querySelectorAll("item")].slice(0, batch);
+
+      items.forEach(item => {
+        const title = item.querySelector("title")?.textContent || "No title";
+        const link = item.querySelector("link")?.textContent || "#";
+        const description = item.querySelector("description")?.textContent || "";
+        const pubDate = new Date(item.querySelector("pubDate")?.textContent);
+        const source = item.querySelector("source")?.textContent || "RSS Feed";
+
+        // Check image
+        let imageUrl = "";
+        const enclosure = item.querySelector("enclosure");
+        if (enclosure && enclosure.getAttribute("url")) {
+          imageUrl = enclosure.getAttribute("url");
+        } else {
+          const content = item.getElementsByTagName("content:encoded")[0];
+          if (content && content.textContent.match(/<img[^>]+src="([^">]+)"/)) {
+            imageUrl = RegExp.$1;
+          }
+        }
+
+        // Create card
+        const card = document.createElement("a");
+        card.href = link;
+        card.target = "_blank";
+        card.className = "news-card";
+
+        if (imageUrl) {
+          card.innerHTML = `
+            <div class="news-image">
+              <img src="${imageUrl}" alt="${title}">
+            </div>
+            <div class="news-content">
+              <h3 class="news-title">${title}</h3>
+              <p class="news-desc">${description}</p>
+              <div class="news-meta">${pubDate.toLocaleDateString(lang)} – ${source}</div>
+            </div>
+          `;
+        } else {
+          card.innerHTML = `
+            <div class="news-placeholder">${title}</div>
+            <div class="news-content">
+              <p class="news-desc">${description}</p>
+              <div class="news-meta">${pubDate.toLocaleDateString(lang)} – ${source}</div>
+            </div>
+          `;
+        }
+
+        container.appendChild(card);
+      });
+    } catch (err) {
+      console.error("Error loading RSS feed:", err);
+    }
+  }
+
+  // Load 5 articles for EN homepage
+  loadNews({
+    xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml", /* 🔁 Remplace avec flux EN */
+    containerId: "news-en",
+    batch: 5,
+    lang: "en"
+  });
+</script>
 
 <!-- Script for RSS -->
 <script src="news.js"></script>
