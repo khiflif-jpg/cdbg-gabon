@@ -408,11 +408,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="news.js"></script>
 <script>
   loadNews({
-    xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml",  // ✅ flux RSS correct
-    containerId: "news-fr",                                // assure-toi que ton <div> a bien id="news-fr"
-    loadMoreBtnId: "load-more-btn",                        // optionnel (pour page "Actualités")
-    batch: 10,
-    lang: "fr"
+    xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml", // ✅ ton flux RSS
+    containerId: "news-fr", // correspond bien au <div id="news-fr">
+    loadMoreBtnId: null,    // pas de bouton sur la page d’accueil
+    batch: 5,               // seulement 5 articles sur la home
+    lang: "fr"              // affichage en français
   });
 </script>
 </body>
