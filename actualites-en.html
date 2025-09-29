@@ -3,51 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Forest News – CDBG</title>
-  <link rel="stylesheet" href="style.css">
+  <title>News</title>
 </head>
 <body>
-<header class="navbar">
-  <div class="logo"><a href="en.html"><img src="logo.webp" alt="CDBG"></a></div>
-  <ul class="nav-links">
-    <li><a href="en.html">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="actualites-en.html" class="active">News</a></li>
-  </ul>
-</header>
 
-<main class="news-page">
-  <h1>Forest News</h1>
-  <p class="subtitle">Latest updates on Gabonese and Central African forests</p>
-
-  <!-- News container -->
-  <div id="news-en" class="news-grid"></div>
-
-  <!-- Load more button -->
-  <button id="loadMoreBtnEn" class="btn">Load more</button>
-</main>
-
-<footer>
-  <div class="footer-container">
-    <div class="footer-col">
-      <h4>CDBG</h4>
-      <p>Documentation Center on Gabon’s Forests</p>
+  <!-- News Section -->
+  <section class="news-section fade-in" id="forest-news">
+    <h2>News</h2>
+    <div class="news-container" id="news-list-en">
+      <!-- Articles will be injected here -->
     </div>
-  </div>
-  <div class="footer-bottom">© 2025 CDBG – All rights reserved</div>
-</footer>
 
-<!-- Main script -->
-<script src="news.js"></script>
-<script>
-  loadNews({
-    xmlUrl: "https://rss.app/feeds/yP7WRGmRBIe1fycP.xml",
-    containerId: "news-en",
-    loadMoreBtnId: "loadMoreBtnEn",
-    batch: 10,
-    lang: "en"
-  });
-</script>
+    <!-- "Load More" button -->
+    <div class="load-more">
+      <button id="load-more-btn-en">Load more</button>
+    </div>
+  </section>
+
+  <!-- Scripts -->
+  <script src="news.js"></script>
+  <script>
+    loadNews({
+      xmlUrl: "https://feedfry.com/rss/11f09c60ca0751419b73c43573c94c6e",
+      containerId: "news-list-en",
+      batch: 12,
+      loadMoreBtnId: "load-more-btn-en",
+      lang: "en"
+    });
+  </script>
 </body>
 </html>
