@@ -20,8 +20,12 @@
 <main class="news-page">
   <h1>Forest News</h1>
   <p class="subtitle">Latest updates on Gabonese and Central African forests</p>
-  <div id="news-list" class="news-grid"></div>
-  <button id="load-more-btn" class="btn">Load more</button>
+
+  <!-- News container -->
+  <div id="news-en" class="news-grid"></div>
+
+  <!-- Load more button -->
+  <button id="loadMoreBtnEn" class="btn">Load more</button>
 </main>
 
 <footer>
@@ -34,15 +38,15 @@
   <div class="footer-bottom">© 2025 CDBG – All rights reserved</div>
 </footer>
 
-<!-- Script principal -->
+<!-- Main script -->
 <script src="news.js"></script>
 <script>
   loadNews({
-    xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml",
-    containerId: "news-list",
-    loadMoreBtnId: "load-more-btn", // ✅ bouton déjà dans ton HTML
-    batch: 10,                      // 10 articles par lot
-    lang: "en"                      // affichage en anglais
+    xmlUrl: "https://rss.app/feeds/yP7WRGmRBIe1fycP.xml",
+    containerId: "news-en",
+    loadMoreBtnId: "loadMoreBtnEn",
+    batch: 10,
+    lang: "en"
   });
 </script>
 </body>
