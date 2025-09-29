@@ -219,15 +219,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </section>
 
 <!-- News Section -->
+<!-- Forest News Section -->
 <section class="news-section fade-in" id="forest-news">
   <h2>News</h2>
   <div class="news-container" id="news-en">
-    <!-- The 5 latest articles will be injected here -->
+    <!-- Latest 5 articles will be injected here -->
   </div>
+  
+  <!-- "See all news" link styled as a card -->
   <div class="more-link">
     <a href="actualites-en.html" class="learn-card btn btn-primary">See all news</a>
   </div>
 </section>
+
+<!-- Script for RSS -->
+<script src="news.js"></script>
+<script>
+  loadNews({
+    xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml", // ✅ same RSS feed
+    containerId: "news-en",  // matches the div id above
+    loadMoreBtnId: null,     // no button on homepage
+    batch: 5,                // 5 articles on homepage
+    lang: "en"               // English mode
+  });
+</script>
 
 <!-- Contact -->
 <section class="contact fade-in" id="contact">
