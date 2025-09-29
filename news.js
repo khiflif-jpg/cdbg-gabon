@@ -24,6 +24,7 @@ async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang =
                 const title = item.querySelector("title")?.textContent || (lang === "fr" ? "Pas de titre" : "No title");
                 const link = item.querySelector("link")?.textContent || "#";
                 const date = item.querySelector("pubDate")?.textContent || "";
+                const description = item.querySelector("description")?.textContent || "";
 
                 const formattedDate = date
                     ? new Date(date).toLocaleDateString(lang === "fr" ? "fr-FR" : "en-GB", {
@@ -33,15 +34,23 @@ async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang =
                       })
                     : "";
 
+                // 🔎 Extraction d'une éventuelle image depuis <enclosure> ou <description>
+                let imageUrl = item.querySelector("enclosure")?.getAttribute("url") || "";
+                if (!imageUrl && description.includes("<img")) {
+                    const match = description.match(/<img[^>]+src="([^">]+)"/i);
+                    if (match) imageUrl = match[1];
+                }
+
                 // ✅ Carte cliquable
                 const card = document.createElement("a");
                 card.className = "actus-card";
                 card.href = link;
-                card.target = "_blank"; // toujours ouvrir dans un nouvel onglet
-                card.rel = "noopener noreferrer"; // sécurité
+                card.target = "_blank";
+                card.rel = "noopener noreferrer";
 
                 card.innerHTML = `
                     <div class="actus-card-content">
+                        ${imageUrl ? `<div class="news-img"><img src="${imageUrl}" alt="${title}" loading="lazy"></div>` : ""}
                         <h3>${title}</h3>
                         <p class="date">${formattedDate}</p>
                         <p class="source">${lang === "fr"
@@ -52,16 +61,13 @@ async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang =
                 container.appendChild(card);
             }
 
-            // Si plus rien à afficher → cacher le bouton
             if (index >= items.length && loadMoreBtnId) {
                 document.getElementById(loadMoreBtnId).style.display = "none";
             }
         }
 
-        // Premier lot
         renderBatch();
 
-        // Gérer le bouton "Voir plus" / "Load more"
         if (loadMoreBtnId) {
             const btn = document.getElementById(loadMoreBtnId);
             btn.addEventListener("click", renderBatch);
