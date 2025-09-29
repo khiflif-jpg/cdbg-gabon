@@ -35,78 +35,17 @@
 </footer>
 
 <!-- Script pour charger les actualités -->
+<script src="news.js"></script>
 <script>
-async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang = "en" }) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
+  loadNews({
+    xmlUrl: "actualites.xml",        // ton flux généré
+    containerId: "news-list",        // ou "news-fr" / "news-en"
+    loadMoreBtnId: "load-more-btn",  // bouton si tu en as un
+    batch: 10,                       // nombre d’articles par lot
+    lang: "fr"                       // "fr" pour FR, "en" pour EN
+  });
+</script>
 
-    try {
-        const response = await fetch(xmlUrl);
-        const text = await response.text();
-
-        const parser = new DOMParser();
-        const xml = parser.parseFromString(text, "text/xml");
-        const items = xml.querySelectorAll("item");
-
-        if (items.length === 0) {
-            container.innerHTML = "<p>No articles available at the moment.</p>";
-            return;
-        }
-
-        let index = 0;
-        function renderBatch() {
-            for (let i = 0; i < batch && index < items.length; i++, index++) {
-                const item = items[index];
-                const title = item.querySelector("title")?.textContent || "No title";
-                const link = item.querySelector("link")?.textContent || "#";
-                const date = item.querySelector("pubDate")?.textContent || "";
-                const formattedDate = date
-                    ? new Date(date).toLocaleDateString("en-GB", {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                      })
-                    : "";
-
-                const card = document.createElement("a");
-                card.className = "actus-card";
-                card.href = link;
-                card.target = "_blank";
-                card.rel = "noopener noreferrer";
-
-                card.innerHTML = `
-                    <div class="actus-card-content">
-                        <h3>${title}</h3>
-                        <p class="date">${formattedDate}</p>
-                        <p class="source">Source: Congo Basin Forest Partnership</p>
-                    </div>
-                `;
-                container.appendChild(card);
-            }
-
-            if (index >= items.length && loadMoreBtnId) {
-                document.getElementById(loadMoreBtnId).style.display = "none";
-            }
-        }
-
-        renderBatch();
-
-        if (loadMoreBtnId) {
-            document.getElementById(loadMoreBtnId).addEventListener("click", renderBatch);
-        }
-    } catch (error) {
-        console.error("Error loading the articles:", error);
-        container.innerHTML = "<p>Error loading the articles. Please try again later.</p>";
-    }
-}
-
-loadNews({
-    xmlUrl: "actualites.xml",
-    containerId: "news-list",
-    loadMoreBtnId: "load-more-btn",
-    batch: 10,
-    lang: "en"
-});
 </script>
 </body>
 </html>
