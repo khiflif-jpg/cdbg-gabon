@@ -343,71 +343,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
   });
 
-  <script>
-async function loadForestNewsEN() {
-    const container = document.getElementById("news-en");
-    if (!container) return;
-
-    try {
-        const rssUrl = "actualites.xml"; // même flux que la version FR
-        const response = await fetch(rssUrl);
-        const text = await response.text();
-
-        const parser = new DOMParser();
-        const xml = parser.parseFromString(text, "text/xml");
-        const items = xml.querySelectorAll("item");
-
-        if (items.length === 0) {
-            container.innerHTML = "<p>No articles available at the moment.</p>";
-            return;
-        }
-
-        container.innerHTML = "";
-        for (let i = 0; i < Math.min(5, items.length); i++) { // seulement 5 actus sur la home
-            const item = items[i];
-            const title = item.querySelector("title")?.textContent || "No title";
-            const link = item.querySelector("link")?.textContent || "#";
-            const date = item.querySelector("pubDate")?.textContent || "";
-
-            const formattedDate = new Date(date).toLocaleDateString("en-GB", {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-            });
-
-            const card = document.createElement("a");
-            card.className = "actus-card";
-            card.href = link;
-            card.target = "_blank";
-
-            card.innerHTML = `
-                <div class="actus-card-content">
-                    <h3>${title}</h3>
-                    <p class="date">${formattedDate}</p>
-                    <p class="source">Source: Congo Basin Forest Partnership</p>
-                </div>
-            `;
-            container.appendChild(card);
-        }
-    } catch (error) {
-        console.error("Error loading English news:", error);
-        container.innerHTML = "<p>Error loading the articles. Please try again later.</p>";
-    }
-}
-document.addEventListener("DOMContentLoaded", loadForestNewsEN);
+ <script src="news.js"></script>
+<script>
+  loadNews({
+    xmlUrl: "actualites.xml",        // ton flux généré
+    containerId: "news-list",        // ou "news-fr" / "news-en"
+    loadMoreBtnId: "load-more-btn",  // bouton si tu en as un
+    batch: 10,                       // nombre d’articles par lot
+    lang: "fr"                       // "fr" pour FR, "en" pour EN
+  });
 </script>
-  
-  <!-- Google Translate widget -->
-<div id="google_translate_element" style="display:none;"></div>
-<script type="text/javascript">
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-      pageLanguage: 'fr',       // le flux est en français
-      includedLanguages: 'en',  // traduire en anglais
-      autoDisplay: true
-    }, 'google_translate_element');
-  }
-</script>
+
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
