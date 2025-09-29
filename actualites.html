@@ -20,8 +20,12 @@
 <main class="news-page">
   <h1>Actualités forestières</h1>
   <p class="subtitle">Les dernières informations sur les forêts du Gabon et d’Afrique centrale</p>
-  <div id="news-list" class="news-grid"></div>
-  <button id="load-more-btn" class="btn">Voir plus</button>
+
+  <!-- Conteneur des articles -->
+  <div id="news-fr" class="news-grid"></div>
+
+  <!-- Bouton Voir plus -->
+  <button id="loadMoreBtnFr" class="btn">Voir plus</button>
 </main>
 
 <footer>
@@ -38,9 +42,9 @@
 <script src="news.js"></script>
 <script>
   loadNews({
-    xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml",
-    containerId: "news-list",
-    loadMoreBtnId: "load-more-btn",
+    xmlUrl: "https://rss.app/feeds/yP7WRGmRBIe1fycP.xml",
+    containerId: "news-fr",
+    loadMoreBtnId: "loadMoreBtnFr",
     batch: 10,
     lang: "fr"
   });
