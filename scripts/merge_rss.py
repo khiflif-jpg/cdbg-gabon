@@ -29,48 +29,56 @@ def traiter_flux():
     try:
         feed = feedparser.parse(RSS_FEED)
     except Exception as e:
-        print(f"❌ Erreur lors de la récupération du flux RSS : {e}")
+        print(f"Erreur lors de la récupération du flux RSS : {e}")
         return
 
-    for entry in feed.entries:
-        titre = entry.get("title", "").strip()
+    for i, entry in enumerate(feed.entries):
+        titre = entry.get("title", "")
         lien = entry.get("link", "").strip()
-        date_str = entry.get("published", "")
 
-        # Si pas de date → fallback à maintenant
-        parsed_date = parse_date(date_str) if date_str else datetime.now(timezone.utc)
+        # Si pas de lien dans le flux source → fallback vers une page interne
+        if not lien:
+            lien = f"https://www.cdbg-gabon.com/actualite-{i+1}.html"
+
+        date_str = entry.get("published", "")
+        if not date_str:
+            parsed_date = datetime.now(timezone.utc)
+        else:
+            parsed_date = parse_date(date_str)
+
+        source = "Partenariat pour les forêts du bassin du Congo"
 
         articles.append({
             "titre": titre,
             "lien": lien,
             "date": parsed_date.isoformat(),
-            "source": "Partenariat pour les forêts du bassin du Congo"
+            "source": source
         })
 
-    # Trier les articles par date décroissante
+    # Trier par date décroissante
     articles.sort(key=lambda x: x["date"], reverse=True)
 
-    # ✅ Sauvegarde JSON (optionnel, utile si tu veux réutiliser côté JS)
+    # Sauvegarde JSON
     with open("merged_feed.json", "w", encoding="utf-8") as f:
         json.dump({
             "derniere_mise_a_jour": datetime.now(timezone.utc).isoformat(),
             "articles": articles
         }, f, ensure_ascii=False, indent=2)
 
-    # ✅ Sauvegarde XML
+    # Sauvegarde XML
     fg = FeedGenerator()
     fg.title("Actualités CDBG")
     fg.link(href="https://www.cdbg-gabon.com/", rel="alternate")
     fg.description("Flux RSS du Partenariat pour les forêts du bassin du Congo")
     fg.language("fr")
 
-    for article in articles[:20]:  # max 20 articles
+    for article in articles[:20]:
         fe = fg.add_entry()
         fe.title(article["titre"])
-        if article["lien"]:
-            fe.link(href=article["lien"])
+        fe.link(href=article["lien"])  # ✅ lien toujours présent
         fe.description(article["source"])
-        fe.pubDate(datetime.fromisoformat(article["date"]))
+        pub_date = datetime.fromisoformat(article["date"])
+        fe.pubDate(pub_date)
 
     fg.rss_file("actualites.xml")
 
