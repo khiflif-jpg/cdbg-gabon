@@ -404,15 +404,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- Script pour charger les actualités depuis le RSS -->
 <script src="news.js"></script>
+<!-- Script pour charger les actualités depuis le RSS -->
+<script src="news.js"></script>
 <script>
   loadNews({
-    const rssUrl = "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml";        // ton flux généré
-    containerId: "news-list",        // ou "news-fr" / "news-en"
-    loadMoreBtnId: "load-more-btn",  // bouton si tu en as un
-    batch: 10,                       // nombre d’articles par lot
-    lang: "fr"                       // "fr" pour FR, "en" pour EN
+    xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml",  // ✅ flux RSS correct
+    containerId: "news-fr",                                // assure-toi que ton <div> a bien id="news-fr"
+    loadMoreBtnId: "load-more-btn",                        // optionnel (pour page "Actualités")
+    batch: 10,
+    lang: "fr"
   });
 </script>
-
 </body>
 </html>
+
