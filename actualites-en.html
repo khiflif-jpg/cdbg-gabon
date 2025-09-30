@@ -73,12 +73,14 @@
 <div id="modal-cookies-en" class="modal"><div class="modal-content"><span class="close">&times;</span><h2>Cookies</h2><p>…</p></div></div>
 
 <script src="menu.js"></script>
+<script src="news.js"></script>
 <script>
   loadNews({
-    xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml",
-    containerId: "news-en",
-    batch: 12,
-    lang: "en"
+    xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml", // ton flux RSS
+    containerId: "news-en",  // correspond au <div id="news-en">
+    loadMoreBtnId: null,     // pas de bouton "voir plus" sur cette page
+    batch: 12,               // nombre d’articles affichés
+    lang: "en"               // affichage en anglais
   });
 </script>
 </body>
