@@ -470,3 +470,91 @@ footer {
 .close:hover {
   color: #000;
 }
+
+/* === Global image safety === */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* === Card Base for harmonization === */
+.card, .learn-card {
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0,0,0,.1);
+  transition: transform .3s ease;
+}
+
+.card:hover, .learn-card:hover {
+  transform: translateY(-10px);
+}
+
+/* === Footer bottom centered === */
+.footer-bottom {
+  border-top: 2px solid #e6d36f;
+  margin-top: 20px;
+  padding-top: 10px;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: white;
+}
+
+/* === Galerie Fix Desktop & Mobile === */
+.gallery-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 20px auto;
+  max-width: 1000px;
+}
+
+.gallery-item img {
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* Desktop */
+@media (min-width: 769px) {
+  .gallery-item img {
+    width: 400px;
+    height: 280px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .gallery-row {
+    flex-direction: column;
+  }
+  .gallery-item img {
+    width: 90%;
+    max-width: 350px;
+    height: auto;
+    margin: 0 auto;
+  }
+}
+
+/* === Bloquer scroll horizontal sur mobile === */
+html, body {
+  overflow-x: hidden;
+}
+
+/* === Responsive typography === */
+.hero h1 {
+  font-size: 2.5rem;
+}
+
+.hero h2 {
+  font-size: 1.6rem;
+}
+
+.hero p {
+  font-size: 1rem;
+}
+
+.nav-links li a {
+  font-size: 0.9rem;
+}
