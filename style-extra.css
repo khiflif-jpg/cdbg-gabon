@@ -1,0 +1,223 @@
+
+/* =========================
+   Minimal overrides (safe)
+   Applied only to implement requested layout changes,
+   designed to avoid altering existing visuals elsewhere.
+   ========================= */
+
+/* --- Bitam: image left on desktop, stacked on mobile --- */
+@media (min-width: 1024px) {
+  .bitam-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .bitam-img {
+    flex: 0 0 40%;
+  }
+  .bitam-img img,
+  .bitam-img picture,
+  .bitam-img picture img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+  }
+  .bitam-text {
+    flex: 1;
+    padding-left: 20px;
+  }
+}
+@media (max-width: 1023px) {
+  .bitam-content { display: block; }
+  .bitam-img { width: 100%; margin-bottom: 12px; }
+}
+
+/* --- Services: stack cards vertically on desktop and harmonize sizes --- */
+@media (min-width: 1024px) {
+  .services .cards {
+    flex-direction: column;
+    align-items: center;
+  }
+  .services .card {
+    width: 640px; /* harmonized width */
+    max-width: calc(100% - 40px);
+    margin: 12px 0;
+  }
+}
+
+/* --- Engagements: elephant image reduced to Bitam size and cards stacked --- */
+@media (min-width: 1024px) {
+  .engagements .engagement-img,
+  .engagement-img {
+    flex-basis: 40%;
+    max-width: 40%;
+  }
+  .engagement-img img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+  }
+  .engagements .cards {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 12px;
+  }
+  .engagements .card {
+    width: 640px;
+    max-width: calc(100% - 40px);
+    margin: 12px 0;
+  }
+}
+@media (max-width: 1023px) {
+  .engagements .engagement-img img { width: 100%; }
+  .engagements .cards { flex-direction: column; }
+}
+
+/* --- Gallery: reduce grumes and planches size and center them side-by-side --- */
+.gallery-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: nowrap;
+}
+.gallery-item {
+  flex: 0 0 45%;
+  max-width: 45%;
+  display: flex;
+  justify-content: center;
+}
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  display: block;
+}
+@media (max-width: 768px) {
+  .gallery-row { gap: 12px; }
+  .gallery-item { flex: 0 0 48%; max-width: 48%; }
+}
+
+/* --- Partnerships: center smaller card under title, 2 lines text --- */
+.partnerships .card {
+  width: 640px;
+  max-width: calc(100% - 40px);
+  margin: 12px auto;
+  text-align: center;
+}
+.partnerships .card p {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- News / Actualités: placeholders & real images harmonization --- */
+/* Ensure rounded corners for image containers */
+.news-image, .news-image img, .news-image.no-image {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Placeholder specifics */
+.news-image.no-image {
+  background: #3D6B35;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 18px;
+  height: 180px;
+}
+
+/* Title inside placeholder (2 lines max) */
+.news-image.no-image a,
+.news-image.no-image h3 {
+  color: #fff;
+  text-decoration: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+  font-size: 16px;
+}
+
+/* Remove duplicate title under placeholders if exists */
+.news-card .news-title { display: none; }
+
+/* Excerpt (3 lines) */
+.news-content .excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+}
+
+/* Read more link styling */
+.news-content .read-more {
+  display: inline-block;
+  margin-top: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Replace RSS Feed text: ensure source element styled */
+.news-content .source { color: #777; font-size: 13px; margin-top: 8px; }
+
+/* Ensure that when placeholder contains only title and no desc, layout stays compact */
+.news-card { max-width: 640px; margin: 0 auto; }
+
+/* --- Footer: hide modal contents that appear below footer by default but keep modal functionality --- */
+.modal { display: none !important; }
+
+/* Modal content styling (when opened via JS we set style.display='block') */
+.modal[style] { /* when inline style display:block is set, this applies */
+  display: block !important;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background: rgba(0,0,0,0.7);
+}
+.modal .modal-content {
+  background: #fff;
+  margin: 8% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 720px;
+}
+
+/* --- Ambition: card green like footer background and centered --- */
+.ambition .ambition-box,
+.ambition-box {
+  background: #3D6B35;
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 800px;
+  margin: 16px auto 0;
+  text-align: center;
+}
+
+/* Mobile specific: keep ambition card centered under title */
+@media (max-width: 768px) {
+  .ambition .ambition-box { width: calc(100% - 40px); }
+  .news-card { margin-left: 15px; margin-right: 15px; }
+  .bitam-text { padding-left: 0; }
+}
+
+/* Small tweaks: ensure links in news placeholder inherit clickable area */
+.news-image.no-image a { display: inline-block; width: 100%; height: 100%; }
+
+/* Keep other styles untouched by using this file as overrides only */
