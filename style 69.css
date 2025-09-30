@@ -1,0 +1,471 @@
+/* ===============================
+   Global Reset & Fonts
+=============================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  line-height: 1.6;
+  color: #333;
+  background: #fff;
+  text-align: center;
+}
+
+/* ===============================
+   Navbar / Header
+=============================== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #3D6B35;
+  padding: 10px 40px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.logo img {
+  height: 80px;
+  width: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.nav-flags img {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.burger {
+  display: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: white;
+}
+
+/* Mobile Navbar */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: #3D6B35;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+  }
+  .nav-links.active {
+    display: flex;
+  }
+  .burger {
+    display: block;
+  }
+}
+
+/* ===============================
+   Hero Section
+=============================== */
+.hero {
+  height: 100vh;
+  background: url('foret.webp') no-repeat center center/cover;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  padding-top: 120px;
+}
+
+.hero-overlay {
+  background: rgba(0,0,0,.4);
+  padding: 40px;
+  border-radius: 20px;
+  margin-bottom: 30px; /* ensures overlay doesn’t touch bottom */
+}
+
+.hero h1 {
+  font-size: 40px;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+.hero h2 {
+  font-size: 26px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.hero p {
+  margin-bottom: 30px;
+  font-size: 18px;
+}
+
+.hero .buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.hero .buttons .btn {
+  border: 2px solid white;
+  background: transparent;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 30px;
+  font-size: 14px;
+  text-decoration: none;
+  width: 220px;
+  text-align: center;
+}
+
+.scroll-down {
+  margin-top: 40px;
+  font-size: 20px;
+  animation: bounce 2s infinite;
+}
+
+.scroll-down span {
+  font-size: 36px;
+}
+
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+/* ===============================
+   Sections
+=============================== */
+section {
+  padding: 80px 20px;
+  scroll-margin-top: 120px;
+}
+
+section h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #3D6B35;
+}
+
+section .subtitle {
+  font-size: 18px;
+  margin-bottom: 40px;
+  color: #666;
+}
+
+/* ===============================
+   Cards (General)
+=============================== */
+.cards, .learn-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card, .learn-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0,0,0,.1);
+  transition: transform .3s ease;
+  text-align: center;
+}
+
+.card:hover, .learn-card:hover {
+  transform: translateY(-10px);
+}
+
+/* Learn cards specific */
+.learn-card {
+  background: #3D6B35;
+  color: white;
+  border: 1px solid #e6d36f;
+  width: 280px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 768px) {
+  .learn-card {
+    width: calc(100% - 30px); /* mobile: widen cards without touching edges */
+  }
+}
+
+/* Center See All News */
+.see-all-news {
+  display: flex;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+/* ===============================
+   Contact Section
+=============================== */
+.contact-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.contact-form {
+  flex: 1;
+  max-width: 500px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.1);
+}
+
+.contact-form button {
+  background: #3D6B35;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.contact-info {
+  flex: 1;
+  max-width: 400px;
+  text-align: left;
+}
+
+.contact-info p {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.contact-info p img {
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+}
+
+/* Desktop Contact Form Layout */
+@media (min-width: 1024px) {
+  .contact-container {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .contact-form {
+    text-align: right;
+  }
+}
+
+/* ===============================
+   News / Articles
+=============================== */
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.news-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  text-align: left;
+}
+
+.news-card:hover {
+  transform: translateY(-6px);
+}
+
+.news-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.news-content {
+  padding: 15px;
+}
+
+.news-content h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #3D6B35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* max 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.news-content .excerpt {
+  font-size: 14px;
+  margin-bottom: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* max 3 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.news-content .date {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 8px;
+}
+
+.news-content .source {
+  font-size: 13px;
+  color: #555;
+}
+
+/* ===============================
+   Footer
+=============================== */
+footer {
+  background: #3D6B35;
+  color: white;
+  padding: 40px 20px;
+  text-align: left;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.footer-col {
+  flex: 1;
+  min-width: 220px;
+  text-align: left;
+}
+
+.footer-col h4 {
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.footer-col p,
+.footer-col ul {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.4;
+  color: white;
+}
+
+.footer-col ul {
+  list-style-position: inside;
+  padding-left: 0;
+}
+
+.footer-col li {
+  margin-bottom: 6px;
+}
+
+.footer-col a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-col a:hover {
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  border-top: 2px solid #e6d36f;
+  margin-top: 20px;
+  padding-top: 10px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 300;
+  color: white;
+}
+
+
+/* === Corrections demandées (éléphant, galerie, Gabon, footer) === */
+
+/* 1. Image elephant arrondie */
+img[src*="elephant_forest.webp"] {
+  border-radius: 12px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* 2. Galerie grumes + planches côte à côte */
+.gallery {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+.gallery img[src*="grumes_generiques.webp"],
+.gallery img[src*="planches_generiques.webp"] {
+  border-radius: 12px;
+  height: auto;
+  max-width: 45%;
+}
+
+/* 3. Section Savoir plus sur le Gabon - cartes en grille 2x4 */
+.savoir-plus {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  justify-items: center;
+}
+.savoir-plus .card {
+  width: 100%;
+  max-width: 280px; /* garde une taille homogène */
+}
+
+/* 4. Footer - supprimer les modaux visibles par défaut */
+footer .modal {
+  display: none; /* masqué tant qu’on n’a pas cliqué */
+}
