@@ -4,10 +4,8 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Forest News – CDBG</title>
-  <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css"/>
   <style>
-    /* News Grid Styles */
     .news-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -67,148 +65,8 @@
       <div class="logo">
         <a href="en.html"><img src="logo.webp" alt="CDBG"/></a>
       </div>
-      <div class="nav-flags">
-        <img src="fr-flag.png" alt="FR"/>
-        <img src="en-flag.png" alt="EN"/>
-      </div>
       <ul class="nav-links">
         <li><a href="en.html">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li><a class="active" href="actualites-en.html">News</a></li>
-      </ul>
-      <div class="burger">&#9776;</div>
-    </nav>
-  </header>
-
-  <!-- Main News Section -->
-  <main class="news-page">
-    <h1>Forest News</h1>
-    <p class="subtitle">Latest updates on Gabonese and Central African forests</p>
-    <div class="news-grid" id="news-list-en"></div>
-    <button class="btn" id="load-more-btn-en">Load more</button>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-container">
-      <div class="footer-col">
-        <h4>CDBG</h4>
-        <p>Documentation Center on Gabon’s Forests</p>
-      </div>
-      <div class="footer-col">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="en.html">Home</a></li>
-          <li><a href="actualites-en.html">News</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <p>Email: info@cdbg.org</p>
-        <p>Phone: +241 00 00 00 00</p>
-      </div>
-    </div>
-    <div class="footer-bottom">© 2025 CDBG – All rights reserved</div>
-  </footer>
-
-  <!-- JS for RSS Feed -->
-  <script>
-    async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang = "en" }) {
-      const container = document.getElementById(containerId);
-      const loadMoreBtn = loadMoreBtnId ? document.getElementById(loadMoreBtnId) : null;
-      let items = [];
-      let currentIndex = 0;
-      try {
-        const res = await fetch(xmlUrl);
-        const text = await res.text();
-        const parser = new DOMParser();
-        const xml = parser.parseFromString(text, "application/xml");
-        items = [...xml.querySelectorAll("item")];
-      } catch(e) {
-        container.innerHTML = "<p>Unable to load news.</p>";
-        return;
-      }
-
-      function renderBatch() {
-        const slice = items.slice(currentIndex, currentIndex + batch);
-        slice.forEach(item => {
-          const title = item.querySelector("title")?.textContent ?? "";
-          const link = item.querySelector("link")?.textContent ?? "#";
-          const description = item.querySelector("description")?.textContent ?? "";
-          const pubDate = new Date(item.querySelector("pubDate")?.textContent ?? Date.now());
-          const source = item.querySelector("source")?.textContent ?? "Unknown source";
-
-          let imageUrl = null;
-          const enclosure = item.querySelector("enclosure");
-          if(enclosure && enclosure.getAttribute("url")) imageUrl = enclosure.getAttribute("url");
-          else {
-            const descMatch = description.match(/<img[^>]+src="([^">]+)"/i);
-            if(descMatch) imageUrl = descMatch[1];
-          }
-
-          const card = document.createElement("a");
-          card.href = link;
-          card.target = "_blank";
-          card.className = "news-card";
-
-          const imgDiv = document.createElement("div");
-          imgDiv.className = "news-image";
-          if(imageUrl) {
-            const img = document.createElement("img");
-            img.src = imageUrl;
-            img.alt = title;
-            imgDiv.appendChild(img);
-          } else {
-            imgDiv.classList.add("no-image");
-            imgDiv.textContent = title;
-          }
-          card.appendChild(imgDiv);
-
-          const content = document.createElement("div");
-          content.className = "news-content";
-          if(imageUrl) {
-            const h3 = document.createElement("h3");
-            h3.className = "news-title";
-            h3.textContent = title;
-            content.appendChild(h3);
-          }
-
-          const descP = document.createElement("p");
-          descP.className = "news-desc";
-          descP.textContent = description.replace(/<[^>]*>/g, "").substring(0,200);
-          content.appendChild(descP);
-
-          const meta = document.createElement("p");
-          meta.className = "news-meta";
-          meta.textContent = `${pubDate.toLocaleDateString(lang)} – ${source}`;
-          content.appendChild(meta);
-
-          card.appendChild(content);
-          container.appendChild(card);
-        });
-
-        currentIndex += slice.length;
-        if(loadMoreBtn && currentIndex >= items.length) loadMoreBtn.style.display = "none";
-      }
-
-      renderBatch();
-      if(loadMoreBtn) loadMoreBtn.addEventListener("click", renderBatch);
-    }
-
-    loadNews({
-      xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml",
-      containerId: "news-list-en",
-      loadMoreBtnId: "load-more-btn-en",
-      batch: 9,
-      lang: "en"
-    });
-
-    // Mobile burger toggle
-    const burger = document.querySelector('.burger');
-    const navLinks = document.querySelector('.nav-links');
-    burger.addEventListener('click', () => navLinks.classList.toggle('active'));
-  </script>
-</body>
-</html>
+        <li
