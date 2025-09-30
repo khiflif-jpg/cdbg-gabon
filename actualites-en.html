@@ -184,4 +184,24 @@
         });
 
         currentIndex += slice.length;
-        if(loadMoreBtn && currentIndex >= items.length) loadMoreBtn.style.displa
+        if(loadMoreBtn && currentIndex >= items.length) loadMoreBtn.style.display = "none";
+      }
+
+      renderBatch();
+      if(loadMoreBtn) loadMoreBtn.addEventListener("click", renderBatch);
+    }
+
+    loadNews({
+      xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml",
+      containerId: "news-list-en",
+      loadMoreBtnId: "load-more-btn-en",
+      batch: 9,
+      lang: "en"
+    });
+
+    const burger = document.querySelector('.burger');
+    const navLinks = document.querySelector('.nav-links');
+    burger.addEventListener('click', () => navLinks.classList.toggle('active'));
+  </script>
+</body>
+</html>
