@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Actualités - CDBG</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- MENU FROM index.html -->
+<header>
+  <nav class="navbar">
+    <div class="logo"><img src="logo.webp" alt="Logo CDBG"></div>
+    <ul class="nav-links">
+      <li><a href="index.html#about">À propos</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#forest-news">Actualités</a></li>
+      <li><a href="index.html#gallery">Galerie</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-flags">
+      <a href="actualites-en.html"><img src="flag-en.webp" alt="English"></a>
+    </div>
+    <div class="burger">&#9776;</div>
+  </nav>
+</header>
+
+<main>
+  <section class="news-section fade-in">
+    <h2>Actualités</h2>
+    <div class="news-container" id="news-fr">
+      <!-- Articles injectés ici -->
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER identique à index.html -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-col">
+      <h4>Compagnie Durable du Bois au Gabon</h4>
+      <p>Exploitation forestière responsable pour un avenir durable</p>
+      <p>N° RCCM : GA-LBV-01-2025-B16-00034</p>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p>Libreville, Gabon</p>
+      <p>+241 77 25 9169</p>
+    </div>
+    <div class="footer-col">
+      <h4>Mentions légales</h4>
+      <ul>
+        <li><a href="#" class="open-modal" data-modal="modal-cgu-fr">Conditions Générales d’Utilisation</a></li>
+        <li><a href="#" class="open-modal" data-modal="modal-privacy-fr">Politique de confidentialité</a></li>
+        <li><a href="#" class="open-modal" data-modal="modal-cookies-fr">Cookies</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Compagnie Durable du Bois au Gabon. Tous droits réservés.</p>
+  </div>
+</footer>
+
+<!-- Modals -->
+<div id="modal-cgu-fr" class="modal"><div class="modal-content"><span class="close">&times;</span><h2>Conditions Générales d’Utilisation</h2><p>...</p></div></div>
+<div id="modal-privacy-fr" class="modal"><div class="modal-content"><span class="close">&times;</span><h2>Politique de confidentialité</h2><p>...</p></div></div>
+<div id="modal-cookies-fr" class="modal"><div class="modal-content"><span class="close">&times;</span><h2>Cookies</h2><p>...</p></div></div>
+
+<script src="script.js"></script>
+</body>
+</html>
