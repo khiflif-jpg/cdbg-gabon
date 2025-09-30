@@ -70,11 +70,13 @@
 <div id="modal-cookies-fr" class="modal"><div class="modal-content"><span class="close">&times;</span><h2>Cookies</h2><p>…</p></div></div>
 
 <script src="menu.js"></script>
+<script src="news.js"></script>
 <script>
   loadNews({
-    xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml",
-    containerId: "news-fr",
-    batch: 12,
+    xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml", 
+    containerId: "news-fr",  // ✅ doit correspondre au <div id="news-fr">
+    loadMoreBtnId: null,
+    batch: 12,               // tu affiches + d’articles ici
     lang: "fr"
   });
 </script>
