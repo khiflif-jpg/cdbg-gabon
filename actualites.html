@@ -6,7 +6,6 @@
   <meta name="theme-color" content="#3D6B35"/>
   <title>Actualités - CDBG</title>
   <link rel="stylesheet" href="style.css"/>
-  <script defer src="news.js"></script>
 </head>
 <body>
 
@@ -73,7 +72,12 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2>Conditions Générales d’Utilisation</h2>
-    <p>Les présentes Conditions Générales d’Utilisation (CGU) régissent l’accès et l’utilisation du site de la Compagnie Durable du Bois au Gabon (CDBG)...</p>
+    <p>Les présentes Conditions Générales d’Utilisation (CGU) régissent l’accès et l’utilisation du site de la Compagnie Durable du Bois au Gabon (CDBG). En accédant au site, vous acceptez sans réserve les présentes conditions.</p>
+    <p>Tous les contenus du site sont protégés par le droit d’auteur et la propriété intellectuelle. Toute reproduction non autorisée est interdite.</p>
+    <p>Éditeur : Compagnie Durable du Bois au Gabon (CDBG), RCCM n° GA-LBV-01-2025-B16-00034, Libreville, BP 4447, Gabon.</p>
+    <p>Hébergement : GitHub, Inc., 88 Colin P. Kelly Jr Street, San Francisco, CA 94107, USA.</p>
+    <p>Responsabilité : CDBG met tout en œuvre pour garantir l’exactitude des informations mais ne saurait être tenue responsable en cas d’erreurs, omissions ou indisponibilité du site.</p>
+    <p>Droit applicable : Ces CGU sont régies par la loi gabonaise. Tout litige relève des juridictions gabonaises.</p>
   </div>
 </div>
 
@@ -81,7 +85,12 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2>Politique de confidentialité</h2>
-    <p>Conformément à la loi n°001/2011 relative à la protection des données à caractère personnel en République Gabonaise...</p>
+    <p>Conformément à la loi n°001/2011 relative à la protection des données personnelles au Gabon, la CDBG s’engage à garantir la sécurité des informations collectées.</p>
+    <p>Données collectées : nom, email, téléphone, objet du message, et toute information fournie volontairement via le formulaire de contact.</p>
+    <p>Utilisation : répondre aux demandes, gérer les relations commerciales et assurer le suivi des partenariats.</p>
+    <p>Durée : les données sont conservées uniquement pour la durée nécessaire, conformément à la loi.</p>
+    <p>Droits : chaque utilisateur dispose d’un droit d’accès, de rectification et de suppression de ses données.</p>
+    <p>Sécurité : des mesures techniques et organisationnelles sont mises en place pour éviter tout accès non autorisé.</p>
   </div>
 </div>
 
@@ -89,34 +98,41 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2>Cookies</h2>
-    <p>Lors de la navigation sur le site de la Compagnie Durable du Bois au Gabon (CDBG), des cookies peuvent être déposés...</p>
+    <p>Lors de votre navigation, des cookies peuvent être déposés sur votre appareil afin de faciliter la navigation et mesurer l’audience du site.</p>
+    <p>Types de cookies utilisés :</p>
+    <ul>
+      <li>Cookies techniques nécessaires au bon fonctionnement du site.</li>
+      <li>Cookies de mesure d’audience (statistiques anonymes).</li>
+    </ul>
+    <p>Vous pouvez désactiver les cookies dans les paramètres de votre navigateur. Toutefois, certaines fonctionnalités pourraient ne plus être disponibles.</p>
   </div>
 </div>
 
-<script>
-// Script ouverture/fermeture modaux
-document.querySelectorAll(".open-modal").forEach(link => {
-  link.addEventListener("click", e => {
-    e.preventDefault();
-    const modal = document.getElementById(link.dataset.modal);
-    if(modal) modal.style.display = "block";
-  });
-});
-document.querySelectorAll(".modal .close").forEach(btn => {
-  btn.addEventListener("click", () => btn.closest(".modal").style.display = "none");
-});
-window.addEventListener("click", e => {
-  if(e.target.classList.contains("modal")) e.target.style.display = "none";
-});
-</script>
-  <script src="news.js"></script>
+<!-- Scripts -->
+<script src="menu.js"></script>
+<script src="news.js"></script>
 <script>
   loadNews({
     xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml",
-    containerId: "news-fr",  // ✅ correspond au <div id="news-fr">
+    containerId: "news-fr",
     loadMoreBtnId: null,
-    batch: 12,               // par ex. + d’articles sur la page dédiée
+    batch: 12,
     lang: "fr"
+  });
+
+  // Gestion ouverture/fermeture des modaux
+  document.querySelectorAll('[data-modal]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const modal = document.getElementById(link.dataset.modal);
+      if (modal) modal.style.display = 'block';
+    });
+  });
+  document.querySelectorAll('.close').forEach(btn => {
+    btn.addEventListener('click', () => btn.closest('.modal').style.display = 'none');
+  });
+  window.addEventListener('click', e => {
+    if (e.target.classList.contains('modal')) e.target.style.display = 'none';
   });
 </script>
 
