@@ -589,3 +589,7 @@ img[src*="elephant_forest.webp"] {
   height: 180px !important;
   object-fit: cover !important;
 }
+.news-section h2 {
+  margin-top: 80px; /* espace sous la navbar fixe */
+}
+
