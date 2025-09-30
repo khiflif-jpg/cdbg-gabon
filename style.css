@@ -589,3 +589,84 @@ img[src*="elephant_forest.webp"] {
   height: 180px !important;
   object-fit: cover !important;
 }
+/* === Hero corrigé pour en.html : media picture + overlay responsive === */
+
+/* neutralise tout background défini précédemment sur .hero */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: none !important;
+}
+
+/* image / picture */
+.hero-media {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* évite d'interférer avec le clic */
+}
+.hero-media img.hero-img {
+  display: block;
+  width: 100%;
+  height: 100vh;            /* couvre la hauteur de l'écran */
+  max-height: 420px;        /* limite desktop */
+  object-fit: cover;
+  object-position: center;
+}
+
+/* overlay centré au-dessus de l'image */
+.hero-overlay {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.45); /* léger fondu noir */
+  color: #fff;
+  padding: 40px;
+  border-radius: 18px;
+  max-width: 980px;
+  width: calc(100% - 48px);
+  box-sizing: border-box;
+  z-index: 40; /* au-dessus de la nav */
+  text-align: center;
+}
+
+/* assure la navbar au-dessus de l'image mais sous l'overlay */
+.navbar { z-index: 60; position: relative; }
+
+/* textes du hero */
+.hero-overlay h1 { font-size: 40px; line-height: 1.2; margin-bottom: 10px; }
+.hero-overlay .subtitle-hero { font-size: 24px; margin-bottom: 16px; color: #fff; font-weight: 400; }
+.hero-overlay p { font-size: 18px; margin-bottom: 20px; color: #fff; }
+
+/* boutons */
+.hero-overlay .buttons { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+
+/* mobile adjustments */
+@media (max-width: 768px) {
+  /* image mobile : hauteur réduite pour correspondre à index.html */
+  .hero-media img.hero-img { height: 60vh; max-height: 320px; }
+
+  /* réduire overlay et polices de 25% (comme demandé) */
+  .hero-overlay {
+    padding: 22px;
+    border-radius: 12px;
+    width: calc(100% - 28px);
+  }
+  .hero-overlay h1 { font-size: 30px; }        /* 40px * 0.75 ≈ 30px */
+  .hero-overlay .subtitle-hero { font-size: 18px; }
+  .hero-overlay p { font-size: 14px; }
+
+  /* évite la "bande grise" : l'overlay est centré verticalement dans l'image */
+  .hero-overlay { top: 50%; transform: translate(-50%, -50%); }
+
+  /* nav: s'assurer que le burger reste visible */
+  .navbar { position: relative; z-index: 80; }
+}
+
+/* small screens very small */
+@media (max-width: 420px) {
+  .hero-overlay h1 { font-size: 24px; }
+  .hero-overlay .subtitle-hero { font-size: 16px; }
+  .hero-overlay p { font-size: 13px; }
+}
