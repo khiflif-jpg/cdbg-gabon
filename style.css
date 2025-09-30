@@ -430,65 +430,42 @@ footer {
 }
 
 
-/* === Overrides Desktop demandés === */
+/* === Corrections demandées (éléphant, galerie, Gabon, footer) === */
 
-/* 1. Image Bitam arrondie */
-img[src*="bitam_panneau.webp"] {
+/* 1. Image elephant arrondie */
+img[src*="elephant_forest.webp"] {
   border-radius: 12px;
-}
-
-/* 2. Harmoniser la taille des cartes et les empiler */
-.card {
-  width: 100%;
-  max-width: 400px;
-  margin: 1rem auto;
   display: block;
-  text-align: center;
-  word-wrap: break-word;
-}
-.card h3, .card p {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  margin: 0 auto;
 }
 
-/* 3. Galerie grumes + planches */
-.gallery img[src*="grumes_generiques.webp"],
-.gallery img[src*="planches_generiques.webp"] {
-  width: 45%;
-  height: auto;
-  margin: 0 2%;
-  border-radius: 12px;
-}
+/* 2. Galerie grumes + planches côte à côte */
 .gallery {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2%;
+  gap: 2rem;
+}
+.gallery img[src*="grumes_generiques.webp"],
+.gallery img[src*="planches_generiques.webp"] {
+  border-radius: 12px;
+  height: auto;
+  max-width: 45%;
 }
 
-/* 4. Section savoir plus sur le Gabon en 2 lignes de 4 */
+/* 3. Section Savoir plus sur le Gabon - cartes en grille 2x4 */
 .savoir-plus {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
+  justify-items: center;
 }
 .savoir-plus .card {
-  max-width: 100%;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 280px; /* garde une taille homogène */
 }
 
-/* 5. Actualités - centrer le lien "voir toutes les actualités" */
-.more-link {
-  display: flex;
-  justify-content: center;
-  margin-top: 1.5rem;
-}
-
-/* 6. Footer - centrer copyright sous ligne jaune */
-footer .footer-bottom {
-  text-align: center;
-  margin-top: 1rem;
+/* 4. Footer - supprimer les modaux visibles par défaut */
+footer .modal {
+  display: none; /* masqué tant qu’on n’a pas cliqué */
 }
