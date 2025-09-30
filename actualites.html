@@ -109,6 +109,16 @@ window.addEventListener("click", e => {
   if(e.target.classList.contains("modal")) e.target.style.display = "none";
 });
 </script>
+  <script src="news.js"></script>
+<script>
+  loadNews({
+    xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml",
+    containerId: "news-fr",  // ✅ correspond au <div id="news-fr">
+    loadMoreBtnId: null,
+    batch: 12,               // par ex. + d’articles sur la page dédiée
+    lang: "fr"
+  });
+</script>
 
 </body>
 </html>
