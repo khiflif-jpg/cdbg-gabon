@@ -429,43 +429,44 @@ footer {
   color: white;
 }
 
+/* === Modals Fix === */
 
-/* === Corrections demandées (éléphant, galerie, Gabon, footer) === */
-
-/* 1. Image elephant arrondie */
-img[src*="elephant_forest.webp"] {
-  border-radius: 12px;
-  display: block;
-  margin: 0 auto;
-}
-
-/* 2. Galerie grumes + planches côte à côte */
-.gallery {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-}
-.gallery img[src*="grumes_generiques.webp"],
-.gallery img[src*="planches_generiques.webp"] {
-  border-radius: 12px;
-  height: auto;
-  max-width: 45%;
-}
-
-/* 3. Section Savoir plus sur le Gabon - cartes en grille 2x4 */
-.savoir-plus {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-  justify-items: center;
-}
-.savoir-plus .card {
+/* Masquer les modaux par défaut */
+.modal {
+  display: none; /* caché par défaut */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
   width: 100%;
-  max-width: 280px; /* garde une taille homogène */
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
-/* 4. Footer - supprimer les modaux visibles par défaut */
-footer .modal {
-  display: none; /* masqué tant qu’on n’a pas cliqué */
+/* Contenu du modal */
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 700px;
+  width: 90%;
+  color: #333;
+  position: relative;
+}
+
+/* Bouton de fermeture (croix) */
+.close {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #000;
 }
