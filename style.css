@@ -103,7 +103,7 @@ body {
   background: rgba(0,0,0,.4);
   padding: 40px;
   border-radius: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 30px; /* ensures overlay doesn’t touch bottom */
 }
 
 .hero h1 {
@@ -221,7 +221,7 @@ section .subtitle {
 
 @media (max-width: 768px) {
   .learn-card {
-    width: calc(100% - 30px);
+    width: calc(100% - 30px); /* mobile: widen cards without touching edges */
   }
 }
 
@@ -287,6 +287,7 @@ section .subtitle {
   margin-right: 10px;
 }
 
+/* Desktop Contact Form Layout */
 @media (min-width: 1024px) {
   .contact-container {
     flex-wrap: nowrap;
@@ -337,7 +338,7 @@ section .subtitle {
   font-size: 18px;
   color: #3D6B35;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 2; /* max 2 lines */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -347,7 +348,7 @@ section .subtitle {
   font-size: 14px;
   margin-bottom: 10px;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 3; /* max 3 lines */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -429,8 +430,10 @@ footer {
 }
 
 /* === Modals Fix === */
+
+/* Masquer les modaux par défaut */
 .modal {
-  display: none;
+  display: none; /* caché par défaut */
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -441,6 +444,7 @@ footer {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
+/* Contenu du modal */
 .modal-content {
   background-color: #fff;
   margin: 10% auto;
@@ -452,6 +456,7 @@ footer {
   position: relative;
 }
 
+/* Bouton de fermeture (croix) */
 .close {
   color: #aaa;
   font-size: 28px;
@@ -466,11 +471,19 @@ footer {
   color: #000;
 }
 
-/* === FORCED OVERRIDES === */
+
+
+/* === FORCED OVERRIDES : gallery sizes, elephant, overflow lock ===
+   These rules are highly specific and use !important where necessary
+   to ensure they override existing styles that may resize the images.
+*/
+
+/* Prevent horizontal scrolling on small devices */
 html, body {
   overflow-x: hidden !important;
 }
 
+/* Elephant image: rounded and constrained */
 img[src*="elephant_forest.webp"] {
   border-radius: 12px !important;
   display: block !important;
@@ -480,25 +493,19 @@ img[src*="elephant_forest.webp"] {
   object-fit: cover !important;
 }
 
-img[src*="bitam_panneau.webp"] {
-  border-radius: 12px !important;
-  display: block !important;
-  margin: 0 auto 1rem auto !important;
-  object-fit: cover !important;
-  max-width: 100% !important;
-  height: auto !important;
-}
-
+/* Gallery row - ensure two images are on the same horizontal level on desktop and centered */
 .gallery-row {
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
   gap: 20px !important;
-  flex-wrap: nowrap !important;
+  flex-wrap: nowrap !important; /* keep them on the same line on desktop */
   margin: 20px auto !important;
   max-width: 1000px !important;
+  box-sizing: border-box !important;
 }
 
+/* Gallery item container safe defaults */
 .gallery-row .gallery-item {
   flex: 0 0 auto !important;
   display: flex !important;
@@ -506,45 +513,43 @@ img[src*="bitam_panneau.webp"] {
   align-items: center !important;
 }
 
+/* Generic image safety for gallery images */
 .gallery-row .gallery-item img {
   border-radius: 12px !important;
   display: block !important;
   object-fit: cover !important;
 }
 
+/* Force exact desktop size for the two gallery images */
 @media (min-width: 769px) {
   .gallery-row .gallery-item img[src*="grumes_generiques.webp"],
   .gallery-row .gallery-item img[src*="planches_generiques.webp"] {
     width: 440px !important;
     height: 300px !important;
+    max-width: none !important;
   }
 }
 
+/* Mobile: stack images vertically and use smaller fixed max width */
 @media (max-width: 768px) {
   .gallery-row {
     flex-direction: column !important;
+    flex-wrap: wrap !important;
     gap: 16px !important;
   }
-  .gallery-row .gallery-item img {
+  /* small variants (source element uses small.webp) or fallback to main image */
+  .gallery-row .gallery-item img[src*="_small.webp"],
+  .gallery-row .gallery-item picture source[srcset*="_small.webp"] ~ img,
+  .gallery-row .gallery-item img[src*="grumes_generiques.webp"],
+  .gallery-row .gallery-item img[src*="planches_generiques.webp"] {
     width: 92% !important;
     max-width: 360px !important;
     height: auto !important;
     margin: 0 auto !important;
   }
-  .hero h1, .hero h2, .hero p {
-    font-size: 75% !important;
-  }
 }
 
-.card, .learn-card {
-  width: 280px !important;
-  height: 250px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center !important;
-}
-
+/* Ensure "Voir toutes les actualités" / See all is centered */
 .more-link, .see-all-news {
   display: flex !important;
   justify-content: center !important;
@@ -552,6 +557,35 @@ img[src*="bitam_panneau.webp"] {
   margin-top: 1.5rem !important;
 }
 
+/* Footer: center copyright under yellow line */
 .footer-bottom {
   text-align: center !important;
+}
+
+/* Learn grid: force 4 columns on desktop and centered alignment */
+@media (min-width: 1024px) {
+  .learn-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 1rem !important;
+    justify-items: center !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+  }
+  .learn-card {
+    width: 100% !important;
+    max-width: 280px !important;
+  }
+}
+
+/* If any other CSS tries to set images to width:100% in gallery, override it */
+.gallery-row img[style], .gallery-row img {
+  max-width: none !important;
+}
+
+/* Safety: make sure news images don't break layout */
+.news-card img {
+  width: 100% !important;
+  height: 180px !important;
+  object-fit: cover !important;
 }
