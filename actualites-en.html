@@ -69,4 +69,119 @@
         <li><a href="en.html">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li
+        <li><a class="active" href="actualites-en.html">News</a></li>
+      </ul>
+      <div class="burger">&#9776;</div>
+    </nav>
+  </header>
+
+  <!-- Main News Section -->
+  <main class="news-page">
+    <h1>Forest News</h1>
+    <p class="subtitle">Latest updates on Gabonese and Central African forests</p>
+    <div class="news-grid" id="news-list-en"></div>
+    <button class="btn" id="load-more-btn-en">Load more</button>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>CDBG</h4>
+        <p>Compagnie Durable du Bois au Gabon</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="en.html">Home</a></li>
+          <li><a href="actualites-en.html">News</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <p>Phone: +241 77 25 9169</p>
+      </div>
+    </div>
+    <div class="footer-bottom" style="text-align:center;">
+      © 2025 Compagnie Durable du Bois au Gabon – All rights reserved
+    </div>
+  </footer>
+
+  <script>
+    async function loadNews({ xmlUrl, containerId, loadMoreBtnId, batch = 10, lang = "en" }) {
+      const container = document.getElementById(containerId);
+      const loadMoreBtn = loadMoreBtnId ? document.getElementById(loadMoreBtnId) : null;
+      let items = [];
+      let currentIndex = 0;
+      try {
+        const res = await fetch(xmlUrl);
+        const text = await res.text();
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(text, "application/xml");
+        items = [...xml.querySelectorAll("item")];
+      } catch(e) {
+        container.innerHTML = "<p>Unable to load news.</p>";
+        return;
+      }
+
+      function renderBatch() {
+        const slice = items.slice(currentIndex, currentIndex + batch);
+        slice.forEach(item => {
+          const title = item.querySelector("title")?.textContent ?? "";
+          const link = item.querySelector("link")?.textContent ?? "#";
+          const description = item.querySelector("description")?.textContent ?? "";
+          const pubDate = new Date(item.querySelector("pubDate")?.textContent ?? Date.now());
+          const source = item.querySelector("source")?.textContent ?? "Unknown source";
+
+          let imageUrl = null;
+          const enclosure = item.querySelector("enclosure");
+          if(enclosure && enclosure.getAttribute("url")) imageUrl = enclosure.getAttribute("url");
+          else {
+            const descMatch = description.match(/<img[^>]+src="([^">]+)"/i);
+            if(descMatch) imageUrl = descMatch[1];
+          }
+
+          const card = document.createElement("a");
+          card.href = link;
+          card.target = "_blank";
+          card.className = "news-card";
+
+          const imgDiv = document.createElement("div");
+          imgDiv.className = "news-image";
+          if(imageUrl) {
+            const img = document.createElement("img");
+            img.src = imageUrl;
+            img.alt = title;
+            imgDiv.appendChild(img);
+          } else {
+            imgDiv.classList.add("no-image");
+            imgDiv.textContent = title;
+          }
+          card.appendChild(imgDiv);
+
+          const content = document.createElement("div");
+          content.className = "news-content";
+          if(imageUrl) {
+            const h3 = document.createElement("h3");
+            h3.className = "news-title";
+            h3.textContent = title;
+            content.appendChild(h3);
+          }
+
+          const descP = document.createElement("p");
+          descP.className = "news-desc";
+          descP.textContent = description.replace(/<[^>]*>/g, "").substring(0,200);
+          content.appendChild(descP);
+
+          const meta = document.createElement("p");
+          meta.className = "news-meta";
+          meta.textContent = `${pubDate.toLocaleDateString(lang)} – ${source}`;
+          content.appendChild(meta);
+
+          card.appendChild(content);
+          container.appendChild(card);
+        });
+
+        currentIndex += slice.length;
+        if(loadMoreBtn && currentIndex >= items.length) loadMoreBtn.style.displa
