@@ -589,3 +589,16 @@ img[src*="elephant_forest.webp"] {
   height: 180px !important;
   object-fit: cover !important;
 }
+/* ✅ Correction taille hero image */
+.hero img {
+  width: 100%;
+  height: auto;
+  max-height: 400px;   /* Limite pour desktop */
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .hero img {
+    max-height: 250px; /* Limite pour mobile */
+  }
+}
