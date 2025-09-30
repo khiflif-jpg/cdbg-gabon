@@ -9,27 +9,53 @@
 </head>
 <body>
 
-<!-- Header -->
+<!-- Header (remplacer l'ancien <header class="hero" id="hero"> ... ) -->
 <header class="hero" id="hero">
   <nav class="navbar">
     <div class="logo"><img alt="CDBG Logo" src="logo.webp" width="80" height="80"/></div>
+
+    <!-- drapeaux au centre entre logo et menu -->
     <div class="nav-flags">
       <a href="index.html"><img alt="Français" src="fr.png" width="32" height="32" loading="lazy"/></a>
       <a href="en.html"><img alt="English" src="en.png" width="32" height="32" loading="lazy"/></a>
     </div>
+
     <ul class="nav-links">
-      <li><a href="en.html#bitam">Bitam</a></li>
-      <li><a href="en.html#about">About</a></li>
-      <li><a href="en.html#ambition">Ambition</a></li>
-      <li><a href="en.html#services">Services</a></li>
-      <li><a href="en.html#gallery">Gallery</a></li>
-      <li><a href="en.html#commitments">Commitments</a></li>
-      <li><a href="en.html#partnerships">Partnerships</a></li>
-      <li><a href="actualites-en.html">News</a></li>
-      <li><a href="en.html#contact">Contact</a></li>
+      <li><a href="#bitam">Bitam</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#ambition">Ambition</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#commitments">Commitments</a></li>
+      <li><a href="#partnerships">Partnerships</a></li>
+      <!-- ce lien pointe vers la section news sur la même page -->
+      <li><a href="#forest-news">News</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
+
     <div aria-label="Menu" class="burger" id="burger">☰</div>
   </nav>
+
+  <!-- Hero media : picture pour mobile/desktop (foret_small.webp pour mobile) -->
+  <picture class="hero-media" aria-hidden="true">
+    <source media="(max-width:768px)" srcset="foret_small.webp">
+    <img class="hero-img" src="foret.webp" alt="Forest in Gabon" loading="lazy"/>
+  </picture>
+
+  <!-- Overlay centré (inchangé visuellement mais responsive) -->
+  <div class="hero-overlay">
+    <h1>Compagnie Durable du Bois in Gabon</h1>
+    <h2 class="subtitle-hero">Responsible Forestry</h2>
+    <p>Ensuring a preserved forest for future generations while promoting Gabon's forest heritage.</p>
+    <div class="buttons">
+      <a class="btn btn-secondary" href="#about">About</a>
+      <a class="btn btn-secondary" href="#contact">Contact</a>
+    </div>
+    <div aria-hidden="true" class="scroll-down">
+      <span class="scroll-text">Welcome</span><br/>
+      <span class="arrow">↓</span>
+    </div>
+  </div>
 </header>
 
 <!-- News Section -->
