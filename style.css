@@ -471,90 +471,121 @@ footer {
   color: #000;
 }
 
-/* === Global image safety === */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+
+
+/* === FORCED OVERRIDES : gallery sizes, elephant, overflow lock ===
+   These rules are highly specific and use !important where necessary
+   to ensure they override existing styles that may resize the images.
+*/
+
+/* Prevent horizontal scrolling on small devices */
+html, body {
+  overflow-x: hidden !important;
 }
 
-/* === Card Base for harmonization === */
-.card, .learn-card {
-  border-radius: 15px;
-  box-shadow: 0 6px 12px rgba(0,0,0,.1);
-  transition: transform .3s ease;
+/* Elephant image: rounded and constrained */
+img[src*="elephant_forest.webp"] {
+  border-radius: 12px !important;
+  display: block !important;
+  margin: 0 auto 1rem auto !important;
+  max-width: 100% !important;
+  height: auto !important;
+  object-fit: cover !important;
 }
 
-.card:hover, .learn-card:hover {
-  transform: translateY(-10px);
-}
-
-/* === Footer bottom centered === */
-.footer-bottom {
-  border-top: 2px solid #e6d36f;
-  margin-top: 20px;
-  padding-top: 10px;
-  text-align: center;
-  font-size: 0.8rem;
-  font-weight: 300;
-  color: white;
-}
-
-/* === Galerie Fix Desktop & Mobile === */
+/* Gallery row - ensure two images are on the same horizontal level on desktop and centered */
 .gallery-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin: 20px auto;
-  max-width: 1000px;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 20px !important;
+  flex-wrap: nowrap !important; /* keep them on the same line on desktop */
+  margin: 20px auto !important;
+  max-width: 1000px !important;
+  box-sizing: border-box !important;
 }
 
-.gallery-item img {
-  border-radius: 12px;
-  object-fit: cover;
+/* Gallery item container safe defaults */
+.gallery-row .gallery-item {
+  flex: 0 0 auto !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
-/* Desktop */
+/* Generic image safety for gallery images */
+.gallery-row .gallery-item img {
+  border-radius: 12px !important;
+  display: block !important;
+  object-fit: cover !important;
+}
+
+/* Force exact desktop size for the two gallery images */
 @media (min-width: 769px) {
-  .gallery-item img {
-    width: 400px;
-    height: 280px;
+  .gallery-row .gallery-item img[src*="grumes_generiques.webp"],
+  .gallery-row .gallery-item img[src*="planches_generiques.webp"] {
+    width: 440px !important;
+    height: 300px !important;
+    max-width: none !important;
   }
 }
 
-/* Mobile */
+/* Mobile: stack images vertically and use smaller fixed max width */
 @media (max-width: 768px) {
   .gallery-row {
-    flex-direction: column;
+    flex-direction: column !important;
+    flex-wrap: wrap !important;
+    gap: 16px !important;
   }
-  .gallery-item img {
-    width: 90%;
-    max-width: 350px;
-    height: auto;
-    margin: 0 auto;
+  /* small variants (source element uses small.webp) or fallback to main image */
+  .gallery-row .gallery-item img[src*="_small.webp"],
+  .gallery-row .gallery-item picture source[srcset*="_small.webp"] ~ img,
+  .gallery-row .gallery-item img[src*="grumes_generiques.webp"],
+  .gallery-row .gallery-item img[src*="planches_generiques.webp"] {
+    width: 92% !important;
+    max-width: 360px !important;
+    height: auto !important;
+    margin: 0 auto !important;
   }
 }
 
-/* === Bloquer scroll horizontal sur mobile === */
-html, body {
-  overflow-x: hidden;
+/* Ensure "Voir toutes les actualités" / See all is centered */
+.more-link, .see-all-news {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-top: 1.5rem !important;
 }
 
-/* === Responsive typography === */
-.hero h1 {
-  font-size: 2.5rem;
+/* Footer: center copyright under yellow line */
+.footer-bottom {
+  text-align: center !important;
 }
 
-.hero h2 {
-  font-size: 1.6rem;
+/* Learn grid: force 4 columns on desktop and centered alignment */
+@media (min-width: 1024px) {
+  .learn-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 1rem !important;
+    justify-items: center !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+  }
+  .learn-card {
+    width: 100% !important;
+    max-width: 280px !important;
+  }
 }
 
-.hero p {
-  font-size: 1rem;
+/* If any other CSS tries to set images to width:100% in gallery, override it */
+.gallery-row img[style], .gallery-row img {
+  max-width: none !important;
 }
 
-.nav-links li a {
-  font-size: 0.9rem;
+/* Safety: make sure news images don't break layout */
+.news-card img {
+  width: 100% !important;
+  height: 180px !important;
+  object-fit: cover !important;
 }
