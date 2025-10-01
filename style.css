@@ -602,18 +602,18 @@ img[src*="elephant_forest.webp"] {
   height: auto;
   }
 
-/* Hero overlay centré, très large et légèrement remonté */
+/* Hero overlay centré, pleine largeur en mobile */
 @media (max-width: 768px) {
   .hero-overlay {
     position: absolute;
-    top: 52%;               /* remonte un peu (au lieu de 58%) */
+    top: 52%;               /* parfait en hauteur */
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
     background: rgba(0, 0, 0, 0.3);
     padding: 18px;
     border-radius: 10px;
-    max-width: 98%;         /* encore plus large (presque bord à bord) */
+    max-width: 100%;        /* prend toute la largeur de l'écran */
   }
 
   .hero-overlay h1 {
