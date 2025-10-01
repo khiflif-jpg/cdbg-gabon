@@ -679,23 +679,21 @@ img[src*="elephant_forest.webp"] {
     display: none;            /* masque la Google Map en mobile */
   }
 
-}/* Harmonisation des images Bitam et Elephant en desktop */
+/* Harmonisation Bitam + Elephant en desktop */
 @media (min-width: 1024px) {
-  /* Bitam panneau et Elephant dans Bitam */
   #bitam img[src*="bitam_panneau.webp"],
-  #bitam img[src*="elephant.webp"],
-  /* Elephant dans la section Engagements (EN) */
-  #engagements img[src*="elephant.webp"] {
-    width: 440px;       /* largeur uniforme */
-    height: 300px;      /* hauteur uniforme */
-    object-fit: cover;  /* rogne proprement */
-    display: block;
-    margin: 0 auto;     /* centre horizontalement */
-    border-radius: 15px; /* coins arrondis */
+  #bitam img[src*="elephant_forest.webp"],
+  #engagements img[src*="elephant_forest.webp"] {
+    width: 440px !important;
+    height: 300px !important;
+    object-fit: cover !important;
+    display: block !important;
+    margin: 0 auto !important;
+    border-radius: 15px !important;
   }
 }
 
-
+  
 
 
 
