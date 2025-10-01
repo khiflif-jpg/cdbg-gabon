@@ -643,33 +643,43 @@ img[src*="elephant_forest.webp"] {
     text-align: center;
   }
 
-  /* Formulaire en premier, large */
-  #contact form {
-    order: -1;                  /* force le formulaire à passer avant adresse/tel */
-    width: 95%;                 /* occupe presque toute la largeur */
-    margin: 0 auto 30px auto;   /* centré avec un espace dessous */
+ /* Réorganisation Contact uniquement en mobile */
+@media (max-width: 768px) {
+  .contact-container {
+    display: flex;
+    flex-direction: column;   /* empile les éléments */
+    align-items: center;      /* centre */
   }
 
-  /* Adresse et téléphone en dessous */
-  #contact .contact-info {
-    text-align: left;           /* aligne les icônes et texte à gauche */
-    max-width: 95%;             /* même largeur que le formulaire */
-    margin: 0 auto;             /* centré globalement */
+  .contact-form {
+    order: -1;                /* passe en premier */
+    width: 95%;               /* large et centré */
+    margin: 0 auto 30px auto;
   }
 
-  #contact .contact-info p {
+  .contact-info {
+    width: 95%;
+    margin: 0 auto;
+    text-align: left;         /* aligne adresse/tel à gauche */
+  }
+
+  .contact-info p {
     display: flex;
     align-items: center;
-    gap: 10px;                  /* espace entre icône et texte */
+    gap: 10px;                /* espace icône/texte */
     margin-bottom: 10px;
   }
 
-  #contact .contact-info i {
-    color: #3D6B35;             /* couleur verte des icônes */
-    font-size: 1.2rem;
+  .contact-info img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .contact-map {
+    display: none;            /* masque la Google Map en mobile */
   }
 }
-}
+
 
 
 
