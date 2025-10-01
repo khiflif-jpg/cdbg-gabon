@@ -602,43 +602,32 @@ img[src*="elephant_forest.webp"] {
   height: auto;
   }
 
-/* Fix de la Hero en version mobile */
-@media (max-width: 768px) {
-  .hero {
-    height: 100vh;              /* occupe toute la hauteur de l'écran */
-    min-height: 100%;           /* sécurité */
-    background-size: cover;     /* l'image couvre tout l'espace */
-    background-position: center;
-    background-repeat: no-repeat;
-    margin: 0;
-    padding: 0;
-  }
-}/* Centrage et réduction du cadre transparent Hero en mobile */
+/* Hero overlay centré et élargi pour mobile */
 @media (max-width: 768px) {
   .hero-overlay {
     position: absolute;
-    top: 50%;              /* centre verticalement */
-    left: 50%;             /* centre horizontalement */
+    top: 58%;               /* descend un peu plus qu'avant */
+    left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    background: rgba(0, 0, 0, 0.3); /* fond semi-transparent */
-    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 18px;
     border-radius: 10px;
-    max-width: 90%;        /* évite que le texte déborde sur petit écran */
+    max-width: 95%;         /* plus large qu'avant (presque toute la largeur) */
   }
 
   .hero-overlay h1 {
-    font-size: 1.5rem;     /* titre réduit */
+    font-size: 1.4rem;      /* légèrement réduit pour tenir dans la largeur */
     line-height: 1.3;
   }
 
   .hero-overlay h2 {
-    font-size: 1.2rem;     /* sous-titre réduit */
+    font-size: 1.1rem;
     line-height: 1.3;
   }
 
   .hero-overlay p {
-    font-size: 1rem;
+    font-size: 0.95rem;
     line-height: 1.4;
   }
 
@@ -647,6 +636,7 @@ img[src*="elephant_forest.webp"] {
     padding: 8px 14px;
   }
 }
+
 
 
 
