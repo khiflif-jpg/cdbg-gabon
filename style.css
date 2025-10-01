@@ -679,14 +679,24 @@ img[src*="elephant_forest.webp"] {
     display: none;            /* masque la Google Map en mobile */
   }
 
-/* Harmonisation Bitam + Elephant en desktop (force overrides) */
+/* Harmonisation Bitam + Elephant en desktop */
 @media (min-width: 1024px) {
-  #bitam img[src*="bitam_panneau.webp"],
-  #bitam img[src*="elephant_forest.webp"],
+  /* Image Bitam */
+  #bitam img[src*="bitam_panneau.webp"] {
+    width: 440px !important;
+    height: 300px !important;
+    max-width: none !important;
+    object-fit: cover !important;
+    display: block !important;
+    margin: 0 auto !important;
+    border-radius: 15px !important;
+  }
+
+  /* Image Elephant (section Nos Engagements / Commitments) */
   #engagements img[src*="elephant_forest.webp"] {
     width: 440px !important;
     height: 300px !important;
-    max-width: none !important;   /* supprime la contrainte "max-width: 100%" */
+    max-width: none !important;
     object-fit: cover !important;
     display: block !important;
     margin: 0 auto !important;
@@ -694,7 +704,6 @@ img[src*="elephant_forest.webp"] {
   }
 }
 
-  
   
 
 
