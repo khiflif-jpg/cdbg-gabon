@@ -652,6 +652,41 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
   });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  function fixImages() {
+    const bitam = document.querySelector('#bitam img[src*="bitam_panneau.webp"]');
+    const elephant = document.querySelector('#engagements img[src*="elephant_forest.webp"]');
+    
+    if (window.innerWidth >= 1024) {
+      [bitam, elephant].forEach(img => {
+        if (img) {
+          img.style.width = "440px";
+          img.style.height = "300px";
+          img.style.objectFit = "cover";
+          img.style.display = "block";
+          img.style.margin = "0 auto";
+          img.style.borderRadius = "15px";
+        }
+      });
+    } else {
+      // enlève les overrides en mobile
+      [bitam, elephant].forEach(img => {
+        if (img) {
+          img.style.width = "";
+          img.style.height = "";
+          img.style.objectFit = "";
+          img.style.margin = "";
+          img.style.borderRadius = "";
+        }
+      });
+    }
+  }
+
+  fixImages();
+  window.addEventListener("resize", fixImages);
+});
+</script>
 
 </body>
 </html>
