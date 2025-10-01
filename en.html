@@ -446,5 +446,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     lang: "en"
   });
 </script>
+  <script>
+  const burger = document.getElementById('burger');
+  const nav = document.querySelector('.navbar');
+
+  burger.addEventListener('click', () => {
+    nav.classList.toggle('active');
+    // Change ☰ en ❌ et inversement
+    burger.textContent = nav.classList.contains('active') ? '✖' : '☰';
+  });
+</script>
+
 </body>
 </html>
