@@ -636,7 +636,15 @@ img[src*="elephant_forest.webp"] {
     font-size: 0.9rem;            /* boutons adaptés */
     padding: 8px 14px;
   }
+/* Uniformiser la police des titres de section avec celle du Hero */
+h2 {
+  font-family: inherit;  /* reprend la même police que le Hero (héritée du body/h1) */
+  color: inherit;        /* garde la même couleur actuelle */
+  font-weight: bold;
+  text-align: center;    /* optionnel : pour harmoniser */
+  margin-bottom: 20px;
 }
+
 
 
 
