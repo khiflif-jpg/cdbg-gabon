@@ -678,7 +678,67 @@ img[src*="elephant_forest.webp"] {
   .contact-map {
     display: none;            /* masque la Google Map en mobile */
   }
+}/* Menu mobile en overlay 3 colonnes */
+@media (max-width: 768px) {
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: transparent;
+  }
+
+  .navbar.active {
+    background: rgba(0,0,0,0.7); /* fond sombre transparent */
+    backdrop-filter: blur(6px);
+    height: 100vh;               /* occupe tout l'écran */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .navbar .nav-links {
+    display: none; /* caché par défaut */
+  }
+
+  .navbar.active .nav-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colonnes */
+    gap: 20px;
+    width: 90%;
+    text-align: center;
+  }
+
+  .navbar.active .nav-links li {
+    list-style: none;
+  }
+
+  .navbar.active .nav-links a {
+    color: #fff;
+    font-size: 1.1rem;
+    text-decoration: none;
+    display: block;
+    padding: 10px 0;
+  }
+
+  /* Burger / Croix */
+  #burger {
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 1100;
+    position: relative;
+  }
+
+  .navbar.active #burger {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+  }
 }
+
 
 
 
