@@ -593,3 +593,11 @@ img[src*="elephant_forest.webp"] {
   margin-top: 80px; /* espace sous la navbar fixe */
 }
 
+/* Image Bitam centrée et arrondie */
+#bitam img {
+  display: block;
+  margin: 0 auto;
+  border-radius: 15px; /* tu peux augmenter la valeur pour plus d’arrondi */
+  max-width: 100%;
+  height: auto;
+}
