@@ -678,17 +678,7 @@ img[src*="elephant_forest.webp"] {
   .contact-map {
     display: none;            /* masque la Google Map en mobile */
   }
-/* Menu mobile overlay 3 colonnes */
-@media (max-width: 768px) {
-  /* NAVBAR fermée → reste normale */
-  .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    background: #3D6B35; /* ta couleur habituelle */
-    transition: background 0.3s ease;
+
   }
 
 
