@@ -637,12 +637,38 @@ img[src*="elephant_forest.webp"] {
     padding: 8px 14px;
   }
    
-/* Uniformiser la police de tous les titres */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Inter', sans-serif; /* même police que le Hero */
-  font-weight: bold;
-  line-height: 1.3;
-  margin-bottom: 20px;
+/* Contact : réorganisation en version mobile */
+@media (max-width: 768px) {
+  #contact {
+    text-align: center;
+  }
+
+  /* Formulaire en premier, large */
+  #contact form {
+    order: -1;                  /* force le formulaire à passer avant adresse/tel */
+    width: 95%;                 /* occupe presque toute la largeur */
+    margin: 0 auto 30px auto;   /* centré avec un espace dessous */
+  }
+
+  /* Adresse et téléphone en dessous */
+  #contact .contact-info {
+    text-align: left;           /* aligne les icônes et texte à gauche */
+    max-width: 95%;             /* même largeur que le formulaire */
+    margin: 0 auto;             /* centré globalement */
+  }
+
+  #contact .contact-info p {
+    display: flex;
+    align-items: center;
+    gap: 10px;                  /* espace entre icône et texte */
+    margin-bottom: 10px;
+  }
+
+  #contact .contact-info i {
+    color: #3D6B35;             /* couleur verte des icônes */
+    font-size: 1.2rem;
+  }
+}
 }
 
 
