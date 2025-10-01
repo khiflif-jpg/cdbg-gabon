@@ -601,5 +601,18 @@ img[src*="elephant_forest.webp"] {
   max-width: 100%;
   height: auto;
   }
+
+/* Fix de la Hero en version mobile */
+@media (max-width: 768px) {
+  .hero {
+    height: 100vh;              /* occupe toute la hauteur de l'écran */
+    min-height: 100%;           /* sécurité */
+    background-size: cover;     /* l'image couvre tout l'espace */
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+  }
 }
+
 
