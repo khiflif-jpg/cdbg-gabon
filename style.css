@@ -679,13 +679,14 @@ img[src*="elephant_forest.webp"] {
     display: none;            /* masque la Google Map en mobile */
   }
 
-/* Harmonisation Bitam + Elephant en desktop */
+/* Harmonisation Bitam + Elephant en desktop (force overrides) */
 @media (min-width: 1024px) {
   #bitam img[src*="bitam_panneau.webp"],
   #bitam img[src*="elephant_forest.webp"],
   #engagements img[src*="elephant_forest.webp"] {
     width: 440px !important;
     height: 300px !important;
+    max-width: none !important;   /* supprime la contrainte "max-width: 100%" */
     object-fit: cover !important;
     display: block !important;
     margin: 0 auto !important;
@@ -693,6 +694,7 @@ img[src*="elephant_forest.webp"] {
   }
 }
 
+  
   
 
 
