@@ -601,4 +601,18 @@ img[src*="elephant_forest.webp"] {
   max-width: 100%;
   height: auto;
   }
+
+/* Fix Hero mobile */
+@media (max-width: 768px) {
+  .hero {
+    padding-top: 70px; /* ajuste la valeur selon la hauteur de ton header */
+  }
+
+  .hero img {
+    width: 100%;
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
 }
+
