@@ -691,54 +691,7 @@ img[src*="elephant_forest.webp"] {
     transition: background 0.3s ease;
   }
 
-  /* NAVBAR ouverte → devient transparente */
-  .navbar.active {
-    background: rgba(0,0,0,0.7); /* semi-transparent */
-    backdrop-filter: blur(6px);
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding-top: 80px;
-  }
 
-  /* cacher par défaut */
-  .nav-links {
-    display: none;
-  }
-
-  /* afficher quand actif en 3 colonnes */
-  .navbar.active .nav-links {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    width: 90%;
-    text-align: center;
-  }
-
-  .navbar.active .nav-links li {
-    list-style: none;
-  }
-
-  .navbar.active .nav-links a {
-    color: #fff;
-    font-size: 1.1rem;
-    text-decoration: none;
-    display: block;
-    padding: 10px 0;
-  }
-
-  /* Burger / Croix */
-  #burger {
-    font-size: 2rem;
-    cursor: pointer;
-    z-index: 1101;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-  }
-}
 
 
 
