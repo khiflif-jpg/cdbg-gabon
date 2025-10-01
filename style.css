@@ -602,22 +602,22 @@ img[src*="elephant_forest.webp"] {
   height: auto;
   }
 
-/* Hero overlay centré et élargi pour mobile */
+/* Hero overlay centré, très large et légèrement remonté */
 @media (max-width: 768px) {
   .hero-overlay {
     position: absolute;
-    top: 58%;               /* descend un peu plus qu'avant */
+    top: 52%;               /* remonte un peu (au lieu de 58%) */
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
     background: rgba(0, 0, 0, 0.3);
     padding: 18px;
     border-radius: 10px;
-    max-width: 95%;         /* plus large qu'avant (presque toute la largeur) */
+    max-width: 98%;         /* encore plus large (presque bord à bord) */
   }
 
   .hero-overlay h1 {
-    font-size: 1.4rem;      /* légèrement réduit pour tenir dans la largeur */
+    font-size: 1.4rem;
     line-height: 1.3;
   }
 
