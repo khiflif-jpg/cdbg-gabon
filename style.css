@@ -690,151 +690,82 @@ img[src*="elephant_forest.webp"] {
   .contact-map {
     display: none;            /* masque la Google Map en mobile */
   }
-/* Desktop - texte sous titre limité et justifié */
+/* ================================
+   Cartes avec icônes centrées au-dessus - Desktop & Mobile
+   ================================ */
+
+/* Texte sous les titres limité sur desktop */
 @media (min-width: 768px) {
-  #about .subtitle {
+  #about .subtitle,
+  #engagements .subtitle {
+    max-width: 700px;        /* largeur maximale */
+    margin: 0 auto 1.5rem;   /* centre horizontal + marge */
+    text-align: justify;      /* texte justifié */
+  }
+
+  /* Limite la largeur des cartes et texte à l'intérieur */
+  .about .card,
+  .engagements .card,
+  .services .card,
+  .partnerships .card,
+  .commitments .card {
     max-width: 700px;
-    margin: 0 auto 1.5rem;
+    margin: 1rem auto;
+  }
+
+  .about .card .card-text,
+  .engagements .card .card-text,
+  .services .card .card-text,
+  .partnerships .card .card-text,
+  .commitments .card .card-text {
     text-align: justify;
   }
+}
 
-  .about .cards {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    align-items: center;
-  }
-
-  .about .card {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    max-width: 700px;
-  }
-
-  .about .card .icon {
-    flex-shrink: 0;
-  }
-
-  .about .card .card-text {
-    text-align: justify;
-  }
-
-  .about h2, .about h3 {
-    text-align: center;
-  }
-
-/* Mobile - icône au-dessus du titre H3, texte justifié */
-@media (max-width: 767px) {
-  .about .cards {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .about .card {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* icône en haut à gauche */
-    text-align: justify;
-    max-width: 100%;
-    margin: 0 auto;
-  }
-
-  .about .card .icon {
-    margin-bottom: 0.5rem;
-  }
-
-  .about .card .card-text {
-    width: 100%;
-    text-align: justify;
-  }
-
-  .about .subtitle {
-    text-align: justify;
-  }
-  /* =========================================
-   Style global pour toutes les cartes
-   ========================================= */
+/* ================================
+   Cartes avec icônes centrées au-dessus pour tous les écrans
+   ================================ */
 .about .card,
 .engagements .card,
 .services .card,
 .partnerships .card,
-#about .card,
-#commitments .card {
+.commitments .card {
   display: flex;
-  flex-direction: column;     /* icône au-dessus du titre et du texte */
-  align-items: center;        /* tout centré horizontalement */
-  max-width: 700px;
-  margin: 1rem auto;
-  text-align: center;         /* centre le titre et le texte */
-  gap: 0.8rem;
-  padding: 1rem 0;
+  flex-direction: column; /* icône au-dessus */
+  align-items: center;    /* icône centrée horizontalement */
+  gap: 0.5rem;
+  text-align: center;
 }
 
-/* Icônes */
 .about .card .icon,
 .engagements .card .icon,
 .services .card .icon,
 .partnerships .card .icon,
-#about .card .icon,
-#commitments .card .icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.commitments .card .icon {
   margin-bottom: 0.5rem;
+  flex-shrink: 0;
 }
 
-.about .card .icon img,
-.engagements .card .icon img,
-.services .card .icon img,
-.partnerships .card .icon img,
-#about .card .icon img,
-#commitments .card .icon img {
-  max-width: 80px;            /* taille raisonnable des icônes */
-  height: auto;
-}
-
-/* Texte des cartes */
+/* Texte à l'intérieur des cartes */
 .about .card .card-text,
 .engagements .card .card-text,
 .services .card .card-text,
 .partnerships .card .card-text,
-#about .card .card-text,
-#commitments .card .card-text {
-  text-align: justify;        /* texte des paragraphes justifié */
-  width: 90%;
-  max-width: 650px;
+.commitments .card .card-text {
+  width: 100%;
 }
 
-/* =========================================
-   Texte sous les titres des sections
-   ========================================= */
-.about .subtitle,
-.engagements .subtitle,
-#about .subtitle,
-#commitments .subtitle {
-  max-width: 700px;           /* largeur limitée sur desktop */
-  margin: 0 auto 1.5rem auto; /* centré horizontalement */
-  text-align: justify;        /* justifié */
-  line-height: 1.6;
-  font-size: 1rem;
+/* Titres des cartes centrés */
+.about .card h3,
+.engagements .card h3,
+.services .card h3,
+.partnerships .card h3,
+.commitments .card h3 {
+  text-align: center;
 }
 
-/* =========================================
-   Titres des sections
-   ========================================= */
-.about h2,
-.engagements h2,
-.services h2,
-.partnerships h2,
-#about h2,
-#commitments h2,
-.about h3,
-.engagements h3,
-.services h3,
-.partnerships h3,
-#about h3,
-#commitments h3 {
-  text-align: center;         /* tous les titres centrés */
+/* Sous-titres des sections centrés sur tous les écrans */
+.about h2, .engagements h2, .services h2, .partnerships h2, .commitments h2,
+.about h3, .engagements h3, .services h3, .partnerships h3, .commitments h3 {
+  text-align: center;
 }
