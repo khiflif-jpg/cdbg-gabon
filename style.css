@@ -723,7 +723,6 @@ img[src*="elephant_forest.webp"] {
   .about h2, .about h3 {
     text-align: center;
   }
-}
 
 /* Mobile - icône au-dessus du titre H3, texte justifié */
 @media (max-width: 767px) {
@@ -754,86 +753,88 @@ img[src*="elephant_forest.webp"] {
   .about .subtitle {
     text-align: justify;
   }
-   /* =========================================
-   1. Texte sous les titres des sections
+  /* =========================================
+   Style global pour toutes les cartes
+   ========================================= */
+.about .card,
+.engagements .card,
+.services .card,
+.partnerships .card,
+#about .card,
+#commitments .card {
+  display: flex;
+  flex-direction: column;     /* icône au-dessus du titre et du texte */
+  align-items: center;        /* tout centré horizontalement */
+  max-width: 700px;
+  margin: 1rem auto;
+  text-align: center;         /* centre le titre et le texte */
+  gap: 0.8rem;
+  padding: 1rem 0;
+}
+
+/* Icônes */
+.about .card .icon,
+.engagements .card .icon,
+.services .card .icon,
+.partnerships .card .icon,
+#about .card .icon,
+#commitments .card .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.about .card .icon img,
+.engagements .card .icon img,
+.services .card .icon img,
+.partnerships .card .icon img,
+#about .card .icon img,
+#commitments .card .icon img {
+  max-width: 80px;            /* taille raisonnable des icônes */
+  height: auto;
+}
+
+/* Texte des cartes */
+.about .card .card-text,
+.engagements .card .card-text,
+.services .card .card-text,
+.partnerships .card .card-text,
+#about .card .card-text,
+#commitments .card .card-text {
+  text-align: justify;        /* texte des paragraphes justifié */
+  width: 90%;
+  max-width: 650px;
+}
+
+/* =========================================
+   Texte sous les titres des sections
    ========================================= */
 .about .subtitle,
 .engagements .subtitle,
 #about .subtitle,
 #commitments .subtitle {
-  max-width: 700px;         /* limite la largeur du texte sur desktop */
+  max-width: 700px;           /* largeur limitée sur desktop */
   margin: 0 auto 1.5rem auto; /* centré horizontalement */
-  text-align: justify;      /* justifié */
-  line-height: 1.6;         /* meilleure lisibilité */
+  text-align: justify;        /* justifié */
+  line-height: 1.6;
   font-size: 1rem;
 }
 
 /* =========================================
-   2. Cartes - Desktop (>=768px)
+   Titres des sections
    ========================================= */
-@media (min-width: 768px) {
-  .about .card,
-  .engagements .card,
-  #about .card,
-  #commitments .card {
-    display: flex;
-    flex-direction: row;         /* icône à gauche, texte à droite */
-    align-items: flex-start;
-    max-width: 700px;
-    margin: 1rem auto;           /* centré */
-    gap: 1rem;
-    text-align: justify;
-  }
-
-  .about .card .icon,
-  .engagements .card .icon,
-  #about .card .icon,
-  #commitments .card .icon {
-    flex-shrink: 0;
-    width: 70px;                 /* taille fixe icône (ajuste si besoin) */
-    text-align: center;
-  }
-
-  .about .card .card-text,
-  .engagements .card .card-text,
-  #about .card .card-text,
-  #commitments .card .card-text {
-    flex: 1;
-    text-align: justify;
-  }
-}
-
-/* =========================================
-   3. Cartes - Mobile (<768px)
-   ========================================= */
-@media (max-width: 767px) {
-  .about .card,
-  .engagements .card,
-  #about .card,
-  #commitments .card {
-    display: flex;
-    flex-direction: column;      /* icône au-dessus */
-    align-items: flex-start;     /* aligne à gauche du texte */
-    max-width: 95%;
-    margin: 1rem auto;
-    gap: 0.5rem;
-  }
-
-  .about .card .icon,
-  .engagements .card .icon,
-  #about .card .icon,
-  #commitments .card .icon {
-    margin-bottom: 0.5rem;
-    width: 60px;                /* ajuste taille sur mobile */
-  }
-
-  .about .card .card-text,
-  .engagements .card .card-text,
-  #about .card .card-text,
-  #commitments .card .card-text {
-    text-align: justify;
-    width: 100%;
-  }
-}
-
+.about h2,
+.engagements h2,
+.services h2,
+.partnerships h2,
+#about h2,
+#commitments h2,
+.about h3,
+.engagements h3,
+.services h3,
+.partnerships h3,
+#about h3,
+#commitments h3 {
+  text-align: center;         /* tous les titres centrés */
 }
