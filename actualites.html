@@ -121,24 +121,36 @@
     batch: 12,
     lang: "fr"
   });
-</script>
-
-  // Gestion des modaux
-  document.querySelectorAll('[data-modal]').forEach(link => {
-    link.addEventListener('click', e => {
+  
+ <script>
+document.addEventListener("DOMContentLoaded", () => {
+  // Ouvre les modales
+  document.querySelectorAll(".open-modal").forEach(link => {
+    link.addEventListener("click", e => {
       e.preventDefault();
-      const modal = document.getElementById(link.dataset.modal);
-      if (modal) modal.style.display = 'block';
+      const modalId = link.getAttribute("data-modal");
+      const modal = document.getElementById(modalId);
+      if (modal) modal.style.display = "block";
     });
   });
-  document.querySelectorAll('.close').forEach(btn => {
-    btn.addEventListener('click', () => btn.closest('.modal').style.display = 'none');
+
+  // Ferme les modales
+  document.querySelectorAll(".modal .close").forEach(closeBtn => {
+    closeBtn.addEventListener("click", () => {
+      closeBtn.closest(".modal").style.display = "none";
+    });
   });
-  window.addEventListener('click', e => {
-    if (e.target.classList.contains('modal')) e.target.style.display = 'none';
+
+  // Ferme si clic à l'extérieur
+  const modals = document.querySelectorAll(".modal");
+  window.addEventListener("click", e => {
+    modals.forEach(modal => {
+      if (e.target === modal) modal.style.display = "none";
+    });
   });
+});
 </script>
-  <script>
+  
   document.addEventListener("DOMContentLoaded", () => {
     const burger = document.getElementById("burger");
     const navLinks = document.querySelector(".nav-links");
