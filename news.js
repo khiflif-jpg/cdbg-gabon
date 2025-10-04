@@ -9,20 +9,20 @@ function loadNews({ xmlUrl, containerId, loadMoreBtnId = null, batch = 5, lang =
     const style = document.createElement("style");
     style.id = "news-style";
     style.textContent = `
-      /* Grille responsive */
+      /* Grille responsive corrigée */
       .news-container, .news-grid {
         display: grid;
-        grid-template-columns: 1fr;
         gap: 20px;
+        grid-template-columns: repeat(1, 1fr); /* mobile */
       }
       @media(min-width: 600px) {
         .news-container, .news-grid {
-          grid-template-columns: repeat(2, 1fr);
+          grid-template-columns: repeat(3, 1fr); /* tablette */
         }
       }
-      @media(min-width: 900px) {
+      @media(min-width: 1024px) {
         .news-container, .news-grid {
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(4, 1fr); /* desktop */
         }
       }
 
