@@ -690,6 +690,97 @@ img[src*="elephant_forest.webp"] {
   .contact-map {
     display: none;            /* masque la Google Map en mobile */
   }
+/* ================================
+   Cartes avec icônes - Desktop
+   ================================ */
+@media (min-width: 768px) {
+  .about .cards,
+  .engagements .cards,
+  .services .cards,
+  .partnerships .cards {
+    display: flex;
+    flex-direction: column; /* cartes empilées */
+    gap: 1.5rem;
+  }
+
+  .about .card,
+  .engagements .card,
+  .services .card,
+  .partnerships .card {
+    display: flex;
+    align-items: flex-start; /* icône à gauche du texte */
+    gap: 1rem;
+    max-width: 700px; /* limite largeur carte */
+    text-align: justify; /* texte justifié */
+  }
+
+  .about .card .icon,
+  .engagements .card .icon,
+  .services .card .icon,
+  .partnerships .card .icon {
+    flex-shrink: 0;
+  }
+
+  .about .card .card-text,
+  .engagements .card .card-text,
+  .services .card .card-text,
+  .partnerships .card .card-text {
+    text-align: justify;
+  }
+
+  .about .subtitle,
+  .engagements .subtitle,
+  .services .subtitle,
+  .partnerships .subtitle {
+    max-width: 700px;
+    margin: 0 auto 1.5rem auto;
+    text-align: justify;
+  }
+}
+
+/* ================================
+   Mobile - icônes au-dessus
+   ================================ */
+@media (max-width: 767px) {
+  .about .card,
+  .engagements .card,
+  .services .card,
+  .partnerships .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: justify;
+  }
+
+  .about .card .icon,
+  .engagements .card .icon,
+  .services .card .icon,
+  .partnerships .card .icon {
+    margin-bottom: 0.5rem;
+  }
+
+  .about .card .card-text,
+  .engagements .card .card-text,
+  .services .card .card-text,
+  .partnerships .card .card-text {
+    width: 100%;
+    text-align: justify;
+  }
+
+  .about .subtitle,
+  .engagements .subtitle,
+  .services .subtitle,
+  .partnerships .subtitle {
+    text-align: justify;
+  }
+}
+
+/* ================================
+   Titres toujours centrés
+   ================================ */
+.about h2, .engagements h2, .services h2, .partnerships h2,
+.about h3, .engagements h3, .services h3, .partnerships h3 {
+  text-align: center;
 
   }
 }
