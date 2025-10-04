@@ -147,27 +147,60 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </section>
 
 <!-- About -->
-<section class="about fade-in" id="about">
-  <h2>About Us</h2>
-  <p class="subtitle">Expertise dedicated to Gabon's forests</p>
-  <div class="cards">
-    <div class="card">
-      <div class="icon"><img alt="Tree icon" loading="lazy" src="sapin.webp"/></div>
-      <h3>10,000 hectares</h3>
-      <p>of privately managed land in Bitam, northern Gabon, handled sustainably.</p>
+<section class="about fade-in" id="about" itemscope itemtype="https://schema.org/Organization">
+  <h2 itemprop="name">About Us</h2>
+
+  <!-- Introduction -->
+  <p class="subtitle" itemprop="description">
+    The Compagnie Durable du Bois du Gabon (CDBG) is a Gabonese company specializing in legal forest exploitation and tropical wood processing.
+    It is committed to responsible forest management and sustainable resource utilization, aiming to promote Gabonese timber on national and international markets.
+  </p>
+
+  <!-- Cards -->
+  <div class="cards" style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+    <!-- Card 1 -->
+    <div class="card" style="display: flex; align-items: flex-start;" itemscope itemtype="https://schema.org/Place">
+      <div class="icon" style="margin-right: 1rem;">
+        <img src="sapin.webp" alt="Tree icon" loading="lazy" itemprop="image"/>
+      </div>
+      <div class="card-text">
+        <h3 itemprop="name">CDBG in Bitam</h3>
+        <p itemprop="description">
+          Located in Bitam, Woleu-Ntem province, CDBG manages a 10,000-hectare private forest property fully dedicated to certified, sustainable management compliant with national and international standards.
+        </p>
+      </div>
     </div>
-    <div class="card">
-      <div class="icon"><img alt="Tropical woods icon" loading="lazy" src="bois.webp"/></div>
-      <h3>Tropical Wood</h3>
-      <p>Selecting and trading noble species: Okoumé, Azobé, Kevazingo, Padouk, Ebony, Moabi, Tali, Iroko, Movingui, Bilinga...</p>
+
+    <!-- Card 2 -->
+    <div class="card" style="display: flex; align-items: flex-start;" itemscope itemtype="https://schema.org/Product">
+      <div class="icon" style="margin-right: 1rem;">
+        <img src="bois.webp" alt="Tropical woods icon" loading="lazy" itemprop="image"/>
+      </div>
+      <div class="card-text">
+        <h3 itemprop="name">CDBG guarantees high-quality tropical wood</h3>
+        <p itemprop="description">
+          Our mission is to actively contribute to sustainable management of Gabon's tropical forests, local wood processing, and promotion of a responsible forest economy in line with international sustainability, traceability, and transparency standards.
+        </p>
+      </div>
     </div>
-    <div class="card">
-      <div class="icon"><img alt="Employment icon" loading="lazy" src="emploi.webp"/></div>
-      <h3>Local Jobs</h3>
-      <p>Developing a sawing business with local workforce to strengthen Bitam's economy.</p>
+
+    <!-- Card 3 -->
+    <div class="card" style="display: flex; align-items: flex-start;" itemscope itemtype="https://schema.org/Organization">
+      <div class="icon" style="margin-right: 1rem;">
+        <img src="emploi.webp" alt="Employment icon" loading="lazy" itemprop="image"/>
+      </div>
+      <div class="card-text">
+        <h3 itemprop="name">CDBG contributes to Bitam’s socio-economic development</h3>
+        <p itemprop="description">
+          We aim to develop a sustainable, traceable, and certified timber sector while actively supporting local development, creating skilled jobs, and preserving Gabon's forest heritage.
+        </p>
+      </div>
     </div>
+
   </div>
 </section>
+
 
 <!-- Ambition -->
 <section class="ambition fade-in" id="ambition">
