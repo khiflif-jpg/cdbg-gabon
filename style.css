@@ -754,4 +754,86 @@ img[src*="elephant_forest.webp"] {
   .about .subtitle {
     text-align: justify;
   }
+   /* =========================================
+   1. Texte sous les titres des sections
+   ========================================= */
+.about .subtitle,
+.engagements .subtitle,
+#about .subtitle,
+#commitments .subtitle {
+  max-width: 700px;         /* limite la largeur du texte sur desktop */
+  margin: 0 auto 1.5rem auto; /* centré horizontalement */
+  text-align: justify;      /* justifié */
+  line-height: 1.6;         /* meilleure lisibilité */
+  font-size: 1rem;
+}
+
+/* =========================================
+   2. Cartes - Desktop (>=768px)
+   ========================================= */
+@media (min-width: 768px) {
+  .about .card,
+  .engagements .card,
+  #about .card,
+  #commitments .card {
+    display: flex;
+    flex-direction: row;         /* icône à gauche, texte à droite */
+    align-items: flex-start;
+    max-width: 700px;
+    margin: 1rem auto;           /* centré */
+    gap: 1rem;
+    text-align: justify;
+  }
+
+  .about .card .icon,
+  .engagements .card .icon,
+  #about .card .icon,
+  #commitments .card .icon {
+    flex-shrink: 0;
+    width: 70px;                 /* taille fixe icône (ajuste si besoin) */
+    text-align: center;
+  }
+
+  .about .card .card-text,
+  .engagements .card .card-text,
+  #about .card .card-text,
+  #commitments .card .card-text {
+    flex: 1;
+    text-align: justify;
+  }
+}
+
+/* =========================================
+   3. Cartes - Mobile (<768px)
+   ========================================= */
+@media (max-width: 767px) {
+  .about .card,
+  .engagements .card,
+  #about .card,
+  #commitments .card {
+    display: flex;
+    flex-direction: column;      /* icône au-dessus */
+    align-items: flex-start;     /* aligne à gauche du texte */
+    max-width: 95%;
+    margin: 1rem auto;
+    gap: 0.5rem;
+  }
+
+  .about .card .icon,
+  .engagements .card .icon,
+  #about .card .icon,
+  #commitments .card .icon {
+    margin-bottom: 0.5rem;
+    width: 60px;                /* ajuste taille sur mobile */
+  }
+
+  .about .card .card-text,
+  .engagements .card .card-text,
+  #about .card .card-text,
+  #commitments .card .card-text {
+    text-align: justify;
+    width: 100%;
+  }
+}
+
 }
