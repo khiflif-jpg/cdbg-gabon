@@ -110,16 +110,18 @@
     <p>Consentement : en poursuivant la navigation sur ce site, vous acceptez l’utilisation de cookies conformément à la présente politique.</p>
   </div>
 </div>
+  
 <script src="menu.js"></script>
 <script src="news.js"></script>
 <script>
   loadNews({
     xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml",
-    containerId: "news-fr",   // ⚡ correspond au <div id="news-fr">
+    containerId: "news-fr",
     loadMoreBtnId: null,
     batch: 12,
     lang: "fr"
   });
+</script>
 
   // Gestion des modaux
   document.querySelectorAll('[data-modal]').forEach(link => {
