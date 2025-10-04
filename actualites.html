@@ -39,7 +39,7 @@
   <div class="news-container" id="news-fr"></div>
 </section>
 
-<!-- Footer + Modals identiques -->
+<!-- Footer -->
 <footer>
   <div class="footer-container">
     <div class="footer-col">
@@ -61,7 +61,9 @@
       </ul>
     </div>
   </div>
-  <div class="footer-bottom"><p>© 2025 Compagnie Durable du Bois au Gabon. Tous droits réservés.</p></div>
+  <div class="footer-bottom">
+    <p>© 2025 Compagnie Durable du Bois au Gabon. Tous droits réservés.</p>
+  </div>
 </footer>
 
 <!-- Modals FR -->
@@ -110,51 +112,51 @@
     <p>Consentement : en poursuivant la navigation sur ce site, vous acceptez l’utilisation de cookies conformément à la présente politique.</p>
   </div>
 </div>
-  
+
+<!-- Scripts -->
 <script src="menu.js"></script>
 <script src="news.js"></script>
 <script>
+  // Charger les news
   loadNews({
     xmlUrl: "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml",
-    containerId: "news-fr",   // ⚡ correspond au <div id="news-fr">
+    containerId: "news-fr",
     loadMoreBtnId: null,
     batch: 12,
     lang: "fr"
   });
-  
- <script>
-document.addEventListener("DOMContentLoaded", () => {
-  // Ouvre les modales
-  document.querySelectorAll(".open-modal").forEach(link => {
-    link.addEventListener("click", e => {
-      e.preventDefault();
-      const modalId = link.getAttribute("data-modal");
-      const modal = document.getElementById(modalId);
-      if (modal) modal.style.display = "block";
-    });
-  });
 
-  // Ferme les modales
-  document.querySelectorAll(".modal .close").forEach(closeBtn => {
-    closeBtn.addEventListener("click", () => {
-      closeBtn.closest(".modal").style.display = "none";
-    });
-  });
-
-  // Ferme si clic à l'extérieur
-  const modals = document.querySelectorAll(".modal");
-  window.addEventListener("click", e => {
-    modals.forEach(modal => {
-      if (e.target === modal) modal.style.display = "none";
-    });
-  });
-});
-</script>
-  
+  // Modales et burger menu
   document.addEventListener("DOMContentLoaded", () => {
+    const modals = document.querySelectorAll(".modal");
+
+    // Ouvrir les modales
+    document.querySelectorAll(".open-modal").forEach(link => {
+      link.addEventListener("click", e => {
+        e.preventDefault();
+        const modalId = link.getAttribute("data-modal");
+        const modal = document.getElementById(modalId);
+        if (modal) modal.style.display = "block";
+      });
+    });
+
+    // Fermer les modales
+    document.querySelectorAll(".modal .close").forEach(closeBtn => {
+      closeBtn.addEventListener("click", () => {
+        closeBtn.closest(".modal").style.display = "none";
+      });
+    });
+
+    // Fermer si clic à l'extérieur
+    window.addEventListener("click", e => {
+      modals.forEach(modal => {
+        if (e.target === modal) modal.style.display = "none";
+      });
+    });
+
+    // Burger menu
     const burger = document.getElementById("burger");
     const navLinks = document.querySelector(".nav-links");
-
     if (burger && navLinks) {
       burger.addEventListener("click", () => {
         navLinks.classList.toggle("active");
