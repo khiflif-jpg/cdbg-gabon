@@ -691,9 +691,10 @@ img[src*="elephant_forest.webp"] {
     display: none;            /* masque la Google Map en mobile */
   }
 /* ================================
-   Cartes avec icônes - Desktop
+   Desktop - cartes empilées et textes sous titres
    ================================ */
 @media (min-width: 768px) {
+  /* Cartes empilées */
   .about .cards,
   .engagements .cards,
   .services .cards,
@@ -711,7 +712,7 @@ img[src*="elephant_forest.webp"] {
     align-items: flex-start; /* icône à gauche du texte */
     gap: 1rem;
     max-width: 700px; /* limite largeur carte */
-    text-align: justify; /* texte justifié */
+    text-align: justify;
   }
 
   .about .card .icon,
@@ -728,27 +729,27 @@ img[src*="elephant_forest.webp"] {
     text-align: justify;
   }
 
-  .about .subtitle,
-  .engagements .subtitle,
-  .services .subtitle,
-  .partnerships .subtitle {
-    max-width: 700px;
-    margin: 0 auto 1.5rem auto;
-    text-align: justify;
+  /* Texte sous les titres "À propos" et "Nos engagements" */
+  #about .subtitle,
+  #engagements .subtitle {
+    max-width: 700px;        /* Limite la largeur du texte */
+    margin: 0 auto 1.5rem;   /* Centre le texte horizontalement avec un peu de marge */
+    text-align: justify;      /* Justifie le texte */
   }
 }
 
 /* ================================
-   Mobile - icônes au-dessus
+   Mobile - icônes au-dessus des titres
    ================================ */
 @media (max-width: 767px) {
+  /* Cartes */
   .about .card,
   .engagements .card,
   .services .card,
   .partnerships .card {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: column; /* icône au-dessus */
+    align-items: flex-start; /* icône à gauche du titre */
     text-align: justify;
   }
 
@@ -756,7 +757,7 @@ img[src*="elephant_forest.webp"] {
   .engagements .card .icon,
   .services .card .icon,
   .partnerships .card .icon {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.5rem; /* espace entre icône et titre */
   }
 
   .about .card .card-text,
@@ -767,11 +768,11 @@ img[src*="elephant_forest.webp"] {
     text-align: justify;
   }
 
-  .about .subtitle,
-  .engagements .subtitle,
-  .services .subtitle,
-  .partnerships .subtitle {
+  /* Texte sous les titres "À propos" et "Nos engagements" (mobile inchangé) */
+  #about .subtitle,
+  #engagements .subtitle {
     text-align: justify;
+    margin-bottom: 1rem;
   }
 }
 
@@ -782,56 +783,6 @@ img[src*="elephant_forest.webp"] {
 .about h3, .engagements h3, .services h3, .partnerships h3 {
   text-align: center;
 }
-
-/* ================================
-   Desktop - texte limité et justifié
-   ================================ */
-@media (min-width: 768px) {
-  /* Texte sous les titres */
-  #about .subtitle,
-  #engagements .subtitle {
-    max-width: 700px;        /* largeur maximale */
-    margin: 0 auto 1.5rem;   /* centrer horizontalement et marge inférieure */
-    text-align: justify;      /* texte justifié */
-  }
-
-  /* Texte à l'intérieur des cartes */
-  .about .card .card-text,
-  .engagements .card .card-text,
-  .services .card .card-text,
-  .partnerships .card .card-text {
-    max-width: 700px;        /* largeur identique aux sous-titres */
-    text-align: justify;      /* texte justifié */
-  }
-
-  /* Cartes empilées sur desktop */
-  .about .cards,
-  .engagements .cards,
-  .services .cards,
-  .partnerships .cards {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    align-items: center;     /* centre les cartes */
-  }
-
-  .about .card,
-  .engagements .card,
-  .services .card,
-  .partnerships .card {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-
-  .about .card .icon,
-  .engagements .card .icon,
-  .services .card .icon,
-  .partnerships .card .icon {
-    flex-shrink: 0;
-  }
-}
-
 
 
 
