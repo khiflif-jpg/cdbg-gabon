@@ -781,8 +781,57 @@ img[src*="elephant_forest.webp"] {
 .about h2, .engagements h2, .services h2, .partnerships h2,
 .about h3, .engagements h3, .services h3, .partnerships h3 {
   text-align: center;
+}
 
+/* ================================
+   Desktop - texte limité et justifié
+   ================================ */
+@media (min-width: 768px) {
+  /* Texte sous les titres */
+  #about .subtitle,
+  #engagements .subtitle {
+    max-width: 700px;        /* largeur maximale */
+    margin: 0 auto 1.5rem;   /* centrer horizontalement et marge inférieure */
+    text-align: justify;      /* texte justifié */
   }
+
+  /* Texte à l'intérieur des cartes */
+  .about .card .card-text,
+  .engagements .card .card-text,
+  .services .card .card-text,
+  .partnerships .card .card-text {
+    max-width: 700px;        /* largeur identique aux sous-titres */
+    text-align: justify;      /* texte justifié */
+  }
+
+  /* Cartes empilées sur desktop */
+  .about .cards,
+  .engagements .cards,
+  .services .cards,
+  .partnerships .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;     /* centre les cartes */
+  }
+
+  .about .card,
+  .engagements .card,
+  .services .card,
+  .partnerships .card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .about .card .icon,
+  .engagements .card .icon,
+  .services .card .icon,
+  .partnerships .card .icon {
+    flex-shrink: 0;
+  }
+}
+
 
 
 
