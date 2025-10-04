@@ -304,9 +304,21 @@ section .subtitle {
 =============================== */
 .news-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
   margin-top: 30px;
+  grid-template-columns: repeat(1, 1fr); /* mobile par défaut */
+}
+
+@media (min-width: 600px) { /* tablette */
+  .news-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) { /* desktop */
+  .news-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .news-card {
