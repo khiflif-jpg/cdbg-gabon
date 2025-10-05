@@ -33,18 +33,17 @@
     <div class="burger" id="burger">☰</div>
   </nav>
 </header>
+<section class="articles-section">
+  <h2>Nos articles</h2>
+  <!-- Container vide pour injecter les articles via JS -->
+  <div id="my-articles-fr"></div>
+</section>
 
-<!-- Main content - Article -->
-<main class="article-container" style="max-width:800px; margin: 100px auto; padding: 0 20px;">
-  <img src="article1.avif" alt="Image article" style="width:100%; height:auto; margin-bottom:20px;" />
-  <h1>Le titre de l’article</h1>
-  <p>
-    Voici le contenu complet de l'article en français. Tu peux remplacer ce texte par le contenu réel de ton article.
-  </p>
-  <p>
-    Ajoute autant de paragraphes, images, ou autres éléments que nécessaire pour bien présenter ton article.
-  </p>
-</main>
+<!-- Inclure le JS et injecter les articles -->
+<script src="my-articles.js"></script>
+<script>
+  injectMyArticles("fr", "my-articles-fr");
+</script>
 
 <!-- Footer -->
 <footer>
