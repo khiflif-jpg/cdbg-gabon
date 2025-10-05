@@ -13,8 +13,7 @@ const myArticlesFR = [
       <p><strong>📌 En conclusion</strong><br>
       Une filière bois moderne et durable est en marche, soutenue par la CDBG en harmonie avec les réformes nationales.</p>
     `,
-    image: "article1.avif",
-    pubDate: "2025-10-05T10:00:00Z"
+    image: "article1.avif"
   }
 ];
 
@@ -30,59 +29,31 @@ const myArticlesEN = [
       <p><strong>📌 Conclusion</strong><br>
       A modern, transparent timber sector is emerging—CDBG is at its core, aligned with national reforms.</p>
     `,
-    image: "article1.avif",
-    pubDate: "2025-10-05T10:00:00Z"
+    image: "article1.avif"
   }
 ];
 
 // ================================
-// INJECTION DE LA LISTE DES ARTICLES
+// INJECTION DES ARTICLES DANS UNE PAGE LISTE (articles.html)
 // ================================
-function injectMyArticles(lang, containerId) {
+function injectMyArticles(lang, containerId, fullContentPage = false) {
   const container = document.getElementById(containerId);
   const articles = lang === "fr" ? myArticlesFR : myArticlesEN;
-
-  if (!container) return;
+  const pageLink = lang === "fr" ? "articles-français.html" : "articles-anglais.html";
 
   articles.forEach(article => {
-    const card = document.createElement("article");
+    const card = document.createElement("a");
     card.className = "news-card";
-
-    const fullLink = lang === "fr" ? `articles-français.html#${article.id}` : `articles-anglais.html#${article.id}`;
-
+    card.href = fullContentPage ? `${pageLink}#${article.id}` : pageLink + `#${article.id}`;
     card.innerHTML = `
-      <a href="${fullLink}" class="news-link">
-        <div class="news-image">
-          <img src="${article.image}" alt="${article.title}">
-        </div>
-        <div class="news-content">
-          <h3 class="news-title">${article.title}</h3>
-          <div class="news-desc">${article.description}</div>
-          <div class="news-meta">${new Date(article.pubDate).toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", {
-            year: "numeric", month: "short", day: "numeric"
-          })}</div>
-        </div>
-      </a>
+      <div class="news-image">
+        <img src="${article.image}" alt="${article.title}">
+      </div>
+      <div class="news-content">
+        <h3 class="news-title">${article.title}</h3>
+        <p class="news-desc">${article.description.replace(/<[^>]*>?/gm, "").substring(0, 200)}...</p>
+      </div>
     `;
     container.appendChild(card);
   });
-}
-
-// ================================
-// INJECTION DU CONTENU COMPLET
-// ================================
-function injectFullArticle(lang) {
-  const articles = lang === "fr" ? myArticlesFR : myArticlesEN;
-  const container = document.querySelector(".article-container");
-
-  if (!container) return;
-
-  const hash = window.location.hash.replace("#", "");
-  const article = articles.find(a => a.id === hash) || articles[0];
-
-  container.innerHTML = `
-    <img src="${article.image}" alt="${article.title}" style="width:100%; height:auto; margin-bottom:20px;" />
-    <h1>${article.title}</h1>
-    ${article.description}
-  `;
 }
