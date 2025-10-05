@@ -1,14 +1,4 @@
-function loadNews({ xmlUrl, containerId, loadMoreBtnId = null, batch = 5, lang = "fr" }) {
-  const container = document.getElementById(containerId);
-  const loadMoreBtn = loadMoreBtnId ? document.getElementById(loadMoreBtnId) : null;
-  let items = [];
-  let currentIndex = 0;
-
-  // Inject CSS une seule fois
-  if (!document.getElementById("news-style")) {
-    const style = document.createElement("style");
-    style.id = "news-style";
-    style.textContent = `
+function loadNews({xmlUrl,containerId,loadMoreBtnId=null,batch=5,lang="fr"}){const container=document.getElementById(containerId);const loadMoreBtn=loadMoreBtnId?document.getElementById(loadMoreBtnId):null;let items=[];let currentIndex=0;if(!document.getElementById("news-style")){const style=document.createElement("style");style.id="news-style";style.textContent=`
       /* Grille responsive corrigée */
       .news-container, .news-grid {
         display: grid;
@@ -111,53 +101,9 @@ function loadNews({ xmlUrl, containerId, loadMoreBtnId = null, batch = 5, lang =
         color: #999;
         margin-top: auto;
       }
-    `;
-    document.head.appendChild(style);
-  }
-
-  // Charger flux RSS
-  fetch(xmlUrl)
-    .then(res => res.text())
-    .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
-    .then(data => {
-      items = Array.from(data.querySelectorAll("item")).map(item => {
-        const title = item.querySelector("title")?.textContent || "";
-        const link = item.querySelector("link")?.textContent || "#";
-        const description = item.querySelector("description")?.textContent || "";
-        const pubDate = item.querySelector("pubDate")?.textContent || "";
-        const source = item.querySelector("source")?.textContent || "";
-        let image = null;
-
-        // Cherche <enclosure> ou balise <img> dans description
-        const enclosure = item.querySelector("enclosure[url]");
-        if (enclosure) {
-          image = enclosure.getAttribute("url");
-        } else {
-          const imgMatch = description.match(/<img.*?src="(.*?)"/);
-          if (imgMatch) image = imgMatch[1];
-        }
-
-        return { title, link, description, pubDate, source, image };
-      });
-
-      renderBatch();
-      if (loadMoreBtn) {
-        loadMoreBtn.style.display = "block";
-        loadMoreBtn.addEventListener("click", renderBatch);
-      }
-    });
-
-  function renderBatch() {
-    const slice = items.slice(currentIndex, currentIndex + batch);
-    slice.forEach(article => {
-      const card = document.createElement("a");
-      card.href = article.link;
-      card.target = "_blank";
-      card.className = "news-card";
-
-      if (article.image) {
-        // Article avec image
-        card.innerHTML = `
+    `;document.head.appendChild(style);}
+fetch(xmlUrl).then(res=>res.text()).then(str=>new window.DOMParser().parseFromString(str,"text/xml")).then(data=>{items=Array.from(data.querySelectorAll("item")).map(item=>{const title=item.querySelector("title")?.textContent||"";const link=item.querySelector("link")?.textContent||"#";const description=item.querySelector("description")?.textContent||"";const pubDate=item.querySelector("pubDate")?.textContent||"";const source=item.querySelector("source")?.textContent||"";let image=null;const enclosure=item.querySelector("enclosure[url]");if(enclosure){image=enclosure.getAttribute("url");}else{const imgMatch=description.match(/<img.*?src="(.*?)"/);if(imgMatch)image=imgMatch[1];}
+return{title,link,description,pubDate,source,image};});renderBatch();if(loadMoreBtn){loadMoreBtn.style.display="block";loadMoreBtn.addEventListener("click",renderBatch);}});function renderBatch(){const slice=items.slice(currentIndex,currentIndex+batch);slice.forEach(article=>{const card=document.createElement("a");card.href=article.link;card.target="_blank";card.className="news-card";if(article.image){card.innerHTML=`
           <div class="news-image">
             <img src="${article.image}" alt="">
           </div>
@@ -168,10 +114,7 @@ function loadNews({ xmlUrl, containerId, loadMoreBtnId = null, batch = 5, lang =
               ${formatDate(article.pubDate, lang)} ${article.source ? " – " + article.source : ""}
             </div>
           </div>
-        `;
-      } else {
-        // Article sans image
-        card.innerHTML = `
+        `;}else{card.innerHTML=`
           <div class="news-placeholder">
             <h3>${article.title}</h3>
           </div>
@@ -181,24 +124,6 @@ function loadNews({ xmlUrl, containerId, loadMoreBtnId = null, batch = 5, lang =
               ${formatDate(article.pubDate, lang)} ${article.source ? " – " + article.source : ""}
             </div>
           </div>
-        `;
-      }
-      container.appendChild(card);
-    });
-    currentIndex += batch;
-
-    if (currentIndex >= items.length && loadMoreBtn) {
-      loadMoreBtn.style.display = "none";
-    }
-  }
-
-  function formatDate(dateStr, lang) {
-    if (!dateStr) return "";
-    const date = new Date(dateStr);
-    return date.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric"
-    });
-  }
-}
+        `;}
+container.appendChild(card);});currentIndex+=batch;if(currentIndex>=items.length&&loadMoreBtn){loadMoreBtn.style.display="none";}}
+function formatDate(dateStr,lang){if(!dateStr)return"";const date=new Date(dateStr);return date.toLocaleDateString(lang==="fr"?"fr-FR":"en-US",{year:"numeric",month:"short",day:"numeric"});}}
