@@ -1,43 +1,50 @@
-// ARTICLES STATIQUES – FRANÇAIS
+// ARTICLES STATIQUES
 const staticArticlesFR = [
   {
     id: "article1",
     title: "🌱 Le Gabon renforce sa politique forestière : lutte contre l’exploitation illégale, certification et traçabilité",
-    link: "articles-francais.html", // lien vers page complète
+    link: "articles-francais.html", // page complète
     description: `
-      <p>Le Gabon, riche de ses forêts équatoriales couvrant près de 88 % de son territoire, s’affirme comme un leader africain dans la gestion durable des ressources forestières. Le gouvernement, via le Ministère des Eaux et Forêts, intensifie la lutte contre l’exploitation illégale en déployant des patrouilles renforcées et des systèmes de surveillance numérique.</p>
-      <p>La traçabilité est désormais certifiée par le Système National de Traçabilité des Bois du Gabon (SNTBG), assurant que chaque grume exploitée est légale et contrôlée. Cette démarche est soutenue par les certifications PAFC et FSC, gages de durabilité et de reconnaissance internationale.</p>
-      <p>Les ONG comme Brainforest, The Nature Conservancy, WWF et Rainforest Foundation UK collaborent activement avec l’État gabonais pour la formation des acteurs locaux et le financement d’initiatives de reforestation et de contrôle forestier. Ces partenariats renforcent l’image du Gabon comme modèle de gestion forestière responsable.</p>
-      <p>En parallèle, le pays participe à des forums internationaux sur la lutte contre la déforestation et la valorisation de la filière bois durable, notamment en Europe, promouvant ses certifications et sa politique de transparence dans le commerce du bois.</p>
-      <p><strong>En conclusion</strong><br>
-      Le Gabon démontre un engagement fort dans la préservation de ses forêts et la modernisation de sa filière bois, soutenu par le ministère des Eaux et Forêts, les certifications PAFC/FSC et les partenaires internationaux.</p>
+      <p>Le Gabon, riche de ses forêts équatoriales couvrant près de 88 % de son territoire, s’impose comme un leader africain dans la gestion durable des ressources forestières. Conscient des enjeux environnementaux et économiques, le gouvernement gabonais, sous l’impulsion du Ministère des Eaux et Forêts, intensifie sa lutte contre l’exploitation illégale du bois et la déforestation.</p>
+      <p>Depuis le début de l’année, plusieurs initiatives concrètes ont été mises en œuvre pour renforcer le contrôle sur le terrain, notamment la surveillance accrue des concessions forestières et la répression des activités illégales. Le Ministère des Eaux et Forêts coordonne inspections régulières, patrouilles fluviales et collaborations avec des ONG spécialisées pour garantir la légalité de la filière bois et protéger la biodiversité.</p>
+      <p>📌 Certification PAFC et FSC et traçabilité numérique</p>
+      <p>Toutes les concessions forestières visent désormais une certification durable selon les normes PAFC (Programme de Certification Forestière Pan-Africaine) et FSC (Forest Stewardship Council). Ces certifications garantissent la traçabilité, la légalité et la durabilité du bois produit, valorisant la filière gabonaise sur les marchés internationaux. Parallèlement, la traçabilité numérique est assurée par le Système National de Traçabilité du Bois (SNTBG), permettant de suivre chaque grume depuis l’exploitation jusqu’à l’exportation, et de détecter toute irrégularité avec une transparence totale.</p>
+      <p>🤝 Partenariats avec les ONG et acteurs internationaux</p>
+      <p>Le succès de ces initiatives repose également sur la collaboration avec des ONG de renom. Parmi elles, Brainforest, The Nature Conservancy (TNC) et WWF Gabon jouent un rôle clé dans la formation, la surveillance environnementale et la promotion des pratiques durables. Ces organisations apportent leur expertise technique et leur notoriété internationale, renforçant ainsi l’image du Gabon comme acteur responsable dans la protection des forêts équatoriales.</p>
+      <p>🌍 Valorisation internationale et engagements récents</p>
+      <p>Le Gabon a récemment accueilli plusieurs rencontres internationales, notamment des séminaires en Europe sur la lutte contre la déforestation illégale et la valorisation de sa chaîne de bois légale. Ces événements ont permis de consolider des partenariats avec des acteurs publics et privés, et de promouvoir les bois certifiés PAFC et FSC sur les marchés mondiaux.</p>
+      <p>📌 En conclusion</p>
+      <p>Une filière bois moderne, légale et durable est en marche au Gabon. Grâce aux certifications PAFC/FSC, à la traçabilité numérique SNTBG et au renforcement du contrôle par le Ministère des Eaux et Forêts, le pays se positionne comme un modèle africain de gestion forestière responsable. La CDBG adhère pleinement à cette politique gouvernementale, contribuant ainsi à la crédibilité et à la valorisation de la filière bois gabonaise sur les marchés internationaux.</p>
     `,
     pubDate: "2025-10-05T10:00:00Z",
     image: "article1.avif"
   }
 ];
 
-// ARTICLES STATIQUES – ANGLAIS
 const staticArticlesEN = [
   {
     id: "article1",
-    title: "🌱 Gabon Strengthens Forestry Policy: Combating Illegal Logging, Certification, and Traceability",
-    link: "articles-anglais.html", // lien vers page complète
+    title: "🌱 Gabon Strengthens Its Forestry Policy: Combating Illegal Logging, Certification, and Traceability",
+    link: "articles-anglais.html", // page complète
     description: `
-      <p>Gabon, with forests covering 88% of its territory, asserts itself as a continental leader in sustainable forest management. The government, through the Ministry of Water and Forests, is intensifying the fight against illegal logging by deploying reinforced patrols and digital monitoring systems.</p>
-      <p>Traceability is now certified through the Gabon National Timber Traceability System (SNTBG), ensuring that every log is legal and fully controlled. This is supported by PAFC and FSC certifications, recognized internationally for sustainable forestry.</p>
-      <p>NGOs such as Brainforest, The Nature Conservancy, WWF, and Rainforest Foundation UK actively collaborate with the Gabonese government to train local stakeholders and fund reforestation and forest control initiatives. These partnerships strengthen Gabon's reputation as a model for responsible forest management.</p>
-      <p>At the same time, Gabon participates in international forums on deforestation control and sustainable timber promotion, notably in Europe, highlighting its certifications and transparent wood trade policy.</p>
-      <p><strong>In conclusion</strong><br>
-      Gabon demonstrates a strong commitment to preserving its forests and modernizing its timber sector, supported by the Ministry of Water and Forests, PAFC/FSC certifications, and international partners.</p>
+      <p>Gabon, with forests covering 88% of its territory, is establishing itself as a continental leader in sustainable forest management. Aware of environmental and economic challenges, the Gabonese government, under the guidance of the Ministry of Water and Forests, is intensifying its fight against illegal logging and deforestation.</p>
+      <p>Since the beginning of the year, concrete measures have been implemented to strengthen on-site monitoring, including increased surveillance of forest concessions and repression of illegal activities. The Ministry coordinates regular inspections, river patrols, and collaborations with specialized NGOs to ensure legality in the timber sector and protect biodiversity.</p>
+      <p>📌 PAFC and FSC Certification and Digital Traceability</p>
+      <p>All forest concessions now aim for sustainable certification according to PAFC (Pan-African Forest Certification Program) and FSC (Forest Stewardship Council) standards. These certifications guarantee traceability, legality, and sustainability of the wood, enhancing Gabon's timber sector internationally. In parallel, digital traceability is ensured by the National Timber Traceability System (SNTBG), tracking every log from harvest to export, with full transparency and irregularity detection.</p>
+      <p>🤝 Partnerships with NGOs and International Actors</p>
+      <p>The success of these initiatives also relies on collaboration with renowned NGOs. Brainforest, The Nature Conservancy (TNC), and WWF Gabon play key roles in training, environmental monitoring, and promoting sustainable practices, reinforcing Gabon's image as a responsible actor in equatorial forest protection.</p>
+      <p>🌍 International Recognition and Recent Commitments</p>
+      <p>Gabon recently hosted several international meetings, including seminars in Europe on combating illegal deforestation and promoting its legal timber chain. These events consolidated partnerships with public and private actors and promoted PAFC and FSC certified wood on global markets.</p>
+      <p>📌 Conclusion</p>
+      <p>A modern, legal, and sustainable timber sector is underway in Gabon. Thanks to PAFC/FSC certifications, the SNTBG digital traceability system, and strengthened oversight by the Ministry of Water and Forests, the country positions itself as an African model of responsible forest management. CDBG fully supports this government policy, contributing to credibility and valorization of Gabonese timber on international markets.</p>
     `,
     pubDate: "2025-10-05T10:00:00Z",
     image: "article1.avif"
   }
 ];
 
-// INJECTION DES ARTICLES STATIQUES DANS LE CONTENEUR
-function injectMyArticles(lang, containerId) {
+// INJECTION DES ARTICLES
+function injectMyArticles(lang, containerId, full = false) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
@@ -46,16 +53,19 @@ function injectMyArticles(lang, containerId) {
   articles.forEach(article => {
     const card = document.createElement("a");
     card.className = "article-card";
-    card.href = article.link; // lien vers page complète
+    card.href = article.link;
+
+    const textContent = full
+      ? article.description
+      : `${article.description.replace(/<[^>]+>/g, "").substring(0, 200)}...`;
+
     card.innerHTML = `
       <div class="article-image">
         <img src="${article.image}" alt="${article.title}" />
       </div>
       <div class="article-content">
         <h3 class="article-title">${article.title}</h3>
-        <p class="article-text">
-          ${article.description.replace(/<[^>]+>/g, "").substring(0, 200)}...
-        </p>
+        <div class="article-text">${textContent}</div>
       </div>
     `;
     container.appendChild(card);
