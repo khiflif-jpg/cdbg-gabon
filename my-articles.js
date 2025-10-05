@@ -52,9 +52,9 @@ function injectMyArticles(lang, containerId) {
       </div>
       <div class="article-content">
         <h3 class="article-title">${article.title}</h3>
-        <p class="article-text">
-          ${article.description.replace(/<[^>]+>/g, "").substring(0, 200)}...
-        </p>
+        <div class="article-text">
+          ${article.description}  <!-- texte complet affiché -->
+        </div>
       </div>
     `;
     container.appendChild(card);
