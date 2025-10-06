@@ -32,11 +32,17 @@
     <div class="burger" id="burger">☰</div>
   </nav>
 </header>
-
-<!-- Main content: article container -->
-<main class="articles-container" id="news-container" style="max-width: 900px; margin: 80px auto; padding: 0 20px;">
-  <!-- Articles will be injected here by JS -->
+<!-- Main Content -->
+<main class="articles-container" id="my-articles-en" style="max-width:900px;margin:80px auto;padding:0 20px;">
+  <!-- Les articles statiques et RSS seront injectés ici -->
 </main>
+
+<!-- Appel du JS -->
+<script src="news.js"></script>
+<script>
+  // Injection des articles statiques en haut
+  injectStaticArticles("en", document.getElementById("my-articles-en"));
+</script>
 
 <!-- Footer -->
 <footer>
