@@ -50,6 +50,16 @@ function injectStaticArticles(lang = "fr", container, limit = false) {
   if (!container) return;
 
   const articles = [
+    // ✅ Ton article statique principal en premier
+    {
+      lang: "fr",
+      title: "Le Gabon renforce sa politique forestière",
+      description: "Le Gabon, riche de ses forêts équatoriales couvrant près de 88 % de son territoire, s’impose comme un leader africain dans la gestion durable des ressources forestières…",
+      img: "foret-gabon.webp",
+      link: "https://www.cdbg-gabon.com/article-full-fr.html",
+      date: "2025-09-12"
+    },
+
     {
       lang: "fr",
       title: "Le développement durable au cœur de la gestion forestière",
@@ -115,7 +125,8 @@ function injectStaticArticles(lang = "fr", container, limit = false) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const lang = document.documentElement.lang || "fr";
-  const container = document.getElementById("news-container");
+  const container = document.getElementById("news-fr") || document.getElementById("news-container");
+
   if (lang === "fr") injectStaticArticles("fr", container);
   if (lang === "en") injectStaticArticles("en", container);
 });
