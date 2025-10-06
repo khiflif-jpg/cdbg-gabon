@@ -925,3 +925,13 @@ img[src*="elephant_forest.webp"] {
   border-top: 1px solid #eee;
   padding-top: 8px;
 }
+#forest-news {
+  margin-top: 80px; /* espace sous le header */
+}
+
+/* Ajustement mobile si le header est plus grand */
+@media (max-width: 768px) {
+  #forest-news {
+    margin-top: 100px;
+  }
+}
