@@ -138,14 +138,14 @@ document.querySelectorAll(".open-modal").forEach(link=>{link.addEventListener("c
 document.querySelectorAll(".modal .close").forEach(btn=>btn.addEventListener("click",()=>btn.closest(".modal").style.display="none"));
 window.addEventListener("click",e=>document.querySelectorAll(".modal").forEach(m=>{if(e.target===m)m.style.display="none";}));
 });
-</script>
-  <script src="news.js"></script>
+<script src="news.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.querySelector(".articles-container");
   injectStaticArticles("en", container, true); // pour articles-anglais.html
 });
 </script>
+
 
 </body>
 </html>
