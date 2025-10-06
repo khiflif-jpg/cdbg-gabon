@@ -118,8 +118,6 @@
 </div>
 </div>
 
-<script src="menu.js"></script>
-<script src="news.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded",()=>{
 injectStaticArticles("en",document.getElementById("news-container"),false);
@@ -130,5 +128,6 @@ const burger=document.getElementById("burger"),navLinks=document.querySelector("
 if(burger&&navLinks){burger.addEventListener("click",()=>{navLinks.classList.toggle("active");burger.textContent=burger.textContent==="☰"?"✖":"☰";});}
 });
 </script>
+  <script src="news.js"></script>
 </body>
 </html>
