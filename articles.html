@@ -6,10 +6,42 @@
   <meta name="theme-color" content="#3D6B35"/>
   <title>Magazine – CDBG</title>
   <link rel="stylesheet" href="style.css"/>
+  <style>
+    .articles-container {
+      display: grid;
+      gap: 25px;
+      grid-template-columns: 1fr;
+      padding-top: 120px; /* Descendre le premier article */
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    @media (min-width: 600px) { .articles-container { grid-template-columns: repeat(2,1fr); } }
+    @media (min-width: 1024px) { .articles-container { grid-template-columns: repeat(3,1fr); } }
+
+    .news-card {
+      display:flex;
+      flex-direction:column;
+      background:#fff;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration:none;
+      color:inherit;
+    }
+    .news-card:hover { transform:translateY(-4px); box-shadow:0 6px 16px rgba(0,0,0,0.12); }
+    .news-image { width:100%; height:180px; overflow:hidden; background:#f0f0f0; }
+    .news-image img { width:100%; height:100%; object-fit:cover; display:block; }
+    .news-placeholder { width:100%; height:180px; background:#3D6B35; color:#fff; display:flex; align-items:center; justify-content:center; text-align:center; padding:10px; }
+    .news-placeholder h3 { font-size:1rem; margin:0; line-height:1.4em; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
+    .news-content { padding:15px; display:flex; flex-direction:column; flex-grow:1; }
+    .news-title { font-size:1rem; font-weight:bold; margin:0 0 8px; line-height:1.4em; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
+    .news-desc { font-size:0.9rem; color:#666; margin:0 0 10px; line-height:1.4em; }
+    .news-meta { font-size:0.8rem; color:#999; margin-top:auto; }
+  </style>
 </head>
 <body>
 
-<!-- Header -->
 <header id="hero">
   <nav class="navbar">
     <div class="logo"><img alt="CDBG Logo" src="logo.webp" width="80" height="80"/></div>
@@ -33,12 +65,10 @@
   </nav>
 </header>
 
-<!-- Conteneur des articles -->
-<main class="articles-container" id="news-container" style="max-width: 900px; margin: 80px auto; padding: 0 20px;">
-  <!-- Les articles seront injectés ici via JavaScript -->
+<main class="articles-container" id="news-container">
+  <!-- Articles injectés via news.js -->
 </main>
 
-<!-- Footer -->
 <footer>
   <div class="footer-container">
     <div class="footer-col">
@@ -65,7 +95,7 @@
   </div>
 </footer>
 
-<!-- Modales -->
+<!-- Modales FR complètes -->
 <div id="modal-cgu-fr" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -85,7 +115,7 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2>Politique de confidentialité</h2>
-    <p>Conformément à la loi n°001/2011 relative à la protection des données à caractère personnel en République Gabonaise, la Compagnie Durable du Bois au Gabon (CDBG) s’engage à protéger les données personnelles des utilisateurs.</p>
+    <p>Conformément à la loi n°001/2011 relative à la protection des données à caractère personnel en République Gabonaise, la CDBG s’engage à protéger les données personnelles des utilisateurs.</p>
     <p>Données collectées : nom, adresse email, numéro de téléphone, objet du message et toute autre information volontairement transmise via le formulaire de contact.</p>
     <p>Finalités : répondre aux demandes de contact, gérer les relations commerciales et assurer le suivi des partenariats.</p>
     <p>Conservation : les données sont conservées uniquement le temps nécessaire aux finalités pour lesquelles elles ont été collectées, conformément aux délais légaux.</p>
@@ -99,7 +129,7 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2>Cookies</h2>
-    <p>Lors de la navigation sur le site de la Compagnie Durable du Bois au Gabon (CDBG), des cookies peuvent être déposés sur l’ordinateur ou le terminal de l’utilisateur.</p>
+    <p>Lors de la navigation sur le site de la CDBG, des cookies peuvent être déposés sur l’ordinateur ou le terminal de l’utilisateur.</p>
     <p>Définition : un cookie est un petit fichier texte enregistré par le navigateur Internet, permettant une navigation plus fluide et la mesure de l’audience du site.</p>
     <p>Types de cookies utilisés :</p>
     <ul>
@@ -107,53 +137,41 @@
       <li>Cookies de mesure d’audience (statistiques anonymisées).</li>
     </ul>
     <p>Finalité : améliorer l’expérience utilisateur et optimiser la performance du site.</p>
-    <p>Paramétrage : l’utilisateur peut désactiver les cookies à tout moment en configurant son navigateur (Chrome, Firefox, Safari, Edge, etc.). Certaines fonctionnalités pourraient alors être limitées.</p>
+    <p>Paramétrage : l’utilisateur peut désactiver les cookies à tout moment en configurant son navigateur. Certaines fonctionnalités pourraient alors être limitées.</p>
     <p>Consentement : en poursuivant la navigation sur ce site, vous acceptez l’utilisation de cookies conformément à la présente politique.</p>
   </div>
 </div>
 
-<!-- JS -->
 <script src="menu.js"></script>
 <script src="news.js"></script>
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  injectStaticArticles("fr", document.getElementById("news-container"));
+  document.addEventListener("DOMContentLoaded", () => {
+    injectStaticArticles("fr", document.getElementById("news-container"));
 
-  // Modales
-  document.querySelectorAll(".open-modal").forEach(link => {
-    link.addEventListener("click", e => {
-      e.preventDefault();
-      const modalId = link.getAttribute("data-modal");
-      const modal = document.getElementById(modalId);
-      if (modal) modal.style.display = "block";
+    // Modales
+    document.querySelectorAll(".open-modal").forEach(link=>{
+      link.addEventListener("click", e=>{
+        e.preventDefault();
+        const modal=document.getElementById(link.dataset.modal);
+        if(modal) modal.style.display="block";
+      });
     });
-  });
-
-  document.querySelectorAll(".modal .close").forEach(closeBtn => {
-    closeBtn.addEventListener("click", () => {
-      closeBtn.closest(".modal").style.display = "none";
+    document.querySelectorAll(".modal .close").forEach(btn=>{
+      btn.addEventListener("click",()=>btn.closest(".modal").style.display="none");
     });
-  });
-
-  // Fermer modales en cliquant en dehors
-  const modals = document.querySelectorAll(".modal");
-  window.addEventListener("click", e => {
-    modals.forEach(modal => {
-      if (e.target === modal) modal.style.display = "none";
+    window.addEventListener("click", e=>{
+      document.querySelectorAll(".modal").forEach(modal=>{
+        if(e.target===modal) modal.style.display="none";
+      });
     });
-  });
 
-  // Burger menu
-  const burger = document.getElementById("burger");
-  const navLinks = document.querySelector(".nav-links");
-  if (burger && navLinks) {
-    burger.addEventListener("click", () => {
+    const burger=document.getElementById("burger");
+    const navLinks=document.querySelector(".nav-links");
+    if(burger&&navLinks){burger.addEventListener("click",()=>{
       navLinks.classList.toggle("active");
-      burger.textContent = burger.textContent === "☰" ? "✖" : "☰";
-    });
-  }
-});
+      burger.textContent=burger.textContent==="☰"?"✖":"☰";
+    });}
+  });
 </script>
-
 </body>
 </html>
