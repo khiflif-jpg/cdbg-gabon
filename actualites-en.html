@@ -1,64 +1,164 @@
-<!DOCTYPE html><html lang=en><head>
-<meta name="robots" content="index, follow">
-<meta name="theme-color" content="#ffffff">
-<link rel="canonical" href="https://www.cdbg-gabon.com">
-<meta property="og:type" content="website">
-<meta property="og:title" content="CDBG Gabon">
-<meta property="og:description" content="Compagnie des Bois du Gabon - Site officiel">
-<meta property="og:url" content="https://www.cdbg-gabon.com">
-<meta name="twitter:card" content="summary_large_image">
-<meta charset=utf-8><meta name=viewport content="width=device-width, initial-scale=1.0"><meta name=theme-color content=#3D6B35><title>News – CDBG</title><link rel=stylesheet href=style.css><script defer src=news.js></script></head><body><a href="#main" class="skip-link" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">Passer au contenu</a>><header id=hero><nav class=navbar><div class=logo><img alt="CDBG Logo" src=logo.webp width=80 height=80></div><div class=nav-flags><a href=index.html><img alt=Français src=fr.png width=32 height=32></a><a href=en.html><img alt=English src=en.png width=32 height=32></a></div><ul class=nav-links><li><a href=en.html#bitam>Bitam</a></li><li><a href=en.html#about>About</a></li><li><a href=en.html#ambition>Ambition</a></li><li><a href=en.html#services>Services</a></li><li><a href=en.html#gallery>Gallery</a></li><li><a href=en.html#commitments>Commitments</a></li><li><a href=en.html#partnerships>Partnerships</a></li><li><a href=actualites-en.html class=active>News</a></li><li><a href="articles-en.html">Magazine</a></li>
-<li><a href=en.html#contact>Contact</a></li></ul><div class=burger id=burger>☰</div></nav></header><section class="news-section fade-in" id=forest-news><h2 style=margin-top:100px>News</h2><div class=news-container id=news-en></div></section><footer><div class=footer-container><div class=footer-col><h4>Compagnie Durable du Bois in Gabon</h4><p>Responsible forest exploitation for a sustainable future</p><p>RCCM No.: GA-LBV-01-2025-B16-00034</p></div><div class=footer-col><h4>Contact</h4><p>Libreville, Gabon</p><p>+241 77 25 9169</p></div><div class=footer-col><h4>Legal Notice</h4><ul><li><a href=# class=open-modal data-modal=modal-cgu-en>Terms of Use</a></li><li><a href=# class=open-modal data-modal=modal-privacy-en>Privacy Policy</a></li><li><a href=# class=open-modal data-modal=modal-cookies-en>Cookies</a></li></ul></div></div><div class=footer-bottom><p>© 2025 Compagnie Durable du Bois in Gabon. All rights reserved.</p></div></footer><div id=modal-cgu-en class=modal><div class=modal-content><span class=close>&times;</span><h2>Terms of Use</h2><p>These Terms of Use govern access and use of the Compagnie Durable du Bois in Gabon (CDBG) website. By accessing the site, you agree to these conditions without reservation.</p><p>All content is protected by intellectual property rights and any unauthorized use is prohibited.</p><p>Publisher: Compagnie Durable du Bois in Gabon (CDBG), RCCM No. GA-LBV-01-2025-B16-00034, registered office: Ancien Sobraga, Libreville, BP 4447, Gabon.</p><p>Hosting: This site is hosted by GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.</p><p>Access: Free, excluding Internet connection costs borne by the user.</p><p>Intellectual property: All content (texts, images, logos, videos, etc.) is protected by copyright and intellectual property law in Gabon. Any reproduction or unauthorized use is strictly prohibited.</p><p>Liability: CDBG makes every effort to ensure the accuracy of published information but cannot be held responsible for errors, omissions, or site unavailability.</p><p>Applicable law: These Terms of Use are governed by Gabonese law. Any dispute falls under the exclusive jurisdiction of the Gabonese courts.</p></div></div><div id=modal-privacy-en class=modal><div class=modal-content><span class=close>&times;</span><h2>Privacy Policy</h2><p>In accordance with Law No.001/2011 on the protection of personal data in the Republic of Gabon, the Compagnie Durable du Bois in Gabon (CDBG) is committed to protecting users' personal data.</p><p>Data collected: name, email address, phone number, subject of the message, and any other information voluntarily provided by the user via the contact form.</p><p>Purposes: to respond to contact requests, manage business relationships, and monitor partnerships.</p><p>Retention: data is kept only for as long as necessary for the purposes for which it was collected, in accordance with legal deadlines.</p><p>Recipients: data is processed only by CDBG and is not transmitted to third parties without user consent, except where required by law.</p><p>User rights: any user has the right to access, rectify, delete, and oppose the processing of their personal data. These rights can be exercised by written request to: Compagnie Durable du Bois in Gabon, BP 4447, Libreville, Gabon, or by email (to be specified).</p><p>Security: CDBG implements appropriate technical and organizational measures to protect data against unauthorized access, loss, or alteration.</p></div></div><div id=modal-cookies-en class=modal><div class=modal-content><span class=close>&times;</span><h2>Cookies</h2><p>When browsing the Compagnie Durable du Bois in Gabon (CDBG) website, cookies may be stored on the user's computer or device.</p><p>Definition: a cookie is a small text file saved by the Internet browser, allowing easier navigation and site audience measurement.</p><p>Types of cookies used:</p><ul><li>Technical cookies necessary for site operation.</li><li>Audience measurement cookies (anonymized statistics).</li></ul><p>Purpose: to improve user experience and optimize site performance.</p><p>Settings: the user can disable cookies at any time by configuring their browser (Chrome, Firefox, Safari, Edge, etc.). However, some site features may be affected.</p><p>Consent: by continuing to browse this site, you accept the use of cookies in accordance with this policy.</p></div></div><script src=menu.js></script><script src=news.js></script><script>
-  loadNews({
-    xmlUrl: "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml",
-    containerId: "news-en",
-    loadMoreBtnId: null,
-    batch: 12,
-    lang: "en"
-  });
-</script><script>
-document.addEventListener("DOMContentLoaded", () => {
-  // Ouvre les modales
-  document.querySelectorAll(".open-modal").forEach(link => {
-    link.addEventListener("click", e => {
-      e.preventDefault();
-      const modalId = link.getAttribute("data-modal");
-      const modal = document.getElementById(modalId);
-      if (modal) modal.style.display = "block";
-    });
-  });
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="canonical" href="https://www.cdbg-gabon.com">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CDBG Gabon">
+  <meta property="og:description" content="Compagnie des Bois du Gabon - Official Website">
+  <meta property="og:url" content="https://www.cdbg-gabon.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#3D6B35">
+  <title>News – CDBG</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- New unified script -->
+  <script defer src="news.js"></script>
+</head>
+<body>
+  <a href="#main" class="skip-link" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">
+    Skip to content
+  </a>
 
-  // Ferme les modales
-  document.querySelectorAll(".modal .close").forEach(closeBtn => {
-    closeBtn.addEventListener("click", () => {
-      closeBtn.closest(".modal").style.display = "none";
-    });
-  });
+  <header id="hero">
+    <nav class="navbar">
+      <div class="logo">
+        <img alt="CDBG Logo" src="logo.webp" width="80" height="80">
+      </div>
+      <div class="nav-flags">
+        <a href="index.html"><img alt="Français" src="fr.png" width="32" height="32"></a>
+        <a href="en.html"><img alt="English" src="en.png" width="32" height="32"></a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="en.html#bitam">Bitam</a></li>
+        <li><a href="en.html#about">About</a></li>
+        <li><a href="en.html#ambition">Ambition</a></li>
+        <li><a href="en.html#services">Services</a></li>
+        <li><a href="en.html#gallery">Gallery</a></li>
+        <li><a href="en.html#commitments">Commitments</a></li>
+        <li><a href="en.html#partnerships">Partnerships</a></li>
+        <li><a href="actualites-en.html" class="active">News</a></li>
+        <!-- Magazine -> Full EN article -->
+        <li><a href="article-full-en.html?id=article1">Magazine</a></li>
+        <li><a href="en.html#contact">Contact</a></li>
+      </ul>
+      <div class="burger" id="burger">☰</div>
+    </nav>
+  </header>
 
-  // Ferme si clic à l'extérieur
-  const modals = document.querySelectorAll(".modal");
-  window.addEventListener("click", e => {
-    modals.forEach(modal => {
-      if (e.target === modal) modal.style.display = "none";
-    });
-  });
-});
-</script><script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const burger = document.getElementById("burger");
-    const navLinks = document.querySelector(".nav-links");
+  <main id="main">
+    <section class="news-section fade-in" id="forest-news">
+      <h2 style="margin-top:100px">News</h2>
+      <!-- unified container expected by news.js -->
+      <div id="news-container"></div>
+    </section>
+  </main>
 
-    if (burger && navLinks) {
-      burger.addEventListener("click", () => {
-        navLinks.classList.toggle("active");
-        burger.textContent = burger.textContent === "☰" ? "✖" : "☰";
+  <footer>
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>Compagnie Durable du Bois in Gabon</h4>
+        <p>Responsible forest exploitation for a sustainable future</p>
+        <p>RCCM No.: GA-LBV-01-2025-B16-00034</p>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <p>Libreville, Gabon</p>
+        <p>+241 77 25 9169</p>
+      </div>
+      <div class="footer-col">
+        <h4>Legal Notice</h4>
+        <ul>
+          <li><a href="#" class="open-modal" data-modal="modal-cgu-en">Terms of Use</a></li>
+          <li><a href="#" class="open-modal" data-modal="modal-privacy-en">Privacy Policy</a></li>
+          <li><a href="#" class="open-modal" data-modal="modal-cookies-en">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Compagnie Durable du Bois in Gabon. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Modals: EXACT texts provided -->
+  <div id="modal-cgu-en" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Terms of Use</h2>
+      <p>These Terms of Use govern access and use of the Compagnie Durable du Bois in Gabon (CDBG) website. By accessing the site, you agree to these conditions without reservation.</p>
+      <p>All content is protected by intellectual property rights and any unauthorized use is prohibited.</p>
+      <p>Publisher: Compagnie Durable du Bois in Gabon (CDBG), RCCM No. GA-LBV-01-2025-B16-00034, registered office: Ancien Sobraga, Libreville, BP 4447, Gabon.</p>
+      <p>Hosting: This site is hosted by GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.</p>
+      <p>Access: Free, excluding Internet connection costs borne by the user.</p>
+      <p>Intellectual property: All content (texts, images, logos, videos, etc.) is protected by copyright and intellectual property law in Gabon. Any reproduction or unauthorized use is strictly prohibited.</p>
+      <p>Liability: CDBG makes every effort to ensure the accuracy of published information but cannot be held responsible for errors, omissions, or site unavailability.</p>
+      <p>Applicable law: These Terms of Use are governed by Gabonese law. Any dispute falls under the exclusive jurisdiction of the Gabonese courts.</p>
+    </div>
+  </div>
+
+  <div id="modal-privacy-en" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Privacy Policy</h2>
+      <p>In accordance with Law No.001/2011 on the protection of personal data in the Republic of Gabon, the Compagnie Durable du Bois in Gabon (CDBG) is committed to protecting users' personal data.</p>
+      <p>Data collected: name, email address, phone number, subject of the message, and any other information voluntarily provided by the user via the contact form.</p>
+      <p>Purposes: to respond to contact requests, manage business relationships, and monitor partnerships.</p>
+      <p>Retention: data is kept only for as long as necessary for the purposes for which it was collected, in accordance with legal deadlines.</p>
+      <p>Recipients: data is processed only by CDBG and is not transmitted to third parties without user consent, except where required by law.</p>
+      <p>User rights: any user has the right to access, rectify, delete, and oppose the processing of their personal data. These rights can be exercised by written request to: Compagnie Durable du Bois in Gabon, BP 4447, Libreville, Gabon, or by email (to be specified).</p>
+      <p>Security: CDBG implements appropriate technical and organizational measures to protect data against unauthorized access, loss, or alteration.</p>
+    </div>
+  </div>
+
+  <div id="modal-cookies-en" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Cookies</h2>
+      <p>When browsing the Compagnie Durable du Bois in Gabon (CDBG) website, cookies may be stored on the user's computer or device.</p>
+      <p>Definition: a cookie is a small text file saved by the Internet browser, allowing easier navigation and site audience measurement.</p>
+      <p>Types of cookies used:</p>
+      <ul>
+        <li>Technical cookies necessary for site operation.</li>
+        <li>Audience measurement cookies (anonymized statistics).</li>
+      </ul>
+      <p>Purpose: to improve user experience and optimize site performance.</p>
+      <p>Settings: the user can disable cookies at any time by configuring their browser (Chrome, Firefox, Safari, Edge, etc.). However, some site features may be affected.</p>
+      <p>Consent: by continuing to browse this site, you accept the use of cookies in accordance with this policy.</p>
+    </div>
+  </div>
+
+  <script src="menu.js"></script>
+  <script>
+    // Modal open/close + burger
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".open-modal").forEach(link => {
+        link.addEventListener("click", e => {
+          e.preventDefault();
+          const id = link.getAttribute("data-modal");
+          const modal = document.getElementById(id);
+          if (modal) modal.style.display = "block";
+        });
       });
-    }
-  });
-</script>
-  <script src="news.js"></script>
-<script>
-  injectStaticArticles("en", document.getElementById("news-container"));
-</script>
+      document.querySelectorAll(".modal .close").forEach(btn => {
+        btn.addEventListener("click", () => btn.closest(".modal").style.display = "none");
+      });
+      window.addEventListener("click", e => {
+        document.querySelectorAll(".modal").forEach(modal => {
+          if (e.target === modal) modal.style.display = "none";
+        });
+      });
 
-</body></html>
+      const burger = document.getElementById("burger");
+      const navLinks = document.querySelector(".nav-links");
+      if (burger && navLinks) {
+        burger.addEventListener("click", () => {
+          navLinks.classList.toggle("active");
+          burger.textContent = burger.textContent === "☰" ? "✖" : "☰";
+        });
+      }
+    });
+  </script>
+</body>
+</html>
