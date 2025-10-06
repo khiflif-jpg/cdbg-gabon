@@ -1,86 +1,86 @@
-// ============================================================
-// ACTUALITES.JS — version finale CDBG (multi-langue + proxy RSS)
-// ============================================================
+async function loadNews() {
+  const lang = document.documentElement.lang || "fr";
+  const container = document.getElementById("news-container");
+  if (!container) return;
 
-// Tronque le contenu
-function truncateHTML(html, maxLength) {
-  const div = document.createElement("div");
-  div.innerHTML = html;
-  let text = div.textContent || div.innerText || "";
-  if (text.length > maxLength) text = text.substring(0, maxLength).trim() + "…";
-  return text;
-}
-
-// Détecte la langue
-function detectLang() {
-  const htmlLang = document.documentElement.lang || "fr";
-  return htmlLang.toLowerCase().startsWith("en") ? "en" : "fr";
-}
-
-// Charge le flux RSS via proxy CORS
-async function injectRSSArticles(container, lang) {
-  const RSS_URL = "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml"; // ✅ Flux payant
-  const PROXY_URL = `https://api.allorigins.win/get?url=${encodeURIComponent(RSS_URL)}`;
+  const xmlUrl = "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml";
+  const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(xmlUrl)}`;
 
   try {
-    const res = await fetch(PROXY_URL);
-    if (!res.ok) throw new Error("Erreur réseau RSS");
+    // Charger le flux RSS via proxy
+    const res = await fetch(proxyUrl);
     const data = await res.json();
     const parser = new DOMParser();
-    const xml = parser.parseFromString(data.contents, "text/xml");
-    const items = xml.querySelectorAll("item");
+    const xml = parser.parseFromString(data.contents, "application/xml");
+    const items = [...xml.querySelectorAll("item")].slice(0, 12);
 
-    if (!items.length) {
-      container.innerHTML = `<p style="text-align:center;color:#555;">Aucun article disponible pour le moment.</p>`;
-      return;
-    }
+    container.innerHTML = "";
 
+    // --- Article interne CDBG ---
+    const internalArticle = document.createElement("a");
+    internalArticle.href =
+      lang === "fr" ? "article-full-fr.html?id=article1" : "article-full-en.html?id=article1";
+    internalArticle.className = "news-card";
+    internalArticle.innerHTML = `
+      <div class="news-placeholder" style="background:#3D6B35;color:#fff;padding:1.5rem;">
+        ${lang === "fr"
+          ? "CDBG Magazine – Découvrez nos projets forestiers au Gabon"
+          : "CDBG Magazine – Discover our sustainable forestry projects in Gabon"}
+      </div>
+      <div class="news-content">
+        <p class="news-desc">${
+          lang === "fr"
+            ? "Consultez notre article complet sur la gestion durable des forêts et les initiatives locales de la CDBG."
+            : "Read our full feature on sustainable forest management and CDBG’s local initiatives."
+        }</p>
+        <div class="news-meta">CDBG • 2025</div>
+      </div>
+    `;
+    container.appendChild(internalArticle);
+
+    // --- Flux RSS ---
     items.forEach(item => {
-      const title = item.querySelector("title")?.textContent || "";
+      const title = item.querySelector("title")?.textContent || "Sans titre";
       const link = item.querySelector("link")?.textContent || "#";
       const description = item.querySelector("description")?.textContent || "";
-      const pubDate = new Date(item.querySelector("pubDate")?.textContent || Date.now());
-      const imgMatch = description.match(/<img[^>]+src="([^"]+)"/);
-      const image = imgMatch ? imgMatch[1] : "images/default-thumb.webp";
+      const pubDate = new Date(item.querySelector("pubDate")?.textContent);
+      let imageUrl = "";
 
-      const html = `
-        <article class="rss-article">
-          <a href="${link}" class="rss-article-img" target="_blank" rel="noopener">
-            <img src="${image}" alt="${title}" loading="lazy">
-          </a>
-          <div class="rss-article-content">
-            <h2><a href="${link}" target="_blank" rel="noopener">${title}</a></h2>
-            <p>${truncateHTML(description.replace(/<[^>]*>?/gm, ""), 180)}</p>
-            <div class="rss-article-meta">
-              <span>${pubDate.toLocaleDateString(lang === "en" ? "en-GB" : "fr-FR", {
-                year: "numeric", month: "long", day: "numeric"
-              })}</span>
-              <span class="rss-source">PFBC</span>
-            </div>
-          </div>
-        </article>
+      // Cherche une image
+      const enclosure = item.querySelector("enclosure");
+      if (enclosure && enclosure.getAttribute("url")) {
+        imageUrl = enclosure.getAttribute("url");
+      } else {
+        const content = item.getElementsByTagName("content:encoded")[0];
+        if (content && content.textContent.match(/<img[^>]+src="([^">]+)"/)) {
+          imageUrl = RegExp.$1;
+        }
+      }
+
+      const card = document.createElement("a");
+      card.href = link;
+      card.target = "_blank";
+      card.className = "news-card";
+
+      card.innerHTML = `
+        ${imageUrl
+          ? `<div class="news-image"><img src="${imageUrl}" alt="${title}"></div>`
+          : `<div class="news-placeholder">${title}</div>`}
+        <div class="news-content">
+          <h3 class="news-title">${title}</h3>
+          <p class="news-desc">${description}</p>
+          <div class="news-meta">${pubDate.toLocaleDateString(lang)}</div>
+        </div>
       `;
-      container.insertAdjacentHTML("beforeend", html);
+      container.appendChild(card);
     });
   } catch (err) {
-    console.error("Erreur flux RSS :", err);
-    container.innerHTML = `<p style="text-align:center;color:red;">Impossible de charger les actualités pour le moment.</p>`;
+    console.error("Erreur de chargement du flux RSS :", err);
+    container.innerHTML =
+      lang === "fr"
+        ? "<p>Impossible de charger les actualités pour le moment.</p>"
+        : "<p>Unable to load news at this time.</p>";
   }
 }
 
-// Initialisation universelle
-document.addEventListener("DOMContentLoaded", async () => {
-  const lang = detectLang();
-
-  const container =
-    document.querySelector('[id^="actualites"]') || // ✅ cherche un ID qui commence par "actualites"
-    document.querySelector("#actualites-container");
-
-  if (!container) {
-    console.warn("⚠️ Aucun conteneur d’actualités trouvé.");
-    return;
-  }
-
-  container.innerHTML = `<p style="text-align:center;">Chargement des actualités...</p>`;
-  await injectRSSArticles(container, lang);
-});
+document.addEventListener("DOMContentLoaded", loadNews);
