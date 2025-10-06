@@ -35,14 +35,15 @@
 
 <!-- Main Content : container vide -->
 <main class="articles-container" id="my-articles-en" style="max-width: 900px; margin: 80px auto; padding: 0 20px;">
-  <!-- JS injectera ici les articles cliquables -->
+  <!-- JS will inject clickable articles here -->
 </main>
 
-<!-- Inclure le JS pour injecter les articles -->
+<!-- Include the JS to inject articles -->
 <script src="my-articles.js"></script>
 <script>
   injectMyArticles("en", "my-articles-en", true);
 </script>
+
 <!-- Footer -->
 <footer>
   <div class="footer-container">
@@ -157,9 +158,15 @@
     }
   });
 </script>
+
 <script src="news.js"></script>
 <script>
-  injectStaticArticles("en", document.getElementById("news-container"));
+  // Make sure there's an element with id news-container if this is used
+  // Or adjust if not needed
+  const newsContainer = document.getElementById("news-container");
+  if (newsContainer) {
+    injectStaticArticles("en", newsContainer);
+  }
 </script>
 
 </body>
