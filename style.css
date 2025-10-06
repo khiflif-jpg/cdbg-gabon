@@ -265,3 +265,93 @@ button:focus-visible,
   outline-offset: 2px;
   border-radius: 4px;
 }
+/* ============================================================
+   🌿 AJOUTS OPTIONNELS — Style des Modales Légales (CDBG)
+   ============================================================ */
+
+/* Fond assombri + léger flou */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  animation: fadeInModal 0.3s ease;
+}
+
+/* Contenu centré et stylisé */
+.modal-content {
+  background-color: #fff;
+  margin: 6% auto;
+  padding: 30px 25px;
+  border-radius: 16px;
+  max-width: 720px;
+  width: 92%;
+  color: #333;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  animation: slideUpModal 0.35s ease;
+}
+
+/* Animation d’apparition */
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUpModal {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Bouton Fermer stylé */
+.close {
+  color: #3D6B35;
+  font-size: 30px;
+  font-weight: bold;
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.close:hover {
+  color: #2b5126;
+  transform: rotate(90deg);
+}
+
+/* Titres et paragraphes */
+.modal-content h2 {
+  color: #3D6B35;
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.modal-content p {
+  margin-bottom: 12px;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+/* Sur mobile : taille et marges adaptées */
+@media (max-width: 768px) {
+  .modal-content {
+    margin: 15% auto;
+    padding: 20px;
+  }
+
+  .modal-content h2 {
+    font-size: 1.2rem;
+  }
+
+  .modal-content p {
+    font-size: 0.95rem;
+  }
+}
