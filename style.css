@@ -69,4 +69,62 @@
   font-size: 0.9rem;
   color: #333;
   line-height: 1.5em;
+  
+}/* === STYLE DES ARTICLES / BLOG === */
+.articles-container {
+  max-width: 900px;
+  margin: 120px auto 50px;
+  padding: 0 20px;
+  font-family: "Georgia", "Times New Roman", serif;
+  color: #2a2a2a;
 }
+
+.news-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  margin-bottom: 50px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.news-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.news-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #3D6B35;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.news-desc {
+  font-size: 1.1rem;
+  line-height: 1.9em;
+  text-align: justify;
+}
+
+.news-desc h3 {
+  font-size: 1.4rem;
+  color: #5B8A48;
+  margin-top: 25px;
+  font-weight: 600;
+}
+
+.news-meta {
+  font-size: 0.9rem;
+  color: #888;
+  margin-top: 25px;
+  text-align: right;
+  font-style: italic;
+}
+
+.news-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
