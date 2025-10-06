@@ -1,5 +1,5 @@
 // ============================================================
-//  NEWS.JS — version CDBG (flux payant unique RSS.app + CORS OK)
+//  NEWS.JS — version CDBG avec flux RSS payant et proxy AllOrigins
 // ============================================================
 
 // Tronque le contenu HTML à un nombre de caractères max
@@ -17,7 +17,7 @@ function detectLang() {
   return htmlLang.toLowerCase().startsWith("en") ? "en" : "fr";
 }
 
-// === Article interne CDBG ===
+// === Article interne CDBG (affiché en premier) ===
 function injectFeaturedArticle(lang, container) {
   const isEN = lang === "en";
   const article = isEN ? staticArticlesEN?.[0] : staticArticlesFR?.[0];
@@ -45,9 +45,9 @@ function injectFeaturedArticle(lang, container) {
   container.insertAdjacentHTML("afterbegin", html);
 }
 
-// === Chargement RSS avec proxy AllOrigins (CORS OK) ===
+// === Chargement RSS avec proxy AllOrigins (corrigé CORS) ===
 async function injectRSSArticles(container, lang) {
-  const RSS_URL = "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml"; // 🔥 ton flux payant unique
+  const RSS_URL = "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml"; // ✅ Ton flux payant
   const PROXY_URL = `https://api.allorigins.win/get?url=${encodeURIComponent(RSS_URL)}`;
 
   try {
@@ -85,14 +85,14 @@ async function injectRSSArticles(container, lang) {
       container.insertAdjacentHTML("beforeend", html);
     });
   } catch (err) {
-    console.error("Erreur flux RSS :", err);
+    console.error("Erreur chargement flux RSS :", err);
   }
 }
 
 // === Initialisation ===
 document.addEventListener("DOMContentLoaded", async () => {
   const lang = detectLang();
-  const container = document.querySelector("#news-container");
+  const container = document.querySelector("#news-container, #news-fr, #news-en");
   if (!container) return;
 
   injectFeaturedArticle(lang, container);
