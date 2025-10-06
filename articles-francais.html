@@ -129,24 +129,29 @@
 </div>
 </div>
 
-<script src="menu.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded",()=>{
-const burger=document.getElementById("burger"),navLinks=document.querySelector(".nav-links");
-if(burger&&navLinks){burger.addEventListener("click",()=>{navLinks.classList.toggle("active");burger.textContent=burger.textContent==="☰"?"✖":"☰";});}
-document.querySelectorAll(".open-modal").forEach(link=>{link.addEventListener("click",e=>{e.preventDefault();document.getElementById(link.dataset.modal).style.display="block";});});
-document.querySelectorAll(".modal .close").forEach(btn=>btn.addEventListener("click",()=>btn.closest(".modal").style.display="none"));
-window.addEventListener("click",e=>document.querySelectorAll(".modal").forEach(m=>{if(e.target===m)m.style.display="none";}));
-});
-  
 <script src="news.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.querySelector(".articles-container");
-  // Injection du contenu complet des articles
-  injectStaticArticles("fr", container, true); // pour articles-francais.html
+  if (!container) return console.error("Container .articles-container introuvable");
+  // injecte les articles FR en mode 'full' (contenu complet)
+  if (typeof injectStaticArticles === "function") {
+    injectStaticArticles("fr", container, true);
+    // Si tu veux cibler un article précis par hash (ex: articles-francais.html#article1)
+    // tu peux scroller automatiquement :
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      setTimeout(() => {
+        const el = document.querySelector(`#${id}`);
+        if (el) el.scrollIntoView({behavior:"smooth"});
+      }, 100);
+    }
+  } else {
+    console.error("injectStaticArticles non défini — news.js peut ne pas être chargé");
+  }
 });
-</script
+</script>
+
 
 </body>
 </html>
