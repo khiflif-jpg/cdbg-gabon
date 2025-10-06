@@ -108,7 +108,12 @@ function injectStaticArticles(lang = "fr", container, limit = false) {
     });
 
     card.innerHTML = `
-      <div class="news-image"><img src="${article.img}" alt="${article.title}"></div>
+      <div class="news-image">
+  <picture>
+    <source media="(max-width: 768px)" srcset="${article.imgSmall || article.img}">
+    <img src="${article.img}" alt="${article.title}">
+  </picture>
+</div>
       <div class="news-content">
         <h3 class="news-title">${article.title}</h3>
         <p class="news-desc">${article.description}</p>
