@@ -1,8 +1,8 @@
 // ============================================================
-//  NEWS.JS — version CDBG avec proxy RSS AllOrigins (OK CORS)
+//  NEWS.JS — version finale CDBG multilingue + proxy AllOrigins
 // ============================================================
 
-// Tronque le contenu HTML à un nombre de caractères max
+// === Tronque le contenu HTML à une longueur max ===
 function truncateHTML(html, maxLength) {
   const div = document.createElement("div");
   div.innerHTML = html;
@@ -11,19 +11,40 @@ function truncateHTML(html, maxLength) {
   return text;
 }
 
-// Détecte la langue de la page
+// === Détection automatique de la langue ===
 function detectLang() {
   const htmlLang = document.documentElement.lang || "fr";
   return htmlLang.toLowerCase().startsWith("en") ? "en" : "fr";
 }
 
-// === Article interne CDBG ===
+// === Articles internes CDBG ===
+const staticArticlesFR = [
+  {
+    id: "article1",
+    title: "CDBG : Une gestion forestière durable au Gabon",
+    description: "Découvrez comment la Compagnie Durable du Bois au Gabon contribue à la préservation des forêts tropicales à Bitam, dans le respect des standards internationaux FSC® et PAFC.",
+    image: "images/cdbg-foret.webp",
+    pubDate: "2025-02-01"
+  }
+];
+
+const staticArticlesEN = [
+  {
+    id: "article1",
+    title: "CDBG: Sustainable Forest Management in Gabon",
+    description: "Learn how Compagnie Durable du Bois in Gabon promotes sustainable forestry practices in Bitam, aligning with FSC® and PAFC international standards.",
+    image: "images/cdbg-forest.webp",
+    pubDate: "2025-02-01"
+  }
+];
+
+// === Injection de l’article interne ===
 function injectFeaturedArticle(lang, container) {
   const isEN = lang === "en";
-  const article = isEN ? staticArticlesEN?.[0] : staticArticlesFR?.[0];
+  const article = isEN ? staticArticlesEN[0] : staticArticlesFR[0];
   if (!article || !container) return;
 
-  const link = isEN ? `article-full-en.html` : `article-full-fr.html`;
+  const link = isEN ? `article-full-en.html?id=${article.id}` : `article-full-fr.html?id=${article.id}`;
   const html = `
     <article class="rss-article cdbg-featured">
       <a href="${link}" class="rss-article-img">
@@ -45,14 +66,23 @@ function injectFeaturedArticle(lang, container) {
   container.insertAdjacentHTML("afterbegin", html);
 }
 
-// === Chargement RSS avec proxy AllOrigins ===
+// === Chargement du flux RSS via AllOrigins ===
 async function injectRSSArticles(container, lang) {
-  const RSS_URL = "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml";
+  const RSS_URL = lang === "en"
+    ? "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml" // 🌍 flux anglais
+    : "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml"; // 🇫🇷 flux français
+
   const PROXY_URL = `https://api.allorigins.win/get?url=${encodeURIComponent(RSS_URL)}`;
 
   try {
     const res = await fetch(PROXY_URL);
     const data = await res.json();
+
+    if (!data || !data.contents) {
+      console.error("⚠️ Flux vide ou inaccessible :", RSS_URL);
+      return;
+    }
+
     const parser = new DOMParser();
     const xml = parser.parseFromString(data.contents, "text/xml");
     const items = xml.querySelectorAll("item");
@@ -74,9 +104,10 @@ async function injectRSSArticles(container, lang) {
             <h2><a href="${link}" target="_blank" rel="noopener">${title}</a></h2>
             <p>${truncateHTML(description.replace(/<[^>]*>?/gm, ""), 200)}</p>
             <div class="rss-article-meta">
-              <span>${pubDate.toLocaleDateString(lang === "en" ? "en-GB" : "fr-FR", {
-                year: "numeric", month: "long", day: "numeric"
-              })}</span>
+              <span>${pubDate.toLocaleDateString(
+                lang === "en" ? "en-GB" : "fr-FR",
+                { year: "numeric", month: "long", day: "numeric" }
+              )}</span>
               <span class="rss-source">PFBC</span>
             </div>
           </div>
@@ -85,7 +116,7 @@ async function injectRSSArticles(container, lang) {
       container.insertAdjacentHTML("beforeend", html);
     });
   } catch (err) {
-    console.error("Erreur flux RSS :", err);
+    console.error("❌ Erreur chargement flux RSS :", err);
   }
 }
 
