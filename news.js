@@ -1,5 +1,5 @@
 // ============================================================
-//  NEWS.JS — version optimisée CDBG
+//  NEWS.JS — version optimisée et corrigée CDBG
 // ============================================================
 
 // === Fonctions utilitaires ===
@@ -49,6 +49,7 @@ function injectFeaturedArticle(lang, container) {
       </div>
     </article>
   `;
+
   // L’article CDBG est inséré en haut du flux
   container.insertAdjacentHTML("afterbegin", html);
 }
@@ -58,11 +59,13 @@ async function injectRSSArticles(container, lang) {
   try {
     const response = await fetch("merged_feed.json");
     const data = await response.json();
-    const articles = Array.isArray(data) ? data : [];
+
+    // ✅ Correction : lecture de la clé "articles"
+    const articles = Array.isArray(data.articles) ? data.articles : [];
 
     for (const item of articles) {
       const link = item.lien || item.url || "#";
-      const title = item.titre || item.title || "";
+      const title = item.titre || item.title || "Article";
       const date = new Date(item.date).toLocaleDateString(
         lang === "en" ? "en-GB" : "fr-FR",
         { year: "numeric", month: "long", day: "numeric" }
@@ -71,12 +74,11 @@ async function injectRSSArticles(container, lang) {
 
       const html = `
         <article class="rss-article">
-          <a href="${link}" class="rss-article-img">
+          <a href="${link}" class="rss-article-img" target="_blank" rel="noopener">
             <img src="images/default-thumb.webp" alt="${title}" loading="lazy">
           </a>
           <div class="rss-article-content">
-            <h2><a href="${link}" target="_blank">${title}</a></h2>
-            <p>${truncateHTML(item.description || "", 200)}</p>
+            <h2><a href="${link}" target="_blank" rel="noopener">${title}</a></h2>
             <div class="rss-article-meta">
               <span>${date}</span>
               <span class="rss-source">${source}</span>
@@ -87,7 +89,7 @@ async function injectRSSArticles(container, lang) {
       container.insertAdjacentHTML("beforeend", html);
     }
   } catch (error) {
-    console.error("Erreur lors du chargement du flux RSS :", error);
+    console.error("❌ Erreur lors du chargement du flux RSS :", error);
   }
 }
 
@@ -98,7 +100,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   if (!container) return;
 
-  // Injecte l’article CDBG en premier
+  // Injecte l’article CDBG en premier (si défini)
   injectFeaturedArticle(lang, container);
 
   // Injecte ensuite les articles RSS du flux fusionné
