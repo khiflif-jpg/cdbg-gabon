@@ -1,35 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#ffffff">
-  <link rel="canonical" href="https://www.cdbg-gabon.com">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="CDBG Gabon">
-  <meta property="og:description" content="Compagnie des Bois du Gabon - Official Website">
-  <meta property="og:url" content="https://www.cdbg-gabon.com">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#3D6B35">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#3D6B35" />
+  <link rel="canonical" href="https://www.cdbg-gabon.com/actualites-en.html" />
+
   <title>News – CDBG</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- New unified script -->
-  <script defer src="news.js"></script>
+  <meta name="description" content="News from Compagnie Durable du Bois in Gabon (CDBG) and the forest/environment sector." />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="News – CDBG" />
+  <meta property="og:description" content="News from Compagnie Durable du Bois in Gabon (CDBG) and the forest/environment sector." />
+  <meta property="og:url" content="https://www.cdbg-gabon.com/actualites-en.html" />
+  <meta property="og:image" content="https://www.cdbg-gabon.com/logo.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="logo.png" type="image/png" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* 4-column responsive grid */
+    .news-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    @media (min-width: 600px) { .news-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .news-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 1280px) { .news-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    .news-card {
+      display: flex; flex-direction: column;
+      background: #fff; border-radius: 12px; overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      text-decoration: none; color: inherit;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .news-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+    .news-image { width: 100%; height: 180px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .news-image img { width:100%; height:100%; object-fit:cover; display:block; }
+    .news-placeholder { width:100%; height:180px; background:#3D6B35; color:#fff; display:flex; align-items:center; justify-content:center; text-align:center; font-weight:700; padding:10px; }
+    .news-content { padding: 14px; }
+    .news-title { margin:0 0 8px; font-size:1rem; line-height:1.4; font-weight:700; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .news-desc { margin:0 0 10px; font-size:.92rem; color:#555; line-height:1.45; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+    .news-meta { font-size:.8rem; color:#888; }
+  </style>
 </head>
 <body>
-  <a href="#main" class="skip-link" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">
-    Skip to content
-  </a>
+  <a href="#main" class="skip-link" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">Skip to content</a>
 
   <header id="hero">
     <nav class="navbar">
       <div class="logo">
-        <img alt="CDBG Logo" src="logo.webp" width="80" height="80">
+        <img src="logo.webp" width="80" height="80" alt="CDBG Logo" />
       </div>
       <div class="nav-flags">
-        <a href="index.html"><img alt="Français" src="fr.png" width="32" height="32"></a>
-        <a href="en.html"><img alt="English" src="en.png" width="32" height="32"></a>
+        <a href="index.html"><img src="fr.png" width="32" height="32" alt="Français" /></a>
+        <a href="en.html"><img src="en.png" width="32" height="32" alt="English" /></a>
       </div>
       <ul class="nav-links">
         <li><a href="en.html#bitam">Bitam</a></li>
@@ -39,20 +68,18 @@
         <li><a href="en.html#gallery">Gallery</a></li>
         <li><a href="en.html#commitments">Commitments</a></li>
         <li><a href="en.html#partnerships">Partnerships</a></li>
-        <li><a href="actualites-en.html" class="active">News</a></li>
-        <!-- Magazine -> Full EN article -->
-        <li><a href="article-full-en.html?id=article1">Magazine</a></li>
+        <li><a class="active" href="actualites-en.html">News</a></li>
+        <li><a href="article-full-en.html">Magazine</a></li>
         <li><a href="en.html#contact">Contact</a></li>
       </ul>
       <div class="burger" id="burger">☰</div>
     </nav>
   </header>
-<script src="menu.js"></script>
+
   <main id="main">
     <section class="news-section fade-in" id="forest-news">
       <h2 style="margin-top:100px">News</h2>
-      <!-- unified container expected by news.js -->
-      <div id="news-container"></div>
+      <div id="news-container" class="news-grid"></div>
     </section>
   </main>
 
@@ -60,7 +87,7 @@
     <div class="footer-container">
       <div class="footer-col">
         <h4>Compagnie Durable du Bois in Gabon</h4>
-        <p>Responsible forest exploitation for a sustainable future</p>
+        <p>Responsible forestry for a sustainable future</p>
         <p>RCCM No.: GA-LBV-01-2025-B16-00034</p>
       </div>
       <div class="footer-col">
@@ -82,8 +109,8 @@
     </div>
   </footer>
 
-  <!-- Modals: EXACT texts provided -->
-  <div id="modal-cgu-en" class="modal">
+  <!-- Modals EN -->
+  <div id="modal-cgu-en" class="modal" style="display:none">
     <div class="modal-content">
       <span class="close">&times;</span>
       <h2>Terms of Use</h2>
@@ -98,7 +125,7 @@
     </div>
   </div>
 
-  <div id="modal-privacy-en" class="modal">
+  <div id="modal-privacy-en" class="modal" style="display:none">
     <div class="modal-content">
       <span class="close">&times;</span>
       <h2>Privacy Policy</h2>
@@ -112,7 +139,7 @@
     </div>
   </div>
 
-  <div id="modal-cookies-en" class="modal">
+  <div id="modal-cookies-en" class="modal" style="display:none">
     <div class="modal-content">
       <span class="close">&times;</span>
       <h2>Cookies</h2>
@@ -129,38 +156,72 @@
     </div>
   </div>
 
-
   <script>
-    // Modal open/close + burger
+    // Burger + Modals
     document.addEventListener("DOMContentLoaded", () => {
-      document.querySelectorAll(".open-modal").forEach(link => {
-        link.addEventListener("click", e => {
+      const burger = document.getElementById("burger");
+      const nav = document.querySelector(".nav-links");
+      if (burger && nav) burger.addEventListener("click", () => nav.classList.toggle("active"));
+
+      document.querySelectorAll(".open-modal").forEach(a => {
+        a.addEventListener("click", e => {
           e.preventDefault();
-          const id = link.getAttribute("data-modal");
-          const modal = document.getElementById(id);
-          if (modal) modal.style.display = "block";
+          const id = a.getAttribute("data-modal");
+          const m = document.getElementById(id);
+          if (m) m.style.display = "block";
         });
       });
       document.querySelectorAll(".modal .close").forEach(btn => {
         btn.addEventListener("click", () => btn.closest(".modal").style.display = "none");
       });
       window.addEventListener("click", e => {
-        document.querySelectorAll(".modal").forEach(modal => {
-          if (e.target === modal) modal.style.display = "none";
-        });
+        if (e.target.classList.contains("modal")) e.target.style.display = "none";
       });
-
-      const burger = document.getElementById("burger");
-      const navLinks = document.querySelector(".nav-links");
-      if (burger && navLinks) {
-        burger.addEventListener("click", () => {
-          navLinks.classList.toggle("active");
-          burger.textContent = burger.textContent === "☰" ? "✖" : "☰";
-        });
-      }
     });
+
+    // ===== RSS (via AllOrigins for CORS) =====
+    const FEED_URL = "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml";
+    async function loadRSS({ containerId, count = 12, lang = "en" }) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      const proxy = "https://api.allorigins.win/get?url=" + encodeURIComponent(FEED_URL);
+      try {
+        const res = await fetch(proxy);
+        const json = await res.json();
+        const xml = new DOMParser().parseFromString(json.contents, "text/xml");
+        const items = Array.from(xml.querySelectorAll("item")).slice(0, count);
+
+        items.forEach(item => {
+          const title = item.querySelector("title")?.textContent?.trim() || "Untitled";
+          const link = item.querySelector("link")?.textContent?.trim() || "#";
+          const description = item.querySelector("description")?.textContent || "";
+          const date = new Date(item.querySelector("pubDate")?.textContent || Date.now());
+          let img = item.querySelector("enclosure")?.getAttribute("url") || "";
+          if (!img) {
+            const content = item.getElementsByTagName("content:encoded")[0]?.textContent || "";
+            const m1 = content.match(/<img[^>]+src="([^"]+)"/i);
+            const m2 = !m1 && description.match(/<img[^>]+src="([^"]+)"/i);
+            img = (m1 && m1[1]) || (m2 && m2[1]) || "";
+          }
+
+          const a = document.createElement("a");
+          a.href = link; a.target = "_blank"; a.rel = "noopener";
+          a.className = "news-card";
+          a.innerHTML = `
+            ${img ? `<div class="news-image"><img src="${img}" alt="${title}"></div>`
+                  : `<div class="news-placeholder">${title}</div>`}
+            <div class="news-content">
+              <h3 class="news-title">${title}</h3>
+              <p class="news-desc">${description.replace(/<[^>]*>/g,"").slice(0,180)}${description.length>180?"…":""}</p>
+              <div class="news-meta">${date.toLocaleDateString("en-GB",{year:"numeric",month:"long",day:"numeric"})} – PFBC</div>
+            </div>
+          `;
+          container.appendChild(a);
+        });
+      } catch (e) { console.error("RSS error:", e); }
+    }
+    // Load 12 articles on EN News page
+    loadRSS({ containerId: "news-container", count: 12, lang: "en" });
   </script>
-  <script defer src="actualites.js"></script>
-  <script src="menu.js"></script>
 </body>
 </html>
