@@ -394,8 +394,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- Section Actualités -->
 <section class="news-section fade-in" id="forest-news">
-  <h2 style="margin-top:100px">Actualités</h2>
-  <div class="news-container" id="news-container"></div>
+  <h2>Actualités</h2>
+
+  <!-- Conteneur des articles -->
+  <div class="news-container" id="news-fr"></div>
 
   <div class="more-link">
     <a href="actualites.html" class="learn-card btn btn-primary">Voir toutes les actualités</a>
@@ -766,6 +768,61 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         burger.textContent = burger.textContent === "☰" ? "✖" : "☰";
       });
     }
+  });
+</script>
+  <!-- Conteneur des articles -->
+  <div class="news-container" id="news-fr"></div>
+
+  <div class="more-link">
+    <a href="actualites.html" class="learn-card btn btn-primary">Voir toutes les actualités</a>
+  </div>
+</section>
+
+<!-- Scripts à placer juste avant la balise </body> -->
+<script src="news.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const lang = document.documentElement.lang || "fr";
+    const container = document.getElementById("news-fr");
+
+    // ✅ Injecte ton article statique "Le Gabon renforce sa politique forestière"
+    injectStaticArticles(lang, container);
+
+    // ✅ Puis charge les actualités dynamiques du flux RSS
+    loadNews({
+      xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml",
+      containerId: "news-fr",
+      batch: 5,
+      lang: lang
+    });
+  });
+</script>
+
+  <!-- Conteneur des articles -->
+  <div class="news-container" id="news-fr"></div>
+
+  <div class="more-link">
+    <a href="actualites.html" class="learn-card btn btn-primary">Voir toutes les actualités</a>
+  </div>
+</section>
+
+<!-- Scripts à placer juste avant la balise </body> -->
+<script src="news.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const lang = document.documentElement.lang || "fr";
+    const container = document.getElementById("news-fr");
+
+    // ✅ Injecte ton article statique "Le Gabon renforce sa politique forestière"
+    injectStaticArticles(lang, container);
+
+    // ✅ Puis charge les actualités dynamiques du flux RSS
+    loadNews({
+      xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml",
+      containerId: "news-fr",
+      batch: 5,
+      lang: lang
+    });
   });
 </script>
 
