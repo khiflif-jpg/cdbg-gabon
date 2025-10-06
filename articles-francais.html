@@ -4,12 +4,12 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="#3D6B35"/>
-  <title>🌱 Le Gabon renforce sa politique forestière – CDBG</title>
+  <title>Magazine – CDBG</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-<!-- Header identique -->
+<!-- Header -->
 <header id="hero">
   <nav class="navbar">
     <div class="logo"><img alt="CDBG Logo" src="logo.webp" width="80" height="80"/></div>
@@ -33,12 +33,12 @@
   </nav>
 </header>
 
-<!-- Conteneur de l'article complet -->
-<main class="article-single" id="article-content" style="max-width: 900px; margin: 80px auto; padding: 0 20px;">
-  <!-- Le JS injectera le contenu complet -->
+<!-- Conteneur des articles -->
+<main class="articles-container" id="news-container" style="max-width: 900px; margin: 80px auto; padding: 0 20px;">
+  <!-- Les articles statiques et RSS seront injectés ici -->
 </main>
 
-<!-- Footer identique -->
+<!-- Footer -->
 <footer>
   <div class="footer-container">
     <div class="footer-col">
@@ -64,45 +64,6 @@
     <p>© 2025 Compagnie Durable du Bois au Gabon. Tous droits réservés.</p>
   </div>
 </footer>
-
-<!-- Modales (identiques à l'autre page) -->
-<div id="modal-cgu-fr" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>Conditions Générales d’Utilisation</h2>
-    <p>Les présentes Conditions Générales d’Utilisation (CGU) régissent l’accès et l’utilisation du site de la Compagnie Durable du Bois au Gabon (CDBG). En accédant au site, vous acceptez sans réserve ces conditions.</p>
-  </div>
-</div>
-
-<div id="modal-privacy-fr" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>Politique de confidentialité</h2>
-  </div>
-</div>
-
-<div id="modal-cookies-fr" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>Cookies</h2>
-  </div>
-</div>
-
-<!-- JS -->
-<script src="menu.js"></script>
-<script src="news.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const article = staticArticlesFR.find(a => a.id === "article1");
-  if(article){
-    const container = document.getElementById("article-content");
-    container.innerHTML = `
-      <h1>${article.title}</h1>
-      <img src="${article.image}" alt="${article.title}" style="width:100%; max-height:400px; object-fit:cover; margin:20px 0;">
-      ${article.description}
-      <p><em>Publié le ${new Date(article.pubDate).toLocaleDateString("fr-FR", { year:"numeric", month:"long", day:"numeric" })}</em></p>
-    `;
-  }
 
 <!-- Modales -->
 <div id="modal-cgu-fr" class="modal">
@@ -151,34 +112,116 @@ document.addEventListener("DOMContentLoaded", () => {
   </div>
 </div>
 
-<!-- JS -->
+<!-- Scripts -->
 <script src="menu.js"></script>
-<script src="news.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  injectStaticArticles("fr", document.getElementById("news-container"));
 
-  // Modales
+  // =================================
+  // ARTICLES STATIQUES
+  // =================================
+  const staticArticlesFR = [
+    {
+      id: "article1",
+      title: "🌱 Le Gabon renforce sa politique forestière : lutte contre l’exploitation illégale, certification et traçabilité",
+      link: "articles-francais.html#article1",
+      description: `
+        <p>Le Gabon, riche de ses forêts équatoriales couvrant près de 88 % de son territoire, s’impose comme un leader africain dans la gestion durable des ressources forestières. Conscient des enjeux environnementaux et économiques, le gouvernement gabonais, sous l’impulsion du Ministère des Eaux et Forêts, intensifie sa lutte contre l’exploitation illégale du bois et la déforestation.</p>
+        <p>Depuis le début de l’année, plusieurs initiatives concrètes ont été mises en œuvre pour renforcer le contrôle sur le terrain, notamment la surveillance accrue des concessions forestières et la répression des activités illégales. Le Ministère des Eaux et Forêts coordonne inspections régulières, patrouilles fluviales et collaborations avec des ONG spécialisées pour garantir la légalité de la filière bois et protéger la biodiversité.</p>
+        <p>📌 Certification PAFC et FSC et traçabilité numérique<br>
+        Toutes les concessions forestières visent désormais une certification durable selon les normes PAFC (Programme de Certification Forestière Pan-Africaine) et FSC (Forest Stewardship Council). Ces certifications garantissent la traçabilité, la légalité et la durabilité du bois produit, valorisant la filière gabonaise sur les marchés internationaux. Parallèlement, la traçabilité numérique est assurée par le Système National de Traçabilité du Bois (SNTBG), permettant de suivre chaque grume depuis l’exploitation jusqu’à l’exportation, et de détecter toute irrégularité avec une transparence totale.</p>
+        <p>🤝 Partenariats avec les ONG et acteurs internationaux<br>
+        Le succès de ces initiatives repose également sur la collaboration avec des ONG de renom. Parmi elles, Brainforest, The Nature Conservancy (TNC) et WWF Gabon jouent un rôle clé dans la formation, la surveillance environnementale et la promotion des pratiques durables. Ces organisations apportent leur expertise technique et leur notoriété internationale, renforçant ainsi l’image du Gabon comme acteur responsable dans la protection des forêts équatoriales.</p>
+        <p>🌍 Valorisation internationale et engagements récents<br>
+        Le Gabon a récemment accueilli plusieurs rencontres internationales, notamment des séminaires en Europe sur la lutte contre la déforestation illégale et la valorisation de sa chaîne de bois légale. Ces événements ont permis de consolider des partenariats avec des acteurs publics et privés, et de promouvoir les bois certifiés PAFC et FSC sur les marchés mondiaux.</p>
+        <p>📌 En conclusion<br>
+        Une filière bois moderne, légale et durable est en marche au Gabon. Grâce aux certifications PAFC/FSC, à la traçabilité numérique SNTBG et au renforcement du contrôle par le Ministère des Eaux et Forêts, le pays se positionne comme un modèle africain de gestion forestière responsable. La CDBG adhère pleinement à cette politique gouvernementale, contribuant ainsi à la crédibilité et à la valorisation de la filière bois gabonaise sur les marchés internationaux.</p>
+      `,
+      pubDate: "2025-10-05T10:00:00Z",
+      image: "article1.avif"
+    }
+  ];
+
+  const container = document.getElementById("news-container");
+
+  function injectStaticArticles() {
+    staticArticlesFR.forEach(article => {
+      const card = document.createElement("a");
+      card.className = "news-card";
+      card.href = article.link;
+      card.innerHTML = `
+        <div class="news-image"><img src="${article.image}" alt="${article.title}"></div>
+        <div class="news-content">
+          <h3 class="news-title">${article.title}</h3>
+          <div class="news-desc">${article.description}</div>
+          <div class="news-meta">${new Date(article.pubDate).toLocaleDateString("fr-FR", {
+            year:"numeric", month:"short", day:"numeric"
+          })}</div>
+        </div>
+      `;
+      container.prepend(card);
+    });
+  }
+
+  // =================================
+  // CHARGEMENT RSS
+  // =================================
+  function loadRSS(url) {
+    fetch(url)
+      .then(res => res.text())
+      .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+      .then(data => {
+        const items = Array.from(data.querySelectorAll("item"));
+        items.forEach(item => {
+          const title = item.querySelector("title")?.textContent || "";
+          const link = item.querySelector("link")?.textContent || "#";
+          const desc = item.querySelector("description")?.textContent || "";
+          const pubDate = item.querySelector("pubDate")?.textContent || "";
+          const enclosure = item.querySelector("enclosure[url]");
+          const image = enclosure ? enclosure.getAttribute("url") : null;
+
+          const card = document.createElement("a");
+          card.className = "news-card";
+          card.href = link;
+          card.target = "_blank";
+          card.innerHTML = `
+            <div class="news-image">${image ? `<img src="${image}" alt="${title}">` : `<div class="news-placeholder"><h3>${title}</h3></div>`}</div>
+            <div class="news-content">
+              <h3 class="news-title">${title}</h3>
+              <p class="news-desc">${desc.replace(/<[^>]*>?/gm,"").substring(0,150)}...</p>
+              <div class="news-meta">${new Date(pubDate).toLocaleDateString("fr-FR", {year:"numeric",month:"short",day:"numeric"})}</div>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      });
+  }
+
+  // =================================
+  // INITIALISATION
+  // =================================
+  injectStaticArticles();
+  loadRSS("rss.xml"); // <-- Remplace par l’URL de ton flux RSS
+
+  // =================================
+  // MODALES
+  // =================================
   document.querySelectorAll(".open-modal").forEach(link => {
     link.addEventListener("click", e => {
       e.preventDefault();
       const modalId = link.getAttribute("data-modal");
       const modal = document.getElementById(modalId);
-      if (modal) modal.style.display = "block";
+      if(modal) modal.style.display = "block";
     });
   });
 
-  document.querySelectorAll(".modal .close").forEach(closeBtn => {
-    closeBtn.addEventListener("click", () => {
-      closeBtn.closest(".modal").style.display = "none";
-    });
+  document.querySelectorAll(".modal .close").forEach(btn => {
+    btn.addEventListener("click", ()=> btn.closest(".modal").style.display="none");
   });
 
-  // Fermer modales en cliquant en dehors
-  const modals = document.querySelectorAll(".modal");
   window.addEventListener("click", e => {
-    modals.forEach(modal => {
-      if (e.target === modal) modal.style.display = "none";
+    document.querySelectorAll(".modal").forEach(modal=>{
+      if(e.target===modal) modal.style.display="none";
     });
   });
 
@@ -186,19 +229,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const burger = document.getElementById("burger");
   const navLinks = document.querySelector(".nav-links");
   if (burger && navLinks) {
-    burger.addEventListener("click", () => {
+    burger.addEventListener("click", ()=> {
       navLinks.classList.toggle("active");
       burger.textContent = burger.textContent === "☰" ? "✖" : "☰";
     });
   }
+
 });
 </script>
 
 </body>
 </html>
-
-  
-
-
-
-
