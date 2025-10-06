@@ -1,5 +1,5 @@
 // ============================================================
-//  NEWS.JS — version optimisée et corrigée CDBG
+//  NEWS.JS — version finale CDBG (flux RSS en direct)
 // ============================================================
 
 // === Fonctions utilitaires ===
@@ -49,36 +49,39 @@ function injectFeaturedArticle(lang, container) {
       </div>
     </article>
   `;
-
-  // L’article CDBG est inséré en haut du flux
   container.insertAdjacentHTML("afterbegin", html);
 }
 
-// === Injection des articles RSS depuis merged_feed.json ===
+// === Chargement du flux RSS en direct ===
 async function injectRSSArticles(container, lang) {
+  const RSS_URL = "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml";
+
   try {
-    const response = await fetch("merged_feed.json");
+    const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}`);
     const data = await response.json();
 
-    // ✅ Correction : lecture de la clé "articles"
-    const articles = Array.isArray(data.articles) ? data.articles : [];
+    if (!data.items || !Array.isArray(data.items)) {
+      console.error("Aucun article RSS trouvé.");
+      return;
+    }
 
-    for (const item of articles) {
-      const link = item.lien || item.url || "#";
-      const title = item.titre || item.title || "Article";
-      const date = new Date(item.date).toLocaleDateString(
+    for (const item of data.items) {
+      const link = item.link || "#";
+      const title = item.title || "";
+      const date = new Date(item.pubDate).toLocaleDateString(
         lang === "en" ? "en-GB" : "fr-FR",
         { year: "numeric", month: "long", day: "numeric" }
       );
-      const source = item.source || "RSS";
+      const source = "Partenariat pour les Forêts du Bassin du Congo";
 
       const html = `
         <article class="rss-article">
           <a href="${link}" class="rss-article-img" target="_blank" rel="noopener">
-            <img src="images/default-thumb.webp" alt="${title}" loading="lazy">
+            <img src="${item.enclosure?.link || "images/default-thumb.webp"}" alt="${title}" loading="lazy">
           </a>
           <div class="rss-article-content">
             <h2><a href="${link}" target="_blank" rel="noopener">${title}</a></h2>
+            <p>${truncateHTML(item.description || "", 200)}</p>
             <div class="rss-article-meta">
               <span>${date}</span>
               <span class="rss-source">${source}</span>
@@ -89,7 +92,7 @@ async function injectRSSArticles(container, lang) {
       container.insertAdjacentHTML("beforeend", html);
     }
   } catch (error) {
-    console.error("❌ Erreur lors du chargement du flux RSS :", error);
+    console.error("Erreur lors du chargement du flux RSS :", error);
   }
 }
 
@@ -100,9 +103,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   if (!container) return;
 
-  // Injecte l’article CDBG en premier (si défini)
+  // Injecte l’article CDBG en premier
   injectFeaturedArticle(lang, container);
 
-  // Injecte ensuite les articles RSS du flux fusionné
+  // Puis injecte les articles RSS en direct
   await injectRSSArticles(container, lang);
 });
