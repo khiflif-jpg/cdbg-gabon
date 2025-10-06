@@ -33,18 +33,10 @@
   </nav>
 </header>
 
-<!-- Main Content : container vide -->
-<main class="articles-container" id="my-articles-en" style="max-width: 900px; margin: 80px auto; padding: 0 20px;">
-  <!-- JS injectera ici les articles cliquables -->
+<!-- Main content: article container -->
+<main class="articles-container" id="news-container" style="max-width: 900px; margin: 80px auto; padding: 0 20px;">
+  <!-- Articles will be injected here by JS -->
 </main>
-
-<!-- Inclure le JS pour injecter les articles via news.js -->
-<script src="news.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    injectNewsArticles("en", "my-articles-en");
-  });
-</script>
 
 <!-- Footer -->
 <footer>
@@ -73,7 +65,7 @@
   </div>
 </footer>
 
-<!-- Modals EN -->
+<!-- Modals -->
 <div id="modal-cgu-en" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -98,7 +90,7 @@
     <p>Purposes: to respond to contact requests, manage business relationships, and monitor partnerships.</p>
     <p>Retention: data is kept only for as long as necessary for the purposes for which it was collected, in accordance with legal deadlines.</p>
     <p>Recipients: data is processed only by CDBG and is not transmitted to third parties without user consent, except where required by law.</p>
-    <p>User rights: any user has the right to access, rectify, delete, and oppose the processing of their personal data. These rights can be exercised by written request to: Compagnie Durable du Bois in Gabon, BP 4447, Libreville, Gabon, or by email (to be specified).</p>
+    <p>User rights: any user has the right to access, rectify, delete, and oppose the processing of their personal data. These rights can be exercised by written request to: Compagnie Durable du Bois in Gabon, BP 4447, Libreville, Gabon, or by email.</p>
     <p>Security: CDBG implements appropriate technical and organizational measures to protect data against unauthorized access, loss, or alteration.</p>
   </div>
 </div>
@@ -122,9 +114,12 @@
 
 <!-- Scripts -->
 <script src="menu.js"></script>
+<script src="news.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    // Open modals
+    injectStaticArticles("en", document.getElementById("news-container"));
+
+    // Modals
     document.querySelectorAll(".open-modal").forEach(link => {
       link.addEventListener("click", e => {
         e.preventDefault();
@@ -134,17 +129,14 @@
       });
     });
 
-    // Close modals
     document.querySelectorAll(".modal .close").forEach(closeBtn => {
       closeBtn.addEventListener("click", () => {
         closeBtn.closest(".modal").style.display = "none";
       });
     });
 
-    // Close on outside click
-    const modals = document.querySelectorAll(".modal");
     window.addEventListener("click", e => {
-      modals.forEach(modal => {
+      document.querySelectorAll(".modal").forEach(modal => {
         if (e.target === modal) modal.style.display = "none";
       });
     });
@@ -159,10 +151,6 @@
       });
     }
   });
-</script>
-<script src="news.js"></script>
-<script>
-  injectStaticArticles("en", document.getElementById("news-container"));
 </script>
 
 </body>
