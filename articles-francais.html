@@ -4,12 +4,12 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="#3D6B35"/>
-  <title>Magazine – CDBG</title>
+  <title>🌱 Le Gabon renforce sa politique forestière – CDBG</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-<!-- Header -->
+<!-- Header identique -->
 <header id="hero">
   <nav class="navbar">
     <div class="logo"><img alt="CDBG Logo" src="logo.webp" width="80" height="80"/></div>
@@ -33,18 +33,12 @@
   </nav>
 </header>
 
-<!-- Main Content : container vide -->
-<main class="articles-container" id="my-articles-fr" style="max-width: 900px; margin: 80px auto; padding: 0 20px;">
-  <!-- JS injectera ici les articles cliquables -->
+<!-- Conteneur de l'article complet -->
+<main class="article-single" id="article-content" style="max-width: 900px; margin: 80px auto; padding: 0 20px;">
+  <!-- Le JS injectera le contenu complet -->
 </main>
 
-<!-- Inclure le JS pour injecter les articles -->
-<script src="my-articles.js"></script>
-<script>
-  injectMyArticles("fr", "my-articles-fr", true);
-</script>
-
-<!-- Footer -->
+<!-- Footer identique -->
 <footer>
   <div class="footer-container">
     <div class="footer-col">
@@ -71,7 +65,46 @@
   </div>
 </footer>
 
-<!-- Modals FR -->
+<!-- Modales (identiques à l'autre page) -->
+<div id="modal-cgu-fr" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Conditions Générales d’Utilisation</h2>
+    <p>Les présentes Conditions Générales d’Utilisation (CGU) régissent l’accès et l’utilisation du site de la Compagnie Durable du Bois au Gabon (CDBG). En accédant au site, vous acceptez sans réserve ces conditions.</p>
+  </div>
+</div>
+
+<div id="modal-privacy-fr" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Politique de confidentialité</h2>
+  </div>
+</div>
+
+<div id="modal-cookies-fr" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Cookies</h2>
+  </div>
+</div>
+
+<!-- JS -->
+<script src="menu.js"></script>
+<script src="news.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const article = staticArticlesFR.find(a => a.id === "article1");
+  if(article){
+    const container = document.getElementById("article-content");
+    container.innerHTML = `
+      <h1>${article.title}</h1>
+      <img src="${article.image}" alt="${article.title}" style="width:100%; max-height:400px; object-fit:cover; margin:20px 0;">
+      ${article.description}
+      <p><em>Publié le ${new Date(article.pubDate).toLocaleDateString("fr-FR", { year:"numeric", month:"long", day:"numeric" })}</em></p>
+    `;
+  }
+
+<!-- Modales -->
 <div id="modal-cgu-fr" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -118,50 +151,54 @@
   </div>
 </div>
 
-<!-- Scripts -->
+<!-- JS -->
 <script src="menu.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // Ouvre les modales
-    document.querySelectorAll(".open-modal").forEach(link => {
-      link.addEventListener("click", e => {
-        e.preventDefault();
-        const modalId = link.getAttribute("data-modal");
-        const modal = document.getElementById(modalId);
-        if (modal) modal.style.display = "block";
-      });
-    });
-
-    // Ferme les modales
-    document.querySelectorAll(".modal .close").forEach(closeBtn => {
-      closeBtn.addEventListener("click", () => {
-        closeBtn.closest(".modal").style.display = "none";
-      });
-    });
-
-    // Ferme si clic à l'extérieur
-    const modals = document.querySelectorAll(".modal");
-    window.addEventListener("click", e => {
-      modals.forEach(modal => {
-        if (e.target === modal) modal.style.display = "none";
-      });
-    });
-
-    // Burger menu
-    const burger = document.getElementById("burger");
-    const navLinks = document.querySelector(".nav-links");
-    if (burger && navLinks) {
-      burger.addEventListener("click", () => {
-        navLinks.classList.toggle("active");
-        burger.textContent = burger.textContent === "☰" ? "✖" : "☰";
-      });
-    }
-  });
-</script>
 <script src="news.js"></script>
 <script>
+document.addEventListener("DOMContentLoaded", () => {
   injectStaticArticles("fr", document.getElementById("news-container"));
+
+  // Modales
+  document.querySelectorAll(".open-modal").forEach(link => {
+    link.addEventListener("click", e => {
+      e.preventDefault();
+      const modalId = link.getAttribute("data-modal");
+      const modal = document.getElementById(modalId);
+      if (modal) modal.style.display = "block";
+    });
+  });
+
+  document.querySelectorAll(".modal .close").forEach(closeBtn => {
+    closeBtn.addEventListener("click", () => {
+      closeBtn.closest(".modal").style.display = "none";
+    });
+  });
+
+  // Fermer modales en cliquant en dehors
+  const modals = document.querySelectorAll(".modal");
+  window.addEventListener("click", e => {
+    modals.forEach(modal => {
+      if (e.target === modal) modal.style.display = "none";
+    });
+  });
+
+  // Burger menu
+  const burger = document.getElementById("burger");
+  const navLinks = document.querySelector(".nav-links");
+  if (burger && navLinks) {
+    burger.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+      burger.textContent = burger.textContent === "☰" ? "✖" : "☰";
+    });
+  }
+});
 </script>
 
 </body>
 </html>
+
+  
+
+
+
+
