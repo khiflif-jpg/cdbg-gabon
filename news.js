@@ -1,5 +1,5 @@
 // ============================================================
-//  NEWS.JS — version unifiée CDBG (même flux FR sur toutes les pages)
+//  NEWS.JS — version CDBG (flux payant unique RSS.app + CORS OK)
 // ============================================================
 
 // Tronque le contenu HTML à un nombre de caractères max
@@ -11,11 +11,19 @@ function truncateHTML(html, maxLength) {
   return text;
 }
 
-// Article interne CDBG
-function injectFeaturedArticle(container) {
-  if (!container || !window.staticArticlesFR?.length) return;
-  const article = staticArticlesFR[0];
-  const link = "article-full-fr.html";
+// Détecte la langue de la page
+function detectLang() {
+  const htmlLang = document.documentElement.lang || "fr";
+  return htmlLang.toLowerCase().startsWith("en") ? "en" : "fr";
+}
+
+// === Article interne CDBG ===
+function injectFeaturedArticle(lang, container) {
+  const isEN = lang === "en";
+  const article = isEN ? staticArticlesEN?.[0] : staticArticlesFR?.[0];
+  if (!article || !container) return;
+
+  const link = isEN ? `article-full-en.html` : `article-full-fr.html`;
   const html = `
     <article class="rss-article cdbg-featured">
       <a href="${link}" class="rss-article-img">
@@ -25,9 +33,10 @@ function injectFeaturedArticle(container) {
         <h2><a href="${link}">${article.title}</a></h2>
         <p>${truncateHTML(article.description, 220)}</p>
         <div class="rss-article-meta">
-          <span>${new Date(article.pubDate).toLocaleDateString("fr-FR", {
-            year: "numeric", month: "long", day: "numeric"
-          })}</span>
+          <span>${new Date(article.pubDate).toLocaleDateString(
+            isEN ? "en-GB" : "fr-FR",
+            { year: "numeric", month: "long", day: "numeric" }
+          )}</span>
           <span class="rss-source">CDBG</span>
         </div>
       </div>
@@ -36,9 +45,9 @@ function injectFeaturedArticle(container) {
   container.insertAdjacentHTML("afterbegin", html);
 }
 
-// Chargement RSS via proxy AllOrigins
-async function injectRSSArticles(container) {
-  const RSS_URL = "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml"; // 🌍 Flux unique FR
+// === Chargement RSS avec proxy AllOrigins (CORS OK) ===
+async function injectRSSArticles(container, lang) {
+  const RSS_URL = "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml"; // 🔥 ton flux payant unique
   const PROXY_URL = `https://api.allorigins.win/get?url=${encodeURIComponent(RSS_URL)}`;
 
   try {
@@ -65,7 +74,7 @@ async function injectRSSArticles(container) {
             <h2><a href="${link}" target="_blank" rel="noopener">${title}</a></h2>
             <p>${truncateHTML(description.replace(/<[^>]*>?/gm, ""), 200)}</p>
             <div class="rss-article-meta">
-              <span>${pubDate.toLocaleDateString("fr-FR", {
+              <span>${pubDate.toLocaleDateString(lang === "en" ? "en-GB" : "fr-FR", {
                 year: "numeric", month: "long", day: "numeric"
               })}</span>
               <span class="rss-source">PFBC</span>
@@ -80,11 +89,12 @@ async function injectRSSArticles(container) {
   }
 }
 
-// Initialisation
+// === Initialisation ===
 document.addEventListener("DOMContentLoaded", async () => {
+  const lang = detectLang();
   const container = document.querySelector("#news-container");
   if (!container) return;
 
-  injectFeaturedArticle(container);
-  await injectRSSArticles(container);
+  injectFeaturedArticle(lang, container);
+  await injectRSSArticles(container, lang);
 });
