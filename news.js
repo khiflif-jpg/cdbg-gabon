@@ -5,7 +5,8 @@ const staticArticlesFR = [
   {
     id: "article1",
     title: "🌱 Le Gabon renforce sa politique forestière : lutte contre l’exploitation illégale, certification et traçabilité",
-    link: "articles-francais.html#article1",
+    linkPreview: "articles.html#article1",
+    linkFull: "articles-francais.html#article1",
     description: `
       <p>Le Gabon, riche de ses forêts équatoriales couvrant près de 88 % de son territoire, s’impose comme un leader africain dans la gestion durable des ressources forestières.</p>
       <h3>Certification PAFC et FSC et traçabilité numérique</h3>
@@ -22,7 +23,8 @@ const staticArticlesEN = [
   {
     id: "article1",
     title: "🌱 Gabon Strengthens Its Forestry Policy: Combating Illegal Logging, Certification, and Traceability",
-    link: "articles-anglais.html#article1",
+    linkPreview: "articles-en.html#article1",
+    linkFull: "articles-anglais.html#article1",
     description: `
       <p>Gabon, with forests covering 88% of its territory, is establishing itself as a continental leader in sustainable forest management.</p>
       <h3>PAFC and FSC Certification and Digital Traceability</h3>
@@ -36,32 +38,45 @@ const staticArticlesEN = [
 ];
 
 // ================================
-// INJECTION DES ARTICLES STATIQUES
+// INJECTION DES ARTICLES
 // ================================
-function injectStaticArticles(lang, container) {
+/**
+ * lang: "fr" ou "en"
+ * container: element DOM
+ * full: boolean, true si page article complet
+ */
+function injectStaticArticles(lang, container, full = false) {
   const articles = lang === "fr" ? staticArticlesFR : staticArticlesEN;
   articles.forEach(article => {
-    const card = document.createElement("a");
+    const card = document.createElement("div");
     card.className = "news-card";
-    card.href = article.link;
+
+    const descContent = full ? article.description : article.description.replace(/<[^>]*>?/gm,"").substring(0,150) + "...";
+
+    const link = full ? article.linkFull : article.linkPreview;
+
     card.innerHTML = `
       <div class="news-image">
-        <img src="${article.image}" alt="${article.title}">
+        <a href="${link}"><img src="${article.image}" alt="${article.title}"></a>
       </div>
-      <div class="news-content">
-        <h3 class="news-title">${article.title}</h3>
-        <div class="news-desc">${article.description}</div>
-        <div class="news-meta">${new Date(article.pubDate).toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", {
-          year: "numeric", month: "short", day: "numeric"
-        })}</div>
-      </div>
+      <h1 class="news-title"><a href="${link}" style="text-decoration:none;color:inherit;">${article.title}</a></h1>
+      <div class="news-desc">${descContent}</div>
+      <div class="news-meta">${formatDate(article.pubDate, lang)}</div>
+      <div class="news-source">Source : CDBG – Compagnie Durable du Bois au Gabon</div>
     `;
-    container.prepend(card);
+
+    container.appendChild(card);
   });
 }
 
+function formatDate(dateStr, lang) {
+  if (!dateStr) return "";
+  const date = new Date(dateStr);
+  return date.toLocaleDateString(lang==="fr"?"fr-FR":"en-US",{year:"numeric",month:"short",day:"numeric"});
+}
+
 // ================================
-// FONCTION RSS + INJECTION
+// FONCTION RSS (optionnelle)
 // ================================
 function loadNews({ xmlUrl, containerId, loadMoreBtnId = null, batch = 5, lang = "fr" }) {
   const container = document.getElementById(containerId);
@@ -69,23 +84,6 @@ function loadNews({ xmlUrl, containerId, loadMoreBtnId = null, batch = 5, lang =
   let items = [];
   let currentIndex = 0;
 
-  // Style
-  if (!document.getElementById("news-style")) {
-    const style = document.createElement("style");
-    style.id = "news-style";
-    style.textContent = `
-      .news-card { display:flex; flex-direction:column; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin-bottom:30px; text-decoration:none; color:inherit; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-      .news-card:hover { transform:translateY(-4px); box-shadow:0 6px 16px rgba(0,0,0,0.12); }
-      .news-image img { width:100%; height:300px; object-fit:cover; display:block; }
-      .news-title { font-size:1.5rem; font-weight:bold; margin:15px 0; line-height:1.4em; }
-      .news-desc { font-size:1rem; color:#444; line-height:1.6em; }
-      .news-desc h3 { font-weight:bold; color:#3D6B35; margin-top:20px; }
-      .news-meta { font-size:0.85rem; color:#999; margin-top:15px; }
-    `;
-    document.head.appendChild(style);
-  }
-
-  // Fetch RSS
   fetch(xmlUrl)
     .then(res => res.text())
     .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
@@ -129,6 +127,7 @@ function loadNews({ xmlUrl, containerId, loadMoreBtnId = null, batch = 5, lang =
             <h3 class="news-title">${article.title}</h3>
             <p class="news-desc">${descPreview}</p>
             <div class="news-meta">${formatDate(article.pubDate, lang)}${article.source ? " – "+article.source : ""}</div>
+            <div class="news-source">Source : CDBG – Compagnie Durable du Bois au Gabon</div>
           </div>
         `;
       } else {
@@ -137,6 +136,7 @@ function loadNews({ xmlUrl, containerId, loadMoreBtnId = null, batch = 5, lang =
           <div class="news-content">
             <p class="news-desc">${descPreview}</p>
             <div class="news-meta">${formatDate(article.pubDate, lang)}${article.source ? " – "+article.source : ""}</div>
+            <div class="news-source">Source : CDBG – Compagnie Durable du Bois au Gabon</div>
           </div>
         `;
       }
@@ -146,10 +146,4 @@ function loadNews({ xmlUrl, containerId, loadMoreBtnId = null, batch = 5, lang =
     currentIndex += batch;
     if (currentIndex >= items.length && loadMoreBtn) loadMoreBtn.style.display = "none";
   }
-}
-
-function formatDate(dateStr, lang) {
-  if (!dateStr) return "";
-  const date = new Date(dateStr);
-  return date.toLocaleDateString(lang==="fr"?"fr-FR":"en-US",{year:"numeric",month:"short",day:"numeric"});
 }
