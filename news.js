@@ -2,10 +2,6 @@
    news.js – Gestion des actualités RSS + articles statiques
    ========================================================== */
 
-/**
- * Chargement des actualités à partir d’un flux RSS
- * (pour la section "News" sur index.html et en.html)
- */
 async function loadNews({ xmlUrl, containerId, batch = 8, lang = "fr" }) {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -17,7 +13,7 @@ async function loadNews({ xmlUrl, containerId, batch = 8, lang = "fr" }) {
     const xml = parser.parseFromString(text, "application/xml");
 
     const items = [...xml.querySelectorAll("item")].slice(0, batch);
-    container.innerHTML = ""; // Nettoyage avant ajout
+    container.innerHTML = "";
 
     items.forEach(item => {
       const title = item.querySelector("title")?.textContent || "Sans titre";
@@ -32,7 +28,6 @@ async function loadNews({ xmlUrl, containerId, batch = 8, lang = "fr" }) {
       card.href = link;
       card.target = "_blank";
       card.className = "news-card";
-
       card.innerHTML = `
         <div class="news-image">
           ${imageUrl ? `<img src="${imageUrl}" alt="${title}">` : ""}
@@ -43,7 +38,6 @@ async function loadNews({ xmlUrl, containerId, batch = 8, lang = "fr" }) {
           <div class="news-meta">${pubDate.toLocaleDateString(lang)} – ${source}</div>
         </div>
       `;
-
       container.appendChild(card);
     });
   } catch (err) {
@@ -52,14 +46,9 @@ async function loadNews({ xmlUrl, containerId, batch = 8, lang = "fr" }) {
   }
 }
 
-/**
- * Articles statiques du Magazine (FR + EN)
- * injectés dans les pages "articles.html" et "articles-en.html"
- */
 function injectStaticArticles(lang = "fr", container, limit = false) {
   if (!container) return;
 
-  // Articles du magazine
   const articles = [
     {
       lang: "fr",
@@ -95,30 +84,21 @@ function injectStaticArticles(lang = "fr", container, limit = false) {
     }
   ];
 
-  // Filtrage selon la langue
   const filtered = articles.filter(a => a.lang === lang);
-
-  // Optionnel : limiter le nombre d’articles affichés
   const toDisplay = limit ? filtered.slice(0, limit) : filtered;
-
-  // Injection dans le DOM
   container.innerHTML = "";
+
   toDisplay.forEach(article => {
     const card = document.createElement("a");
     card.href = article.link;
     card.className = "news-card";
-
     const dateObj = new Date(article.date);
     const formattedDate = dateObj.toLocaleDateString(lang, {
-      year: "numeric",
-      month: "long",
-      day: "numeric"
+      year: "numeric", month: "long", day: "numeric"
     });
 
     card.innerHTML = `
-      <div class="news-image">
-        <img src="${article.img}" alt="${article.title}">
-      </div>
+      <div class="news-image"><img src="${article.img}" alt="${article.title}"></div>
       <div class="news-content">
         <h3 class="news-title">${article.title}</h3>
         <p class="news-desc">${article.description}</p>
@@ -128,42 +108,14 @@ function injectStaticArticles(lang = "fr", container, limit = false) {
     container.appendChild(card);
   });
 
-  // Si aucun article
   if (!toDisplay.length) {
     container.innerHTML = `<p style="text-align:center;color:#666;">${lang === "fr" ? "Aucun article pour le moment." : "No articles available yet."}</p>`;
   }
 }
 
-/* ==========================================================
-   Initialisation automatique selon la page
-   ========================================================== */
 document.addEventListener("DOMContentLoaded", () => {
-  // Pages d'accueil (flux RSS)
-  if (document.getElementById("news-fr")) {
-    loadNews({
-      xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml",
-      containerId: "news-fr",
-      batch: 5,
-      lang: "fr"
-    });
-  }
-
-  if (document.getElementById("news-en")) {
-    loadNews({
-      xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml",
-      containerId: "news-en",
-      batch: 5,
-      lang: "en"
-    });
-  }
-
-  // Pages magazine
-  const containerFR = document.getElementById("news-container");
-  const containerEN = document.getElementById("news-container");
-
-  // On détecte la langue via <html lang="...">
   const lang = document.documentElement.lang || "fr";
-
-  if (containerFR && lang === "fr") injectStaticArticles("fr", containerFR);
-  if (containerEN && lang === "en") injectStaticArticles("en", containerEN);
+  const container = document.getElementById("news-container");
+  if (lang === "fr") injectStaticArticles("fr", container);
+  if (lang === "en") injectStaticArticles("en", container);
 });
