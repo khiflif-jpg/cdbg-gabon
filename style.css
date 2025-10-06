@@ -827,3 +827,101 @@ img[src*="elephant_forest.webp"] {
   margin-bottom: 20px;
 }
 
+/* =====================================================
+   CDBG - Grille d'articles RSS (4 colonnes desktop)
+   ===================================================== */
+#news-container,
+#news-fr,
+#news-en {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 24px !important;
+  width: 100%;
+  margin: 60px auto !important;
+  max-width: 1400px;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* 3 colonnes sur tablette */
+@media (max-width: 1024px) {
+  #news-container,
+  #news-fr,
+  #news-en {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+/* 1 colonne sur mobile */
+@media (max-width: 768px) {
+  #news-container,
+  #news-fr,
+  #news-en {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* === Carte d'article RSS === */
+.rss-article {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  text-align: justify;
+  color: #000;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rss-article:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Image */
+.rss-article-img img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Contenu */
+.rss-article-content {
+  padding: 16px 18px;
+}
+
+.rss-article-content h2 {
+  color: #3D6B35 !important; /* vert du site */
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+  text-align: left;
+}
+
+.rss-article-content h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.rss-article-content h2 a:hover {
+  text-decoration: underline;
+}
+
+.rss-article-content p {
+  font-size: 0.95rem;
+  color: #000;
+  line-height: 1.5;
+  margin-bottom: 12px;
+  text-align: justify;
+}
+
+.rss-article-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #555;
+  border-top: 1px solid #eee;
+  padding-top: 8px;
+}
