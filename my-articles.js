@@ -3,7 +3,7 @@ const staticArticlesFR = [
   {
     id: "article1",
     title: "🌱 Le Gabon renforce sa politique forestière : lutte contre l’exploitation illégale, certification et traçabilité",
-    link: "articles-francais.html", // page complète
+    link: "/articles-francais.html", // corrigé : chemin absolu
     description: `
       <p>Le Gabon, riche de ses forêts équatoriales couvrant près de 88 % de son territoire, s’impose comme un leader africain dans la gestion durable des ressources forestières. Conscient des enjeux environnementaux et économiques, le gouvernement gabonais, sous l’impulsion du Ministère des Eaux et Forêts, intensifie sa lutte contre l’exploitation illégale du bois et la déforestation.</p>
       <p>Depuis le début de l’année, plusieurs initiatives concrètes ont été mises en œuvre pour renforcer le contrôle sur le terrain, notamment la surveillance accrue des concessions forestières et la répression des activités illégales. Le Ministère des Eaux et Forêts coordonne inspections régulières, patrouilles fluviales et collaborations avec des ONG spécialisées pour garantir la légalité de la filière bois et protéger la biodiversité.</p>
@@ -25,7 +25,7 @@ const staticArticlesEN = [
   {
     id: "article1",
     title: "🌱 Gabon Strengthens Its Forestry Policy: Combating Illegal Logging, Certification, and Traceability",
-    link: "articles-anglais.html", // page complète
+    link: "/articles-anglais.html", // corrigé : chemin absolu
     description: `
       <p>Gabon, with forests covering 88% of its territory, is establishing itself as a continental leader in sustainable forest management. Aware of environmental and economic challenges, the Gabonese government, under the guidance of the Ministry of Water and Forests, is intensifying its fight against illegal logging and deforestation.</p>
       <p>Since the beginning of the year, concrete measures have been implemented to strengthen on-site monitoring, including increased surveillance of forest concessions and repression of illegal activities. The Ministry coordinates regular inspections, river patrols, and collaborations with specialized NGOs to ensure legality in the timber sector and protect biodiversity.</p>
@@ -42,32 +42,3 @@ const staticArticlesEN = [
     image: "article1.avif"
   }
 ];
-
-// INJECTION DES ARTICLES
-function injectMyArticles(lang, containerId, full = false) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-
-  const articles = lang === "fr" ? staticArticlesFR : staticArticlesEN;
-
-  articles.forEach(article => {
-    const card = document.createElement("a");
-    card.className = "article-card";
-    card.href = article.link;
-
-    const textContent = full
-      ? article.description
-      : `${article.description.replace(/<[^>]+>/g, "").substring(0, 200)}...`;
-
-    card.innerHTML = `
-      <div class="article-image">
-        <img src="${article.image}" alt="${article.title}" />
-      </div>
-      <div class="article-content">
-        <h3 class="article-title">${article.title}</h3>
-        <div class="article-text">${textContent}</div>
-      </div>
-    `;
-    container.appendChild(card);
-  });
-}
