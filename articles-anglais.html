@@ -1,24 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="theme-color" content="#3D6B35"/>
-<title>Magazine – CDBG</title>
-<link rel="stylesheet" href="style.css"/>
-<style>
-.articles-container { max-width:900px; margin:120px auto 50px auto; padding:0 20px; font-family:'Arial', sans-serif; }
-.news-card { display:flex; flex-direction:column; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin-bottom:30px; text-decoration:none; color:inherit; transition: transform 0.2s ease, box-shadow 0.2s ease;}
-.news-card:hover { transform:translateY(-5px); box-shadow:0 8px 18px rgba(0,0,0,0.12); }
-.news-image img { width:100%; height:300px; object-fit:cover; border-bottom:1px solid #eee; }
-.news-title { font-size:2rem; font-weight:bold; margin:12px 15px 15px 15px; text-align:justify; }
-.news-desc { font-size:1rem; color:#444; margin:0 15px 15px 15px; line-height:1.6em; text-align:justify; }
-.news-desc h3 { font-weight:300; color:#3D6B35; margin-top:20px; }
-.news-meta { font-size:0.85rem; color:#999; margin:0 15px 15px 15px; }
-.news-source { font-size:0.8rem; color:#555; margin:0 15px 15px 15px; font-style:italic; }
-</style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#3D6B35"/>
+  <title>Magazine – CDBG</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .articles-container {
+      max-width: 900px;
+      margin: 120px auto 50px auto;
+      padding: 0 20px;
+      font-family:'Arial', sans-serif;
+    }
+    .news-card {
+      display:flex;
+      flex-direction:column;
+      background:#fff;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 4px 12px rgba(0,0,0,0.08);
+      margin-bottom:40px;
+      text-decoration:none;
+      color:inherit;
+      padding:20px;
+    }
+    .news-image img {
+      width:100%;
+      height:300px;
+      object-fit:cover;
+      border-radius:8px;
+    }
+    .news-title {
+      font-size:2rem;
+      font-weight:bold;
+      margin:20px 0 15px 0;
+      text-align:center;
+    }
+    .news-desc {
+      font-size:1.05rem;
+      line-height:1.7;
+      text-align:justify;
+      color:#333;
+    }
+    .news-desc h3 {
+      font-weight:400;
+      font-size:1.2rem;
+      margin-top:20px;
+      color:#3D6B35;
+    }
+    .news-meta, .news-source {
+      font-size:0.85rem;
+      color:#666;
+      margin-top:15px;
+    }
+  </style>
 </head>
 <body>
+
 <header>
   <nav class="navbar">
     <div class="logo"><img alt="CDBG Logo" src="logo.webp" width="80" height="80"/></div>
@@ -26,25 +65,24 @@
       <a href="index.html"><img alt="Français" src="fr.png" width="32" height="32"/></a>
       <a href="en.html"><img alt="English" src="en.png" width="32" height="32"/></a>
     </div>
+    <ul class="nav-links">
+      <li><a href="en.html#bitam">Bitam</a></li>
+      <li><a href="en.html#about">About</a></li>
+      <li><a href="en.html#ambition">Ambition</a></li>
+      <li><a href="en.html#services">Services</a></li>
+      <li><a href="en.html#gallery">Gallery</a></li>
+      <li><a href="en.html#commitments">Commitments</a></li>
+      <li><a href="en.html#partnerships">Partnerships</a></li>
+      <li><a href="actualites-en.html">News</a></li>
+      <li><a href="articles-en.html">Magazine</a></li>
+      <li><a href="en.html#contact">Contact</a></li>
+    </ul>
+    <div class="burger" id="burger">☰</div>
   </nav>
 </header>
 
 <main class="articles-container" id="news-container">
-  <div class="news-card">
-    <div class="news-image">
-      <img src="article1.avif" alt="🌱 Gabon Strengthens Its Forestry Policy">
-    </div>
-    <h1 class="news-title">🌱 Gabon Strengthens Its Forestry Policy: Combating Illegal Logging, Certification, and Traceability</h1>
-    <div class="news-desc">
-      <p>Gabon, with forests covering 88% of its territory, is establishing itself as a continental leader in sustainable forest management.</p>
-      <h3>PAFC and FSC Certification and Digital Traceability</h3>
-      <p>All forest concessions now aim for sustainable certification according to PAFC and FSC standards...</p>
-      <h3>Partnerships with NGOs</h3>
-      <p>Brainforest, TNC, and WWF Gabon play key roles in training and environmental monitoring.</p>
-    </div>
-    <div class="news-meta">Published on: Oct 5, 2025</div>
-    <div class="news-source">Source: CDBG – Compagnie Durable du Bois au Gabon</div>
-  </div>
+  <!-- Article complet injecté via news.js -->
 </main>
 
 <footer>
@@ -78,13 +116,13 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2>Terms of Use</h2>
-    <p>These Terms of Use govern access and use of the Compagnie Durable du Bois in Gabon (CDBG) website...</p>
-    <p>All content is protected by intellectual property rights and any unauthorized use is prohibited...</p>
-    <p>Publisher: CDBG, RCCM No. GA-LBV-01-2025-B16-00034...</p>
-    <p>Hosting: This site is hosted by GitHub, Inc...</p>
-    <p>Access: Free, excluding internet costs...</p>
-    <p>Intellectual property: All content protected...</p>
-    <p>Liability: CDBG makes every effort...</p>
+    <p>These Terms of Use govern access and use of the CDBG website...</p>
+    <p>All content is protected...</p>
+    <p>Publisher: Compagnie Durable du Bois in Gabon...</p>
+    <p>Hosting: GitHub, Inc....</p>
+    <p>Access: Free...</p>
+    <p>Intellectual property: All content...</p>
+    <p>Liability: CDBG cannot be held responsible...</p>
     <p>Applicable law: Gabonese law...</p>
   </div>
 </div>
@@ -93,13 +131,13 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2>Privacy Policy</h2>
-    <p>In accordance with Law No.001/2011 on data protection in Gabon...</p>
-    <p>Data collected: name, email, phone, message...</p>
-    <p>Purposes: respond to inquiries, manage relationships...</p>
-    <p>Retention: data kept as long as necessary...</p>
+    <p>In accordance with Law No.001/2011 on personal data...</p>
+    <p>Data collected: name, email, phone...</p>
+    <p>Purposes: respond to inquiries...</p>
+    <p>Retention: data kept only as necessary...</p>
     <p>Recipients: processed only by CDBG...</p>
-    <p>User rights: access, rectify, delete, oppose...</p>
-    <p>Security: technical and organizational measures...</p>
+    <p>User rights: access, rectification, deletion...</p>
+    <p>Security: appropriate measures implemented...</p>
   </div>
 </div>
 
@@ -107,21 +145,46 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2>Cookies</h2>
-    <p>During navigation on the CDBG website, cookies may be stored...</p>
-    <p>Definition: a small text file...</p>
-    <p>Types: technical cookies, analytics cookies...</p>
-    <p>Purpose: improve user experience...</p>
-    <p>Settings: can be disabled in browser...</p>
-    <p>Consent: by continuing navigation, you accept cookies...</p>
+    <p>During navigation, cookies may be stored...</p>
+    <p>Definition: small text file...</p>
+    <p>Types: technical, audience measurement...</p>
+    <p>Purpose: improve experience...</p>
+    <p>Settings: cookies can be disabled...</p>
+    <p>Consent: by continuing navigation, you accept cookies according to this policy.</p>
   </div>
 </div>
 
 <script src="menu.js"></script>
+<script src="news.js"></script>
 <script>
-document.addEventListener("DOMContentLoaded", ()=>{
-  document.querySelectorAll(".open-modal").forEach(link=>link.addEventListener("click", e=>{e.preventDefault(); document.getElementById(link.dataset.modal).style.display="block";}));
-  document.querySelectorAll(".modal .close").forEach(btn=>btn.addEventListener("click", ()=>btn.closest(".modal").style.display="none"));
-  window.addEventListener("click", e=>document.querySelectorAll(".modal").forEach(m=>{if(e.target===m)m.style.display="none";}));
+document.addEventListener("DOMContentLoaded", () => {
+  // Inject full English article
+  injectStaticArticles("en", document.getElementById("news-container"), true); // full article
+
+  // Modals
+  document.querySelectorAll(".open-modal").forEach(link => {
+    link.addEventListener("click", e => {
+      e.preventDefault();
+      const modal = document.getElementById(link.dataset.modal);
+      if(modal) modal.style.display = "block";
+    });
+  });
+  document.querySelectorAll(".modal .close").forEach(btn => {
+    btn.addEventListener("click", () => btn.closest(".modal").style.display="none");
+  });
+  window.addEventListener("click", e => {
+    document.querySelectorAll(".modal").forEach(modal => { if(e.target===modal) modal.style.display="none"; });
+  });
+
+  // Burger menu
+  const burger = document.getElementById("burger");
+  const navLinks = document.querySelector(".nav-links");
+  if(burger && navLinks){
+    burger.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+      burger.textContent = burger.textContent==="☰"?"✖":"☰";
+    });
+  }
 });
 </script>
 </body>
