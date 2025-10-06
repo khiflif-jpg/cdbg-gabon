@@ -32,11 +32,17 @@
     <div class="burger" id="burger">☰</div>
   </nav>
 </header>
-
-<!-- Main Content : container vide -->
-<main class="articles-container" id="my-articles-en" style="max-width: 900px; margin: 80px auto; padding: 0 20px;">
-  <!-- JS will inject clickable articles here -->
+<!-- Main Content -->
+<main id="article-detail" style="max-width:900px;margin:80px auto;padding:0 20px;">
+  <!-- Contenu complet de l'article sera injecté ici via JS -->
 </main>
+
+<!-- Appel du JS -->
+<script src="news.js"></script>
+<script>
+  // Injecte l'article complet selon l'ID dans l'URL
+  injectArticleDetail("en");
+</script>
 
 <!-- Include the JS to inject articles -->
 <script src="my-articles.js"></script>
