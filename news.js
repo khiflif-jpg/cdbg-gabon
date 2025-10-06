@@ -1,106 +1,169 @@
-// ============================================================
-//  NEWS.JS — version finale CDBG FR + EN
-// ============================================================
+/* ==========================================================
+   news.js – Gestion des actualités RSS + articles statiques
+   ========================================================== */
 
-// Tronque le contenu HTML à un nombre de caractères max
-function truncateHTML(html, maxLength) {
-  const div = document.createElement("div");
-  div.innerHTML = html;
-  let text = div.textContent || div.innerText || "";
-  if (text.length > maxLength) text = text.substring(0, maxLength).trim() + "…";
-  return text;
-}
-
-// Détecte la langue de la page
-function detectLang() {
-  const htmlLang = document.documentElement.lang || "fr";
-  return htmlLang.toLowerCase().startsWith("en") ? "en" : "fr";
-}
-
-// === Article interne CDBG ===
-function injectFeaturedArticle(lang, container) {
-  const isEN = lang === "en";
-  const article = isEN ? staticArticlesEN?.[0] : staticArticlesFR?.[0];
-  if (!article || !container) return;
-
-  const link = isEN
-    ? `article-full-en.html?id=${article.id}`
-    : `article-full-fr.html?id=${article.id}`;
-
-  const html = `
-    <article class="rss-article cdbg-featured">
-      <a href="${link}" class="rss-article-img">
-        <img src="${article.image}" alt="${article.title}" loading="lazy">
-      </a>
-      <div class="rss-article-content">
-        <h2><a href="${link}">${article.title}</a></h2>
-        <p>${truncateHTML(article.description, 220)}</p>
-        <div class="rss-article-meta">
-          <span>${new Date(article.pubDate).toLocaleDateString(
-            isEN ? "en-GB" : "fr-FR",
-            { year: "numeric", month: "long", day: "numeric" }
-          )}</span>
-          <span class="rss-source">CDBG</span>
-        </div>
-      </div>
-    </article>
-  `;
-  container.insertAdjacentHTML("afterbegin", html);
-}
-
-// === Chargement du flux RSS via AllOrigins (CORS OK) ===
-async function injectRSSArticles(container, lang) {
-  const RSS_URL = "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml";
-  const PROXY_URL = `https://api.allorigins.win/get?url=${encodeURIComponent(RSS_URL)}`;
+/**
+ * Chargement des actualités à partir d’un flux RSS
+ * (pour la section "News" sur index.html et en.html)
+ */
+async function loadNews({ xmlUrl, containerId, batch = 8, lang = "fr" }) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
 
   try {
-    const res = await fetch(PROXY_URL);
-    const data = await res.json();
+    const res = await fetch(xmlUrl);
+    const text = await res.text();
     const parser = new DOMParser();
-    const xml = parser.parseFromString(data.contents, "text/xml");
-    const items = xml.querySelectorAll("item");
+    const xml = parser.parseFromString(text, "application/xml");
+
+    const items = [...xml.querySelectorAll("item")].slice(0, batch);
+    container.innerHTML = ""; // Nettoyage avant ajout
 
     items.forEach(item => {
-      const title = item.querySelector("title")?.textContent || "";
+      const title = item.querySelector("title")?.textContent || "Sans titre";
       const link = item.querySelector("link")?.textContent || "#";
       const description = item.querySelector("description")?.textContent || "";
-      const pubDate = new Date(item.querySelector("pubDate")?.textContent || Date.now());
-      const imgMatch = description.match(/<img[^>]+src="([^"]+)"/);
-      const image = imgMatch ? imgMatch[1] : "images/default-thumb.webp";
+      const pubDate = new Date(item.querySelector("pubDate")?.textContent);
+      const source = item.querySelector("source")?.textContent || "RSS Source";
+      const enclosure = item.querySelector("enclosure");
+      const imageUrl = enclosure?.getAttribute("url") || "";
 
-      const html = `
-        <article class="rss-article">
-          <a href="${link}" class="rss-article-img" target="_blank" rel="noopener">
-            <img src="${image}" alt="${title}" loading="lazy">
-          </a>
-          <div class="rss-article-content">
-            <h2><a href="${link}" target="_blank" rel="noopener">${title}</a></h2>
-            <p>${truncateHTML(description.replace(/<[^>]*>?/gm, ""), 200)}</p>
-            <div class="rss-article-meta">
-              <span>${pubDate.toLocaleDateString(lang === "en" ? "en-GB" : "fr-FR", {
-                year: "numeric", month: "long", day: "numeric"
-              })}</span>
-              <span class="rss-source">PFBC</span>
-            </div>
-          </div>
-        </article>
+      const card = document.createElement("a");
+      card.href = link;
+      card.target = "_blank";
+      card.className = "news-card";
+
+      card.innerHTML = `
+        <div class="news-image">
+          ${imageUrl ? `<img src="${imageUrl}" alt="${title}">` : ""}
+        </div>
+        <div class="news-content">
+          <h3 class="news-title">${title}</h3>
+          <p class="news-desc">${description}</p>
+          <div class="news-meta">${pubDate.toLocaleDateString(lang)} – ${source}</div>
+        </div>
       `;
-      container.insertAdjacentHTML("beforeend", html);
+
+      container.appendChild(card);
     });
   } catch (err) {
-    console.error("Erreur flux RSS :", err);
+    console.error("Erreur lors du chargement du flux RSS :", err);
+    container.innerHTML = `<p style="text-align:center;color:#666;">${lang === "fr" ? "Aucune actualité disponible." : "No news available."}</p>`;
   }
 }
 
-// === Initialisation ===
-document.addEventListener("DOMContentLoaded", async () => {
-  const lang = detectLang();
-  const container = document.querySelector("#news-container");
+/**
+ * Articles statiques du Magazine (FR + EN)
+ * injectés dans les pages "articles.html" et "articles-en.html"
+ */
+function injectStaticArticles(lang = "fr", container, limit = false) {
   if (!container) return;
 
-  // Injecte l’article interne CDBG
-  injectFeaturedArticle(lang, container);
+  // Articles du magazine
+  const articles = [
+    {
+      lang: "fr",
+      title: "Le développement durable au cœur de la gestion forestière",
+      description: "Découvrez comment la CDBG met en œuvre une gestion durable des forêts gabonaises, conciliant économie et écologie.",
+      img: "foret_durable.webp",
+      link: "article-full-fr.html",
+      date: "2025-09-22"
+    },
+    {
+      lang: "fr",
+      title: "Les essences tropicales du Gabon",
+      description: "Un voyage au cœur des bois précieux du Gabon : Okoumé, Kevazingo, Padouk et bien d’autres espèces remarquables.",
+      img: "bois_tropicaux.webp",
+      link: "article-full-fr.html#essences",
+      date: "2025-09-25"
+    },
+    {
+      lang: "en",
+      title: "Sustainable development in forest management",
+      description: "Learn how CDBG implements responsible forestry in Gabon, combining economic growth and environmental care.",
+      img: "foret_durable.webp",
+      link: "article-full-en.html",
+      date: "2025-09-22"
+    },
+    {
+      lang: "en",
+      title: "Tropical wood species of Gabon",
+      description: "A journey through Gabon's noble tropical species: Okoumé, Kevazingo, Padouk, and other remarkable woods.",
+      img: "bois_tropicaux.webp",
+      link: "article-full-en.html#species",
+      date: "2025-09-25"
+    }
+  ];
 
-  // Injecte le flux RSS externe
-  await injectRSSArticles(container, lang);
+  // Filtrage selon la langue
+  const filtered = articles.filter(a => a.lang === lang);
+
+  // Optionnel : limiter le nombre d’articles affichés
+  const toDisplay = limit ? filtered.slice(0, limit) : filtered;
+
+  // Injection dans le DOM
+  container.innerHTML = "";
+  toDisplay.forEach(article => {
+    const card = document.createElement("a");
+    card.href = article.link;
+    card.className = "news-card";
+
+    const dateObj = new Date(article.date);
+    const formattedDate = dateObj.toLocaleDateString(lang, {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    });
+
+    card.innerHTML = `
+      <div class="news-image">
+        <img src="${article.img}" alt="${article.title}">
+      </div>
+      <div class="news-content">
+        <h3 class="news-title">${article.title}</h3>
+        <p class="news-desc">${article.description}</p>
+        <div class="news-meta">${formattedDate}</div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  // Si aucun article
+  if (!toDisplay.length) {
+    container.innerHTML = `<p style="text-align:center;color:#666;">${lang === "fr" ? "Aucun article pour le moment." : "No articles available yet."}</p>`;
+  }
+}
+
+/* ==========================================================
+   Initialisation automatique selon la page
+   ========================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+  // Pages d'accueil (flux RSS)
+  if (document.getElementById("news-fr")) {
+    loadNews({
+      xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml",
+      containerId: "news-fr",
+      batch: 5,
+      lang: "fr"
+    });
+  }
+
+  if (document.getElementById("news-en")) {
+    loadNews({
+      xmlUrl: "https://rss.app/feeds/hbFiIhcY4o5oFSa5.xml",
+      containerId: "news-en",
+      batch: 5,
+      lang: "en"
+    });
+  }
+
+  // Pages magazine
+  const containerFR = document.getElementById("news-container");
+  const containerEN = document.getElementById("news-container");
+
+  // On détecte la langue via <html lang="...">
+  const lang = document.documentElement.lang || "fr";
+
+  if (containerFR && lang === "fr") injectStaticArticles("fr", containerFR);
+  if (containerEN && lang === "en") injectStaticArticles("en", containerEN);
 });
