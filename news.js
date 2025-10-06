@@ -1,17 +1,13 @@
 // ============================================================
-//  NEWS.JS — version finale CDBG (flux RSS en direct)
+//  NEWS.JS — version CDBG avec proxy RSS AllOrigins (OK CORS)
 // ============================================================
 
-// === Fonctions utilitaires ===
-
-// Tronque le contenu HTML à un nombre de caractères max (préserve les balises basiques)
+// Tronque le contenu HTML à un nombre de caractères max
 function truncateHTML(html, maxLength) {
   const div = document.createElement("div");
   div.innerHTML = html;
   let text = div.textContent || div.innerText || "";
-  if (text.length > maxLength) {
-    text = text.substring(0, maxLength).trim() + "…";
-  }
+  if (text.length > maxLength) text = text.substring(0, maxLength).trim() + "…";
   return text;
 }
 
@@ -21,16 +17,13 @@ function detectLang() {
   return htmlLang.toLowerCase().startsWith("en") ? "en" : "fr";
 }
 
-// === Injection de l’article interne CDBG ===
+// === Article interne CDBG ===
 function injectFeaturedArticle(lang, container) {
   const isEN = lang === "en";
   const article = isEN ? staticArticlesEN?.[0] : staticArticlesFR?.[0];
   if (!article || !container) return;
 
-  const link = isEN
-    ? `article-full-en.html?id=${article.id}`
-    : `article-full-fr.html?id=${article.id}`;
-
+  const link = isEN ? `article-full-en.html` : `article-full-fr.html`;
   const html = `
     <article class="rss-article cdbg-featured">
       <a href="${link}" class="rss-article-img">
@@ -52,60 +45,56 @@ function injectFeaturedArticle(lang, container) {
   container.insertAdjacentHTML("afterbegin", html);
 }
 
-// === Chargement du flux RSS en direct ===
+// === Chargement RSS avec proxy AllOrigins ===
 async function injectRSSArticles(container, lang) {
   const RSS_URL = "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml";
+  const PROXY_URL = `https://api.allorigins.win/get?url=${encodeURIComponent(RSS_URL)}`;
 
   try {
-    const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}`);
-    const data = await response.json();
+    const res = await fetch(PROXY_URL);
+    const data = await res.json();
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(data.contents, "text/xml");
+    const items = xml.querySelectorAll("item");
 
-    if (!data.items || !Array.isArray(data.items)) {
-      console.error("Aucun article RSS trouvé.");
-      return;
-    }
-
-    for (const item of data.items) {
-      const link = item.link || "#";
-      const title = item.title || "";
-      const date = new Date(item.pubDate).toLocaleDateString(
-        lang === "en" ? "en-GB" : "fr-FR",
-        { year: "numeric", month: "long", day: "numeric" }
-      );
-      const source = "Partenariat pour les Forêts du Bassin du Congo";
+    items.forEach(item => {
+      const title = item.querySelector("title")?.textContent || "";
+      const link = item.querySelector("link")?.textContent || "#";
+      const description = item.querySelector("description")?.textContent || "";
+      const pubDate = new Date(item.querySelector("pubDate")?.textContent || Date.now());
+      const imgMatch = description.match(/<img[^>]+src="([^"]+)"/);
+      const image = imgMatch ? imgMatch[1] : "images/default-thumb.webp";
 
       const html = `
         <article class="rss-article">
           <a href="${link}" class="rss-article-img" target="_blank" rel="noopener">
-            <img src="${item.enclosure?.link || "images/default-thumb.webp"}" alt="${title}" loading="lazy">
+            <img src="${image}" alt="${title}" loading="lazy">
           </a>
           <div class="rss-article-content">
             <h2><a href="${link}" target="_blank" rel="noopener">${title}</a></h2>
-            <p>${truncateHTML(item.description || "", 200)}</p>
+            <p>${truncateHTML(description.replace(/<[^>]*>?/gm, ""), 200)}</p>
             <div class="rss-article-meta">
-              <span>${date}</span>
-              <span class="rss-source">${source}</span>
+              <span>${pubDate.toLocaleDateString(lang === "en" ? "en-GB" : "fr-FR", {
+                year: "numeric", month: "long", day: "numeric"
+              })}</span>
+              <span class="rss-source">PFBC</span>
             </div>
           </div>
         </article>
       `;
       container.insertAdjacentHTML("beforeend", html);
-    }
-  } catch (error) {
-    console.error("Erreur lors du chargement du flux RSS :", error);
+    });
+  } catch (err) {
+    console.error("Erreur flux RSS :", err);
   }
 }
 
-// === Initialisation principale ===
-document.addEventListener("DOMContentLoaded", async function () {
+// === Initialisation ===
+document.addEventListener("DOMContentLoaded", async () => {
   const lang = detectLang();
   const container = document.querySelector("#news-container");
-
   if (!container) return;
 
-  // Injecte l’article CDBG en premier
   injectFeaturedArticle(lang, container);
-
-  // Puis injecte les articles RSS en direct
   await injectRSSArticles(container, lang);
 });
