@@ -32,23 +32,11 @@
     <div class="burger" id="burger">☰</div>
   </nav>
 </header>
-<!-- Main Content -->
-<main id="article-detail" style="max-width:900px;margin:80px auto;padding:0 20px;">
-  <!-- Contenu complet de l'article sera injecté ici via JS -->
+
+<!-- Main Content : container vide -->
+<main class="articles-container" id="news-container" style="max-width: 900px; margin: 80px auto; padding: 0 20px;">
+  <!-- JS injectera ici les articles statiques et RSS -->
 </main>
-
-<!-- Appel du JS -->
-<script src="news.js"></script>
-<script>
-  // Injecte l'article complet selon l'ID dans l'URL
-  injectArticleDetail("en");
-</script>
-
-<!-- Include the JS to inject articles -->
-<script src="my-articles.js"></script>
-<script>
-  injectMyArticles("en", "my-articles-en", true);
-</script>
 
 <!-- Footer -->
 <footer>
@@ -102,7 +90,7 @@
     <p>Purposes: to respond to contact requests, manage business relationships, and monitor partnerships.</p>
     <p>Retention: data is kept only for as long as necessary for the purposes for which it was collected, in accordance with legal deadlines.</p>
     <p>Recipients: data is processed only by CDBG and is not transmitted to third parties without user consent, except where required by law.</p>
-    <p>User rights: any user has the right to access, rectify, delete, and oppose the processing of their personal data. These rights can be exercised by written request to: Compagnie Durable du Bois in Gabon, BP 4447, Libreville, Gabon, or by email (to be specified).</p>
+    <p>User rights: any user has the right to access, rectify, delete, and oppose the processing of their personal data. These rights can be exercised by written request to: Compagnie Durable du Bois in Gabon, BP 4447, Libreville, Gabon, or by email.</p>
     <p>Security: CDBG implements appropriate technical and organizational measures to protect data against unauthorized access, loss, or alteration.</p>
   </div>
 </div>
@@ -126,8 +114,12 @@
 
 <!-- Scripts -->
 <script src="menu.js"></script>
+<script src="news.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
+    // Inject the static article first
+    injectStaticArticles("en", document.getElementById("news-container"));
+
     // Open modals
     document.querySelectorAll(".open-modal").forEach(link => {
       link.addEventListener("click", e => {
@@ -162,17 +154,15 @@
         burger.textContent = burger.textContent === "☰" ? "✖" : "☰";
       });
     }
-  });
-</script>
 
-<script src="news.js"></script>
-<script>
-  // Make sure there's an element with id news-container if this is used
-  // Or adjust if not needed
-  const newsContainer = document.getElementById("news-container");
-  if (newsContainer) {
-    injectStaticArticles("en", newsContainer);
-  }
+    // Load RSS feed for English
+    loadNews({
+      xmlUrl: "rss-en.xml",
+      containerId: "news-container",
+      batch: 5,
+      lang: "en"
+    });
+  });
 </script>
 
 </body>
