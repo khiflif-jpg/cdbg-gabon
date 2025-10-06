@@ -8,126 +8,127 @@
 <link rel="stylesheet" href="style.css"/>
 <style>
 .articles-container { display:grid; gap:25px; grid-template-columns:1fr; padding-top:120px; max-width:900px; margin:0 auto; }
-@media (min-width:600px){.articles-container{grid-template-columns:repeat(2,1fr);}}
-@media (min-width:1024px){.articles-container{grid-template-columns:repeat(3,1fr);}}
-.news-card{display:flex;flex-direction:column;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08);text-decoration:none;color:inherit;transition:transform 0.2s ease,box-shadow 0.2s ease;}
+@media(min-width:600px){.articles-container{grid-template-columns:repeat(2,1fr);}}
+@media(min-width:1024px){.articles-container{grid-template-columns:repeat(3,1fr);}}
+.news-card{display:flex;flex-direction:column;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08);margin-bottom:30px;text-decoration:none;color:inherit;transition: transform 0.2s ease, box-shadow 0.2s ease;}
 .news-card:hover{transform:translateY(-4px);box-shadow:0 6px 16px rgba(0,0,0,0.12);}
-.news-image img{width:100%;height:200px;object-fit:cover;}
-.news-title{font-size:1.2rem;font-weight:bold;margin:12px 15px 8px 15px;}
-.news-desc{font-size:0.95rem;color:#444;margin:0 15px 10px 15px;line-height:1.5em;text-align:justify;}
-.news-meta{font-size:0.8rem;color:#999;margin:0 15px 15px 15px;}
-.read-more{display:inline-block;margin:0 15px 15px 15px;color:#3D6B35;font-weight:bold;text-decoration:none;}
+.news-image img{width:100%;height:200px;object-fit:cover;display:block;}
+.news-content{padding:15px;display:flex;flex-direction:column;flex-grow:1;}
+.news-title{font-size:1.4rem;font-weight:bold;margin:0 0 8px;line-height:1.4em;}
+.news-desc{font-size:0.95rem;color:#444;margin:0 0 10px;line-height:1.5em;text-align:justify;}
+.news-desc h3{font-weight:400;color:#3D6B35;margin-top:20px;}
+.news-meta{font-size:0.8rem;color:#999;margin-top:auto;text-align:right;}
 </style>
 </head>
 <body>
+
 <header>
-  <nav class="navbar">
-    <div class="logo"><img alt="CDBG Logo" src="logo.webp" width="80" height="80"/></div>
-    <div class="nav-flags">
-      <a href="index.html"><img alt="Français" src="fr.png" width="32" height="32"/></a>
-      <a href="en.html"><img alt="English" src="en.png" width="32" height="32"/></a>
-    </div>
-    <ul class="nav-links">
-      <li><a href="index.html#bitam">Bitam</a></li>
-      <li><a href="index.html#about">À propos</a></li>
-      <li><a href="index.html#ambition">Ambition</a></li>
-      <li><a href="index.html#services">Services</a></li>
-      <li><a href="index.html#gallery">Galerie</a></li>
-      <li><a href="index.html#engagements">Engagements</a></li>
-      <li><a href="index.html#partnerships">Partenariats</a></li>
-      <li><a href="actualites.html">Actualités</a></li>
-      <li><a href="articles.html">Magazine</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
-    </ul>
-    <div class="burger" id="burger">☰</div>
-  </nav>
+<nav class="navbar">
+<div class="logo"><img alt="CDBG Logo" src="logo.webp" width="80" height="80"/></div>
+<div class="nav-flags">
+<a href="index.html"><img alt="Français" src="fr.png" width="32" height="32"/></a>
+<a href="en.html"><img alt="English" src="en.png" width="32" height="32"/></a>
+</div>
+<ul class="nav-links">
+<li><a href="index.html#bitam">Bitam</a></li>
+<li><a href="index.html#about">À propos</a></li>
+<li><a href="index.html#ambition">Ambition</a></li>
+<li><a href="index.html#services">Services</a></li>
+<li><a href="index.html#gallery">Galerie</a></li>
+<li><a href="index.html#engagements">Engagements</a></li>
+<li><a href="index.html#partnerships">Partenariats</a></li>
+<li><a href="actualites.html">Actualités</a></li>
+<li><a href="articles.html">Magazine</a></li>
+<li><a href="index.html#contact">Contact</a></li>
+</ul>
+<div class="burger" id="burger">☰</div>
+</nav>
 </header>
 
-<main class="articles-container" id="news-container"></main>
+<main class="articles-container" id="news-container">
+<!-- Articles injectés via news.js -->
+</main>
 
 <footer>
-  <div class="footer-container">
-    <div class="footer-col">
-      <h4>Compagnie Durable du Bois au Gabon</h4>
-      <p>Exploitation forestière responsable pour un avenir durable</p>
-      <p>N° RCCM : GA-LBV-01-2025-B16-00034</p>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <p>Libreville, Gabon</p>
-      <p>+241 77 25 9169</p>
-    </div>
-    <div class="footer-col">
-      <h4>Mentions légales</h4>
-      <ul>
-        <li><a href="#" class="open-modal" data-modal="modal-cgu-fr">Conditions Générales d’Utilisation</a></li>
-        <li><a href="#" class="open-modal" data-modal="modal-privacy-fr">Politique de confidentialité</a></li>
-        <li><a href="#" class="open-modal" data-modal="modal-cookies-fr">Cookies</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2025 Compagnie Durable du Bois au Gabon. Tous droits réservés.</p>
-  </div>
+<div class="footer-container">
+<div class="footer-col">
+<h4>Compagnie Durable du Bois au Gabon</h4>
+<p>Exploitation forestière responsable pour un avenir durable</p>
+<p>N° RCCM : GA-LBV-01-2025-B16-00034</p>
+</div>
+<div class="footer-col">
+<h4>Contact</h4>
+<p>Libreville, Gabon</p>
+<p>+241 77 25 9169</p>
+</div>
+<div class="footer-col">
+<h4>Mentions légales</h4>
+<ul>
+<li><a href="#" class="open-modal" data-modal="modal-cgu-fr">Conditions Générales d’Utilisation</a></li>
+<li><a href="#" class="open-modal" data-modal="modal-privacy-fr">Politique de confidentialité</a></li>
+<li><a href="#" class="open-modal" data-modal="modal-cookies-fr">Cookies</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2025 Compagnie Durable du Bois au Gabon. Tous droits réservés.</p>
+</div>
 </footer>
 
-<!-- Modales FR complètes -->
+<!-- Modals FR -->
 <div id="modal-cgu-fr" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>Conditions Générales d’Utilisation</h2>
-    <p>Les présentes Conditions Générales d’Utilisation (CGU) régissent l’accès et l’utilisation du site de la Compagnie Durable du Bois au Gabon (CDBG). En accédant au site, vous acceptez sans réserve ces conditions.</p>
-    <p>L’ensemble des contenus est protégé par des droits de propriété intellectuelle et toute utilisation non autorisée est interdite.</p>
-    <p>Éditeur : Compagnie Durable du Bois au Gabon (CDBG), RCCM n° GA-LBV-01-2025-B16-00034, siège social : Ancien Sobraga, Libreville, BP 4447, Gabon.</p>
-    <p>Hébergement : Ce site est hébergé par GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.</p>
-    <p>Accès : L’accès est gratuit, hors coûts de connexion Internet supportés par l’utilisateur.</p>
-    <p>Propriété intellectuelle : L’ensemble des contenus (textes, images, logos, vidéos, etc.) est protégé par le droit d’auteur et le droit de la propriété intellectuelle au Gabon. Toute reproduction ou utilisation non autorisée est strictement interdite.</p>
-    <p>Responsabilité : La CDBG met tout en œuvre pour assurer l’exactitude des informations diffusées mais ne peut être tenue responsable d’éventuelles erreurs, omissions ou indisponibilités du site.</p>
-    <p>Droit applicable : Les présentes CGU sont régies par le droit gabonais. Tout litige relève de la compétence exclusive des juridictions gabonaises.</p>
-  </div>
+<div class="modal-content">
+<span class="close">&times;</span>
+<h2>Conditions Générales d’Utilisation</h2>
+<p>Les présentes Conditions Générales d’Utilisation (CGU) régissent l’accès et l’utilisation du site de la CDBG. Tout utilisateur s’engage à respecter ces conditions.</p>
+<p>L’ensemble des contenus est protégé par la propriété intellectuelle et toute utilisation non autorisée est interdite.</p>
+<p>Éditeur : Compagnie Durable du Bois au Gabon (CDBG), N° RCCM : GA-LBV-01-2025-B16-00034, siège social : Ancien Sobraga, Libreville, BP 4447, Gabon.</p>
+<p>Hébergement : Ce site est hébergé par GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.</p>
+<p>Accès : Gratuit, hors frais de connexion internet à la charge de l’utilisateur.</p>
+<p>Propriété intellectuelle : Tous les contenus (textes, images, logos, vidéos, etc.) sont protégés. Toute reproduction ou utilisation non autorisée est strictement interdite.</p>
+<p>Responsabilité : La CDBG met tout en œuvre pour assurer l’exactitude des informations publiées mais ne peut être tenue responsable des erreurs, omissions ou indisponibilité du site.</p>
+<p>Droit applicable : Les présentes CGU sont régies par le droit gabonais. Tout litige relève de la compétence exclusive des tribunaux gabonais.</p>
+</div>
 </div>
 
 <div id="modal-privacy-fr" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>Politique de confidentialité</h2>
-    <p>Conformément à la loi n°001/2011 relative à la protection des données à caractère personnel en République Gabonaise, la CDBG s’engage à protéger les données personnelles des utilisateurs.</p>
-    <p>Données collectées : nom, adresse email, numéro de téléphone, objet du message et toute autre information volontairement transmise via le formulaire de contact.</p>
-    <p>Finalités : répondre aux demandes de contact, gérer les relations commerciales et assurer le suivi des partenariats.</p>
-    <p>Conservation : les données sont conservées uniquement le temps nécessaire aux finalités pour lesquelles elles ont été collectées, conformément aux délais légaux.</p>
-    <p>Destinataires : les données sont traitées uniquement par la CDBG et ne sont transmises à aucun tiers sans consentement, sauf obligation légale.</p>
-    <p>Droits des utilisateurs : tout utilisateur dispose d’un droit d’accès, de rectification, de suppression et d’opposition au traitement de ses données. Ces droits peuvent être exercés par demande écrite à : CDBG, BP 4447, Libreville, Gabon, ou par email.</p>
-    <p>Sécurité : la CDBG met en œuvre les mesures techniques et organisationnelles appropriées pour protéger les données contre tout accès non autorisé, perte ou altération.</p>
-  </div>
+<div class="modal-content">
+<span class="close">&times;</span>
+<h2>Politique de confidentialité</h2>
+<p>Conformément à la loi n°001/2011 relative à la protection des données à caractère personnel en République gabonaise, la CDBG s’engage à protéger les données personnelles des utilisateurs.</p>
+<p>Données collectées : nom, adresse email, téléphone, objet du message, et toutes informations fournies volontairement via le formulaire de contact.</p>
+<p>Finalités : répondre aux demandes de contact, gérer la relation commerciale, suivre les partenariats.</p>
+<p>Conservation : les données sont conservées uniquement pour la durée nécessaire aux finalités pour lesquelles elles ont été collectées.</p>
+<p>Destinataires : les données sont traitées uniquement par la CDBG et ne sont pas transmises à des tiers sans consentement, sauf obligations légales.</p>
+<p>Droits des utilisateurs : tout utilisateur peut accéder, rectifier, supprimer ou s’opposer au traitement de ses données personnelles. Ces droits peuvent être exercés par courrier ou email auprès de la CDBG.</p>
+<p>Sécurité : la CDBG met en œuvre des mesures techniques et organisationnelles appropriées pour protéger les données contre tout accès non autorisé, perte ou altération.</p>
+</div>
 </div>
 
 <div id="modal-cookies-fr" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>Cookies</h2>
-    <p>Lors de la navigation sur le site de la CDBG, des cookies peuvent être déposés sur l’ordinateur ou le terminal de l’utilisateur.</p>
-    <p>Définition : un cookie est un petit fichier texte enregistré par le navigateur Internet, permettant une navigation plus fluide et la mesure de l’audience du site.</p>
-    <p>Types de cookies utilisés :</p>
-    <ul>
-      <li>Cookies techniques nécessaires au fonctionnement du site.</li>
-      <li>Cookies de mesure d’audience (statistiques anonymisées).</li>
-    </ul>
-    <p>Finalité : améliorer l’expérience utilisateur et optimiser la performance du site.</p>
-    <p>Paramétrage : l’utilisateur peut désactiver les cookies à tout moment en configurant son navigateur (Chrome, Firefox, Safari, Edge, etc.). Certaines fonctionnalités pourraient alors être limitées.</p>
-    <p>Consentement : en poursuivant la navigation sur ce site, vous acceptez l’utilisation de cookies conformément à la présente politique.</p>
-  </div>
+<div class="modal-content">
+<span class="close">&times;</span>
+<h2>Cookies</h2>
+<p>Lors de la navigation sur le site, des cookies peuvent être déposés sur votre appareil.</p>
+<p>Définition : un cookie est un petit fichier texte enregistré par le navigateur permettant de faciliter la navigation et la mesure d’audience.</p>
+<p>Types de cookies : techniques, statistiques anonymisées.</p>
+<p>Finalité : améliorer l’expérience utilisateur et optimiser le site.</p>
+<p>Paramétrage : vous pouvez désactiver les cookies via votre navigateur, certaines fonctionnalités peuvent être affectées.</p>
+<p>Consentement : en continuant votre navigation, vous acceptez l’utilisation des cookies conformément à cette politique.</p>
+</div>
 </div>
 
 <script src="menu.js"></script>
 <script src="news.js"></script>
 <script>
-document.addEventListener("DOMContentLoaded", ()=>{
-  injectStaticArticles("fr", document.getElementById("news-container"));
-  document.querySelectorAll(".open-modal").forEach(link=>link.addEventListener("click", e=>{e.preventDefault(); document.getElementById(link.dataset.modal).style.display="block";}));
-  document.querySelectorAll(".modal .close").forEach(btn=>btn.addEventListener("click", ()=>btn.closest(".modal").style.display="none"));
-  window.addEventListener("click", e=>document.querySelectorAll(".modal").forEach(m=>{if(e.target===m) m.style.display="none";}));
-  const burger=document.getElementById("burger"), navLinks=document.querySelector(".nav-links");
-  if(burger&&navLinks){burger.addEventListener("click",()=>{navLinks.classList.toggle("active"); burger.textContent=burger.textContent==="☰"?"✖":"☰";});}
+document.addEventListener("DOMContentLoaded",()=>{
+injectStaticArticles("fr",document.getElementById("news-container"),false);
+document.querySelectorAll(".open-modal").forEach(link=>{
+link.addEventListener("click",e=>{e.preventDefault();document.getElementById(link.dataset.modal).style.display="block";});});
+document.querySelectorAll(".modal .close").forEach(btn=>btn.addEventListener("click",()=>btn.closest(".modal").style.display="none"));
+window.addEventListener("click",e=>document.querySelectorAll(".modal").forEach(m=>{if(e.target===m)m.style.display="none";}));
+const burger=document.getElementById("burger"),navLinks=document.querySelector(".nav-links");
+if(burger&&navLinks){burger.addEventListener("click",()=>{navLinks.classList.toggle("active");burger.textContent=burger.textContent==="☰"?"✖":"☰";});}
 });
 </script>
 </body>
