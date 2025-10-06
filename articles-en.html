@@ -6,10 +6,40 @@
   <meta name="theme-color" content="#3D6B35"/>
   <title>Magazine – CDBG</title>
   <link rel="stylesheet" href="style.css"/>
+  <style>
+    .articles-container {
+      display: grid;
+      gap: 25px;
+      grid-template-columns: 1fr;
+      padding-top: 120px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    @media (min-width: 600px) { .articles-container { grid-template-columns: repeat(2,1fr); } }
+    @media (min-width: 1024px) { .articles-container { grid-template-columns: repeat(3,1fr); } }
+
+    .news-card {
+      display:flex;
+      flex-direction:column;
+      background:#fff;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration:none;
+      color:inherit;
+    }
+    .news-card:hover { transform:translateY(-4px); box-shadow:0 6px 16px rgba(0,0,0,0.12); }
+    .news-image { width:100%; height:180px; overflow:hidden; background:#f0f0f0; }
+    .news-image img { width:100%; height:100%; object-fit:cover; display:block; }
+    .news-content { padding:15px; display:flex; flex-direction:column; flex-grow:1; }
+    .news-title { font-size:1rem; font-weight:bold; margin:0 0 8px; line-height:1.4em; }
+    .news-desc { font-size:0.9rem; color:#666; margin:0 0 10px; line-height:1.4em; }
+    .news-meta { font-size:0.8rem; color:#999; margin-top:auto; }
+  </style>
 </head>
 <body>
 
-<!-- Header -->
 <header id="hero">
   <nav class="navbar">
     <div class="logo"><img alt="CDBG Logo" src="logo.webp" width="80" height="80"/></div>
@@ -18,39 +48,31 @@
       <a href="en.html"><img alt="English" src="en.png" width="32" height="32"/></a>
     </div>
     <ul class="nav-links">
-      <li><a href="en.html#bitam">Bitam</a></li>
-      <li><a href="en.html#about">About</a></li>
-      <li><a href="en.html#ambition">Ambition</a></li>
-      <li><a href="en.html#services">Services</a></li>
-      <li><a href="en.html#gallery">Gallery</a></li>
-      <li><a href="en.html#commitments">Commitments</a></li>
-      <li><a href="en.html#partnerships">Partnerships</a></li>
+      <li><a href="index.html#bitam">Bitam</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#ambition">Ambition</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#gallery">Gallery</a></li>
+      <li><a href="index.html#engagements">Commitments</a></li>
+      <li><a href="index.html#partnerships">Partnerships</a></li>
       <li><a href="actualites-en.html">News</a></li>
       <li><a href="articles-en.html">Magazine</a></li>
-      <li><a href="en.html#contact">Contact</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
     </ul>
     <div class="burger" id="burger">☰</div>
   </nav>
 </header>
-<!-- Main Content -->
-<main class="articles-container" id="my-articles-en" style="max-width:900px;margin:80px auto;padding:0 20px;">
-  <!-- Les articles statiques et RSS seront injectés ici -->
+
+<main class="articles-container" id="news-container">
+  <!-- Articles injected via news.js -->
 </main>
 
-<!-- Appel du JS -->
-<script src="news.js"></script>
-<script>
-  // Injection des articles statiques en haut
-  injectStaticArticles("en", document.getElementById("my-articles-en"));
-</script>
-
-<!-- Footer -->
 <footer>
   <div class="footer-container">
     <div class="footer-col">
-      <h4>Compagnie Durable du Bois in Gabon</h4>
+      <h4>Compagnie Durable du Bois au Gabon</h4>
       <p>Responsible forest exploitation for a sustainable future</p>
-      <p>RCCM No.: GA-LBV-01-2025-B16-00034</p>
+      <p>RCCM No: GA-LBV-01-2025-B16-00034</p>
     </div>
     <div class="footer-col">
       <h4>Contact</h4>
@@ -58,7 +80,7 @@
       <p>+241 77 25 9169</p>
     </div>
     <div class="footer-col">
-      <h4>Legal Notice</h4>
+      <h4>Legal</h4>
       <ul>
         <li><a href="#" class="open-modal" data-modal="modal-cgu-en">Terms of Use</a></li>
         <li><a href="#" class="open-modal" data-modal="modal-privacy-en">Privacy Policy</a></li>
@@ -67,23 +89,23 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2025 Compagnie Durable du Bois in Gabon. All rights reserved.</p>
+    <p>© 2025 Compagnie Durable du Bois au Gabon. All rights reserved.</p>
   </div>
 </footer>
 
-<!-- Modals -->
+<!-- Modals EN complete -->
 <div id="modal-cgu-en" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2>Terms of Use</h2>
-    <p>These Terms of Use govern access and use of the Compagnie Durable du Bois in Gabon (CDBG) website. By accessing the site, you agree to these conditions without reservation.</p>
-    <p>All content is protected by intellectual property rights and any unauthorized use is prohibited.</p>
-    <p>Publisher: Compagnie Durable du Bois in Gabon (CDBG), RCCM No. GA-LBV-01-2025-B16-00034, registered office: Ancien Sobraga, Libreville, BP 4447, Gabon.</p>
+    <p>These Terms of Use govern access and use of the CDBG website. By accessing the site, you accept these terms unconditionally.</p>
+    <p>All content is protected by intellectual property rights, and any unauthorized use is prohibited.</p>
+    <p>Publisher: Compagnie Durable du Bois au Gabon (CDBG), RCCM No GA-LBV-01-2025-B16-00034, Headquarters: Ancien Sobraga, Libreville, BP 4447, Gabon.</p>
     <p>Hosting: This site is hosted by GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.</p>
-    <p>Access: Free, excluding Internet connection costs borne by the user.</p>
-    <p>Intellectual property: All content (texts, images, logos, videos, etc.) is protected by copyright and intellectual property law in Gabon. Any reproduction or unauthorized use is strictly prohibited.</p>
-    <p>Liability: CDBG makes every effort to ensure the accuracy of published information but cannot be held responsible for errors, omissions, or site unavailability.</p>
-    <p>Applicable law: These Terms of Use are governed by Gabonese law. Any dispute falls under the exclusive jurisdiction of the Gabonese courts.</p>
+    <p>Access: Free, excluding user internet connection costs.</p>
+    <p>Intellectual Property: All content (text, images, logos, videos, etc.) is protected by copyright law. Unauthorized reproduction or use is strictly prohibited.</p>
+    <p>Liability: CDBG strives for accuracy but cannot be held responsible for errors or unavailability.</p>
+    <p>Governing Law: Gabonese law applies. Any dispute falls under Gabonese courts.</p>
   </div>
 </div>
 
@@ -91,13 +113,13 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2>Privacy Policy</h2>
-    <p>In accordance with Law No.001/2011 on the protection of personal data in the Republic of Gabon, the Compagnie Durable du Bois in Gabon (CDBG) is committed to protecting users' personal data.</p>
-    <p>Data collected: name, email address, phone number, subject of the message, and any other information voluntarily provided by the user via the contact form.</p>
-    <p>Purposes: to respond to contact requests, manage business relationships, and monitor partnerships.</p>
-    <p>Retention: data is kept only for as long as necessary for the purposes for which it was collected, in accordance with legal deadlines.</p>
-    <p>Recipients: data is processed only by CDBG and is not transmitted to third parties without user consent, except where required by law.</p>
-    <p>User rights: any user has the right to access, rectify, delete, and oppose the processing of their personal data. These rights can be exercised by written request to: Compagnie Durable du Bois in Gabon, BP 4447, Libreville, Gabon, or by email.</p>
-    <p>Security: CDBG implements appropriate technical and organizational measures to protect data against unauthorized access, loss, or alteration.</p>
+    <p>In accordance with Gabonese law n°001/2011, CDBG is committed to protecting personal data.</p>
+    <p>Data collected: name, email, phone, message subject, and other information submitted via contact form.</p>
+    <p>Purpose: respond to inquiries, manage business relationships, and partnerships.</p>
+    <p>Retention: data is kept only as long as necessary for the stated purposes.</p>
+    <p>Recipients: data is processed only by CDBG and not shared without consent except legal obligation.</p>
+    <p>User rights: access, rectification, deletion, and objection can be exercised via written request to CDBG.</p>
+    <p>Security: appropriate technical and organizational measures are implemented to protect data.</p>
   </div>
 </div>
 
@@ -105,59 +127,31 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2>Cookies</h2>
-    <p>When browsing the Compagnie Durable du Bois in Gabon (CDBG) website, cookies may be stored on the user's computer or device.</p>
-    <p>Definition: a cookie is a small text file saved by the Internet browser, allowing easier navigation and site audience measurement.</p>
-    <p>Types of cookies used:</p>
-    <ul>
-      <li>Technical cookies necessary for site operation.</li>
-      <li>Audience measurement cookies (anonymized statistics).</li>
-    </ul>
-    <p>Purpose: to improve user experience and optimize site performance.</p>
-    <p>Settings: the user can disable cookies at any time by configuring their browser (Chrome, Firefox, Safari, Edge, etc.). However, some site features may be affected.</p>
-    <p>Consent: by continuing to browse this site, you accept the use of cookies in accordance with this policy.</p>
+    <p>During navigation on the CDBG site, cookies may be stored on the user’s device.</p>
+    <p>Definition: a cookie is a small text file stored by the browser to enhance navigation and track anonymized statistics.</p>
+    <p>Types: technical cookies, analytics cookies.</p>
+    <p>Purpose: improve user experience and site performance.</p>
+    <p>Settings: cookies can be disabled in browser settings.</p>
+    <p>Consent: by continuing navigation, you accept cookies.</p>
   </div>
 </div>
 
-<!-- Scripts -->
 <script src="menu.js"></script>
 <script src="news.js"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    injectStaticArticles("en", document.getElementById("news-container"));
-
-    // Modals
-    document.querySelectorAll(".open-modal").forEach(link => {
-      link.addEventListener("click", e => {
-        e.preventDefault();
-        const modalId = link.getAttribute("data-modal");
-        const modal = document.getElementById(modalId);
-        if (modal) modal.style.display = "block";
-      });
+document.addEventListener("DOMContentLoaded", ()=>{
+  injectStaticArticles("en", document.getElementById("news-container")); // inject preview/full depending on JS
+  document.querySelectorAll(".open-modal").forEach(link=>{
+    link.addEventListener("click", e=>{
+      e.preventDefault();
+      document.getElementById(link.dataset.modal).style.display="block";
     });
-
-    document.querySelectorAll(".modal .close").forEach(closeBtn => {
-      closeBtn.addEventListener("click", () => {
-        closeBtn.closest(".modal").style.display = "none";
-      });
-    });
-
-    window.addEventListener("click", e => {
-      document.querySelectorAll(".modal").forEach(modal => {
-        if (e.target === modal) modal.style.display = "none";
-      });
-    });
-
-    // Burger menu
-    const burger = document.getElementById("burger");
-    const navLinks = document.querySelector(".nav-links");
-    if (burger && navLinks) {
-      burger.addEventListener("click", () => {
-        navLinks.classList.toggle("active");
-        burger.textContent = burger.textContent === "☰" ? "✖" : "☰";
-      });
-    }
   });
+  document.querySelectorAll(".modal .close").forEach(btn=>btn.addEventListener("click", ()=>btn.closest(".modal").style.display="none"));
+  window.addEventListener("click", e=>document.querySelectorAll(".modal").forEach(m=>{if(e.target===m) m.style.display="none";}));
+  const burger=document.getElementById("burger"), navLinks=document.querySelector(".nav-links");
+  if(burger&&navLinks){burger.addEventListener("click",()=>{navLinks.classList.toggle("active"); burger.textContent=burger.textContent==="☰"?"✖":"☰";});}
+});
 </script>
-
 </body>
 </html>
