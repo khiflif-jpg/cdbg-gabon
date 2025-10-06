@@ -128,3 +128,140 @@
   margin-bottom: 20px;
 }
 
+/* ============================================================
+   🔥 AJOUTS CDBG — Optimisation Menu + Grille Actualités
+   ============================================================ */
+
+/* === GRILLE DES ARTICLES (flux RSS + article CDBG) === */
+#news-container {
+  display: grid;
+  gap: 24px;
+  margin: 60px auto;
+  padding: 0 20px;
+  max-width: 1300px;
+  grid-template-columns: 1fr; /* 1 colonne mobile */
+}
+
+@media (min-width: 600px) {
+  #news-container {
+    grid-template-columns: repeat(3, 1fr); /* 3 colonnes tablettes */
+  }
+}
+
+@media (min-width: 1024px) {
+  #news-container {
+    grid-template-columns: repeat(4, 1fr); /* 4 colonnes desktop */
+  }
+}
+
+/* === Style des cartes d'articles RSS === */
+.rss-article {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  text-align: left;
+}
+
+.rss-article:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.rss-article-img img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.rss-article-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.rss-article-content h2 {
+  font-size: 1.05rem;
+  color: #3D6B35;
+  margin-bottom: 10px;
+  line-height: 1.4em;
+}
+
+.rss-article-content h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.rss-article-content h2 a:hover {
+  text-decoration: underline;
+}
+
+.rss-article-content p {
+  font-size: 0.9rem;
+  color: #333;
+  flex-grow: 1;
+  line-height: 1.5em;
+  margin-bottom: 12px;
+}
+
+.rss-article-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: #777;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.rss-source {
+  font-weight: bold;
+  color: #3D6B35;
+}
+
+/* === Article CDBG mis en avant === */
+.cdbg-featured {
+  border: 2px solid #3D6B35;
+  box-shadow: 0 6px 18px rgba(61, 107, 53, 0.2);
+  position: relative;
+}
+
+.cdbg-featured::before {
+  content: "★ Article CDBG";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #3D6B35;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+/* === Animation d’ouverture du menu burger === */
+.nav-links {
+  transition: all 0.3s ease-in-out;
+}
+
+.burger {
+  transition: transform 0.3s ease;
+}
+
+.burger:active {
+  transform: scale(0.9);
+}
+
+/* === Accessibilité focus visible === */
+a:focus-visible,
+button:focus-visible,
+.burger:focus-visible {
+  outline: 3px solid #e6d36f;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
