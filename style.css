@@ -637,5 +637,31 @@ button:focus-visible,
   .articles-page p {
     font-size: 0.95rem;
     line-height: 1.6;
-  }
+  }/* === Effet "Magazine de luxe" : lettrine sur le premier paragraphe === */
+/* Appliqué uniquement aux pages d'articles complets */
+.article-full p:first-of-type:first-letter,
+.articles-container p:first-of-type:first-letter,
+.articles-page p:first-of-type:first-letter {
+  float: left;
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 400;
+  color: #3D6B35; /* ton vert principal */
+  margin-right: 10px;
+  margin-top: 4px;
 }
+
+}/* === Effet "Magazine de luxe" : lettrine sur le premier paragraphe === */
+/* Appliqué uniquement aux pages d'articles complets */
+.article-full p:first-of-type:first-letter,
+.articles-container p:first-of-type:first-letter,
+.articles-page p:first-of-type:first-letter {
+  float: left;
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 400;
+  color: #3D6B35; /* ton vert principal */
+  margin-right: 10px;
+  margin-top: 4px;
+}
+
