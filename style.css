@@ -559,5 +559,85 @@ button:focus-visible,
   margin-top: auto;
   text-align: right;
 }
+/* =====================================================
+   TYPOGRAPHIE UNIFIÉE – TOUS LES ARTICLES ET FLUX RSS
+   (index.html, en.html, actualites.html, articles.html,
+    actualites-en.html, articles-en.html,
+    article-full-fr.html, article-full-en.html)
+   ===================================================== */
+
+.news-card,
+.news-content,
+.news-title,
+.news-desc,
+.news-meta,
+.articles-container,
+.articles-container h1,
+.articles-container h2,
+.articles-container h3,
+.articles-container p,
+.article-full,
+.article-full h1,
+.article-full h2,
+.article-full h3,
+.article-full p,
+.articles-page,
+.articles-page h1,
+.articles-page h2,
+.articles-page h3,
+.articles-page p {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 300 !important; /* écriture fine */
+  color: #3D6B35 !important; /* vert principal du site */
+  text-decoration: none !important;
+  line-height: 1.6;
+}
+
+/* Titres légèrement plus visibles mais fins */
+.news-title,
+.articles-container h1,
+.articles-container h2,
+.articles-container h3,
+.article-full h1,
+.article-full h2,
+.article-full h3,
+.articles-page h1,
+.articles-page h2,
+.articles-page h3 {
+  font-weight: 400 !important; /* fin mais affirmé */
+  color: #3D6B35;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+/* Paragraphes (articles complets + previews) */
+.articles-container p,
+.article-full p,
+.news-desc,
+.articles-page p {
+  font-size: 1rem;
+  font-weight: 300;
+  color: #3D6B35;
+  text-align: justify;
+  line-height: 1.7;
+}
+
+/* Métadonnées (date, source, etc.) */
+.news-meta {
+  font-size: 0.9rem;
+  color: #6fa563;
+  font-weight: 300;
+  margin-top: 6px;
+}
+
+/* Harmonisation responsive pour mobiles */
+@media (max-width: 768px) {
+  .articles-container p,
+  .article-full p,
+  .articles-page p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+}
 
 
