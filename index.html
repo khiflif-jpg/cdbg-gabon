@@ -528,33 +528,120 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
   });
 </script>
-    <!-- === Gestion des Modaux (CGU, Confidentialité, Cookies) === -->
+   <!-- Footer -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-col">
+      <h4>Compagnie Durable du Bois au Gabon</h4>
+      <p>Exploitation forestière responsable pour un avenir durable</p>
+      <p>N° RCCM : GA-LBV-01-2025-B16-00034</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p>Libreville, Gabon</p>
+      <p>+241 77 25 9169</p>
+    </div>
+    <div class="footer-col">
+      <h4>Mentions légales</h4>
+      <ul>
+        <li><a href="#" class="open-modal" data-modal="modal-cgu-fr">Conditions Générales d’Utilisation</a></li>
+        <li><a href="#" class="open-modal" data-modal="modal-privacy-fr">Politique de confidentialité</a></li>
+        <li><a href="#" class="open-modal" data-modal="modal-cookies-fr">Cookies</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Compagnie Durable du Bois au Gabon. Tous droits réservés.</p>
+  </div>
+</footer>
+
+<!-- Modals FR (textes complets) -->
+<div id="modal-cgu-fr" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Conditions Générales d’Utilisation</h2>
+    <p>Les présentes Conditions Générales d’Utilisation (CGU) régissent l’accès et l’utilisation du site de la CDBG. Tout utilisateur s’engage à respecter ces conditions.</p>
+    <p>L’ensemble des contenus est protégé par la propriété intellectuelle et toute utilisation non autorisée est interdite.</p>
+    <p>Éditeur : Compagnie Durable du Bois au Gabon (CDBG), N° RCCM : GA-LBV-01-2025-B16-00034, siège social : Ancien Sobraga, Libreville, BP 4447, Gabon.</p>
+    <p>Hébergement : Ce site est hébergé par GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.</p>
+    <p>Accès : Gratuit, hors frais de connexion internet à la charge de l’utilisateur.</p>
+    <p>Propriété intellectuelle : Tous les contenus (textes, images, logos, vidéos, etc.) sont protégés. Toute reproduction ou utilisation non autorisée est strictement interdite.</p>
+    <p>Responsabilité : La CDBG met tout en œuvre pour assurer l’exactitude des informations publiées mais ne peut être tenue responsable des erreurs, omissions ou indisponibilité du site.</p>
+    <p>Droit applicable : Les présentes CGU sont régies par le droit gabonais. Tout litige relève de la compétence exclusive des tribunaux gabonais.</p>
+  </div>
+</div>
+
+<div id="modal-privacy-fr" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Politique de confidentialité</h2>
+    <p>Conformément à la loi n°001/2011 relative à la protection des données à caractère personnel en République gabonaise, la CDBG s’engage à protéger les données personnelles des utilisateurs.</p>
+    <p>Données collectées : nom, adresse email, téléphone, objet du message, et toutes informations fournies volontairement via le formulaire de contact.</p>
+    <p>Finalités : répondre aux demandes de contact, gérer la relation commerciale, suivre les partenariats.</p>
+    <p>Conservation : les données sont conservées uniquement pour la durée nécessaire aux finalités pour lesquelles elles ont été collectées.</p>
+    <p>Destinataires : les données sont traitées uniquement par la CDBG et ne sont pas transmises à des tiers sans consentement, sauf obligations légales.</p>
+    <p>Droits des utilisateurs : tout utilisateur peut accéder, rectifier, supprimer ou s’opposer au traitement de ses données personnelles. Ces droits peuvent être exercés par courrier ou email auprès de la CDBG.</p>
+    <p>Sécurité : la CDBG met en œuvre des mesures techniques et organisationnelles appropriées pour protéger les données contre tout accès non autorisé, perte ou altération.</p>
+  </div>
+</div>
+
+<div id="modal-cookies-fr" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Cookies</h2>
+    <p>Lors de la navigation sur le site, des cookies peuvent être déposés sur votre appareil.</p>
+    <p>Définition : un cookie est un petit fichier texte enregistré par le navigateur permettant de faciliter la navigation et la mesure d’audience.</p>
+    <p>Types de cookies : techniques, statistiques anonymisées.</p>
+    <p>Finalité : améliorer l’expérience utilisateur et optimiser le site.</p>
+    <p>Paramétrage : vous pouvez désactiver les cookies via votre navigateur, certaines fonctionnalités peuvent être affectées.</p>
+    <p>Consentement : en continuant votre navigation, vous acceptez l’utilisation des cookies conformément à cette politique.</p>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="news.js" defer></script>
 <script>
+  // Smooth scroll pour les ancres et gestion des modales
   document.addEventListener("DOMContentLoaded", () => {
-    // Ouvrir le modal au clic
-    document.querySelectorAll(".open-modal").forEach(link => {
-      link.addEventListener("click", e => {
+    // Smooth scroll
+    document.querySelectorAll('a[href^=\"#\"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+          const navLinks = document.querySelector('.nav-links');
+          if (navLinks && navLinks.classList.contains('active')) navLinks.classList.remove('active');
+        }
+      });
+    });
+
+    // Modales
+    document.querySelectorAll(\".open-modal\").forEach(link => {
+      link.addEventListener(\"click\", e => {
         e.preventDefault();
-        const modalId = link.getAttribute("data-modal");
+        const modalId = link.getAttribute(\"data-modal\");
         const modal = document.getElementById(modalId);
-        if (modal) modal.style.display = "block";
+        if (modal) modal.style.display = \"block\";
       });
     });
 
-    // Fermer via la croix
-    document.querySelectorAll(".modal .close").forEach(closeBtn => {
-      closeBtn.addEventListener("click", () => {
-        closeBtn.closest(".modal").style.display = "none";
+    document.querySelectorAll(\".modal .close\").forEach(closeBtn => {
+      closeBtn.addEventListener(\"click\", () => {
+        closeBtn.closest(\".modal\").style.display = \"none\";
       });
     });
 
-    // Fermer au clic en dehors du contenu
-    window.addEventListener("click", e => {
-      if (e.target.classList.contains("modal")) {
-        e.target.style.display = "none";
+    window.addEventListener(\"click\", e => {
+      if (e.target.classList.contains(\"modal\")) {
+        e.target.style.display = \"none\";
       }
     });
   });
 </script>
+    
+</body>
+</html>
 </body>
 </html>
