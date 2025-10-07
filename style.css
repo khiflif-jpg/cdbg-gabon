@@ -677,4 +677,65 @@ button:focus-visible,
   margin-right: 10px;
   margin-top: 4px;
 }
+/* =========================================================
+   🌿 Uniformisation du style des articles et aperçus
+   (toutes les pages : actualités, articles, previews)
+   ========================================================= */
+
+/* Titres des cartes d’articles (previews / RSS / actu) */
+.news-title,
+.news-content h3,
+.rss-article-content h2 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500; /* plus fin */
+  font-size: 1.1rem;
+  color: #3D6B35 !important; /* ton vert principal */
+  text-decoration: none !important;
+  line-height: 1.4;
+}
+
+/* Texte des aperçus (descriptions, extraits) */
+.news-desc,
+.news-content p,
+.rss-article-content p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  color: #333;
+  text-decoration: none !important;
+  line-height: 1.6;
+}
+
+/* Désactive le bleu souligné par défaut sur les liens */
+.news-card a,
+.rss-article-content a {
+  color: #3D6B35 !important;
+  text-decoration: none !important;
+}
+
+.news-card a:hover,
+.rss-article-content a:hover {
+  text-decoration: underline !important;
+}
+
+/* Titres des articles complets */
+.articles-container h1,
+.articles-container h2,
+.article-full h1,
+.article-full h2 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  color: #3D6B35 !important;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* Paragraphes des articles complets */
+.articles-container p,
+.article-full p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  color: #333;
+  line-height: 1.8;
+  text-align: justify;
+}
 
