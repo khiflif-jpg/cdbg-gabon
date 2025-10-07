@@ -173,5 +173,33 @@
       if (e.target.classList?.contains("modal")) e.target.style.display = "none";
     });
   </script>
+  <!-- === Fermeture intelligente du menu mobile === -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const navLinks = document.querySelector('.nav-links');
+  const burger = document.querySelector('.burger');
+  const closeIcon = document.querySelector('.close');
+
+  // ✅ Fermer le menu lorsqu'on clique sur un lien (et laisser le lien fonctionner)
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('active');
+    });
+  });
+
+  // ✅ Fermer le menu si on clique ailleurs ou sur le fond du menu
+  document.addEventListener('click', (e) => {
+    const isClickInsideMenu = navLinks.contains(e.target);
+    const isClickOnBurger = burger.contains(e.target);
+    const isClickOnClose = closeIcon && closeIcon.contains(e.target);
+    const isMenuActive = navLinks.classList.contains('active');
+
+    // Si le menu est ouvert, qu'on clique sur le fond ou en dehors, il se ferme
+    if (isMenuActive && (!isClickInsideMenu || e.target === navLinks) && !isClickOnBurger && !isClickOnClose) {
+      navLinks.classList.remove('active');
+    }
+  });
+});
+</script>
 </body>
 </html>
