@@ -603,5 +603,67 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+    <!-- ✅ SCRIPT FINAL NAVBAR (compat .active/.open + overlay + fallback) -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const burger = document.querySelector(".burger") || document.getElementById("burger");
+  const navLinks = document.querySelector(".nav-links");
+  if (!burger || !navLinks) return;
+
+  // Crée l’overlay (une seule fois)
+  let overlay = document.querySelector(".menu-overlay");
+  if (!overlay) {
+    overlay = document.createElement("div");
+    overlay.className = "menu-overlay";
+    document.body.appendChild(overlay);
+  }
+
+  function isOpen() {
+    return navLinks.classList.contains("active") || navLinks.classList.contains("open");
+  }
+
+  function openMenu() {
+    navLinks.classList.add("active", "open");
+    navLinks.style.display = "flex";          // ✅ fallback anti-conflits CSS
+    navLinks.style.opacity = "1";
+    navLinks.style.transform = "translateY(0)";
+    overlay.classList.add("active");
+  }
+
+  function closeMenu() {
+    navLinks.classList.remove("active", "open");
+    navLinks.style.display = "";              // reset inline
+    navLinks.style.opacity = "";
+    navLinks.style.transform = "";
+    overlay.classList.remove("active");
+  }
+
+  // Toggle via burger
+  burger.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (isOpen()) closeMenu(); else openMenu();
+  });
+
+  // Fermer sur clic overlay
+  overlay.addEventListener("click", closeMenu);
+
+  // Fermer sur clic lien
+  document.querySelectorAll(".nav-links a").forEach(a => {
+    a.addEventListener("click", closeMenu);
+  });
+
+  // Fermer si clic ailleurs
+  document.addEventListener("click", (e) => {
+    if (isOpen() && !navLinks.contains(e.target) && !burger.contains(e.target)) {
+      closeMenu();
+    }
+  });
+
+  // Sécurité: reset en desktop
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 768) closeMenu();
+  });
+});
+</script>
 </body>
 </html>
