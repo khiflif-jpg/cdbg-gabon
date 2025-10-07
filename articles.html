@@ -6,6 +6,78 @@
   <meta name="theme-color" content="#3D6B35"/>
   <title>Magazine – CDBG</title>
   <link rel="stylesheet" href="style.css"/>
+
+  <style>
+    .articles-container {
+      display: grid;
+      gap: 25px;
+      grid-template-columns: 1fr;
+      padding: 120px 20px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    @media(min-width:768px) {
+      .articles-container { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media(min-width:1200px) {
+      .articles-container { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .news-card {
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .news-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .news-image img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .news-content {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .news-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin: 0 0 10px;
+      line-height: 1.3em;
+    }
+
+    .news-desc {
+      font-size: 0.95rem;
+      color: #444;
+      margin-bottom: 12px;
+      text-align: justify;
+      line-height: 1.5em;
+    }
+
+    .news-meta {
+      font-size: 0.8rem;
+      color: #777;
+      margin-top: auto;
+      text-align: right;
+    }
+  </style>
 </head>
 
 <body>
@@ -32,25 +104,20 @@
     </nav>
   </header>
 
-  <main>
-    <section class="news-section fade-in" id="magazine" style="margin-top:100px">
-      <h2>Magazine</h2>
-      <div class="news-grid">
-        <div class="news-card">
-          <div class="news-image">
-            <img src="foret.webp" alt="Le Gabon renforce sa politique forestière">
-          </div>
-          <div class="news-content">
-            <h3 class="news-title">Le Gabon renforce sa politique forestière</h3>
-            <p class="news-desc">
-              Le Gabon, riche de ses forêts équatoriales, s’impose comme un leader africain
-              dans la gestion durable des ressources forestières.
-            </p>
-            <div class="news-meta">12 septembre 2025 — CDBG Magazine</div>
-          </div>
-        </div>
+  <main class="articles-container">
+    <a href="article-full-fr.html" class="news-card">
+      <div class="news-image">
+        <img src="article1.avif" alt="Le Gabon renforce sa politique forestière">
       </div>
-    </section>
+      <div class="news-content">
+        <h3 class="news-title">Le Gabon renforce sa politique forestière</h3>
+        <p class="news-desc">
+          Le Gabon, riche de ses forêts équatoriales, s’impose comme un leader africain
+          dans la gestion durable des ressources forestières.
+        </p>
+        <div class="news-meta">12 septembre 2025 — CDBG Magazine</div>
+      </div>
+    </a>
   </main>
 
   <footer>
@@ -79,7 +146,7 @@
     </div>
   </footer>
 
-  <!-- Modals FR -->
+  <!-- Modaux -->
   <div id="modal-cgu-fr" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
@@ -124,33 +191,22 @@
 
   <script>
   document.addEventListener("DOMContentLoaded", () => {
-    // Modales
     document.querySelectorAll(".open-modal").forEach(link => {
       link.addEventListener("click", e => {
         e.preventDefault();
         document.getElementById(link.dataset.modal).style.display = "block";
       });
     });
-
     document.querySelectorAll(".modal .close").forEach(btn => {
       btn.addEventListener("click", () => btn.closest(".modal").style.display = "none");
     });
-
     window.addEventListener("click", e => {
       document.querySelectorAll(".modal").forEach(m => {
         if (e.target === m) m.style.display = "none";
       });
     });
-
-    // Burger
-    const burger = document.getElementById("burger"),
-          navLinks = document.querySelector(".nav-links");
-    if (burger && navLinks) {
-      burger.addEventListener("click", () => {
-        navLinks.classList.toggle("active");
-        burger.textContent = burger.textContent === "☰" ? "✖" : "☰";
-      });
-    }
+    const burger=document.getElementById("burger"),navLinks=document.querySelector(".nav-links");
+    if(burger&&navLinks){burger.addEventListener("click",()=>{navLinks.classList.toggle("active");burger.textContent=burger.textContent==="☰"?"✖":"☰";});}
   });
   </script>
 </body>
