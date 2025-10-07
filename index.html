@@ -528,5 +528,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
   });
 </script>
+    <!-- === Gestion des Modaux (CGU, Confidentialité, Cookies) === -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Ouvrir le modal au clic
+    document.querySelectorAll(".open-modal").forEach(link => {
+      link.addEventListener("click", e => {
+        e.preventDefault();
+        const modalId = link.getAttribute("data-modal");
+        const modal = document.getElementById(modalId);
+        if (modal) modal.style.display = "block";
+      });
+    });
+
+    // Fermer via la croix
+    document.querySelectorAll(".modal .close").forEach(closeBtn => {
+      closeBtn.addEventListener("click", () => {
+        closeBtn.closest(".modal").style.display = "none";
+      });
+    });
+
+    // Fermer au clic en dehors du contenu
+    window.addEventListener("click", e => {
+      if (e.target.classList.contains("modal")) {
+        e.target.style.display = "none";
+      }
+    });
+  });
+</script>
 </body>
 </html>
