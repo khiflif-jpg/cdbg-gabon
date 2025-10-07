@@ -853,8 +853,50 @@ button:focus-visible,
   text-align: right !important;
 }
 /* =========================================================
-   🌿 MENU MOBILE : fond semi-transparent + effet verre dépoli
+   🌿 MENU MOBILE + EFFETS LUXE (verre dépoli, animations)
    ========================================================= */
+
+/* — Base mobile — */
+@media (max-width: 768px) {
+  .burger {
+    display: block;
+    cursor: pointer;
+    font-size: 28px;
+    color: white;
+    z-index: 1001;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: #3D6B35;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+    z-index: 999;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .nav-links.active {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .nav-links a {
+    padding: 12px 0;
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+  }
+}
+
+/* — Overlay fond flou (verre dépoli) — */
 .menu-overlay {
   position: fixed;
   top: 0;
@@ -874,9 +916,7 @@ button:focus-visible,
   visibility: visible;
 }
 
-/* =========================================================
-   🍃 Animation des liens du menu mobile (style Apple)
-   ========================================================= */
+/* — Animation d’apparition douce des liens (fade + slide) — */
 @keyframes fadeSlideIn {
   from {
     opacity: 0;
@@ -892,7 +932,6 @@ button:focus-visible,
   opacity: 0;
   animation: fadeSlideIn 0.4s ease forwards;
 }
-
 .nav-links.active a:nth-child(1) { animation-delay: 0.05s; }
 .nav-links.active a:nth-child(2) { animation-delay: 0.10s; }
 .nav-links.active a:nth-child(3) { animation-delay: 0.15s; }
@@ -903,21 +942,17 @@ button:focus-visible,
 .nav-links a {
   transition: color 0.3s ease, transform 0.3s ease;
 }
-
 .nav-links a:hover {
-  color: #cdeac0; /* vert clair raffiné */
+  color: #cdeac0;
   transform: translateX(3px);
 }
 
-/* =========================================================
-   ✨ HOVER DOUX POUR MENU DESKTOP (luxe & fluidité)
-   ========================================================= */
+/* — Hover doré fluide sur desktop — */
 .nav-links li a {
   position: relative;
   overflow: hidden;
   display: inline-block;
 }
-
 .nav-links li a::after {
   content: "";
   position: absolute;
@@ -925,10 +960,9 @@ button:focus-visible,
   left: 50%;
   width: 0%;
   height: 2px;
-  background-color: #e6d36f; /* doré doux */
+  background-color: #e6d36f;
   transition: width 0.3s ease, left 0.3s ease;
 }
-
 .nav-links li a:hover::after {
   width: 100%;
   left: 0;
