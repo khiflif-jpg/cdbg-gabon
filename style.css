@@ -968,8 +968,37 @@ button:focus-visible,
   left: 0;
 }
 /* =========================================================
-   💎 MENU MOBILE LUXE (effet zoom + soulignement doré)
+   💎 MENU MOBILE ULTIME – Premium, compact et réactif
    ========================================================= */
+
+/* --- Navbar rétractable au scroll --- */
+.navbar {
+  transition: all 0.4s ease-in-out !important;
+}
+.navbar.shrink {
+  padding: 6px 30px !important;
+  background: rgba(61,107,53,0.95) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+/* --- Overlay flouté pour fond --- */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 998;
+}
+.menu-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* --- MENU MOBILE --- */
 @media (max-width: 768px) {
   .burger {
     display: block;
@@ -988,10 +1017,10 @@ button:focus-visible,
     top: 100%;
     left: 0;
     width: 100%;
-    padding: 20px 0;
+    padding: 10px 0;
     z-index: 999;
     opacity: 0;
-    transform: translateY(-20px) scale(0.98);
+    transform: translateY(-15px) scale(0.98);
     transition: all 0.4s ease;
   }
 
@@ -1002,14 +1031,14 @@ button:focus-visible,
   }
 
   .nav-links a {
-    padding: 14px 0;
-    font-size: 17px;
+    padding: 10px 0;
+    font-size: 16px;
     color: white;
     text-decoration: none;
     position: relative;
     opacity: 0;
-    transform: translateY(10px) scale(0.95);
-    animation: fadeZoomIn 0.45s forwards ease;
+    transform: translateY(8px) scale(0.96);
+    animation: fadeZoomIn 0.4s forwards ease;
   }
 
   .nav-links.active a:nth-child(1) { animation-delay: 0.05s; }
@@ -1019,18 +1048,18 @@ button:focus-visible,
   .nav-links.active a:nth-child(5) { animation-delay: 0.25s; }
 
   @keyframes fadeZoomIn {
-    from { opacity: 0; transform: translateY(10px) scale(0.95); }
+    from { opacity: 0; transform: translateY(8px) scale(0.96); }
     to { opacity: 1; transform: translateY(0) scale(1); }
   }
 
   .nav-links a::after {
     content: "";
     position: absolute;
-    bottom: -2px;
+    bottom: -3px;
     left: 50%;
     width: 0%;
     height: 2px;
-    background-color: #e6d36f; /* doré */
+    background-color: #e6d36f; /* doré raffiné */
     transition: all 0.3s ease;
   }
 
@@ -1040,29 +1069,12 @@ button:focus-visible,
   }
 
   .nav-links a:hover {
-    transform: scale(1.05);
+    transform: scale(1.04);
     color: #cdeac0;
   }
 }
 
-/* 🌫️ overlay verre dépoli */
-.menu-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  z-index: 998;
-}
-.menu-overlay.active {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* ✨ Animation hover doré sur desktop aussi */
+/* --- Effet doré hover desktop --- */
 .nav-links li a {
   position: relative;
   overflow: hidden;
