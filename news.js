@@ -17,28 +17,43 @@ async function loadNews({ xmlUrl, containerId, batch = 10, lang = "fr" }) {
 
     const items = [...xml.querySelectorAll("item")].slice(0, batch);
 
-    // Créer un set des titres déjà injectés pour éviter doublons
     const existingTitles = new Set(
       Array.from(container.querySelectorAll(".news-title")).map(el => el.textContent.trim())
     );
 
     items.forEach(item => {
       const title = item.querySelector("title")?.textContent?.trim() || "Sans titre";
-      if (existingTitles.has(title)) return;  // skip doublon
+      if (existingTitles.has(title)) return;
 
       const link = item.querySelector("link")?.textContent?.trim() || "#";
-      const descriptionRaw = item.querySelector("description")?.textContent || "";
-      const description = descriptionRaw.replace(/<[^>]*>/g, "").trim();
+      let descriptionRaw = item.querySelector("description")?.textContent || "";
       const pubDateRaw = item.querySelector("pubDate")?.textContent || "";
       const pubDate = pubDateRaw ? new Date(pubDateRaw) : new Date();
-      const enclosure = item.querySelector("enclosure");
-      const imageUrl = enclosure?.getAttribute("url") || "";
       const source = "PFBC Partenariat pour les Forêts du Gabon";
+
+      // === Recherche de l'image ===
+      let imageUrl = "";
+
+      // 1️⃣ Balise <media:content>
+      const media = item.querySelector("media\\:content, content");
+      if (media && media.getAttribute("url")) {
+        imageUrl = media.getAttribute("url");
+      }
+
+      // 2️⃣ Sinon image dans la description
+      if (!imageUrl) {
+        const imgMatch = descriptionRaw.match(/<img[^>]+src=["']([^"']+)["']/i);
+        if (imgMatch && imgMatch[1]) imageUrl = imgMatch[1];
+      }
+
+      // Nettoyer la description pour garder un texte lisible
+      const description = descriptionRaw.replace(/<[^>]*>/g, "").trim();
 
       const card = document.createElement("a");
       card.href = link.startsWith("http") ? link : "#";
       card.target = "_blank";
       card.className = "news-card";
+
       card.innerHTML = `
         <div class="news-image">
           ${imageUrl ? `<img src="${imageUrl}" alt="${title}">` : ""}
@@ -51,6 +66,14 @@ async function loadNews({ xmlUrl, containerId, batch = 10, lang = "fr" }) {
       `;
       container.appendChild(card);
     });
+
+    // Force la grille 4 colonnes responsive
+    container.style.display = "grid";
+    container.style.gridTemplateColumns = "repeat(auto-fill, minmax(260px, 1fr))";
+    container.style.gap = "24px";
+    container.style.alignItems = "stretch";
+    container.style.justifyContent = "center";
+
   } catch (err) {
     console.error("Erreur lors du chargement du flux RSS :", err);
     container.innerHTML += `<p style="text-align:center;color:#666;">
@@ -60,7 +83,7 @@ async function loadNews({ xmlUrl, containerId, batch = 10, lang = "fr" }) {
 }
 
 /* ----------------------------------------------------------
-   Injection d’articles statiques (FR / EN)
+   Article statique en premier
 ---------------------------------------------------------- */
 function injectStaticArticles(lang = "fr", container) {
   if (!container) return;
