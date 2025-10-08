@@ -191,6 +191,7 @@
 
   <script>
   document.addEventListener("DOMContentLoaded", () => {
+    // Ouverture/fermeture des modales
     document.querySelectorAll(".open-modal").forEach(link => {
       link.addEventListener("click", e => {
         e.preventDefault();
@@ -205,101 +206,10 @@
         if (e.target === m) m.style.display = "none";
       });
     });
-    const burger=document.getElementById("burger"),navLinks=document.querySelector(".nav-links");
-    if(burger&&navLinks){burger.addEventListener("click",()=>{navLinks.classList.toggle("active");burger.textContent=burger.textContent==="☰"?"✖":"☰";});}
   });
- <!-- Scripts -->
-<script src="news.js" defer></script>
+  </script>
 
-<!-- ✅ NAVBAR PREMIUM FINALE : menu fluide, overlay flouté, animation dorée -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const navbar = document.querySelector(".navbar");
-  const burger = document.querySelector(".burger");
-  const navLinks = document.querySelector(".nav-links");
-
-  if (!navbar || !burger || !navLinks) return;
-
-  // === Création de l’overlay flouté (fond semi-transparent) ===
-  let overlay = document.querySelector(".menu-overlay");
-  if (!overlay) {
-    overlay = document.createElement("div");
-    overlay.className = "menu-overlay";
-    document.body.appendChild(overlay);
-  }
-
-  // === Ouvrir / fermer le menu mobile ===
-  function openMenu() {
-    navLinks.classList.add("active");
-    overlay.classList.add("active");
-    burger.classList.add("open");
-    navbar.classList.add("menu-open");
-  }
-
-  function closeMenu() {
-    navLinks.classList.remove("active");
-    overlay.classList.remove("active");
-    burger.classList.remove("open");
-    navbar.classList.remove("menu-open");
-  }
-
-  burger.addEventListener("click", (e) => {
-    e.stopPropagation();
-    navLinks.classList.contains("active") ? closeMenu() : openMenu();
-  });
-
-  // === Fermer le menu si on clique ailleurs ou sur un lien ===
-  overlay.addEventListener("click", closeMenu);
-  document.addEventListener("click", (e) => {
-    if (!navLinks.contains(e.target) && !burger.contains(e.target)) closeMenu();
-  });
-  document.querySelectorAll(".nav-links a").forEach(link => {
-    link.addEventListener("click", closeMenu);
-  });
-
-  // === Smooth scroll fluide pour les ancres ===
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener("click", (e) => {
-      const target = document.querySelector(anchor.getAttribute("href"));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: "smooth" });
-      }
-    });
-  });
-
-  // === Navbar shrink (rétractable au scroll vers le bas) ===
-  let lastScroll = 0;
-  window.addEventListener("scroll", () => {
-    const current = window.scrollY;
-    if (current > lastScroll && current > 60) navbar.classList.add("shrink");
-    else navbar.classList.remove("shrink");
-    lastScroll = current;
-  });
-
-  // === Réinitialisation du menu si retour en desktop ===
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 768) closeMenu();
-  });
-});
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const navLinks = document.querySelectorAll(".nav-links a");
-  const navMenu = document.querySelector(".nav-links");
-  const burger = document.querySelector(".burger");
-  const overlay = document.querySelector(".menu-overlay");
-
-  navLinks.forEach(link => {
-    link.addEventListener("click", () => {
-      // Ferme le menu après clic
-      navMenu.classList.remove("active", "open");
-      burger.classList.remove("open");
-      if (overlay) overlay.classList.remove("active");
-    });
-  });
-});
-</script>
-
+  <!-- Scripts -->
+  <script src="menu.js" defer></script>
 </body>
 </html>
