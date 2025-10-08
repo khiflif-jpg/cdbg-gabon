@@ -68,11 +68,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <li><a href="#contact">Contact</a></li>
     </ul>
 
-   <div class="burger" id="burger">
-  <div></div>
-  <div></div>
-  <div></div>
-</div>
+    <div class="burger" id="burger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   </nav>
 
   <div class="hero-overlay">
@@ -116,6 +116,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p>The Compagnie Durable du Bois du Gabon (CDBG) is a Gabonese company specializing in legal forest exploitation and tropical wood processing. It is committed to responsible forest management and sustainable resource utilization, aiming to promote Gabonese timber on national and international markets.</p>
   </div>
 </section>
+
 <!-- Our Services -->
 <section class="services fade-in" id="services">
   <h2>Our Services</h2>
@@ -177,6 +178,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 </section>
+
 <!-- Our Commitments -->
 <section class="commitments fade-in" id="commitments">
   <div class="commitments-content" style="max-width:700px; margin:0 auto;">
@@ -228,7 +230,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
-  <!-- Ambition -->
+<!-- Ambition -->
 <section class="ambition fade-in" id="ambition">
   <h2>Our Ambition</h2>
   <div class="cards" style="max-width:700px; margin:0 auto;">
@@ -276,7 +278,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
-   <!-- Gallery -->
+<!-- Gallery -->
 <section class="gallery fade-in" id="gallery">
   <h2>Gallery</h2>
   <div class="gallery-row">
@@ -402,134 +404,44 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </div>
 
-<!-- ✅ MENU MOBILE PREMIUM -->
+<!-- Scripts -->
+<script src="menu.js" defer></script>
+<script src="news.js" defer></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const navbar = document.querySelector(".navbar");
-  const burger = document.querySelector(".burger");
-  const navLinks = document.querySelector(".nav-links");
-
-  if (!navbar || !burger || !navLinks) return;
-
-  if (!burger.querySelector(".line")) {
-    burger.textContent = "";
-    for (let i = 0; i < 3; i++) {
-      const line = document.createElement("div");
-      line.className = "line";
-      burger.appendChild(line);
-    }
-  }
-
-  let overlay = document.querySelector(".menu-overlay");
-  if (!overlay) {
-    overlay = document.createElement("div");
-    overlay.className = "menu-overlay";
-    document.body.appendChild(overlay);
-  }
-
-  const openMenu = () => {
-    navLinks.classList.add("active");
-    burger.classList.add("open");
-    overlay.classList.add("active");
-  };
-  const closeMenu = () => {
-    navLinks.classList.remove("active");
-    burger.classList.remove("open");
-    overlay.classList.remove("active");
-  };
-
-  burger.addEventListener("click", e => {
-    e.stopPropagation();
-    navLinks.classList.contains("active") ? closeMenu() : openMenu();
-  });
-  overlay.addEventListener("click", closeMenu);
-  document.addEventListener("click", e => {
-    if (!navLinks.contains(e.target) && !burger.contains(e.target)) closeMenu();
-  });
-  document.querySelectorAll(".nav-links a").forEach(link => link.addEventListener("click", closeMenu));
-
-  // Smooth scroll
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener("click", e => {
-      const target = document.querySelector(anchor.getAttribute("href"));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: "smooth" });
+  // Fade-in observer
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        obs.unobserve(entry.target);
       }
     });
+  }, { threshold: 0.1 });
+  document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
+
+  // Modals
+  document.querySelectorAll(".open-modal").forEach(link => {
+    link.addEventListener("click", e => {
+      e.preventDefault();
+      const modal = document.getElementById(link.dataset.modal);
+      if (modal) modal.style.display = "block";
+    });
+  });
+  document.querySelectorAll(".modal .close").forEach(btn => {
+    btn.addEventListener("click", () => btn.closest(".modal").style.display = "none");
+  });
+  window.addEventListener("click", e => {
+    if (e.target.classList.contains("modal")) e.target.style.display = "none";
   });
 
-  // Navbar shrink
-  let last = 0;
-  window.addEventListener("scroll", () => {
-    const y = window.scrollY;
-    if (y > last && y > 60) navbar.classList.add("shrink");
-    else navbar.classList.remove("shrink");
-    last = y;
-  });
-
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 768) closeMenu();
-  });
+  // Load latest news (RSS)
+  try {
+    loadNews({ xmlUrl: "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml", containerId: "news-en", batch: 5, lang: "en" });
+  } catch {
+    try { loadNews("en", "news-en", 5); } catch {}
+  }
 });
 </script>
-  <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const navLinks = document.querySelectorAll(".nav-links a");
-  const navMenu = document.querySelector(".nav-links");
-  const burger = document.querySelector(".burger");
-  const overlay = document.querySelector(".menu-overlay");
-
-  navLinks.forEach(link => {
-    link.addEventListener("click", () => {
-      // Ferme le menu après clic
-      navMenu.classList.remove("active", "open");
-      burger.classList.remove("open");
-      if (overlay) overlay.classList.remove("active");
-    });
-  });
-});
-</script>
-  <!-- Scripts -->
-  <script src="menu.js" defer></script>
-  <script src="news.js" defer></script>
-
-  <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // Fade-in observer
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
-
-    // Modals
-    document.querySelectorAll(".open-modal").forEach(link => {
-      link.addEventListener("click", e => {
-        e.preventDefault();
-        const modal = document.getElementById(link.dataset.modal);
-        if (modal) modal.style.display = "block";
-      });
-    });
-    document.querySelectorAll(".modal .close").forEach(btn => {
-      btn.addEventListener("click", () => btn.closest(".modal").style.display = "none");
-    });
-    window.addEventListener("click", e => {
-      if (e.target.classList.contains("modal")) e.target.style.display = "none";
-    });
-
-    // Load latest news (RSS)
-    try {
-      loadNews({ xmlUrl: "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml", containerId: "news-en", batch: 5, lang: "en" });
-    } catch {
-      try { loadNews("en", "news-en", 5); } catch {}
-    }
-  });
-  </script>
 </body>
 </html>
-
