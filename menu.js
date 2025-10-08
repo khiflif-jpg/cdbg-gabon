@@ -1,5 +1,5 @@
 /* =========================================================
-   menu.js – CDBG version unifiée
+   menu.js – Version premium CDBG (vert + or)
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!navbar || !burger || !navLinks) return;
 
-  // Crée un overlay flouté si absent
+  // === Crée un overlay vert semi-transparent si absent ===
   let overlay = document.querySelector(".menu-overlay");
   if (!overlay) {
     overlay = document.createElement("div");
@@ -17,41 +17,51 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(overlay);
   }
 
-  // --- Ouvrir / fermer menu ---
+  // === Ouvrir / fermer le menu ===
   function openMenu() {
     navLinks.classList.add("active");
     overlay.classList.add("active");
     burger.classList.add("open");
-    burger.textContent = "✖";
-    document.body.style.overflow = "hidden"; // empêche le scroll
+    document.body.style.overflow = "hidden"; // bloque le scroll
   }
 
   function closeMenu() {
     navLinks.classList.remove("active");
     overlay.classList.remove("active");
     burger.classList.remove("open");
-    burger.textContent = "☰";
     document.body.style.overflow = ""; // réactive le scroll
   }
 
+  // === Clic sur le burger ===
   burger.addEventListener("click", (e) => {
     e.stopPropagation();
-    navLinks.classList.contains("active") ? closeMenu() : openMenu();
+    if (navLinks.classList.contains("active")) closeMenu();
+    else openMenu();
   });
 
-  overlay.addEventListener("click", closeMenu);
+  // === Ferme dès qu’on clique ailleurs (hypersensible) ===
+  document.addEventListener("click", (e) => {
+    const clickInsideMenu = navLinks.contains(e.target);
+    const clickOnBurger = burger.contains(e.target);
+    const clickOnOverlay = overlay.contains(e.target);
+    const menuOpen = navLinks.classList.contains("active");
 
-  // Ferme le menu au clic sur un lien
+    if (menuOpen && !clickInsideMenu && !clickOnBurger && !clickOnOverlay) {
+      closeMenu();
+    }
+  });
+
+  // === Ferme le menu quand on clique sur un lien ===
   navLinks.querySelectorAll("a").forEach(link =>
     link.addEventListener("click", closeMenu)
   );
 
-  // Ferme au clavier (Échap)
+  // === Ferme avec la touche Échap ===
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeMenu();
   });
 
-  // Ferme automatiquement si on repasse en mode desktop
+  // === Réinitialise si on repasse en desktop ===
   window.addEventListener("resize", () => {
     if (window.innerWidth > 768) closeMenu();
   });
