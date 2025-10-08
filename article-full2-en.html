@@ -3,26 +3,82 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gabon’s wood sector: 2023–2025 figures &amp; official sources – CDBG</title>
-  <meta name="description" content="CDBG analysis: the role of Gabon’s wood sector in the national economy and internationally, with recent figures (World Bank 2024) and official Gabonese sources (MEF 2025, Forest Economic Forum 2025).">
+  <title>Gabon’s wood sector: 2023–2025 figures – CDBG</title>
+  <meta name="description" content="The role of Gabon’s wood sector in the national economy: recent World Bank figures (2024), domestic processing, 2024–2025 public policy and 2025 priorities.">
   <meta name="theme-color" content="#3D6B35">
   <link rel="canonical" href="https://www.cdbg-gabon.com/article-full2-en.html">
   <link rel="stylesheet" href="style.css">
+  <!-- Premium styles (scoped) -->
+  <style>
+    .article-full * { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    .article-full-container {
+      background:
+        radial-gradient(900px 300px at 10% 0%, rgba(61,107,53,.06), transparent 50%),
+        radial-gradient(700px 300px at 90% 10%, rgba(61,107,53,.04), transparent 55%);
+      border-radius: 14px;
+    }
+    .article-cover img { border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.08); }
+
+    /* Typography */
+    .article-full .article-title { font-weight:600; letter-spacing:.2px; }
+    .article-full .article-meta  { font-weight:400; color:#6a6a6a; }
+    .article-full .article-body  { font-weight:400; font-size:1.075rem; color:#222; line-height:1.75; }
+    .article-full .article-body p,
+    .article-full .article-body li { text-align:justify; text-justify:inter-word; hyphens:auto; }
+    .article-full .article-body strong { font-weight:600; }
+
+    /* Headings */
+    .article-full .article-body h2 {
+      color:#244a2a; border-left:4px solid #3D6B35; padding-left:.75rem;
+      margin:1.6rem 0 .6rem; letter-spacing:.2px; font-weight:600;
+    }
+
+    /* Lead with drop cap */
+    .article-full .lead { margin-top:.8rem; }
+    .article-full .lead:first-letter {
+      float:left; font-size:3.25rem; line-height:.85; padding-right:.18rem; margin-top:.1rem;
+      color:#3D6B35; font-weight:600;
+    }
+
+    /* Key figures */
+    .keyfig { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:.4rem 0 1.1rem; }
+    .keyfig .card {
+      background: linear-gradient(180deg,#ffffff, #fafdf9);
+      border:1px solid #e7efe6; border-radius:12px; padding:14px; text-align:center;
+      box-shadow: 0 8px 18px rgba(0,0,0,.05), inset 0 1px 0 rgba(255,255,255,.4);
+    }
+    .keyfig .k { font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; color:#6a6a6a; }
+    .keyfig .v { margin-top:6px; font-weight:600; font-size:1.45rem; color:#111; }
+    .keyfig .s { font-size:.85rem; color:#6a6a6a; margin-top:2px; }
+
+    /* Lists */
+    .article-full .article-body ul { padding-left:1.1rem; }
+    .article-full .article-body li { margin:.4rem 0; }
+    .article-full .article-body li::marker { color:#3D6B35; }
+
+    /* Highlight box */
+    .note-premium {
+      border-left:4px solid #3D6B35; padding:.9rem 1rem; background:linear-gradient(180deg,#f7faf7,#fbfdfb);
+      border-radius:8px; color:#2b2b2b; box-shadow: 0 4px 14px rgba(0,0,0,.04);
+    }
+
+    @media (max-width: 720px){ .keyfig { grid-template-columns:1fr; } }
+  </style>
   <link rel="icon" href="logo.png" type="image/png">
 </head>
 
 <body>
   <a href="#main" class="skip-link" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">Skip to content</a>
 
-  <!-- HEADER (unchanged, flags switch between EN/FR versions) -->
+  <!-- HEADER (identique à ton gabarit EN) -->
   <header>
     <nav class="navbar">
       <div class="logo">
         <img src="logo.webp" alt="CDBG Logo" width="80" height="80">
       </div>
       <div class="nav-flags">
-        <a href="article-full2-fr.html"><img src="fr.png" alt="Français" width="32" height="32" loading="lazy"></a>
-        <a href="article-full2-en.html"><img src="en.png" alt="English" width="32" height="32" loading="lazy"></a>
+        <a href="index.html"><img src="fr.png" alt="Français" width="32" height="32" loading="lazy"></a>
+        <a href="en.html"><img src="en.png" alt="English" width="32" height="32" loading="lazy"></a>
       </div>
       <ul class="nav-links">
         <li><a href="en.html#bitam">Bitam</a></li>
@@ -37,9 +93,7 @@
         <li><a href="en.html#contact">Contact</a></li>
       </ul>
       <div class="burger" id="burger">
-        <div></div>
-        <div></div>
-        <div></div>
+        <div></div><div></div><div></div>
       </div>
     </nav>
   </header>
@@ -49,51 +103,52 @@
 
       <!-- HERO IMAGE ABOVE THE TITLE -->
       <figure class="article-cover" style="margin:1rem 0;">
-        <img src="article2.avif" alt="Gabon’s forests and wood manufacturing – CDBG" style="width:100%;height:auto;border-radius:10px;">
+        <img src="article2.avif" alt="Gabon’s forests and wood manufacturing – CDBG" style="width:100%;height:auto;">
       </figure>
 
       <header class="article-header">
         <h1 class="article-title" style="color:#3D6B35;font-size:2rem;line-height:1.2;margin:0 0 .75rem;">
           Gabon’s wood sector: a pillar for diversification, jobs and sustainable competitiveness
         </h1>
-        <div class="article-meta" style="color:#666;margin-bottom:1rem;">
-          Published on <time datetime="2025-10-08">October 8, 2025</time> — Source: CDBG Magazine
+        <div class="article-meta" style="margin-bottom:1rem;">
+          Published on <time datetime="2025-10-08">October 8, 2025</time> — Source: CDBG
         </div>
       </header>
 
-      <section class="article-body" style="font-size:1.0625rem;line-height:1.75;color:#222;">
+      <section class="article-body">
 
         <!-- Key figures -->
-        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 1rem;">
-          <div style="border:1px solid #e7e7e7;border-radius:10px;padding:12px;text-align:center;">
-            <div style="font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:#666;">Share of GDP (2023)</div>
-            <div style="font-weight:700;font-size:1.4rem;color:#111;">3.2%</div>
-            <div style="font-size:.85rem;color:#666;">World Bank (Oct&nbsp;14,&nbsp;2024)</div>
+        <div class="keyfig" aria-label="Key figures 2023">
+          <div class="card">
+            <div class="k">Share of GDP (2023)</div>
+            <div class="v">3.2%</div>
+            <div class="s">World Bank — Oct&nbsp;14,&nbsp;2024</div>
           </div>
-          <div style="border:1px solid #e7e7e7;border-radius:10px;padding:12px;text-align:center;">
-            <div style="font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:#666;">Share of exports (2023)</div>
-            <div style="font-weight:700;font-size:1.4rem;color:#111;">6%</div>
-            <div style="font-size:.85rem;color:#666;">World Bank (Oct&nbsp;14,&nbsp;2024)</div>
+          <div class="card">
+            <div class="k">Share of exports (2023)</div>
+            <div class="v">6%</div>
+            <div class="s">World Bank — Oct&nbsp;14,&nbsp;2024</div>
           </div>
-          <div style="border:1px solid #e7e7e7;border-radius:10px;padding:12px;text-align:center;">
-            <div style="font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:#666;">Public revenues (2023)</div>
-            <div style="font-weight:700;font-size:1.4rem;color:#111;">FCFA&nbsp;41.9&nbsp;bn</div>
-            <div style="font-size:.85rem;color:#666;">World Bank (Oct&nbsp;14,&nbsp;2024)</div>
+          <div class="card">
+            <div class="k">Public revenues (2023)</div>
+            <div class="v">FCFA&nbsp;41.9&nbsp;bn</div>
+            <div class="s">World Bank — Oct&nbsp;14,&nbsp;2024</div>
           </div>
         </div>
 
-        <p style="text-align:justify">
-          With vast tropical forests and a strategic push for domestic processing, Gabon’s wood industry is central to diversification and job creation. The latest <strong>World Bank</strong> update confirms its <em>macroeconomic footprint</em>: <strong>3.2% of GDP</strong>, <strong>6% of exports</strong> and <strong>FCFA&nbsp;41.9&nbsp;bn</strong> in public revenues in 2023. The report also notes that wood-related activities are the country’s <strong>leading source of formal private-sector jobs</strong>.
+        <!-- Lead -->
+        <p class="lead">
+          With vast tropical forests and a decisive push for domestic processing, Gabon’s wood industry sits at the heart of diversification and job creation. The latest <strong>World Bank</strong> update confirms its <em>macroeconomic footprint</em>: <strong>3.2% of GDP</strong>, <strong>6% of exports</strong> and <strong>FCFA&nbsp;41.9&nbsp;bn</strong> in public revenues in 2023. It also notes that wood activities are the country’s <strong>leading source of formal private-sector jobs</strong>.
         </p>
 
         <h2>🎯 Local value and access to demanding markets</h2>
-        <p style="text-align:justify">
-          The government’s focus on <strong>in-country processing</strong> (sawmilling, kiln-drying, veneer, plywood) and robust <strong>traceability</strong> aims to capture more value domestically while securing market access—particularly in the EU under the deforestation regulation. For CDBG, a competitive edge comes from compliance, product quality, and verifiable legal/certified origin.
+        <p>
+          The government’s focus on <strong>in-country processing</strong> (sawmilling, kiln-drying, veneer, plywood) and <strong>traceability</strong> aims to capture more value domestically while securing market access (notably in the EU under the deforestation regulation). For CDBG, the edge comes from compliance, product quality, and verifiable legal/certified origin.
         </p>
 
         <h2>🏛️ Public policy 2024–2025: course confirmed</h2>
         <ul>
-          <li><strong>MEF public–private roundtable — June&nbsp;19,&nbsp;2025 (Libreville)</strong>: second dialogue to accelerate processing, compliance and sustainability across the value chain.</li>
+          <li><strong>MEF public–private roundtable — June&nbsp;19,&nbsp;2025 (Libreville)</strong>: the second dialogue to accelerate processing, compliance and sustainability.</li>
           <li><strong>Forest Economic Forum — Sept&nbsp;8–9,&nbsp;2025</strong>: a government-led event spotlighting industrialisation and jobs in the forest–wood sector.</li>
           <li><strong>EU–Gabon cooperation — Dec&nbsp;2024</strong>: technical assistance and partnerships to strengthen sustainable forest management and alignment with EU requirements.</li>
         </ul>
@@ -105,39 +160,9 @@
           <li><strong>Industrial productivity</strong>: invest in kiln-drying, precision sawing, panels and finishing to improve margins and competitiveness.</li>
         </ul>
 
-        <div style="border-left:3px solid #3D6B35;padding-left:.9rem;color:#333;background:#f7faf7;border-radius:6px;margin:1rem 0;">
-          <strong>Takeaway for CDBG:</strong> doubling down on industrial upgrades and traceability delivers a winning trio—<em>value, trust and market access</em>—while maximising socio-economic impact in Gabon.
+        <div class="note-premium">
+          <strong>Takeaway for CDBG:</strong> doubling down on industrial upgrades and traceability delivers a winning trio — <em>value, trust and market access</em> — while maximising socio-economic impact in Gabon.
         </div>
-
-        <!-- Official sources (≤ 12 months) -->
-        <section aria-label="Official sources (≤ 12 months)" style="margin-top:2rem;">
-          <h2>📚 Official sources (≤ 12 months)</h2>
-          <ul style="margin-left:1rem;">
-            <li>
-              <strong>World Bank</strong> — <em>Gabon Economic Update 2024: Designing Fiscal Policies for Sustainable Forestry</em><br>
-              • Press release (Oct&nbsp;14,&nbsp;2024): 
-              <a href="https://www.worldbank.org/en/news/press-release/2024/10/14/gabon-economic-update-2024-policy-options-to-promote-forest-conservation-and-optimize-fiscal-revenenues" target="_blank" rel="noopener">worldbank.org</a><br>
-              • Publication page: 
-              <a href="https://www.worldbank.org/en/country/gabon/publication/gabon-economic-update-2024-designing-fiscal-policies-for-sustainable-forestry" target="_blank" rel="noopener">worldbank.org</a><br>
-              • Full report (PDF): 
-              <a href="https://documents1.worldbank.org/curated/en/099092524143030496/pdf/P181230120e78103b1b7c612a6fccdafa23.pdf" target="_blank" rel="noopener">documents1.worldbank.org</a>
-              <div style="font-size:.95rem;color:#666;margin-top:.25rem;">Includes: GDP share 3.2%; export share 6%; public revenues FCFA 41.9&nbsp;bn; leading formal private-sector employer.</div>
-            </li>
-            <li>
-              <strong>Official Portal of the Government of Gabon</strong> — <em>Strengthening the Forest–Wood Sector: Second Public–Private Consultation</em> (June&nbsp;19,&nbsp;2025): 
-              <a href="https://www.gouvernement.ga/3582-actualites/4-actualite-nationale/3619-environnement/4227-renforcement-de-la-filiere-foret-bois-deuxieme-concertation-public-prive/" target="_blank" rel="noopener">gouvernement.ga</a>
-            </li>
-            <li>
-              <strong>Official Portal of the Government of Gabon</strong> — <em>Forest Economic Forum 2025: Towards a Sustainable Transformation of the Forest–Wood Sector</em> (Sept&nbsp;9,&nbsp;2025): 
-              <a href="https://www.gouvernement.ga/3582-actualites/3-actualite-internationale/3664-environnement/4346-forum-economique-forestier-2025-vers-une-transformation-durable-du-secteur-foret-bois-au-gabon/" target="_blank" rel="noopener">gouvernement.ga</a>
-            </li>
-            <li>
-              <strong>Council of Ministers</strong> — <em>Final communiqué of the Council of Ministers, Dec&nbsp;19,&nbsp;2024</em>: 
-              <a href="https://www.gouvernement.ga/5-conseil-des-ministres/3869-annee-2024/4032-communique-final-du-conseil-des-ministres-du-19-decembre-2024/" target="_blank" rel="noopener">gouvernement.ga</a>
-              <div style="font-size:.95rem;color:#666;margin-top:.25rem;">References to cooperation with the European Union (forests, economy, transport).</div>
-            </li>
-          </ul>
-        </section>
 
       </section>
 
@@ -147,7 +172,7 @@
     </article>
   </main>
 
-  <!-- FOOTER (unchanged) -->
+  <!-- FOOTER (identique à ton gabarit EN) -->
   <footer>
     <div class="footer-container">
       <div class="footer-col">
@@ -220,27 +245,26 @@
   <!-- Scripts -->
   <script src="menu.js" defer></script>
   <script src="news.js" defer></script>
-
   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // Modals
-    document.querySelectorAll(".open-modal").forEach(link => {
-      link.addEventListener("click", e => {
-        e.preventDefault();
-        document.getElementById(link.dataset.modal).style.display = "block";
+    document.addEventListener("DOMContentLoaded", () => {
+      // Modals
+      document.querySelectorAll(".open-modal").forEach(link => {
+        link.addEventListener("click", e => {
+          e.preventDefault();
+          document.getElementById(link.dataset.modal).style.display = "block";
+        });
+      });
+
+      document.querySelectorAll(".modal .close").forEach(btn => {
+        btn.addEventListener("click", () => btn.closest(".modal").style.display = "none");
+      });
+
+      window.addEventListener("click", e => {
+        document.querySelectorAll(".modal").forEach(m => {
+          if (e.target === m) m.style.display = "none";
+        });
       });
     });
-
-    document.querySelectorAll(".modal .close").forEach(btn => {
-      btn.addEventListener("click", () => btn.closest(".modal").style.display = "none");
-    });
-
-    window.addEventListener("click", e => {
-      document.querySelectorAll(".modal").forEach(m => {
-        if (e.target === m) m.style.display = "none";
-      });
-    });
-  });
   </script>
 </body>
 </html>
