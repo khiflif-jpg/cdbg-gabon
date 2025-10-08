@@ -1,66 +1,62 @@
 /* ==========================================================
-   news.js – Gestion des actualités RSS + articles statiques
+   news.js – Gestion des actualités RSS + article statique
    ========================================================== */
 
-async function loadNews({ xmlUrl, containerId, batch = 10, lang = "fr" }) {
+async function loadNews({ xmlUrl, containerId = "news-container", batch = 10, lang = "fr" }) {
   const container = document.getElementById(containerId);
-  if (!container) return;
+  if (!container) {
+    console.warn(`[news.js] Conteneur introuvable : #${containerId}`);
+    return;
+  }
 
   try {
     const res = await fetch(xmlUrl);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const text = await res.text();
+    const xmlText = await res.text();
 
     const parser = new DOMParser();
-    const xml = parser.parseFromString(text, "application/xml");
+    const xml = parser.parseFromString(xmlText, "application/xml");
     if (xml.querySelector("parsererror")) throw new Error("Flux RSS invalide");
 
     const items = [...xml.querySelectorAll("item")].slice(0, batch);
+    if (!items.length) throw new Error("Aucun article RSS trouvé");
 
     const existingTitles = new Set(
       Array.from(container.querySelectorAll(".news-title")).map(el => el.textContent.trim())
     );
 
-    items.forEach(item => {
+    for (const item of items) {
       const title = item.querySelector("title")?.textContent?.trim() || "Sans titre";
-      if (existingTitles.has(title)) return;
+      if (existingTitles.has(title)) continue;
 
       const link = item.querySelector("link")?.textContent?.trim() || "#";
       let descriptionRaw = item.querySelector("description")?.textContent || "";
       const pubDateRaw = item.querySelector("pubDate")?.textContent || "";
       const pubDate = pubDateRaw ? new Date(pubDateRaw) : new Date();
-      const source = "PFBC Partenariat pour les Forêts du Gabon";
+      const source = "PFBC – Partenariat pour les Forêts du Bassin du Congo";
 
       // === Recherche de l'image ===
       let imageUrl = "";
-
-      // 1️⃣ Balise <media:content>
       const media = item.querySelector("media\\:content, content");
-      if (media && media.getAttribute("url")) {
+      if (media?.getAttribute("url")) {
         imageUrl = media.getAttribute("url");
-      }
-
-      // 2️⃣ Sinon image dans la description
-      if (!imageUrl) {
+      } else {
         const imgMatch = descriptionRaw.match(/<img[^>]+src=["']([^"']+)["']/i);
-        if (imgMatch && imgMatch[1]) imageUrl = imgMatch[1];
+        if (imgMatch?.[1]) imageUrl = imgMatch[1];
       }
 
-      // Nettoyer la description pour garder un texte lisible
-      // + suppression des liens internes <a> pour éviter les ancres imbriquées
-      let description = descriptionRaw
+      // Nettoyage description (suppression HTML et liens)
+      const description = descriptionRaw
         .replace(/<a\b[^>]*>([\s\S]*?)<\/a>/gi, "$1")
         .replace(/<[^>]*>/g, "")
         .trim();
 
-      // --- Création de la carte ---
+      // --- Création carte ---
       const card = document.createElement("article");
       card.className = "news-card";
-
-      // carte cliquable accessible
-      card.addEventListener("click", () => window.open(link, "_blank"));
+      card.tabIndex = 0;
       card.setAttribute("role", "link");
-      card.setAttribute("tabindex", "0");
+      card.addEventListener("click", () => window.open(link, "_blank"));
 
       card.innerHTML = `
         <div class="news-image">
@@ -72,67 +68,69 @@ async function loadNews({ xmlUrl, containerId, batch = 10, lang = "fr" }) {
           <div class="news-meta">${pubDate.toLocaleDateString(lang)} – ${source}</div>
         </div>
       `;
+
       container.appendChild(card);
+    }
+
+    // Grille responsive uniforme
+    Object.assign(container.style, {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+      gap: "24px",
+      alignItems: "stretch",
+      justifyContent: "center",
     });
 
-    // Force la grille 4 colonnes responsive
-    container.style.display = "grid";
-    container.style.gridTemplateColumns = "repeat(auto-fill, minmax(260px, 1fr))";
-    container.style.gap = "24px";
-    container.style.alignItems = "stretch";
-    container.style.justifyContent = "center";
-
   } catch (err) {
-    console.error("Erreur lors du chargement du flux RSS :", err);
-    container.innerHTML += `<p style="text-align:center;color:#666;">
-      ${lang === "fr" ? "Aucune actualité disponible." : "No news available."}
-    </p>`;
+    console.error("[news.js] Erreur lors du chargement RSS :", err);
+    container.innerHTML = `
+      <p style="text-align:center;color:#666;margin-top:40px;">
+        ${lang === "fr" ? "Aucune actualité disponible pour le moment." : "No news available at the moment."}
+      </p>
+    `;
   }
 }
 
 /* ----------------------------------------------------------
-   Article statique en premier
+   Injection de l’article statique CDBG
 ---------------------------------------------------------- */
 function injectStaticArticles(lang = "fr", container) {
   if (!container) return;
 
-  const articles = [
-    {
-      lang: "fr",
+  const article = {
+    fr: {
       title: "Le Gabon renforce sa politique forestière",
       description:
         "Le Gabon, riche de ses forêts équatoriales couvrant près de 88 % de son territoire, s’impose comme un leader africain dans la gestion durable des ressources forestières…",
       img: "article1.avif",
       link: "article-full-fr.html",
-      date: "2025-09-12"
+      date: "2025-09-12",
+      source: "CDBG Magazine",
     },
-    {
-      lang: "en",
+    en: {
       title: "Gabon strengthens its forest policy",
       description:
         "Gabon, rich in its equatorial forests, stands as a leader in sustainable forest management and biodiversity preservation.",
       img: "article1.avif",
       link: "article-full-en.html",
-      date: "2025-09-12"
-    }
-  ];
+      date: "2025-09-12",
+      source: "CDBG Magazine",
+    },
+  }[lang];
 
-  const article = articles.find(a => a.lang === lang);
   if (!article) return;
 
-  const dateObj = new Date(article.date);
-  const formattedDate = dateObj.toLocaleDateString(lang, {
+  const formattedDate = new Date(article.date).toLocaleDateString(lang, {
     year: "numeric",
     month: "long",
-    day: "numeric"
+    day: "numeric",
   });
-  const source = "CDBG Magazine";
 
   const card = document.createElement("article");
   card.className = "news-card";
-  card.addEventListener("click", () => window.open(article.link, "_blank"));
+  card.tabIndex = 0;
   card.setAttribute("role", "link");
-  card.setAttribute("tabindex", "0");
+  card.addEventListener("click", () => window.open(article.link, "_blank"));
 
   card.innerHTML = `
     <div class="news-image">
@@ -141,30 +139,33 @@ function injectStaticArticles(lang = "fr", container) {
     <div class="news-content">
       <h3 class="news-title">${article.title}</h3>
       <p class="news-desc">${article.description}</p>
-      <div class="news-meta">${formattedDate} – ${source}</div>
+      <div class="news-meta">${formattedDate} – ${article.source}</div>
     </div>
   `;
+
   container.prepend(card);
 }
 
 /* ----------------------------------------------------------
-   Initialisation
+   Initialisation automatique
 ---------------------------------------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
   const lang = document.documentElement.lang || "fr";
   const container =
+    document.getElementById("news-container") ||
     document.getElementById("news-fr") ||
-    document.getElementById("news-en") ||
-    document.getElementById("news-container");
+    document.getElementById("news-en");
 
-  if (!container) return;
+  if (!container) {
+    console.warn("[news.js] Aucun conteneur d’actualités trouvé.");
+    return;
+  }
 
   injectStaticArticles(lang, container);
-
   loadNews({
     xmlUrl: "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml",
     containerId: container.id,
     batch: 10,
-    lang
+    lang,
   });
 });
