@@ -2014,7 +2014,6 @@ header.hero{
   header.hero .hero-overlay{
     transform: translateY(-6vh); /* ajuste à -4vh / -8vh si tu veux */
   }
-}
 
 /* Éviter la petite bande grise sous la forêt (margin de la 1re section) */
 header.hero + section{
