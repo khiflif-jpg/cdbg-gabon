@@ -239,46 +239,79 @@ document.addEventListener("DOMContentLoaded", () => {
 <!-- Scripts -->
 <script src="news.js" defer></script>
 
-<!-- ✅ SCRIPT FINAL NAVBAR PREMIUM (overlay + animation + scroll shrink) -->
+<!-- ✅ NAVBAR PREMIUM : overlay + burger animé + fermeture partout + shrink -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const burger = document.querySelector(".burger");
+  const navbar  = document.querySelector(".navbar");
+  const burger  = document.querySelector(".burger") || document.getElementById("burger");
   const navLinks = document.querySelector(".nav-links");
-  const navbar = document.querySelector(".navbar");
+  if (!navbar || !burger || !navLinks) return;
 
-  if (!burger || !navLinks || !navbar) return;
+  // 1) Assainir l’état initial (évite conflicts d’anciens scripts)
+  navLinks.classList.remove("active", "open");
+  ["display","opacity","transform"].forEach(p => navLinks.style[p] = "");
 
-  // ✅ Création de l’overlay flouté
-  const overlay = document.createElement("div");
-  overlay.classList.add("menu-overlay");
-  document.body.appendChild(overlay);
+  // 2) Fabriquer les 3 barres si le burger ne contient pas déjà des lignes
+  if (!burger.querySelector(".line")) {
+    burger.textContent = ""; // efface ☰ éventuel
+    for (let i = 0; i < 3; i++) {
+      const line = document.createElement("div");
+      line.className = "line";
+      burger.appendChild(line);
+    }
+  }
 
-  // ✅ Ouvrir / fermer le menu mobile + animation burger
-  burger.addEventListener("click", (e) => {
-    e.stopPropagation();
-    const isActive = navLinks.classList.toggle("active");
-    burger.classList.toggle("open", isActive);
-    overlay.classList.toggle("active", isActive);
-  });
-
-  // ✅ Fermer si clic sur overlay ou ailleurs
-  function closeMenu() {
-    navLinks.classList.remove("active");
-    burger.classList.remove("open");
+  // 3) Overlay flouté (une seule fois)
+  let overlay = document.querySelector(".menu-overlay");
+  if (!overlay) {
+    overlay = document.createElement("div");
+    overlay.className = "menu-overlay";
+    document.body.appendChild(overlay);
+  } else {
     overlay.classList.remove("active");
   }
 
-  overlay.addEventListener("click", closeMenu);
+  const isOpen = () => navLinks.classList.contains("active");
 
-  // ✅ Fermer si clic sur un lien
-  document.querySelectorAll(".nav-links a").forEach(link => {
-    link.addEventListener("click", closeMenu);
+  function openMenu(){
+    navLinks.classList.add("active");
+    overlay.classList.add("active");
+    burger.classList.add("open");
+  }
+  function closeMenu(){
+    navLinks.classList.remove("active");
+    overlay.classList.remove("active");
+    burger.classList.remove("open");
+  }
+
+  // 4) Toggle via burger
+  burger.addEventListener("click", (e) => {
+    e.stopPropagation();
+    isOpen() ? closeMenu() : openMenu();
   });
 
-  // ✅ Smooth scroll interne
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener("click", function (e) {
-      const target = document.querySelector(this.getAttribute("href"));
+  // 5) Fermeture au clic partout hors menu
+  document.addEventListener("click", (e) => {
+    if (!isOpen()) return;
+    const clickInsideMenu   = navLinks.contains(e.target);
+    const clickOnBurger     = burger.contains(e.target);
+    const clickOnNavbarLink = e.target.closest(".nav-links a");
+    if (!clickInsideMenu && !clickOnBurger && !clickOnNavbarLink) {
+      closeMenu();
+    }
+  });
+
+  // 6) Fermeture au clic sur overlay et sur chaque lien
+  overlay.addEventListener("click", closeMenu);
+  navLinks.addEventListener("click", (e) => {
+    if (e.target.tagName === "A") closeMenu();
+    e.stopPropagation(); // ne pas transmettre au document
+  });
+
+  // 7) Smooth scroll interne
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener("click", (e) => {
+      const target = document.querySelector(a.getAttribute("href"));
       if (target) {
         e.preventDefault();
         target.scrollIntoView({ behavior: "smooth" });
@@ -286,23 +319,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ✅ Navbar rétractable au scroll
-  let lastScroll = 0;
+  // 8) Navbar shrink (rétractable au scroll)
+  let last = 0;
   window.addEventListener("scroll", () => {
-    const current = window.scrollY;
-    if (current > lastScroll && current > 60) {
-      navbar.classList.add("shrink");
-    } else {
-      navbar.classList.remove("shrink");
-    }
-    lastScroll = current;
+    const y = window.scrollY;
+    if (y > last && y > 60) { navbar.classList.add("shrink"); }
+    else { navbar.classList.remove("shrink"); }
+    last = y;
   });
 
-  // ✅ Fermer si clic ailleurs que menu
-  document.addEventListener("click", (e) => {
-    if (!navLinks.contains(e.target) && !burger.contains(e.target)) {
-      closeMenu();
-    }
+  // 9) Sécurité : reset en desktop
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 768) closeMenu();
   });
 });
 </script>
