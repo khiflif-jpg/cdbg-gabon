@@ -1868,3 +1868,40 @@ a.news-card:hover {
 
 /* S'assurer que le contenu "hero" n'écrase pas la navbar */
 .hero-overlay { position: relative; z-index: 1; }
+/* --- PATCH CLICS NAV MOBILE (priorité max) --- */
+.navbar {
+  position: sticky; /* ou fixed selon ton cas */
+  top: 0;
+  z-index: 10010; /* au-dessus des overlays/hero */
+}
+
+.burger {
+  position: relative;
+  z-index: 10020; /* au-dessus de tout */
+  cursor: pointer;
+}
+
+/* L’overlay du menu ne doit pas bloquer les clics quand il est inactif */
+.menu-overlay { pointer-events: none; }
+.menu-overlay.active { pointer-events: auto; }
+
+/* Met la surcouche hero sous la navbar */
+.hero-overlay { position: relative; z-index: 1; }
+
+/* Si tu as des pseudo-éléments qui couvrent le header, neutralise-les */
+header::before, header::after,
+.hero::before, .hero::after {
+  pointer-events: none;
+}
+
+/* Option: assure les liens du menu au-dessus du contenu */
+.nav-links { position: relative; z-index: 10005; }
+/* Harmonisation visuelle des 3 barres */
+.burger > div {
+  width: 28px;
+  height: 2px;
+  margin: 6px 0;
+  background: #E8D18D;        /* doré cohérent */
+  border-radius: 2px;
+  transition: transform .25s ease, opacity .25s ease;
+}
