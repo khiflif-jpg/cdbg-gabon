@@ -1243,3 +1243,43 @@ button:focus-visible,
 .menu-overlay {
   pointer-events: auto;
 }
+/* =========================================================
+   ✅ FIX CLICS MENU + HIÉRARCHIE HERO / NAVBAR
+   ========================================================= */
+
+/* La barre de navigation doit être tout en haut */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 3000 !important;
+}
+
+/* Le menu et ses liens doivent être au-dessus de tout */
+.nav-links,
+.nav-links li,
+.nav-links a {
+  position: relative;
+  z-index: 3001 !important;
+  pointer-events: auto !important;
+}
+
+/* L'overlay du menu reste dessous, sans bloquer les clics */
+.menu-overlay {
+  z-index: 2000 !important;
+  pointer-events: none !important;
+}
+
+/* Le header héros passe derrière la barre */
+.hero,
+.hero-overlay {
+  position: relative;
+  z-index: 1 !important;
+}
+
+/* Pour s'assurer que le contenu de la hero ne recouvre rien */
+.hero-overlay * {
+  position: relative;
+  z-index: 1 !important;
+}
