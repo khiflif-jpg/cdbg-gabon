@@ -144,14 +144,6 @@
   </div>
 
   <script>
-    // Burger
-    document.getElementById("burger")?.addEventListener("click", () => {
-      const nav = document.querySelector(".nav-links");
-      if (!nav) return;
-      nav.classList.toggle("active");
-      const b = document.getElementById("burger");
-      if (b) b.textContent = (b.textContent === "☰" ? "✖" : "☰");
-    });
 
     // Modales
     document.querySelectorAll(".open-modal").forEach(a => {
