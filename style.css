@@ -1800,5 +1800,8 @@ a.news-card:hover {
 
 /* Si ta page a un gros bandeau .hero-overlay qui recouvre, on le rend traversable */
 .hero-overlay{ pointer-events: none; }
-
+.navbar { z-index: 10000; }
+.burger { z-index: 2147483647; pointer-events: auto !important; }
+.menu-overlay { z-index: 2000; pointer-events: none; }
+.menu-overlay.active { pointer-events: auto; }
 
