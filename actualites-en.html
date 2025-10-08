@@ -32,22 +32,79 @@
     @media (min-width: 1280px) { .news-grid { grid-template-columns: repeat(4, 1fr); } }
 
     .news-card {
-      display: flex; flex-direction: column;
-      background: #fff; border-radius: 12px; overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      text-decoration: none; color: inherit;
+      text-decoration: none;
+      color: inherit;
       transition: transform .2s ease, box-shadow .2s ease;
     }
-    .news-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
-    .news-image { width: 100%; height: 180px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-    .news-image img { width:100%; height:100%; object-fit:cover; display:block; }
-    .news-placeholder { width:100%; height:180px; background:#3D6B35; color:#fff; display:flex; align-items:center; justify-content:center; text-align:center; font-weight:700; padding:10px; }
+
+    .news-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+
+    .news-image {
+      width: 100%;
+      height: 180px;
+      background:#f0f0f0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+
+    .news-image img {
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .news-placeholder {
+      width:100%;
+      height:180px;
+      background:#3D6B35;
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      font-weight:700;
+      padding:10px;
+    }
+
     .news-content { padding: 14px; }
-    .news-title { margin:0 0 8px; font-size:1rem; line-height:1.4; font-weight:700; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-    .news-desc { margin:0 0 10px; font-size:.92rem; color:#555; line-height:1.45; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+    .news-title {
+      margin:0 0 8px;
+      font-size:1rem;
+      line-height:1.4;
+      font-weight:700;
+      display:-webkit-box;
+      -webkit-line-clamp:2;
+      -webkit-box-orient:vertical;
+      overflow:hidden;
+    }
+
+    .news-desc {
+      margin:0 0 10px;
+      font-size:.92rem;
+      color:#555;
+      line-height:1.45;
+      display:-webkit-box;
+      -webkit-line-clamp:3;
+      -webkit-box-orient:vertical;
+      overflow:hidden;
+    }
+
     .news-meta { font-size:.8rem; color:#888; }
   </style>
 </head>
+
 <body>
   <a href="#main" class="skip-link" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">Skip to content</a>
 
@@ -110,7 +167,7 @@
   </footer>
 
   <!-- Modals EN -->
-  <div id="modal-cgu-en" class="modal" style="display:none">
+  <div id="modal-cgu-en" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
       <h2>Terms of Use</h2>
@@ -125,7 +182,7 @@
     </div>
   </div>
 
-  <div id="modal-privacy-en" class="modal" style="display:none">
+  <div id="modal-privacy-en" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
       <h2>Privacy Policy</h2>
@@ -139,7 +196,7 @@
     </div>
   </div>
 
-  <div id="modal-cookies-en" class="modal" style="display:none">
+  <div id="modal-cookies-en" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
       <h2>Cookies</h2>
@@ -156,164 +213,28 @@
     </div>
   </div>
 
-  <script>
-    // Burger + Modals
-    document.addEventListener("DOMContentLoaded", () => {
-      const burger = document.getElementById("burger");
-      const nav = document.querySelector(".nav-links");
-      if (burger && nav) burger.addEventListener("click", () => nav.classList.toggle("active"));
-
-      document.querySelectorAll(".open-modal").forEach(a => {
-        a.addEventListener("click", e => {
-          e.preventDefault();
-          const id = a.getAttribute("data-modal");
-          const m = document.getElementById(id);
-          if (m) m.style.display = "block";
-        });
-      });
-      document.querySelectorAll(".modal .close").forEach(btn => {
-        btn.addEventListener("click", () => btn.closest(".modal").style.display = "none");
-      });
-      window.addEventListener("click", e => {
-        if (e.target.classList.contains("modal")) e.target.style.display = "none";
-      });
-    });
-
-    // ===== RSS (via AllOrigins for CORS) =====
-    const FEED_URL = "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml";
-    async function loadRSS({ containerId, count = 12, lang = "en" }) {
-      const container = document.getElementById(containerId);
-      if (!container) return;
-      const proxy = "https://api.allorigins.win/get?url=" + encodeURIComponent(FEED_URL);
-      try {
-        const res = await fetch(proxy);
-        const json = await res.json();
-        const xml = new DOMParser().parseFromString(json.contents, "text/xml");
-        const items = Array.from(xml.querySelectorAll("item")).slice(0, count);
-
-        items.forEach(item => {
-          const title = item.querySelector("title")?.textContent?.trim() || "Untitled";
-          const link = item.querySelector("link")?.textContent?.trim() || "#";
-          const description = item.querySelector("description")?.textContent || "";
-          const date = new Date(item.querySelector("pubDate")?.textContent || Date.now());
-          let img = item.querySelector("enclosure")?.getAttribute("url") || "";
-          if (!img) {
-            const content = item.getElementsByTagName("content:encoded")[0]?.textContent || "";
-            const m1 = content.match(/<img[^>]+src="([^"]+)"/i);
-            const m2 = !m1 && description.match(/<img[^>]+src="([^"]+)"/i);
-            img = (m1 && m1[1]) || (m2 && m2[1]) || "";
-          }
-
-          const a = document.createElement("a");
-          a.href = link; a.target = "_blank"; a.rel = "noopener";
-          a.className = "news-card";
-          a.innerHTML = `
-            ${img ? `<div class="news-image"><img src="${img}" alt="${title}"></div>`
-                  : `<div class="news-placeholder">${title}</div>`}
-            <div class="news-content">
-              <h3 class="news-title">${title}</h3>
-              <p class="news-desc">${description.replace(/<[^>]*>/g,"").slice(0,180)}${description.length>180?"…":""}</p>
-              <div class="news-meta">${date.toLocaleDateString("en-GB",{year:"numeric",month:"long",day:"numeric"})} – PFBC</div>
-            </div>
-          `;
-          container.appendChild(a);
-        });
-      } catch (e) { console.error("RSS error:", e); }
-    }
-    // Load 12 articles on EN News page
-    loadRSS({ containerId: "news-container", count: 12, lang: "en" });
   <!-- Scripts -->
-<script src="news.js" defer></script>
+  <script src="news.js" defer></script>
+  <script src="menu.js" defer></script>
 
-<!-- ✅ NAVBAR PREMIUM FINALE : menu fluide, overlay flouté, animation dorée -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const navbar = document.querySelector(".navbar");
-  const burger = document.querySelector(".burger");
-  const navLinks = document.querySelector(".nav-links");
-
-  if (!navbar || !burger || !navLinks) return;
-
-  // === Création de l’overlay flouté (fond semi-transparent) ===
-  let overlay = document.querySelector(".menu-overlay");
-  if (!overlay) {
-    overlay = document.createElement("div");
-    overlay.className = "menu-overlay";
-    document.body.appendChild(overlay);
-  }
-
-  // === Ouvrir / fermer le menu mobile ===
-  function openMenu() {
-    navLinks.classList.add("active");
-    overlay.classList.add("active");
-    burger.classList.add("open");
-    navbar.classList.add("menu-open");
-  }
-
-  function closeMenu() {
-    navLinks.classList.remove("active");
-    overlay.classList.remove("active");
-    burger.classList.remove("open");
-    navbar.classList.remove("menu-open");
-  }
-
-  burger.addEventListener("click", (e) => {
-    e.stopPropagation();
-    navLinks.classList.contains("active") ? closeMenu() : openMenu();
-  });
-
-  // === Fermer le menu si on clique ailleurs ou sur un lien ===
-  overlay.addEventListener("click", closeMenu);
-  document.addEventListener("click", (e) => {
-    if (!navLinks.contains(e.target) && !burger.contains(e.target)) closeMenu();
-  });
-  document.querySelectorAll(".nav-links a").forEach(link => {
-    link.addEventListener("click", closeMenu);
-  });
-
-  // === Smooth scroll fluide pour les ancres ===
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener("click", (e) => {
-      const target = document.querySelector(anchor.getAttribute("href"));
-      if (target) {
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Modals
+    document.querySelectorAll(".open-modal").forEach(link => {
+      link.addEventListener("click", e => {
         e.preventDefault();
-        target.scrollIntoView({ behavior: "smooth" });
-      }
+        document.getElementById(link.dataset.modal).style.display = "block";
+      });
+    });
+    document.querySelectorAll(".modal .close").forEach(btn => {
+      btn.addEventListener("click", () => btn.closest(".modal").style.display = "none");
+    });
+    window.addEventListener("click", e => {
+      document.querySelectorAll(".modal").forEach(m => {
+        if (e.target === m) m.style.display = "none";
+      });
     });
   });
-
-  // === Navbar shrink (rétractable au scroll vers le bas) ===
-  let lastScroll = 0;
-  window.addEventListener("scroll", () => {
-    const current = window.scrollY;
-    if (current > lastScroll && current > 60) navbar.classList.add("shrink");
-    else navbar.classList.remove("shrink");
-    lastScroll = current;
-  });
-
-  // === Réinitialisation du menu si retour en desktop ===
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 768) closeMenu();
-  });
-});
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const navLinks = document.querySelectorAll(".nav-links a");
-  const navMenu = document.querySelector(".nav-links");
-  const burger = document.querySelector(".burger");
-  const overlay = document.querySelector(".menu-overlay");
-
-  navLinks.forEach(link => {
-    link.addEventListener("click", () => {
-      // Ferme le menu après clic
-      navMenu.classList.remove("active", "open");
-      burger.classList.remove("open");
-      if (overlay) overlay.classList.remove("active");
-    });
-  });
-});
-</script>
-
+  </script>
 </body>
 </html>
