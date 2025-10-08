@@ -47,12 +47,20 @@ async function loadNews({ xmlUrl, containerId, batch = 10, lang = "fr" }) {
       }
 
       // Nettoyer la description pour garder un texte lisible
-      const description = descriptionRaw.replace(/<[^>]*>/g, "").trim();
+      // + suppression des liens internes <a> pour éviter les ancres imbriquées
+      let description = descriptionRaw
+        .replace(/<a\b[^>]*>([\s\S]*?)<\/a>/gi, "$1")
+        .replace(/<[^>]*>/g, "")
+        .trim();
 
-      const card = document.createElement("a");
-      card.href = link.startsWith("http") ? link : "#";
-      card.target = "_blank";
+      // --- Création de la carte ---
+      const card = document.createElement("article");
       card.className = "news-card";
+
+      // carte cliquable accessible
+      card.addEventListener("click", () => window.open(link, "_blank"));
+      card.setAttribute("role", "link");
+      card.setAttribute("tabindex", "0");
 
       card.innerHTML = `
         <div class="news-image">
@@ -120,9 +128,12 @@ function injectStaticArticles(lang = "fr", container) {
   });
   const source = "CDBG Magazine";
 
-  const card = document.createElement("a");
-  card.href = article.link;
+  const card = document.createElement("article");
   card.className = "news-card";
+  card.addEventListener("click", () => window.open(article.link, "_blank"));
+  card.setAttribute("role", "link");
+  card.setAttribute("tabindex", "0");
+
   card.innerHTML = `
     <div class="news-image">
       <img src="${article.img}" alt="${article.title}">
