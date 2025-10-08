@@ -1758,5 +1758,47 @@ a.news-card:hover {
 
 /* (Page d'accueil) éviter que la hero-overlay “mange” les taps */
 .hero-overlay{ pointer-events: none; }
+/* === CLiquabilité garantie du burger === */
+.navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 2147483000; }
+
+.burger{
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  z-index: 2147483647;                 /* au-dessus de tout */
+  pointer-events: auto !important;
+}
+.burger > div{ width: 22px; height: 2px; background: #fff; margin: 3px 0; border-radius: 2px; }
+
+@media (min-width: 769px){ .burger{ display: none; } }
+
+/* Overlay : ne bloque pas quand inactif */
+.menu-overlay{
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.4);
+  backdrop-filter: blur(8px);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .3s ease, visibility .3s ease;
+  z-index: 2147482000;                 /* sous navbar/burger */
+}
+.menu-overlay.active{ opacity: 1; visibility: visible; pointer-events: all; }
+
+/* Panneau menu mobile */
+@media (max-width: 768px){
+  .nav-links{
+    display: none;
+    position: absolute; top: 100%; left: 0; width: 100%;
+    background: #3D6B35;
+    padding: 12px 0;
+    z-index: 2147483000;               /* sous burger, au-dessus contenu */
+  }
+  .nav-links.active{ display: flex; flex-direction: column; }
+  .nav-links a{ padding: 12px 16px; color: #fff; text-decoration: none; }
+}
+
+/* Si ta page a un gros bandeau .hero-overlay qui recouvre, on le rend traversable */
+.hero-overlay{ pointer-events: none; }
 
 
