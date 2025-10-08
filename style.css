@@ -1995,3 +1995,17 @@ header.hero{
   /* couleur de fond au cas où 1px de “gap” se produirait */
   background-color: #3D6B35;
 }
+/* ===== Navbar mobile : resserrer l'espacement entre les liens ===== */
+@media (max-width: 768px){
+  header .navbar .nav-links{
+    gap: 4px;                 /* si la liste utilise gap, on le réduit */
+  }
+  header .navbar .nav-links > li{
+    margin: 2px 0;            /* fallback si gap n’est pas pris en compte */
+  }
+  header .navbar .nav-links > li > a{
+    padding-block: 10px;      /* était souvent 14–16px : plus compact */
+    padding-inline: 16px;     /* garde une bonne zone de clic horizontale */
+    line-height: 1.25;        /* texte un peu plus serré */
+  }
+}
