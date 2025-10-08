@@ -2008,4 +2008,24 @@ header.hero{
     padding-inline: 16px;     /* garde une bonne zone de clic horizontale */
     line-height: 1.25;        /* texte un peu plus serré */
   }
+}/* === Hero : corrections mobile (FR & EN) =============================== */
+@media (max-width: 768px){
+  /* Remonter légèrement le cadre transparent */
+  header.hero .hero-overlay{
+    transform: translateY(-6vh); /* ajuste à -4vh / -8vh si tu veux */
+  }
 }
+
+/* Éviter la petite bande grise sous la forêt (margin de la 1re section) */
+header.hero + section{
+  margin-top: 0 !important;
+}
+
+/* Sécurité d’affichage du hero selon appareils mobiles récents */
+header.hero{
+  min-height: 100svh;           /* évite les micro-gaps liés aux barres du navigateur */
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
