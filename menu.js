@@ -1,53 +1,58 @@
-// ===============================
-//  MENU BURGER – CDBG GABON
-// ===============================
-// Gère l’ouverture/fermeture du menu burger (accessible & fluide)
-// ===============================
+/* =========================================================
+   menu.js – CDBG version unifiée
+   ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
+  const navbar = document.querySelector(".navbar");
   const burger = document.getElementById("burger");
-  const nav = document.querySelector(".nav-links");
-  if (!burger || !nav) return;
+  const navLinks = document.querySelector(".nav-links");
 
-  function openNav() {
-    nav.classList.add("active");
-    document.body.classList.add("nav-open");
-    burger.setAttribute("aria-expanded", "true");
-  }
-  function closeNav() {
-    nav.classList.remove("active");
-    document.body.classList.remove("nav-open");
-    burger.setAttribute("aria-expanded", "false");
-  }
-  function toggleNav() {
-    if (nav.classList.contains("active")) {
-      closeNav();
-      burger.textContent = "☰";
-    } else {
-      openNav();
-      burger.textContent = "✖";
-    }
+  if (!navbar || !burger || !navLinks) return;
+
+  // Crée un overlay flouté si absent
+  let overlay = document.querySelector(".menu-overlay");
+  if (!overlay) {
+    overlay = document.createElement("div");
+    overlay.className = "menu-overlay";
+    document.body.appendChild(overlay);
   }
 
-  // Click bouton
-  burger.addEventListener("click", toggleNav);
+  // --- Ouvrir / fermer menu ---
+  function openMenu() {
+    navLinks.classList.add("active");
+    overlay.classList.add("active");
+    burger.classList.add("open");
+    burger.textContent = "✖";
+    document.body.style.overflow = "hidden"; // empêche le scroll
+  }
 
-  // Fermer au clic sur un lien
-  nav.querySelectorAll("a").forEach(a => a.addEventListener("click", closeNav));
+  function closeMenu() {
+    navLinks.classList.remove("active");
+    overlay.classList.remove("active");
+    burger.classList.remove("open");
+    burger.textContent = "☰";
+    document.body.style.overflow = ""; // réactive le scroll
+  }
 
-  // Fermer avec Échap
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeNav();
+  burger.addEventListener("click", (e) => {
+    e.stopPropagation();
+    navLinks.classList.contains("active") ? closeMenu() : openMenu();
   });
 
-  // Accessibilité
-  burger.setAttribute("tabindex", "0");
-  burger.setAttribute("aria-label", "Menu principal");
-  burger.setAttribute("aria-expanded", "false");
-  burger.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      toggleNav();
-    }
+  overlay.addEventListener("click", closeMenu);
+
+  // Ferme le menu au clic sur un lien
+  navLinks.querySelectorAll("a").forEach(link =>
+    link.addEventListener("click", closeMenu)
+  );
+
+  // Ferme au clavier (Échap)
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMenu();
+  });
+
+  // Ferme automatiquement si on repasse en mode desktop
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 768) closeMenu();
   });
 });
