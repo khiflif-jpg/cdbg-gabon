@@ -3,22 +3,67 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Le secteur du bois au Gabon : chiffres 2023–2025 &amp; sources officielles – CDBG</title>
-  <meta name="description" content="Analyse CDBG : rôle du secteur du bois au Gabon et à l’international, avec chiffres récents (Banque mondiale 2024) et actualités publiques 2024–2025.">
+  <title>Le secteur du bois au Gabon : chiffres 2023–2025 – CDBG</title>
+  <meta name="description" content="Rôle du secteur du bois dans l’économie du Gabon : chiffres récents (Banque mondiale 2024), transformation locale, gouvernance publique 2024–2025 et priorités 2025.">
   <meta name="theme-color" content="#3D6B35">
   <link rel="canonical" href="https://www.cdbg-gabon.com/article-full2-fr.html">
   <link rel="stylesheet" href="style.css">
-  <!-- Typo tweaks: justify text + lighten weights -->
+  <!-- Styles premium (scopés à l’article) -->
   <style>
-    .article-full .article-title{ font-weight:600; }
-    .article-full .article-meta{ font-weight:400; }
-    .article-full .article-body{ font-weight:400; }
-    .article-full .article-body p,
-    .article-full .article-body li{
-      text-align:justify; text-justify:inter-word; hyphens:auto;
+    .article-full * { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    .article-full-container {
+      background:
+        radial-gradient(900px 300px at 10% 0%, rgba(61,107,53,.06), transparent 50%),
+        radial-gradient(700px 300px at 90% 10%, rgba(61,107,53,.04), transparent 55%);
+      border-radius: 14px;
     }
-    .article-full .article-body strong{ font-weight:600; }
-    .article-full .article-body [style*="font-weight:700"]{ font-weight:600 !important; }
+    .article-cover img { border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.08); }
+
+    /* Typo */
+    .article-full .article-title { font-weight:600; letter-spacing:.2px; }
+    .article-full .article-meta  { font-weight:400; color:#6a6a6a; }
+    .article-full .article-body  { font-weight:400; font-size:1.075rem; color:#222; line-height:1.75; }
+    .article-full .article-body p,
+    .article-full .article-body li { text-align:justify; text-justify:inter-word; hyphens:auto; }
+    .article-full .article-body strong { font-weight:600; }
+
+    /* Intertitres */
+    .article-full .article-body h2 {
+      color:#244a2a; border-left:4px solid #3D6B35; padding-left:.75rem;
+      margin:1.6rem 0 .6rem; letter-spacing:.2px; font-weight:600;
+    }
+
+    /* Chapeau avec drop cap */
+    .article-full .lead { margin-top:.8rem; }
+    .article-full .lead:first-letter {
+      float:left; font-size:3.25rem; line-height:.85; padding-right:.18rem; margin-top:.1rem;
+      color:#3D6B35; font-weight:600;
+    }
+
+    /* Chiffres clés */
+    .keyfig { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:.4rem 0 1.1rem; }
+    .keyfig .card {
+      background: linear-gradient(180deg,#ffffff, #fafdf9);
+      border:1px solid #e7efe6; border-radius:12px; padding:14px; text-align:center;
+      box-shadow: 0 8px 18px rgba(0,0,0,.05), inset 0 1px 0 rgba(255,255,255,.4);
+    }
+    .keyfig .k { font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; color:#6a6a6a; }
+    .keyfig .v { margin-top:6px; font-weight:600; font-size:1.45rem; color:#111; }
+    .keyfig .s { font-size:.85rem; color:#6a6a6a; margin-top:2px; }
+
+    /* Listes */
+    .article-full .article-body ul { padding-left:1.1rem; }
+    .article-full .article-body li { margin:.4rem 0; }
+    .article-full .article-body li::marker { color:#3D6B35; }
+
+    /* Encadré final */
+    .note-premium {
+      border-left:4px solid #3D6B35; padding:.9rem 1rem; background:linear-gradient(180deg,#f7faf7,#fbfdfb);
+      border-radius:8px; color:#2b2b2b; box-shadow: 0 4px 14px rgba(0,0,0,.04);
+    }
+
+    /* Mobile */
+    @media (max-width: 720px){ .keyfig { grid-template-columns:1fr; } }
   </style>
   <link rel="icon" href="logo.png" type="image/png">
 </head>
@@ -26,15 +71,15 @@
 <body>
   <a href="#main" class="skip-link" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">Passer au contenu</a>
 
-  <!-- HEADER (identique, bascule FR/EN entre les 2 versions) -->
+  <!-- HEADER (identique à ton gabarit FR) -->
   <header> 
     <nav class="navbar">
       <div class="logo">
         <img src="logo.webp" alt="CDBG Logo" width="80" height="80">
       </div>
       <div class="nav-flags">
-        <a href="article-full2-fr.html"><img src="fr.png" alt="Français" width="32" height="32" loading="lazy"></a>
-        <a href="article-full2-en.html"><img src="en.png" alt="English" width="32" height="32" loading="lazy"></a>
+        <a href="index.html"><img src="fr.png" alt="Français" width="32" height="32" loading="lazy"></a>
+        <a href="en.html"><img src="en.png" alt="English" width="32" height="32" loading="lazy"></a>
       </div>
       <ul class="nav-links">
         <li><a href="index.html#bitam">Bitam</a></li>
@@ -59,40 +104,41 @@
 
       <!-- IMAGE AU-DESSUS DU TITRE -->
       <figure class="article-cover" style="margin:1rem 0;">
-        <img src="article2.avif" alt="Forêts du Gabon et transformation du bois – CDBG" style="width:100%;height:auto;border-radius:10px;">
+        <img src="article2.avif" alt="Forêts du Gabon et transformation du bois – CDBG" style="width:100%;height:auto;">
       </figure>
 
       <header class="article-header">
         <h1 class="article-title" style="color:#3D6B35;font-size:2rem;line-height:1.2;margin:0 0 .75rem;">
           Le secteur du bois au Gabon : pilier de diversification, d’emploi et de compétitivité durable
         </h1>
-        <div class="article-meta" style="color:#666;margin-bottom:1rem;">
+        <div class="article-meta" style="margin-bottom:1rem;">
           Publié le <time datetime="2025-10-08">8 octobre 2025</time> — Source : CDBG
         </div>
       </header>
 
-      <section class="article-body" style="font-size:1.0625rem;line-height:1.75;color:#222;">
+      <section class="article-body">
 
         <!-- Chiffres clés -->
-        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 1rem;">
-          <div style="border:1px solid #e7e7e7;border-radius:10px;padding:12px;text-align:center;">
-            <div style="font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:#666;">Part du PIB (2023)</div>
-            <div style="font-weight:600;font-size:1.4rem;color:#111;">3,2&nbsp;%</div>
-            <div style="font-size:.85rem;color:#666;">Banque mondiale (14&nbsp;oct.&nbsp;2024)</div>
+        <div class="keyfig" aria-label="Chiffres clés 2023">
+          <div class="card">
+            <div class="k">Part du PIB (2023)</div>
+            <div class="v">3,2&nbsp;%</div>
+            <div class="s">Banque mondiale — 14&nbsp;oct.&nbsp;2024</div>
           </div>
-          <div style="border:1px solid #e7e7e7;border-radius:10px;padding:12px;text-align:center;">
-            <div style="font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:#666;">Part des exportations (2023)</div>
-            <div style="font-weight:600;font-size:1.4rem;color:#111;">6&nbsp;%</div>
-            <div style="font-size:.85rem;color:#666;">Banque mondiale (14&nbsp;oct.&nbsp;2024)</div>
+          <div class="card">
+            <div class="k">Part des exportations (2023)</div>
+            <div class="v">6&nbsp;%</div>
+            <div class="s">Banque mondiale — 14&nbsp;oct.&nbsp;2024</div>
           </div>
-          <div style="border:1px solid #e7e7e7;border-radius:10px;padding:12px;text-align:center;">
-            <div style="font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:#666;">Recettes publiques (2023)</div>
-            <div style="font-weight:600;font-size:1.4rem;color:#111;">41,9&nbsp;Mds&nbsp;FCFA</div>
-            <div style="font-size:.85rem;color:#666;">Banque mondiale (14&nbsp;oct.&nbsp;2024)</div>
+          <div class="card">
+            <div class="k">Recettes publiques (2023)</div>
+            <div class="v">41,9&nbsp;Mds&nbsp;FCFA</div>
+            <div class="s">Banque mondiale — 14&nbsp;oct.&nbsp;2024</div>
           </div>
         </div>
 
-        <p>
+        <!-- Chapeau -->
+        <p class="lead">
           Pays de forêts par excellence, le Gabon s’appuie sur une filière forêt-bois au cœur de sa stratégie de diversification et de création d’emplois. Les données les plus récentes de la <strong>Banque mondiale</strong> confirment son <em>poids macroéconomique</em> : <strong>3,2&nbsp;% du PIB</strong>, <strong>6&nbsp;% des exportations</strong> et <strong>41,9&nbsp;milliards&nbsp;FCFA</strong> de recettes publiques en 2023. Le rapport 2024 souligne aussi que la filière bois est la <strong>première source d’emplois formels privés</strong> du pays.
         </p>
 
@@ -115,11 +161,9 @@
           <li><strong>Productivité industrielle</strong> : investir dans le séchage, la précision au sciage, les panneaux et les finitions pour améliorer marges et compétitivité.</li>
         </ul>
 
-        <div style="border-left:3px solid #3D6B35;padding-left:.9rem;color:#333;background:#f7faf7;border-radius:6px;margin:1rem 0;">
+        <div class="note-premium">
           <strong>À retenir pour CDBG :</strong> poursuivre l’industrialisation et la traçabilité offre le trio gagnant <em>valeur – confiance – accès marché</em>, tout en maximisant l’impact socio-économique au Gabon.
         </div>
-
-        <!-- (Bloc des sources supprimé comme demandé) -->
 
       </section>
 
@@ -129,7 +173,7 @@
     </article>
   </main>
 
-  <!-- FOOTER (identique) -->
+  <!-- FOOTER (identique à ton gabarit FR) -->
   <footer>
     <div class="footer-container">
       <div class="footer-col">
@@ -202,27 +246,26 @@
   <!-- Scripts -->
   <script src="menu.js" defer></script>
   <script src="news.js" defer></script>
-
   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // Modales
-    document.querySelectorAll(".open-modal").forEach(link => {
-      link.addEventListener("click", e => {
-        e.preventDefault();
-        document.getElementById(link.dataset.modal).style.display = "block";
+    document.addEventListener("DOMContentLoaded", () => {
+      // Modales
+      document.querySelectorAll(".open-modal").forEach(link => {
+        link.addEventListener("click", e => {
+          e.preventDefault();
+          document.getElementById(link.dataset.modal).style.display = "block";
+        });
+      });
+
+      document.querySelectorAll(".modal .close").forEach(btn => {
+        btn.addEventListener("click", () => btn.closest(".modal").style.display = "none");
+      });
+
+      window.addEventListener("click", e => {
+        document.querySelectorAll(".modal").forEach(m => {
+          if (e.target === m) m.style.display = "none";
+        });
       });
     });
-
-    document.querySelectorAll(".modal .close").forEach(btn => {
-      btn.addEventListener("click", () => btn.closest(".modal").style.display = "none");
-    });
-
-    window.addEventListener("click", e => {
-      document.querySelectorAll(".modal").forEach(m => {
-        if (e.target === m) m.style.display = "none";
-      });
-    });
-  });
   </script>
 </body>
 </html>
