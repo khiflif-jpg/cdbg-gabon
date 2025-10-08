@@ -488,28 +488,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 <!-- Scripts -->
 <script src="news.js" defer></script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  // --- Smooth scroll — exclut les liens des modaux ---
-  document.querySelectorAll('a[href^="#"]:not(.open-modal)').forEach(anchor => {
-    anchor.addEventListener("click", function (e) {
-      const href = this.getAttribute("href");
-      // Bloquer le comportement par défaut si href="#"
-      if (!href || href === "#") {
-        e.preventDefault();
-        return;
-      }
 
-      const target = document.querySelector(href);
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: "smooth" });
-        const navLinks = document.querySelector(".nav-links");
-        if (navLinks && navLinks.classList.contains("active"))
-          navLinks.classList.remove("active");
-      }
-    });
-  });
 
   // --- Gestion des modales ---
   document.querySelectorAll(".open-modal").forEach(link => {
@@ -533,110 +512,59 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-</script>
-    <!-- === Fermeture intelligente du menu mobile === -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const navLinks = document.querySelector('.nav-links');
-  const burger = document.querySelector('.burger');
-  const closeIcon = document.querySelector('.close');
-
-  // ✅ Fermer le menu lorsqu'on clique sur un lien (et laisser le lien fonctionner)
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('active');
-    });
-  });
-
-  // ✅ Fermer le menu si on clique ailleurs ou sur le fond du menu
-  document.addEventListener('click', (e) => {
-    const isClickInsideMenu = navLinks.contains(e.target);
-    const isClickOnBurger = burger.contains(e.target);
-    const isClickOnClose = closeIcon && closeIcon.contains(e.target);
-    const isMenuActive = navLinks.classList.contains('active');
-
-    // Si le menu est ouvert, qu'on clique sur le fond ou en dehors, il se ferme
-    if (isMenuActive && (!isClickInsideMenu || e.target === navLinks) && !isClickOnBurger && !isClickOnClose) {
-      navLinks.classList.remove('active');
-    }
-  });
-});
- <!-- Scripts -->
+<!-- Scripts -->
 <script src="news.js" defer></script>
 
-<!-- ✅ NAVBAR PREMIUM : overlay + burger animé + fermeture partout + shrink -->
+<!-- ✅ NAVBAR PREMIUM FINALE : menu fluide, overlay flouté, animation dorée -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const navbar  = document.querySelector(".navbar");
-  const burger  = document.querySelector(".burger") || document.getElementById("burger");
+  const navbar = document.querySelector(".navbar");
+  const burger = document.querySelector(".burger");
   const navLinks = document.querySelector(".nav-links");
+
   if (!navbar || !burger || !navLinks) return;
 
-  // 1) Assainir l’état initial (évite conflicts d’anciens scripts)
-  navLinks.classList.remove("active", "open");
-  ["display","opacity","transform"].forEach(p => navLinks.style[p] = "");
-
-  // 2) Fabriquer les 3 barres si le burger ne contient pas déjà des lignes
-  if (!burger.querySelector(".line")) {
-    burger.textContent = ""; // efface ☰ éventuel
-    for (let i = 0; i < 3; i++) {
-      const line = document.createElement("div");
-      line.className = "line";
-      burger.appendChild(line);
-    }
-  }
-
-  // 3) Overlay flouté (une seule fois)
+  // === Création de l’overlay flouté (fond semi-transparent) ===
   let overlay = document.querySelector(".menu-overlay");
   if (!overlay) {
     overlay = document.createElement("div");
     overlay.className = "menu-overlay";
     document.body.appendChild(overlay);
-  } else {
-    overlay.classList.remove("active");
   }
 
-  const isOpen = () => navLinks.classList.contains("active");
-
-  function openMenu(){
+  // === Ouvrir / fermer le menu mobile ===
+  function openMenu() {
     navLinks.classList.add("active");
     overlay.classList.add("active");
     burger.classList.add("open");
+    navbar.classList.add("menu-open");
   }
-  function closeMenu(){
+
+  function closeMenu() {
     navLinks.classList.remove("active");
     overlay.classList.remove("active");
     burger.classList.remove("open");
+    navbar.classList.remove("menu-open");
   }
 
-  // 4) Toggle via burger
   burger.addEventListener("click", (e) => {
     e.stopPropagation();
-    isOpen() ? closeMenu() : openMenu();
+    navLinks.classList.contains("active") ? closeMenu() : openMenu();
   });
 
-  // 5) Fermeture au clic partout hors menu
-  document.addEventListener("click", (e) => {
-    if (!isOpen()) return;
-    const clickInsideMenu   = navLinks.contains(e.target);
-    const clickOnBurger     = burger.contains(e.target);
-    const clickOnNavbarLink = e.target.closest(".nav-links a");
-    if (!clickInsideMenu && !clickOnBurger && !clickOnNavbarLink) {
-      closeMenu();
-    }
-  });
-
-  // 6) Fermeture au clic sur overlay et sur chaque lien
+  // === Fermer le menu si on clique ailleurs ou sur un lien ===
   overlay.addEventListener("click", closeMenu);
-  navLinks.addEventListener("click", (e) => {
-    if (e.target.tagName === "A") closeMenu();
-    e.stopPropagation(); // ne pas transmettre au document
+  document.addEventListener("click", (e) => {
+    if (!navLinks.contains(e.target) && !burger.contains(e.target)) closeMenu();
+  });
+  document.querySelectorAll(".nav-links a").forEach(link => {
+    link.addEventListener("click", closeMenu);
   });
 
-  // 7) Smooth scroll interne
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener("click", (e) => {
-      const target = document.querySelector(a.getAttribute("href"));
+  // === Smooth scroll fluide pour les ancres ===
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener("click", (e) => {
+      const target = document.querySelector(anchor.getAttribute("href"));
       if (target) {
         e.preventDefault();
         target.scrollIntoView({ behavior: "smooth" });
@@ -644,16 +572,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 8) Navbar shrink (rétractable au scroll)
-  let last = 0;
+  // === Navbar shrink (rétractable au scroll vers le bas) ===
+  let lastScroll = 0;
   window.addEventListener("scroll", () => {
-    const y = window.scrollY;
-    if (y > last && y > 60) { navbar.classList.add("shrink"); }
-    else { navbar.classList.remove("shrink"); }
-    last = y;
+    const current = window.scrollY;
+    if (current > lastScroll && current > 60) navbar.classList.add("shrink");
+    else navbar.classList.remove("shrink");
+    lastScroll = current;
   });
 
-  // 9) Sécurité : reset en desktop
+  // === Réinitialisation du menu si retour en desktop ===
   window.addEventListener("resize", () => {
     if (window.innerWidth > 768) closeMenu();
   });
