@@ -1805,3 +1805,66 @@ a.news-card:hover {
 .menu-overlay { z-index: 2000; pointer-events: none; }
 .menu-overlay.active { pointer-events: auto; }
 
+/* ===== Hard fix mobile menu (mettre tout en bas de style.css) ===== */
+.hero { position: relative; }
+
+/* Nav au-dessus de tout */
+.navbar { position: sticky; top: 0; z-index: 5000; }
+.burger {
+  position: relative; z-index: 6000;
+  width: 44px; height: 36px;
+  display: flex; flex-direction: column; justify-content: center; gap: 6px;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.burger .line {
+  display: block; height: 3px; width: 28px; border-radius: 2px;
+  background: linear-gradient(90deg,#E4C26A,#FAE79F,#E4C26A);
+  box-shadow: 0 0 8px rgba(228,194,106,.45);
+  transition: transform .25s ease, opacity .25s ease;
+}
+.burger.open .line:nth-child(1){ transform: translateY(9px) rotate(45deg); }
+.burger.open .line:nth-child(2){ opacity: 0; }
+.burger.open .line:nth-child(3){ transform: translateY(-9px) rotate(-45deg); }
+
+/* Overlay : inoffensif quand inactif */
+.menu-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.35);
+  opacity: 0; pointer-events: none;
+  transition: opacity .2s ease;
+  z-index: 4500;
+}
+.menu-overlay.active { opacity: 1; pointer-events: auto; }
+
+/* Panneau off-canvas */
+.nav-links {
+  list-style: none; margin: 0;
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: 78%; max-width: 360px;
+  padding: 80px 24px 24px;
+  background: #fff;
+  transform: translateX(100%); transition: transform .25s ease;
+  z-index: 5500; box-shadow: -12px 0 28px rgba(0,0,0,.08);
+  pointer-events: none; /* <— ne bloque JAMAIS le burger quand fermé */
+}
+.nav-links.active { transform: translateX(0); pointer-events: auto; }
+
+.nav-links li { margin: 0 0 14px; }
+.nav-links a { display: block; padding: 10px 6px; border-bottom: 1px solid rgba(0,0,0,.06); color: #1a1a1a; text-decoration: none; }
+.nav-links a.active { color: #3D6B35; font-weight: 700; }
+
+@media (min-width: 769px) {
+  .burger { display: none; }
+  .nav-links {
+    position: static; transform: none; box-shadow: none;
+    padding: 0; width: auto; max-width: none;
+    display: flex; gap: 18px; pointer-events: auto;
+  }
+  .menu-overlay { display: none; }
+}
+
+/* Empêche le scroll de fond quand le menu est ouvert */
+.no-scroll { overflow: hidden; }
+
+/* S'assurer que le contenu "hero" n'écrase pas la navbar */
+.hero-overlay { position: relative; z-index: 1; }
