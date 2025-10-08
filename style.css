@@ -1524,4 +1524,145 @@ a.news-card:hover {
   .nav-links a::after {
     display: none;
   }
+}/* ==========================================================
+   🍃 NAVBAR & MENU MOBILE PREMIUM – CDBG
+   ========================================================== */
+
+/* === Burger doré animé === */
+.burger {
+  position: relative;
+  width: 36px;
+  height: 26px;
+  cursor: pointer;
+  z-index: 1003;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease;
 }
+
+.burger div {
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, #d4b663, #f5d98b); /* doré */
+  border-radius: 2px;
+  transition: all 0.4s ease;
+  box-shadow: 0 0 5px rgba(245, 217, 139, 0.5);
+}
+
+.burger:hover div {
+  box-shadow: 0 0 10px rgba(255, 230, 150, 0.8);
+  transform: scaleX(1.05);
+}
+
+.burger.open div:nth-child(1) {
+  transform: translateY(11px) rotate(45deg);
+}
+.burger.open div:nth-child(2) {
+  opacity: 0;
+}
+.burger.open div:nth-child(3) {
+  transform: translateY(-11px) rotate(-45deg);
+}
+
+/* === Overlay vert semi-transparent (sans flou) === */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(61, 107, 53, 0.85); /* vert CDBG, léger voile */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 1001;
+}
+.menu-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* === Navigation mobile === */
+.nav-links {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 75%;
+  max-width: 320px;
+  height: 100vh;
+  background: #3D6B35; /* fond vert solide */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.6rem;
+  list-style: none;
+  transition: right 0.4s ease;
+  z-index: 1002;
+}
+
+.nav-links.active {
+  right: 0;
+}
+
+/* === Liens du menu === */
+.nav-links a {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* effet doré au survol */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #d4b663, #f5d98b);
+  transition: width 0.3s ease;
+}
+.nav-links a:hover::after {
+  width: 100%;
+}
+.nav-links a:hover {
+  color: #f5d98b;
+}
+
+/* === Navbar shrink (au scroll) === */
+.navbar.shrink {
+  background: rgba(61, 107, 53, 0.95);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* === Desktop (réinitialisation) === */
+@media (min-width: 769px) {
+  .burger, .menu-overlay {
+    display: none;
+  }
+
+  .nav-links {
+    position: static;
+    flex-direction: row;
+    background: none;
+    height: auto;
+    gap: 1rem;
+    justify-content: flex-end;
+    align-items: center;
+    width: auto;
+  }
+
+  .nav-links a::after {
+    bottom: -6px;
+  }
+}
+
