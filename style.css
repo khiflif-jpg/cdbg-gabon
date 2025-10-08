@@ -1094,3 +1094,52 @@ button:focus-visible,
   width: 100%;
   left: 0;
 }
+/* =========================================================
+   🍔 BURGER ANIMÉ (3 barres → croix fluide)
+   ========================================================= */
+.burger {
+  width: 30px;
+  height: 22px;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  z-index: 1001;
+}
+
+.burger div {
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background-color: #3D6B35; /* vert signature */
+  border-radius: 3px;
+  transition: all 0.35s ease;
+}
+
+.burger div:nth-child(1) { top: 0; }
+.burger div:nth-child(2) { top: 9px; }
+.burger div:nth-child(3) { top: 18px; }
+
+.burger.open div:nth-child(1) {
+  transform: rotate(45deg);
+  top: 9px;
+}
+
+.burger.open div:nth-child(2) {
+  opacity: 0;
+}
+
+.burger.open div:nth-child(3) {
+  transform: rotate(-45deg);
+  top: 9px;
+}
+
+/* =========================================================
+   🌿 NAVBAR SHRINK (rétractable au scroll)
+   ========================================================= */
+.navbar.shrink {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 8px 0;
+  transition: all 0.4s ease;
+}
