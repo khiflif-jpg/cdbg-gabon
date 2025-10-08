@@ -1234,3 +1234,12 @@ button:focus-visible,
   .nav-links a:hover::after{ width:100%; left:0; }
   .nav-links a:hover{ transform: scale(1.04); color:#cdeac0; }
 }
+/* Corrige les clics bloqués par le menu mobile */
+.nav-links a {
+  position: relative;
+  z-index: 1003; /* au-dessus de l’overlay */
+}
+
+.menu-overlay {
+  pointer-events: auto;
+}
