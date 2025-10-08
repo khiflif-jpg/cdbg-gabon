@@ -934,39 +934,4 @@ img[src*="elephant_forest.webp"] {
   #forest-news {
     margin-top: 100px;
   }
-}/* =========================================================
-   ✅ FIX CLICS MENU (desktop + mobile)
-   ========================================================= */
-
-/* S'assure que les liens du menu soient cliquables */
-.navbar,
-.nav-links,
-.nav-links li,
-.nav-links a {
-  position: relative;
-  z-index: 2000 !important;
-  pointer-events: auto !important;
-}
-
-/* Empêche les autres éléments (overlay, hero, etc.) de bloquer les clics */
-.menu-overlay {
-  z-index: 1500 !important;
-  pointer-events: none !important;
-}
-
-/* Si la hero image ou autre section est trop haute */
-.hero,
-.hero * {
-  position: relative;
-  z-index: 1 !important;
-}
-
-/* Pour forcer la navbar à rester au-dessus du contenu */
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 3000 !important;
-}
 
