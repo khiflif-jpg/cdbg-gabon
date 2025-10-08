@@ -1034,5 +1034,96 @@ a.news-card {
 a.news-card:hover {
   text-decoration: none;
 }
+/* ==========================================================
+   📰 Cartes d’actualités – design harmonisé CDBG
+   ========================================================== */
+.news-section {
+  padding: 60px 20px;
+  background: #f9faf9;
+}
+
+.news-section h2 {
+  text-align: center;
+  color: #3D6B35;
+  font-size: 2rem;
+  margin-bottom: 40px;
+}
+
+/* === Grille des cartes === */
+.news-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* === Carte d’une actu === */
+.news-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+}
+
+.news-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* === Image === */
+.news-image img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+/* === Contenu === */
+.news-content {
+  padding: 16px 20px;
+  flex-grow: 1;
+}
+
+.news-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2E4D27;
+  margin: 0 0 10px;
+  line-height: 1.3;
+}
+
+.news-desc {
+  font-size: 0.96rem;
+  color: #444;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.news-meta {
+  font-size: 0.85rem;
+  color: #666;
+  text-align: right;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .news-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .news-image img {
+    height: 200px;
+  }
+}
 
 
