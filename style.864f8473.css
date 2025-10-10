@@ -223,3 +223,35 @@ body.menu-open {
   text-align: center;
   z-index: 99998 !important;
 }
+/* === FIX ULTRA SIMPLE : réactive le clic du menu sans changer le HTML === */
+
+/* Le nav entier flotte au-dessus de tout le hero */
+.hero .navbar {
+  position: relative !important;
+  z-index: 99999 !important;
+  pointer-events: auto !important;
+}
+
+/* Le hero overlay n'intercepte plus les clics dans la zone haute */
+.hero-overlay {
+  position: relative !important;
+}
+.hero-overlay::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px; /* zone cliquable du header */
+  pointer-events: none !important;
+  background: transparent;
+  z-index: 1;
+}
+
+/* Burger par-dessus tout */
+#burger {
+  position: relative !important;
+  z-index: 100000 !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
