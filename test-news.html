@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test News PFBC – CDBG</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f8f9f8; color:#222; padding:2rem; }
+    h1 { text-align:center; color:#3D6B35; }
+    .news-grid { 
+      display:grid; 
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); 
+      gap:1.5rem; margin-top:2rem; 
+    }
+    .news-card { 
+      background:white; 
+      border-radius:12px; 
+      padding:1rem; 
+      box-shadow:0 2px 5px rgba(0,0,0,0.1);
+      transition:transform 0.2s;
+    }
+    .news-card:hover { transform:translateY(-3px); }
+    .news-card img { 
+      width:100%; 
+      height:auto; 
+      border-radius:8px; 
+      margin-bottom:0.5rem;
+    }
+    .meta { color:#777; font-size:0.9rem; margin-bottom:0.3rem; }
+    .btn { 
+      display:inline-block; 
+      background:#3D6B35; 
+      color:white; 
+      padding:0.4rem 0.8rem; 
+      text-decoration:none; 
+      border-radius:5px; 
+      font-size:0.9rem; 
+    }
+  </style>
+</head>
+<body>
+  <h1>📰 Test du flux PFBC (via news.js)</h1>
+
+  <div id="news-feed" class="news-grid"></div>
+
+  <script defer src="js/news.js"></script>
+</body>
+</html>
