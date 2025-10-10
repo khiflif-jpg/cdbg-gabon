@@ -70,3 +70,61 @@ body.menu-open {
   text-align: center;
   z-index: 9998 !important;
 }
+/* === FIX FINAL CDBG : Navbar fixe, transparente et 100 % cliquable === */
+
+/* Navbar toujours au premier plan et cliquable */
+.navbar {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 99999 !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1.5rem;
+  background: rgba(255, 255, 255, 0.12); /* garde ta transparence */
+  backdrop-filter: blur(10px);
+  pointer-events: auto !important;
+}
+
+/* Burger cliquable et prioritaire */
+#burger {
+  position: relative !important;
+  z-index: 100000 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* Corrige le hero : il ne bloque plus les clics */
+.hero,
+.hero-overlay {
+  position: relative !important;
+  z-index: 1 !important;
+  pointer-events: none !important; /* ne bloque plus les clics sur la navbar */
+}
+
+/* Réactive les clics à l’intérieur du hero */
+.hero-overlay a,
+.hero-overlay button {
+  pointer-events: auto !important;
+}
+
+/* Menu mobile (quand ouvert) */
+.nav-links.open {
+  display: flex !important;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.95);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding: 1.5rem;
+  text-align: center;
+  z-index: 99998 !important;
+}
+
+/* Bloque le scroll quand menu ouvert */
+body.menu-open {
+  overflow: hidden !important;
+}
