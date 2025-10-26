@@ -75,7 +75,7 @@
       <p>Wood Industries Promotion Agency (APIB)</p>
       <p>Forest Stewardship Council (FSC Africa)</p>
       <p>www.cdbg-gabon.com/actualites</p>
-      
+
       <p>Compagnie Durable du Bois au Gabon</p>
       <p>Copyright © 2025 CDBG</p>
 
@@ -86,23 +86,96 @@
   <footer>
     <div class="footer-container">
       <div class="footer-col">
-        <h4>Quick links</h4>
-        <ul>
-          <li><a href="en.html">Home</a></li>
-          <li><a href="articles-en.html">Articles</a></li>
-          <li><a href="actualites-en.html">News</a></li>
-          <li><a href="contact-en.html">Contact</a></li>
-          <li><a href="legal.html">Legal notice</a></li>
-        </ul>
+        <h4>Compagnie Durable du Bois in Gabon</h4>
+        <p>Responsible forestry for a sustainable future</p>
+        <p>RCCM No.: GA-LBV-01-2025-B16-00034</p>
       </div>
       <div class="footer-col">
-        <h4>Compagnie Durable du Bois in Gabon (CDBG)</h4>
-        <p>Responsible forestry for a sustainable future.</p>
-        <p><a href="mailto:contact@cdbg-gabon.com">contact@cdbg-gabon.com</a></p>
+        <h4>Contact</h4>
+        <p>Libreville, Gabon</p>
+        <p>+241 77 25 9169</p>
+      </div>
+      <div class="footer-col">
+        <h4>Legal notice</h4>
+        <ul>
+          <li><a href="#" class="open-modal" data-modal="modal-terms-en">Terms and Conditions</a></li>
+          <li><a href="#" class="open-modal" data-modal="modal-privacy-en">Privacy Policy</a></li>
+          <li><a href="#" class="open-modal" data-modal="modal-cookies-en">Cookies</a></li>
+        </ul>
       </div>
     </div>
-    <p style="text-align:center">&copy; 2025 CDBG. All rights reserved.</p>
+    <div class="footer-bottom">
+      <p>© 2025 Compagnie Durable du Bois in Gabon. All rights reserved.</p>
+    </div>
   </footer>
+
+  <!-- Modals EN -->
+  <div id="modal-terms-en" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Terms and Conditions</h2>
+      <p>These Terms and Conditions govern access to and use of the website of Compagnie Durable du Bois in Gabon (CDBG). By accessing the website, you agree to these terms without reservation.</p>
+      <p>All content is protected by intellectual property law and any unauthorized use is prohibited.</p>
+      <p><strong>Publisher:</strong> Compagnie Durable du Bois in Gabon (CDBG), RCCM No. GA-LBV-01-2025-B16-00034, registered office: Ancien Sobraga, Libreville, BP 4447, Gabon.</p>
+      <p><strong>Hosting:</strong> GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.</p>
+      <p><strong>Access:</strong> Free access (excluding Internet connection costs borne by the user).</p>
+      <p><strong>Intellectual Property:</strong> All content (texts, images, logos, videos, etc.) is protected by copyright and intellectual property laws in force in Gabon. Any unauthorized reproduction or use is strictly prohibited.</p>
+      <p><strong>Liability:</strong> CDBG makes every effort to ensure the accuracy of published information but cannot be held responsible for errors, omissions, or site unavailability.</p>
+      <p><strong>Applicable law:</strong> Gabonese law. Any dispute falls under the exclusive jurisdiction of the Gabonese courts.</p>
+    </div>
+  </div>
+
+  <div id="modal-privacy-en" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Privacy Policy</h2>
+      <p>In accordance with Law No.001/2011 on the protection of personal data in the Republic of Gabon, CDBG is committed to protecting users’ personal data.</p>
+      <p><strong>Data collected:</strong> name, email address, phone number, subject of the message, and any information voluntarily provided via the contact form.</p>
+      <p><strong>Purposes:</strong> respond to contact requests, manage business relationships, and follow up on partnerships.</p>
+      <p><strong>Retention:</strong> only for the time necessary for the stated purposes, in accordance with legal time limits.</p>
+      <p><strong>Recipients:</strong> CDBG only; no transfer to third parties without consent, except where required by law.</p>
+      <p><strong>Rights:</strong> access, rectification, deletion, objection. Requests may be sent to: CDBG, BP 4447, Libreville, Gabon.</p>
+      <p><strong>Security:</strong> appropriate technical and organizational measures to protect data from unauthorized access, loss, or alteration.</p>
+    </div>
+  </div>
+
+  <div id="modal-cookies-en" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Cookies</h2>
+      <p>When browsing the CDBG website, cookies may be stored on the user’s device.</p>
+      <p><strong>Definition:</strong> a small text file saved by the browser to facilitate navigation and audience measurement.</p>
+      <p><strong>Types:</strong> technical cookies necessary for site operation; audience measurement cookies (anonymized statistics).</p>
+      <p><strong>Purpose:</strong> improve user experience and optimize site performance.</p>
+      <p><strong>Settings:</strong> users can disable cookies in their browser settings (Chrome, Firefox, Safari, Edge, etc.). Some features may be affected.</p>
+      <p><strong>Consent:</strong> by continuing to browse this site, you agree to the use of cookies in accordance with this policy.</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="menu.js" defer></script>
+  <script src="news.js" defer></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Modales
+      document.querySelectorAll(".open-modal").forEach(link => {
+        link.addEventListener("click", e => {
+          e.preventDefault();
+          document.getElementById(link.dataset.modal).style.display = "block";
+        });
+      });
+
+      document.querySelectorAll(".modal .close").forEach(btn => {
+        btn.addEventListener("click", () => btn.closest(".modal").style.display = "none");
+      });
+
+      window.addEventListener("click", e => {
+        document.querySelectorAll(".modal").forEach(m => {
+          if (e.target === m) m.style.display = "none";
+        });
+      });
+    });
+  </script>
 </body>
 </html>
-
