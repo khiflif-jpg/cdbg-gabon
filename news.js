@@ -30,7 +30,7 @@
       img:"article2.avif", link:"article-full2-en.html", date:"2025-09-20" },
 
     { lang:"fr", title:"Nkok : vitrine du développement industriel durable du Gabon",
-      description:"La Zone Économique Spéciale de Nkog illustre la réussite du modèle gabonais alliant industrialisation, durabilité et emploi local.",
+      description:"La Zone Économique Spéciale de Nkok illustre la réussite du modèle gabonais alliant industrialisation, durabilité et emploi local.",
       img:"nkok.avif", link:"article-full3-fr.html", date:"2025-10-26" },
     { lang:"en", title:"Nkok: showcase of Gabon’s sustainable industrial development",
       description:"The Nkok Special Economic Zone highlights Gabon’s success in combining industrial growth, sustainability, and local employment.",
@@ -68,7 +68,7 @@
     wrapper.innerHTML = `
       <a href="${a.link}" class="news-card" ${isRSS ? 'target="_blank" rel="noopener noreferrer"' : ""}>
         <div class="news-image">
-          <img src="${a.img}" alt="${a.title}">
+          <img src="${a.img || ""}" alt="${a.title}">
         </div>
         <div class="news-content">
           <h3 class="news-title">${a.title}</h3>
@@ -80,11 +80,15 @@
     return wrapper.firstElementChild;
   };
 
+  // garde l'image si on en a une, sinon supprime proprement le bloc image
   const createCardSafe = (a) => {
     const el = createCard(a);
-    if (!a.img) {
-      const imgBlock = el.querySelector(".news-image");
-      if (imgBlock) imgBlock.remove();
+    const hasImg = a.img && String(a.img).trim().length > 0;
+    const imgBlock = el.querySelector(".news-image");
+    if (!hasImg && imgBlock) imgBlock.remove();
+    else if (hasImg) {
+      const img = imgBlock?.querySelector("img");
+      if (img) img.src = a.img;
     }
     return el;
   };
@@ -123,7 +127,7 @@
     return link ? link.getAttribute("href") : null;
   };
 
-  // parseRSS avec correction 404 (URL absolues, entités HTML, fallback sur guid/description)
+  // parseRSS — conserve les URLs rss.app telles quelles (ne "déroule" pas), et récupère une image si possible
   const parseRSS = async (url) => {
     const absUrl = new URL(url, location.href).toString();
     const res = await fetch(absUrl).catch(() => null);
@@ -144,53 +148,83 @@
     };
     const toAbsolute = (raw, base) => {
       if (!raw) return null;
-      let s = decodeEntities(raw).trim()
-        .replace(/\u00A0/g, " ")
-        .replace(/&amp;/g, "&");
-      if (/^\/\//.test(s)) s = "https:" + s;
-      try { return new URL(s, base).toString(); }
-      catch {
-        try { return new URL("https://" + s).toString(); }
-        catch { return null; }
-      }
+      // NE PAS réécrire les liens déjà absolus (ex: rss.app redirect)
+      if (/^https?:\/\//i.test(raw)) return raw.trim();
+      if (/^\/\//.test(raw)) return ("https:" + raw).trim();
+      try { return new URL(raw, base).toString(); }
+      catch { return null; }
     };
-    const firstHrefIn = (html) => {
+    const firstAttrFrom = (html, attr) => {
       if (!html) return null;
-      const m = html.match(/href\s*=\s*"(.*?)"/i);
+      const rx = new RegExp(attr + '\\s*=\\s*"(.*?)"', "i");
+      const m = html.match(rx);
       return m ? m[1] : null;
+    };
+
+    const pickImage = (it, base) => {
+      const mediaContent = it.querySelector("media\\:content, content")?.getAttribute?.("url");
+      const mediaThumb   = it.querySelector("media\\:thumbnail, thumbnail")?.getAttribute?.("url");
+      const enclosure    = (() => {
+        const enc = it.querySelector("enclosure");
+        if (!enc) return null;
+        const type = (enc.getAttribute("type") || "").toLowerCase();
+        const url  = enc.getAttribute("url");
+        return /^image\//.test(type) ? url : null;
+      })();
+      const contentEncoded = it.getElementsByTagName("content:encoded")?.[0]?.textContent || "";
+      const desc = it.querySelector("description")?.textContent || "";
+      const imgInContent = firstAttrFrom(contentEncoded, "src") || firstAttrFrom(desc, "src");
+
+      const candidates = [mediaContent, mediaThumb, enclosure, imgInContent].filter(Boolean);
+      for (const c of candidates) {
+        const abs = toAbsolute(decodeEntities(c), base);
+        if (abs) return abs;
+      }
+      return ""; // rien de fiable
     };
 
     const items = Array.from(xml.querySelectorAll("item"));
     return items.map((it) => {
       const title = it.querySelector("title")?.textContent?.trim() || "";
-      const linkText = it.querySelector("link")?.textContent?.trim() || "";
+      const linkRaw = it.querySelector("link")?.textContent?.trim() || "";
       const guidNode = it.querySelector("guid");
       const guidText = guidNode?.textContent?.trim() || "";
       const guidIsPermalink = (guidNode?.getAttribute("isPermaLink") || "").toLowerCase() === "true";
-      const desc = it.querySelector("description")?.textContent || "";
+      const contentEncoded = it.getElementsByTagName("content:encoded")?.[0]?.textContent || "";
+      const descRaw = it.querySelector("description")?.textContent || "";
 
-      const candidates = [
-        linkText,
-        (guidIsPermalink || /^https?:\/\//i.test(guidText)) ? guidText : null,
-        firstHrefIn(desc)
-      ].filter(Boolean);
+      // Lien : on garde <link> tel quel s'il est absolu (incl. rss.app). Sinon on retombe sur guid/href.
+      let finalLink = linkRaw && /^https?:\/\//i.test(linkRaw)
+        ? linkRaw.trim()
+        : null;
 
-      let finalLink = null;
-      for (const c of candidates) {
-        const abs = toAbsolute(c, channelLink);
-        if (abs) { finalLink = abs; break; }
+      if (!finalLink) {
+        const hrefContent = firstAttrFrom(contentEncoded, "href");
+        const hrefDesc    = firstAttrFrom(descRaw, "href");
+        const linkCandidates = [
+          (guidIsPermalink || /^https?:\/\//i.test(guidText)) ? guidText : null,
+          hrefContent,
+          hrefDesc
+        ].filter(Boolean);
+
+        for (const c of linkCandidates) {
+          const abs = toAbsolute(decodeEntities(c), channelLink);
+          if (abs) { finalLink = abs; break; }
+        }
       }
-      if (!finalLink) finalLink = toAbsolute(linkText || guidText, channelLink) || "#";
+      if (!finalLink) finalLink = "#";
+
+      const img = pickImage(it, channelLink);
 
       const pubDate = it.querySelector("pubDate")?.textContent?.trim() || "";
       const dateISO = pubDate ? new Date(pubDate).toISOString().slice(0, 10) : "1970-01-01";
 
       return {
-        // ⚠️ pas de "lang" → le RSS apparaît en FR & EN (règle d’affichage)
+        // ⚠️ pas de "lang" → le RSS apparaît en FR & EN
         title,
-        description: decodeEntities(desc).replace(/<[^>]+>/g, "").trim().slice(0, 300),
-        img: "",
-        link: finalLink,   // ✅ URL absolue, nettoyée
+        description: decodeEntities(descRaw).replace(/<[^>]+>/g, "").trim().slice(0, 300),
+        img,              // ✅ image si trouvée
+        link: finalLink,  // ✅ lien conservé tel quel si rss.app, sinon absolutisé
         date: dateISO,
         _isRSS: true
       };
@@ -270,7 +304,7 @@
         const mergedForPreview = [...rssForPage, ...localsForPage]
           .sort((a, b) => (a.date < b.date ? 1 : -1));
 
-        clearAndInjectMultiple(previewTargets, mergedForPreview, true); // réinjection safe (ouvre les liens RSS en _blank)
+        clearAndInjectMultiple(previewTargets, mergedForPreview, true); // réinjection safe
       } catch {
         // on garde les locales déjà injectées
       }
