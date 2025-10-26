@@ -64,6 +64,11 @@
   // --------- Helpers : rendu ----------
   const createCard = (a) => {
     const isRSS = a._isRSS === true;
+    const pageLang = getLang();
+    const meta = isRSS
+      ? `${formatDate(a.date, pageLang)} - PFBC - ${SITE_BRAND}`
+      : `${formatDate(a.date, a.lang)} — ${SITE_BRAND}`;
+
     const wrapper = document.createElement("div");
     wrapper.innerHTML = `
       <a href="${a.link}" class="news-card" ${isRSS ? 'target="_blank" rel="noopener noreferrer"' : ""}>
@@ -73,7 +78,7 @@
         <div class="news-content">
           <h3 class="news-title">${a.title}</h3>
           <p class="news-desc">${a.description}</p>
-          <div class="news-meta">${formatDate(a.date, a.lang)} — ${SITE_BRAND}</div>
+          <div class="news-meta">${meta}</div>
         </div>
       </a>
     `.trim();
@@ -98,10 +103,9 @@
     container.innerHTML = "";
     items.forEach((a) => container.appendChild(safe ? createCardSafe(a) : createCard(a)));
   };
-
-  function clearAndInjectMultiple(containers, items, safe = false) {
+  const clearAndInjectMultiple = (containers, items, safe = false) => {
     containers.forEach(ctn => clearAndInject(ctn, items, safe));
-  }
+  };
 
   // --------- Grille : colonnes 3/2/1 ----------
   function enforceGridColumns(containerList) {
@@ -127,7 +131,7 @@
     return link ? link.getAttribute("href") : null;
   };
 
-  // parseRSS — conserve les URLs rss.app telles quelles (ne "déroule" pas), et récupère une image si possible
+  // Images + liens (préserve rss.app), + fallback robustes
   const parseRSS = async (url) => {
     const absUrl = new URL(url, location.href).toString();
     const res = await fetch(absUrl).catch(() => null);
@@ -140,25 +144,15 @@
 
     const channelLink = xml.querySelector("channel > link")?.textContent?.trim() || absUrl;
 
-    const decodeEntities = (s) => {
-      if (!s) return s;
-      const ta = document.createElement("textarea");
-      ta.innerHTML = s;
-      return ta.value;
-    };
+    const decodeEntities = (s) => { if (!s) return s; const ta = document.createElement("textarea"); ta.innerHTML = s; return ta.value; };
     const toAbsolute = (raw, base) => {
       if (!raw) return null;
-      // NE PAS réécrire les liens déjà absolus (ex: rss.app redirect)
-      if (/^https?:\/\//i.test(raw)) return raw.trim();
+      if (/^https?:\/\//i.test(raw)) return raw.trim();       // garde rss.app
       if (/^\/\//.test(raw)) return ("https:" + raw).trim();
-      try { return new URL(raw, base).toString(); }
-      catch { return null; }
+      try { return new URL(raw, base).toString(); } catch { return null; }
     };
     const firstAttrFrom = (html, attr) => {
-      if (!html) return null;
-      const rx = new RegExp(attr + '\\s*=\\s*"(.*?)"', "i");
-      const m = html.match(rx);
-      return m ? m[1] : null;
+      if (!html) return null; const rx = new RegExp(attr + '\\s*=\\s*"(.*?)"', "i"); const m = html.match(rx); return m ? m[1] : null;
     };
 
     const pickImage = (it, base) => {
@@ -193,11 +187,7 @@
       const contentEncoded = it.getElementsByTagName("content:encoded")?.[0]?.textContent || "";
       const descRaw = it.querySelector("description")?.textContent || "";
 
-      // Lien : on garde <link> tel quel s'il est absolu (incl. rss.app). Sinon on retombe sur guid/href.
-      let finalLink = linkRaw && /^https?:\/\//i.test(linkRaw)
-        ? linkRaw.trim()
-        : null;
-
+      let finalLink = linkRaw && /^https?:\/\//i.test(linkRaw) ? linkRaw.trim() : null;
       if (!finalLink) {
         const hrefContent = firstAttrFrom(contentEncoded, "href");
         const hrefDesc    = firstAttrFrom(descRaw, "href");
@@ -223,13 +213,30 @@
         // ⚠️ pas de "lang" → le RSS apparaît en FR & EN
         title,
         description: decodeEntities(descRaw).replace(/<[^>]+>/g, "").trim().slice(0, 300),
-        img,              // ✅ image si trouvée
-        link: finalLink,  // ✅ lien conservé tel quel si rss.app, sinon absolutisé
+        img,
+        link: finalLink,
         date: dateISO,
         _isRSS: true
       };
     });
   };
+
+  // ---- Correctif hôtes connus (PFBC) ----
+  function fixKnownHosts(u) {
+    try {
+      const url = new URL(u);
+      if (url.hostname.endsWith("pfbc-cbfp.org")) {
+        if (/^\/fr\/actualites\/detail\//.test(url.pathname)) {
+          url.pathname = url.pathname.replace(
+            "/fr/actualites/detail/",
+            "/fr/actualites/actualites-des-partenaires/detail/"
+          );
+          return url.toString();
+        }
+      }
+      return u;
+    } catch { return u; }
+  }
 
   // --------- Conteneurs : détection robuste + fallback création ----------
   function findPreviewContainers() {
@@ -249,7 +256,7 @@
     ));
     if (found.length > 0) return found;
 
-    // Fallback : créer un conteneur propre si aucun trouvé (utile si variation sur en.html)
+    // Fallback : créer un conteneur propre si aucun trouvé
     const section = document.createElement("section");
     section.className = "news-section";
     section.id = "latest-news";
@@ -275,7 +282,7 @@
     const previewTargets = findPreviewContainers();   // Accueils + Actualités
     const magazineTargets = findMagazineContainers(); // Magazine
 
-    // Colonnes sur toutes les grilles identifiées
+    // Colonnes
     enforceGridColumns([...previewTargets, ...magazineTargets]);
 
     // 1) Tes articles (par langue)
@@ -292,13 +299,16 @@
     clearAndInjectMultiple(previewTargets, localsForPage, false);
     clearAndInjectMultiple(magazineTargets, localByLang, false); // magazine = tes articles seulement
 
-    // 2) RSS : charge et fusionne
+    // 2) RSS : charge et fusionne (+ correctif PFBC + meta PFBC déjà gérée dans createCard)
     const rssURL = getRSSUrl();
     if (rssURL) {
       try {
         const rssItems = await parseRSS(rssURL); // pas de filtre de langue
-        const rssForHome = rssItems.slice(0, HOME_RSS_LIMIT);
-        const rssForNews = rssItems.slice(0, NEWS_RSS_LIMIT);
+        // corrige PFBC (et futurs hôtes connus)
+        const rssFixed = rssItems.map(it => ({ ...it, link: fixKnownHosts(it.link) }));
+
+        const rssForHome = rssFixed.slice(0, HOME_RSS_LIMIT);
+        const rssForNews = rssFixed.slice(0, NEWS_RSS_LIMIT);
         const rssForPage = isNewsListingPage() ? rssForNews : rssForHome;
 
         const mergedForPreview = [...rssForPage, ...localsForPage]
