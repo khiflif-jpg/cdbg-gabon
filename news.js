@@ -75,12 +75,9 @@
 
   // --------- Utils ----------
   const getLang = () => {
-    // 1) <html lang="..."> si présent
     const htmlLang = (document.documentElement.getAttribute("lang") || "").toLowerCase();
     if (htmlLang.startsWith("en")) return "en";
     if (htmlLang.startsWith("fr")) return "fr";
-
-    // 2) heuristique via l’URL
     const href = (location.href || "").toLowerCase();
     if (href.includes("-en") || href.endsWith("/en.html") || href.includes("/en.html")) return "en";
     return "fr";
@@ -113,7 +110,6 @@
         </div>
       </a>
     `.trim();
-    // retourne l’élément racine (.news-card)
     return wrapper.firstElementChild;
   };
 
@@ -123,16 +119,13 @@
     items.forEach((a) => container.appendChild(createCard(a)));
   };
 
-  // --------- RSS (optionnel) ----------
-  // Si tu as un <link rel="alternate" type="application/rss+xml" href="..."> dans le <head>,
-  // on le lit et on fusionne les items (date/desc/titre/lien) avec les STATIC_ARTICLES.
+  // --------- RSS ----------
   const findRSSLink = () => {
     const link = document.querySelector('link[rel="alternate"][type="application/rss+xml"]');
     return link ? link.getAttribute("href") : null;
   };
 
   const parseRSS = async (url) => {
-    // Parse minimaliste (title, link, pubDate, description)
     const res = await fetch(url).catch(() => null);
     if (!res || !res.ok) return [];
     const text = await res.text();
@@ -145,12 +138,9 @@
       const link = it.querySelector("link")?.textContent?.trim() || "#";
       const pubDate = it.querySelector("pubDate")?.textContent?.trim() || "";
       const description = it.querySelector("description")?.textContent?.trim() || "";
-      // heuristique langue: en si "-en" dans l’URL du lien
-      const lang = /(^|\/|\-)en(\.|\/|\-|$)/i.test(link) ? "en" : "fr";
       const dateISO = pubDate ? new Date(pubDate).toISOString().slice(0, 10) : "1970-01-01";
-
       return {
-        lang,
+        // ⚠️ pas de "lang" ici → le RSS doit apparaître en FR et EN
         title,
         description,
         img: "", // pas d’image fiable dans RSS générique
@@ -165,7 +155,6 @@
   const createCardSafe = (a) => {
     const el = createCard(a);
     if (!a.img) {
-      // supprime le bloc image si pas d’URL
       const imgBlock = el.querySelector(".news-image");
       if (imgBlock) imgBlock.remove();
     }
@@ -181,42 +170,42 @@
   const inject = async () => {
     const lang = getLang();
 
-    // Sélecteurs tolérants pour ne pas toucher aux HTML
+    // Conteneurs "aperçu/actualités" (accueils + pages actualités)
     const previewTargets = Array.from(new Set([
-      document.querySelector("#latest-news"),
-      document.querySelector("#latest-news-fr"),
-      document.querySelector("#latest-news-en"),
+      document.querySelector("#latest-news-en"),     // en.html éventuel
+      document.querySelector("#latest-news"),        // index.html / actualites.html
       document.querySelector(".latest-news .news-grid"),
       document.querySelector(".news-section .news-grid"),
       document.querySelector(".news-grid")
     ].filter(Boolean)));
 
+    // Conteneurs "magazine" (articles.html / articles-en.html)
     const magazineTargets = Array.from(new Set([
       document.querySelector(".articles-container"),
       document.querySelector("#magazine .news-grid"),
       document.querySelector("#articles .news-grid")
     ].filter(Boolean)));
 
-    // 1) Données locales
+    // 1) Données locales (tes articles) par langue
     const localByLang = STATIC_ARTICLES
       .filter(a => a.lang === lang)
       .sort((a, b) => (a.date < b.date ? 1 : -1));
 
-    // Injection immédiate des locales (rapide)
+    // Injection immédiate des locales
     previewTargets.forEach(ctn => clearAndInject(ctn, localByLang.slice(0, PREVIEW_LIMIT)));
-    magazineTargets.forEach(ctn => clearAndInject(ctn, localByLang));
+    magazineTargets.forEach(ctn => clearAndInject(ctn, localByLang)); // magazine = tes articles seulement
 
-    // 2) Fusion optionnelle avec RSS si dispo
+    // 2) Fusion avec RSS si dispo (RSS affiché dans FR et EN)
     const rssURL = findRSSLink();
     if (rssURL) {
       try {
-        const rssItems = (await parseRSS(rssURL)).filter(x => x.lang === lang);
-        const merged = [...localByLang, ...rssItems]
+        const rssItems = await parseRSS(rssURL); // 🔴 plus de filtre x.lang === lang
+        const mergedForPreview = [...rssItems, ...localByLang]
           .sort((a, b) => (a.date < b.date ? 1 : -1));
 
-        // Ré-injecte avec les items fusionnés
-        previewTargets.forEach(ctn => clearAndInjectSafe(ctn, merged.slice(0, PREVIEW_LIMIT)));
-        magazineTargets.forEach(ctn => clearAndInjectSafe(ctn, merged));
+        // Ré-injecte uniquement les aperçus/actualités (PAS le magazine)
+        previewTargets.forEach(ctn => clearAndInjectSafe(ctn, mergedForPreview.slice(0, PREVIEW_LIMIT)));
+        // magazineTargets : on ne reinjecte pas => restent tes articles uniquement
       } catch {
         // en cas d’échec RSS, on garde les locales déjà injectées
       }
