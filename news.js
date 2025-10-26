@@ -30,7 +30,7 @@
       img:"article2.avif", link:"article-full2-en.html", date:"2025-09-20" },
 
     { lang:"fr", title:"Nkok : vitrine du développement industriel durable du Gabon",
-      description:"La Zone Économique Spéciale de Nkok illustre la réussite du modèle gabonais alliant industrialisation, durabilité et emploi local.",
+      description:"La Zone Économique Spéciale de Nkog illustre la réussite du modèle gabonais alliant industrialisation, durabilité et emploi local.",
       img:"nkok.avif", link:"article-full3-fr.html", date:"2025-10-26" },
     { lang:"en", title:"Nkok: showcase of Gabon’s sustainable industrial development",
       description:"The Nkok Special Economic Zone highlights Gabon’s success in combining industrial growth, sustainability, and local employment.",
@@ -123,28 +123,77 @@
     return link ? link.getAttribute("href") : null;
   };
 
+  // parseRSS avec correction 404 (URL absolues, entités HTML, fallback sur guid/description)
   const parseRSS = async (url) => {
     const absUrl = new URL(url, location.href).toString();
     const res = await fetch(absUrl).catch(() => null);
     if (!res || !res.ok) return [];
+
     const text = await res.text();
     const parser = new DOMParser();
     const xml = parser.parseFromString(text, "text/xml");
     if (xml.querySelector("parsererror")) return [];
 
     const channelLink = xml.querySelector("channel > link")?.textContent?.trim() || absUrl;
-    const items = Array.from(xml.querySelectorAll("item"));
 
+    const decodeEntities = (s) => {
+      if (!s) return s;
+      const ta = document.createElement("textarea");
+      ta.innerHTML = s;
+      return ta.value;
+    };
+    const toAbsolute = (raw, base) => {
+      if (!raw) return null;
+      let s = decodeEntities(raw).trim()
+        .replace(/\u00A0/g, " ")
+        .replace(/&amp;/g, "&");
+      if (/^\/\//.test(s)) s = "https:" + s;
+      try { return new URL(s, base).toString(); }
+      catch {
+        try { return new URL("https://" + s).toString(); }
+        catch { return null; }
+      }
+    };
+    const firstHrefIn = (html) => {
+      if (!html) return null;
+      const m = html.match(/href\s*=\s*"(.*?)"/i);
+      return m ? m[1] : null;
+    };
+
+    const items = Array.from(xml.querySelectorAll("item"));
     return items.map((it) => {
       const title = it.querySelector("title")?.textContent?.trim() || "";
-      const rawLink = it.querySelector("link")?.textContent?.trim() || "#";
-      let link;
-      try { link = new URL(rawLink, channelLink).toString(); }
-      catch { link = rawLink; }
+      const linkText = it.querySelector("link")?.textContent?.trim() || "";
+      const guidNode = it.querySelector("guid");
+      const guidText = guidNode?.textContent?.trim() || "";
+      const guidIsPermalink = (guidNode?.getAttribute("isPermaLink") || "").toLowerCase() === "true";
+      const desc = it.querySelector("description")?.textContent || "";
+
+      const candidates = [
+        linkText,
+        (guidIsPermalink || /^https?:\/\//i.test(guidText)) ? guidText : null,
+        firstHrefIn(desc)
+      ].filter(Boolean);
+
+      let finalLink = null;
+      for (const c of candidates) {
+        const abs = toAbsolute(c, channelLink);
+        if (abs) { finalLink = abs; break; }
+      }
+      if (!finalLink) finalLink = toAbsolute(linkText || guidText, channelLink) || "#";
+
       const pubDate = it.querySelector("pubDate")?.textContent?.trim() || "";
-      const description = it.querySelector("description")?.textContent?.trim() || "";
       const dateISO = pubDate ? new Date(pubDate).toISOString().slice(0, 10) : "1970-01-01";
-      return { title, description, img:"", link, date:dateISO, _isRSS:true };
+
+      return {
+        // ⚠️ pas de "lang" → le RSS apparaît en FR & EN (règle d’affichage)
+        title,
+        description: decodeEntities(desc).replace(/<[^>]+>/g, "").trim().slice(0, 300),
+        img: "",
+        link: finalLink,   // ✅ URL absolue, nettoyée
+        date: dateISO,
+        _isRSS: true
+      };
     });
   };
 
@@ -166,17 +215,14 @@
     ));
     if (found.length > 0) return found;
 
-    // 🔧 Fallback : créer un conteneur propre si aucun trouvé (utile pour en.html)
+    // Fallback : créer un conteneur propre si aucun trouvé (utile si variation sur en.html)
     const section = document.createElement("section");
     section.className = "news-section";
-    section.id = "latest-news"; // neutre
+    section.id = "latest-news";
     const grid = document.createElement("div");
     grid.className = "news-grid";
     section.appendChild(grid);
-
-    // essaie d'insérer dans <main>, sinon avant la fin du <body>
-    const main = document.querySelector("main") || document.body;
-    main.appendChild(section);
+    (document.querySelector("main") || document.body).appendChild(section);
     return [grid];
   }
 
@@ -210,7 +256,7 @@
 
     // Injection immédiate : preview & magazine
     clearAndInjectMultiple(previewTargets, localsForPage, false);
-    clearAndInjectMultiple(magazineTargets, localByLang, false); // magazine = tes articles uniquement
+    clearAndInjectMultiple(magazineTargets, localByLang, false); // magazine = tes articles seulement
 
     // 2) RSS : charge et fusionne
     const rssURL = getRSSUrl();
