@@ -5,11 +5,14 @@
 
 (() => {
   // --------- Config ----------
-  const HOME_LOCAL_LIMIT = 20;    // nb d’articles "maison" sur les ACCUEILS
+  const HOME_LOCAL_LIMIT = 20;       // nb d’articles "maison" sur les ACCUEILS
   const HOME_RSS_LIMIT   = Infinity; // nb d’articles RSS sur les ACCUEILS
   const NEWS_LOCAL_LIMIT = Infinity; // nb d’articles "maison" sur ACTUALITÉS
   const NEWS_RSS_LIMIT   = Infinity; // nb d’articles RSS sur ACTUALITÉS
   const SITE_BRAND = "CDBG Magazine";
+
+  // ⚠️ Ton flux RSS (prioritaire sur tout le reste)
+  const RSS_URL_OVERRIDE = "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml";
 
   // --------- Données statiques centralisées ----------
   const STATIC_ARTICLES = [
@@ -165,17 +168,21 @@
   }
 
   // --------- RSS ----------
-  const findRSSLink = () => {
+  // 1) essaie l’override ; 2) sinon la balise <link rel="alternate"> ; 3) sinon rien
+  const getRSSUrl = () => {
+    if (RSS_URL_OVERRIDE) return RSS_URL_OVERRIDE;
     const link = document.querySelector('link[rel="alternate"][type="application/rss+xml"]');
     return link ? link.getAttribute("href") : null;
   };
 
   const parseRSS = async (url) => {
-    const res = await fetch(url).catch(() => null);
+    const absUrl = new URL(url, location.href).toString();
+    const res = await fetch(absUrl).catch(() => null);
     if (!res || !res.ok) return [];
     const text = await res.text();
     const parser = new DOMParser();
     const xml = parser.parseFromString(text, "text/xml");
+    if (xml.querySelector("parsererror")) return [];
     const items = Array.from(xml.querySelectorAll("item"));
 
     return items.map((it) => {
@@ -235,7 +242,7 @@
     clearAndInjectMultiple(magazineTargets, localByLang, false); // magazine = tes articles seulement
 
     // 2) Fusion avec RSS si dispo (RSS affiché dans FR et EN pour preview/actualités)
-    const rssURL = findRSSLink();
+    const rssURL = getRSSUrl();
     if (rssURL) {
       try {
         const rssItems = await parseRSS(rssURL); // pas de filtre de langue
