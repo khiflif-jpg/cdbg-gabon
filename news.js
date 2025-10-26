@@ -5,7 +5,10 @@
 
 (() => {
   // --------- Config ----------
-  const PREVIEW_LIMIT = 3; // nb d’articles dans l’aperçu
+  const HOME_LOCAL_LIMIT = 20;    // nb d’articles "maison" sur les ACCUEILS
+  const HOME_RSS_LIMIT   = Infinity; // nb d’articles RSS sur les ACCUEILS
+  const NEWS_LOCAL_LIMIT = Infinity; // nb d’articles "maison" sur ACTUALITÉS
+  const NEWS_RSS_LIMIT   = Infinity; // nb d’articles RSS sur ACTUALITÉS
   const SITE_BRAND = "CDBG Magazine";
 
   // --------- Données statiques centralisées ----------
@@ -73,7 +76,7 @@
     }
   ];
 
-  // --------- Utils ----------
+  // --------- Helpers : page & langue ----------
   const getLang = () => {
     const htmlLang = (document.documentElement.getAttribute("lang") || "").toLowerCase();
     if (htmlLang.startsWith("en")) return "en";
@@ -82,6 +85,14 @@
     if (href.includes("-en") || href.endsWith("/en.html") || href.includes("/en.html")) return "en";
     return "fr";
   };
+
+  const isHomePage = () => {
+    const p = (location.pathname || "").toLowerCase();
+    // index.html, en.html, ou racine "/"
+    return p === "/" || /(?:^|\/)(index|en)\.html$/.test(p);
+  };
+
+  const isNewsListingPage = () => /actualites(-en)?\.html$/i.test(location.pathname);
 
   const formatDate = (iso, lang) => {
     try {
@@ -96,6 +107,7 @@
     }
   };
 
+  // --------- Helpers : rendu ----------
   const createCard = (a) => {
     const wrapper = document.createElement("div");
     wrapper.innerHTML = `
@@ -113,11 +125,44 @@
     return wrapper.firstElementChild;
   };
 
-  const clearAndInject = (container, items) => {
+  // pour éviter d’afficher des cartes vides côté image pour le RSS
+  const createCardSafe = (a) => {
+    const el = createCard(a);
+    if (!a.img) {
+      const imgBlock = el.querySelector(".news-image");
+      if (imgBlock) imgBlock.remove();
+    }
+    return el;
+  };
+
+  const clearAndInject = (container, items, safe = false) => {
     if (!container) return;
     container.innerHTML = "";
-    items.forEach((a) => container.appendChild(createCard(a)));
+    items.forEach((a) =>
+      container.appendChild(safe ? createCardSafe(a) : createCard(a))
+    );
   };
+  function clearAndInjectMultiple(containers, items, safe = false) {
+    containers.forEach(ctn => clearAndInject(ctn, items, safe));
+  }
+
+  // --------- Grille : forcer proprement les colonnes (3/2/1) ----------
+  function enforceGridColumns(containerList) {
+    const apply = () => {
+      const ww = window.innerWidth || 1024;
+      const cols = ww >= 1024 ? 3 : ww >= 640 ? 2 : 1;
+      containerList.forEach((ctn) => {
+        if (!ctn) return;
+        const style = getComputedStyle(ctn);
+        // on force une grille si ce n’est pas déjà OK
+        ctn.style.display = "grid";
+        ctn.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
+        if (!style.gap || style.gap === "0px") ctn.style.gap = "24px";
+      });
+    };
+    apply();
+    window.addEventListener("resize", apply);
+  }
 
   // --------- RSS ----------
   const findRSSLink = () => {
@@ -151,21 +196,6 @@
     });
   };
 
-  // pour éviter d’afficher des cartes vides côté image pour le RSS
-  const createCardSafe = (a) => {
-    const el = createCard(a);
-    if (!a.img) {
-      const imgBlock = el.querySelector(".news-image");
-      if (imgBlock) imgBlock.remove();
-    }
-    return el;
-  };
-  const clearAndInjectSafe = (container, items) => {
-    if (!container) return;
-    container.innerHTML = "";
-    items.forEach((a) => container.appendChild(createCardSafe(a)));
-  };
-
   // --------- Injection principale ----------
   const inject = async () => {
     const lang = getLang();
@@ -186,26 +216,43 @@
       document.querySelector("#articles .news-grid")
     ].filter(Boolean)));
 
+    // Colonnes (3/2/1) sur toutes les grilles identifiées
+    enforceGridColumns([...previewTargets, ...magazineTargets]);
+
     // 1) Données locales (tes articles) par langue
     const localByLang = STATIC_ARTICLES
       .filter(a => a.lang === lang)
       .sort((a, b) => (a.date < b.date ? 1 : -1));
 
-    // Injection immédiate des locales
-    previewTargets.forEach(ctn => clearAndInject(ctn, localByLang.slice(0, PREVIEW_LIMIT)));
-    magazineTargets.forEach(ctn => clearAndInject(ctn, localByLang)); // magazine = tes articles seulement
+    // Injection immédiate des locales (preview + magazine)
+    // - ACCUEILS: on limite tes articles à 20 ; RSS arrivera ensuite (infini)
+    // - ACTUALITÉS: on mettra tout ensuite (infini)
+    const localForHome = localByLang.slice(0, HOME_LOCAL_LIMIT);
+    const localForNews = localByLang.slice(0, NEWS_LOCAL_LIMIT);
 
-    // 2) Fusion avec RSS si dispo (RSS affiché dans FR et EN)
+    const localsForPage = isNewsListingPage() ? localForNews : localForHome;
+    clearAndInjectMultiple(previewTargets, localsForPage, false);
+    clearAndInjectMultiple(magazineTargets, localByLang, false); // magazine = tes articles seulement
+
+    // 2) Fusion avec RSS si dispo (RSS affiché dans FR et EN pour preview/actualités)
     const rssURL = findRSSLink();
     if (rssURL) {
       try {
-        const rssItems = await parseRSS(rssURL); // 🔴 plus de filtre x.lang === lang
-        const mergedForPreview = [...rssItems, ...localByLang]
+        const rssItems = await parseRSS(rssURL); // pas de filtre de langue
+        const rssForHome = rssItems.slice(0, HOME_RSS_LIMIT);
+        const rssForNews = rssItems.slice(0, NEWS_RSS_LIMIT);
+
+        const rssForPage = isNewsListingPage() ? rssForNews : rssForHome;
+
+        // Fusion pour preview/actualités :
+        // Accueils → RSS (infini) + tes 20 articles
+        // Actualités → RSS (infini) + tous tes articles
+        const mergedForPreview = [...rssForPage, ...localsForPage]
           .sort((a, b) => (a.date < b.date ? 1 : -1));
 
-        // Ré-injecte uniquement les aperçus/actualités (PAS le magazine)
-        previewTargets.forEach(ctn => clearAndInjectSafe(ctn, mergedForPreview.slice(0, PREVIEW_LIMIT)));
-        // magazineTargets : on ne reinjecte pas => restent tes articles uniquement
+        // Ré-injecte UNIQUEMENT les previewTargets en "safe"
+        clearAndInjectMultiple(previewTargets, mergedForPreview, true);
+        // magazineTargets : on ne touche pas (pas de RSS)
       } catch {
         // en cas d’échec RSS, on garde les locales déjà injectées
       }
