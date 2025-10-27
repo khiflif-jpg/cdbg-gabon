@@ -66,3 +66,22 @@
     window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMenu(); });
   });
 })();
+
+
+// === Force burger on iPad and touch tablets ===
+(function() {
+  const isIpad = /iPad/.test(navigator.userAgent) ||
+                 (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+  if (isIpad || isTouch) {
+    document.addEventListener('DOMContentLoaded', () => {
+      const navLinks = document.querySelector('.navbar .nav-links');
+      const burger = document.querySelector('.navbar .burger');
+      if (navLinks && burger) {
+        navLinks.style.display = 'none';
+        burger.style.display = 'block';
+      }
+    });
+  }
+})();
