@@ -61,6 +61,19 @@
     } catch { return iso; }
   };
 
+  // --------- Styles anti-soulignement (injectés une seule fois) ----------
+  function ensureNoUnderlineStyle() {
+    if (document.getElementById("news-card-style")) return;
+    const style = document.createElement("style");
+    style.id = "news-card-style";
+    style.textContent = `
+      .news-card { text-decoration: none !important; color: inherit !important; }
+      .news-card:hover, .news-card:focus { text-decoration: none !important; }
+      .news-card .news-title, .news-card h3.news-title a { text-decoration: none !important; color: inherit !important; }
+    `;
+    document.head.appendChild(style);
+  }
+
   // --------- Helpers : rendu ----------
   const createCard = (a) => {
     const isRSS = a._isRSS === true;
@@ -107,11 +120,12 @@
     containers.forEach(ctn => clearAndInject(ctn, items, safe));
   };
 
-  // --------- Grille : colonnes 3/2/1 ----------
+  // --------- Grille : 4/3/2/1 colonnes ----------
   function enforceGridColumns(containerList) {
     const apply = () => {
-      const ww = window.innerWidth || 1024;
-      const cols = ww >= 1024 ? 3 : ww >= 640 ? 2 : 1;
+      const ww = window.innerWidth || 1280;
+      // 4 colonnes (≥1280), 3 (≥900), 2 (≥640), 1 (<640)
+      const cols = ww >= 1280 ? 4 : ww >= 900 ? 3 : ww >= 640 ? 2 : 1;
       containerList.forEach((ctn) => {
         if (!ctn) return;
         ctn.style.display = "grid";
@@ -131,7 +145,7 @@
     return link ? link.getAttribute("href") : null;
   };
 
-  // Images + liens (préserve rss.app), + fallback robustes
+  // parseRSS — conserve les URLs rss.app telles quelles (ne "déroule" pas), et récupère une image si possible
   const parseRSS = async (url) => {
     const absUrl = new URL(url, location.href).toString();
     const res = await fetch(absUrl).catch(() => null);
@@ -276,13 +290,15 @@
 
   // --------- Injection principale ----------
   const inject = async () => {
+    ensureNoUnderlineStyle(); // 🔒 enlève le soulignement partout pour .news-card
+
     const lang = getLang();
 
     // Conteneurs
     const previewTargets = findPreviewContainers();   // Accueils + Actualités
     const magazineTargets = findMagazineContainers(); // Magazine
 
-    // Colonnes
+    // Colonnes (4/3/2/1)
     enforceGridColumns([...previewTargets, ...magazineTargets]);
 
     // 1) Tes articles (par langue)
@@ -299,12 +315,11 @@
     clearAndInjectMultiple(previewTargets, localsForPage, false);
     clearAndInjectMultiple(magazineTargets, localByLang, false); // magazine = tes articles seulement
 
-    // 2) RSS : charge et fusionne (+ correctif PFBC + meta PFBC déjà gérée dans createCard)
+    // 2) RSS : charge et fusionne (+ correctif PFBC)
     const rssURL = getRSSUrl();
     if (rssURL) {
       try {
         const rssItems = await parseRSS(rssURL); // pas de filtre de langue
-        // corrige PFBC (et futurs hôtes connus)
         const rssFixed = rssItems.map(it => ({ ...it, link: fixKnownHosts(it.link) }));
 
         const rssForHome = rssFixed.slice(0, HOME_RSS_LIMIT);
