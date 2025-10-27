@@ -2137,3 +2137,33 @@ header.hero + section h2:first-child{ margin-top: 0 !important; }
   .navbar .burger { display: none !important; }
 }
 /* === Fin override === */
+/* === Forcer le menu burger sur iPad et tablettes === */
+
+/* iPadOS (Safari desktop-class) + tous appareils tactiles <=1366px */
+@supports (-webkit-touch-callout: none) {
+  @media (min-width: 768px) and (max-width: 1366px) {
+    .navbar .nav-links { display: none !important; }
+    .navbar .burger { display: block !important; }
+    .nav-links.active { display: flex !important; }
+  }
+}
+
+/* Sécurité : tous les écrans tactiles (Android, iPad, etc.) */
+@media (hover: none) and (pointer: coarse) and (max-width: 1366px) {
+  .navbar .nav-links { display: none !important; }
+  .navbar .burger { display: block !important; }
+  .nav-links.active { display: flex !important; }
+}
+
+/* Desktop normal uniquement au-delà de 1367px */
+@media (min-width: 1367px) {
+  .navbar .nav-links { 
+    display: flex !important;
+    flex-direction: row !important;
+    background: transparent !important;
+    position: static !important;
+    padding: 0 !important;
+  }
+  .navbar .burger { display: none !important; }
+}
+/* === Fin bloc burger iPad/tablettes === */
