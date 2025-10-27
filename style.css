@@ -2038,29 +2038,35 @@ header.hero + section h2:first-child{ margin-top: 0 !important; }
   }
 }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-/* --- Tablet burger: reuse mobile dropdown styles up to 1366px --- */
+/* --- Burger menu: pour mobiles + tablettes (jusqu’à 1366px) --- */
 @media (max-width: 1366px) {
-  /* Hide desktop links and show burger */
+  /* Cacher le menu horizontal et afficher le burger */
   .nav-links { 
     display: none !important; 
     flex-direction: column !important; 
   }
-  .burger { display: block !important; }
 
-  /* When menu is open */
+  .burger { 
+    display: block !important; 
+    cursor: pointer;
+  }
+
+  /* Quand le menu est ouvert */
   .nav-links.active {
     display: flex !important;
   }
 
-  /* Off-canvas / dropdown container styling to match mobile */
+  /* Style du menu déroulant (identique au mobile) */
   .navbar .nav-links {
-    background: #3D6B35; /* même vert que la barre de menu */
+    background: #3D6B35; /* même vert que la barre de navigation */
     position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
     padding: 20px 0;
     gap: 16px;
+    flex-direction: column;
+    text-align: left;
   }
 
   .navbar .nav-links li {
@@ -2074,4 +2080,19 @@ header.hero + section h2:first-child{ margin-top: 0 !important; }
     text-decoration: none;
   }
 }
-/* --- End tablet burger block --- */
+
+/* --- Desktop menu: pour écrans larges à partir de 1367px --- */
+@media (min-width: 1367px) {
+  .navbar .nav-links { 
+    display: flex !important; 
+    flex-direction: row !important;
+    background: transparent !important;
+    position: static !important;
+    padding: 0 !important;
+  }
+
+  .navbar .burger { 
+    display: none !important; 
+  }
+}
+/* --- End responsive burger / desktop block --- */
