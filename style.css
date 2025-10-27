@@ -2038,27 +2038,28 @@ header.hero + section h2:first-child{ margin-top: 0 !important; }
   }
 }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-/* --- Burger menu: pour mobiles + tablettes (jusqu’à 1366px) --- */
+/* === Responsive nav: burger (<=1366px) / desktop (>=1367px) === */
+
+/* 1) Burger pour mobiles + tablettes (jusqu'à 1366px) */
 @media (max-width: 1366px) {
-  /* Cacher le menu horizontal et afficher le burger */
+  /* cacher le menu horizontal, afficher le burger */
   .nav-links { 
     display: none !important; 
     flex-direction: column !important; 
   }
-
   .burger { 
     display: block !important; 
     cursor: pointer;
   }
 
-  /* Quand le menu est ouvert */
+  /* quand le burger est ouvert */
   .nav-links.active {
     display: flex !important;
   }
 
-  /* Style du menu déroulant (identique au mobile) */
+  /* panneau déroulant identique au mobile */
   .navbar .nav-links {
-    background: #3D6B35; /* même vert que la barre de navigation */
+    background: #3D6B35;
     position: absolute;
     top: 100%;
     left: 0;
@@ -2068,12 +2069,10 @@ header.hero + section h2:first-child{ margin-top: 0 !important; }
     flex-direction: column;
     text-align: left;
   }
-
   .navbar .nav-links li {
     border-bottom: 1px solid rgba(255,255,255,0.2);
     padding: 12px 24px;
   }
-
   .navbar .nav-links a {
     color: #fff;
     font-size: 18px;
@@ -2081,7 +2080,7 @@ header.hero + section h2:first-child{ margin-top: 0 !important; }
   }
 }
 
-/* --- Desktop menu: pour écrans larges à partir de 1367px --- */
+/* 2) Desktop pour écrans larges (à partir de 1367px) */
 @media (min-width: 1367px) {
   .navbar .nav-links { 
     display: flex !important; 
@@ -2090,9 +2089,18 @@ header.hero + section h2:first-child{ margin-top: 0 !important; }
     position: static !important;
     padding: 0 !important;
   }
-
   .navbar .burger { 
     display: none !important; 
   }
 }
-/* --- End responsive burger / desktop block --- */
+
+/* 3) Correctif iPad Safari (iPadOS “desktop-class”) :
+      on force le burger sur iPad pour <=1366px */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 1366px) {
+    .navbar .nav-links { display: none !important; }
+    .navbar .burger { display: block !important; }
+    .nav-links.active { display: flex !important; }
+  }
+}
+/* === Fin bloc responsive nav === */
