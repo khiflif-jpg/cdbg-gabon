@@ -2104,3 +2104,36 @@ header.hero + section h2:first-child{ margin-top: 0 !important; }
   }
 }
 /* === Fin bloc responsive nav === */
+/* === Ultimate override: iPad & touch devices === */
+
+/* 1) Forcer burger sur iPad (Safari, iPadOS desktop-class) */
+@supports (-webkit-touch-callout: none) {
+  /* iPad (toutes tailles usuelles), même quand Safari se dit "desktop" */
+  @media (min-width: 768px) and (max-width: 1366px) {
+    .navbar .nav-links { display: none !important; }
+    .navbar .burger { display: block !important; }
+    .nav-links.active { display: flex !important; }
+  }
+}
+
+/* 2) Renfort pour appareils tactiles (iPad inclus) */
+@media (hover: none) and (pointer: coarse) {
+  @media (max-width: 1366px) {
+    .navbar .nav-links { display: none !important; }
+    .navbar .burger { display: block !important; }
+    .nav-links.active { display: flex !important; }
+  }
+}
+
+/* 3) Desktop strict au-delà de 1367px (vraies grandes largeurs) */
+@media (min-width: 1367px) {
+  .navbar .nav-links { 
+    display: flex !important;
+    flex-direction: row !important;
+    background: transparent !important;
+    position: static !important;
+    padding: 0 !important;
+  }
+  .navbar .burger { display: none !important; }
+}
+/* === Fin override === */
