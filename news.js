@@ -10,8 +10,9 @@
   const NEWS_RSS_LIMIT   = Infinity;  // nb d’articles RSS sur ACTUALITÉS
   const SITE_BRAND = "CDBG Magazine";
 
-  // Ton flux RSS (prioritaire)
-  const RSS_URL_OVERRIDE = "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml";
+  // ✅ Tes 2 flux RSS
+  const RSS_URL_OVERRIDE_1 = "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml";  // flux 1
+  const RSS_URL_OVERRIDE_2 = "https://rss.app/feeds/NbpOTwjyYzdutyWP.xml";  // flux 2 (payant)
 
   // --------- Données statiques centralisées ----------
   const STATIC_ARTICLES = [
@@ -124,7 +125,6 @@
   function enforceGridColumns(containerList) {
     const apply = () => {
       const ww = window.innerWidth || 1280;
-      // 4 colonnes (≥1280), 3 (≥900), 2 (≥640), 1 (<640)
       const cols = ww >= 1280 ? 4 : ww >= 900 ? 3 : ww >= 640 ? 2 : 1;
       containerList.forEach((ctn) => {
         if (!ctn) return;
@@ -139,13 +139,19 @@
   }
 
   // --------- RSS ----------
-  const getRSSUrl = () => {
-    if (RSS_URL_OVERRIDE) return RSS_URL_OVERRIDE;
+  // ➜ renvoie un tableau de flux (1 ou 2 ou plus)
+  const getRSSUrls = () => {
+    const urls = [];
+    if (RSS_URL_OVERRIDE_1) urls.push(RSS_URL_OVERRIDE_1);
+    if (RSS_URL_OVERRIDE_2) urls.push(RSS_URL_OVERRIDE_2);
+
+    // éventuellement depuis le HTML
     const link = document.querySelector('link[rel="alternate"][type="application/rss+xml"]');
-    return link ? link.getAttribute("href") : null;
+    if (link) urls.push(link.getAttribute("href"));
+    return urls;
   };
 
-  // parseRSS — conserve les URLs rss.app telles quelles (ne "déroule" pas), et récupère une image si possible
+  // parseRSS — récupère un flux et renvoie un tableau d’articles
   const parseRSS = async (url) => {
     const absUrl = new URL(url, location.href).toString();
     const res = await fetch(absUrl).catch(() => null);
@@ -161,12 +167,15 @@
     const decodeEntities = (s) => { if (!s) return s; const ta = document.createElement("textarea"); ta.innerHTML = s; return ta.value; };
     const toAbsolute = (raw, base) => {
       if (!raw) return null;
-      if (/^https?:\/\//i.test(raw)) return raw.trim();       // garde rss.app
+      if (/^https?:\/\//i.test(raw)) return raw.trim();
       if (/^\/\//.test(raw)) return ("https:" + raw).trim();
       try { return new URL(raw, base).toString(); } catch { return null; }
     };
     const firstAttrFrom = (html, attr) => {
-      if (!html) return null; const rx = new RegExp(attr + '\\s*=\\s*"(.*?)"', "i"); const m = html.match(rx); return m ? m[1] : null;
+      if (!html) return null;
+      const rx = new RegExp(attr + '\\s*=\\s*"(.*?)"', "i");
+      const m = html.match(rx);
+      return m ? m[1] : null;
     };
 
     const pickImage = (it, base) => {
@@ -188,7 +197,7 @@
         const abs = toAbsolute(decodeEntities(c), base);
         if (abs) return abs;
       }
-      return ""; // rien de fiable
+      return "";
     };
 
     const items = Array.from(xml.querySelectorAll("item"));
@@ -224,7 +233,6 @@
       const dateISO = pubDate ? new Date(pubDate).toISOString().slice(0, 10) : "1970-01-01";
 
       return {
-        // ⚠️ pas de "lang" → le RSS apparaît en FR & EN
         title,
         description: decodeEntities(descRaw).replace(/<[^>]+>/g, "").trim().slice(0, 300),
         img,
@@ -290,7 +298,7 @@
 
   // --------- Injection principale ----------
   const inject = async () => {
-    ensureNoUnderlineStyle(); // 🔒 enlève le soulignement partout pour .news-card
+    ensureNoUnderlineStyle();
 
     const lang = getLang();
 
@@ -306,32 +314,37 @@
       .filter(a => a.lang === lang)
       .sort((a, b) => (a.date < b.date ? 1 : -1));
 
-    // Limites locales selon la page
     const localForHome = localByLang.slice(0, HOME_LOCAL_LIMIT);
     const localForNews = localByLang.slice(0, NEWS_LOCAL_LIMIT);
     const localsForPage = isNewsListingPage() ? localForNews : localForHome;
 
     // Injection immédiate : preview & magazine
     clearAndInjectMultiple(previewTargets, localsForPage, false);
-    clearAndInjectMultiple(magazineTargets, localByLang, false); // magazine = tes articles seulement
+    clearAndInjectMultiple(magazineTargets, localByLang, false);
 
-    // 2) RSS : charge et fusionne (+ correctif PFBC)
-    const rssURL = getRSSUrl();
-    if (rssURL) {
+    // 2) RSS : charge et fusionne
+    const rssURLs = getRSSUrls();
+    if (rssURLs.length) {
       try {
-        const rssItems = await parseRSS(rssURL); // pas de filtre de langue
-        const rssFixed = rssItems.map(it => ({ ...it, link: fixKnownHosts(it.link) }));
+        // on charge tous les flux en parallèle (si l’un échoue → [])
+        const allRssArrays = await Promise.all(
+          rssURLs.map(url => parseRSS(url).catch(() => []))
+        );
 
-        const rssForHome = rssFixed.slice(0, HOME_RSS_LIMIT);
-        const rssForNews = rssFixed.slice(0, NEWS_RSS_LIMIT);
+        // on aplatit
+        let rssItems = allRssArrays.flat().map(it => ({ ...it, link: fixKnownHosts(it.link) }));
+
+        const rssForHome = rssItems.slice(0, HOME_RSS_LIMIT);
+        const rssForNews = rssItems.slice(0, NEWS_RSS_LIMIT);
         const rssForPage = isNewsListingPage() ? rssForNews : rssForHome;
 
+        // fusion
         const mergedForPreview = [...rssForPage, ...localsForPage]
           .sort((a, b) => (a.date < b.date ? 1 : -1));
 
-        clearAndInjectMultiple(previewTargets, mergedForPreview, true); // réinjection safe
+        clearAndInjectMultiple(previewTargets, mergedForPreview, true);
       } catch {
-        // on garde les locales déjà injectées
+        // on garde tes articles statiques
       }
     }
   };
