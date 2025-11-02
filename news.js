@@ -4,15 +4,15 @@
 
 (() => {
   // --------- Config ----------
-  const HOME_LOCAL_LIMIT = 20;        // nb d’articles "maison" sur ACCUEILS
-  const HOME_RSS_LIMIT   = Infinity;  // nb d’articles RSS sur ACCUEILS
-  const NEWS_LOCAL_LIMIT = Infinity;  // nb d’articles "maison" sur ACTUALITÉS
-  const NEWS_RSS_LIMIT   = Infinity;  // nb d’articles RSS sur ACTUALITÉS
+  const HOME_LOCAL_LIMIT = 20;
+  const HOME_RSS_LIMIT   = Infinity;
+  const NEWS_LOCAL_LIMIT = Infinity;
+  const NEWS_RSS_LIMIT   = Infinity;
   const SITE_BRAND = "CDBG Magazine";
 
   // ✅ Tes 2 flux RSS
-  const RSS_URL_OVERRIDE_1 = "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml";  // flux 1
-  const RSS_URL_OVERRIDE_2 = "https://rss.app/feeds/NbpOTwjyYzdutyWP.xml";  // flux 2 (payant)
+  const RSS_URL_OVERRIDE_1 = "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml";  // PFBC
+  const RSS_URL_OVERRIDE_2 = "https://rss.app/feeds/NbpOTwjyYzdutyWP.xml";  // ATIBT
 
   // --------- Données statiques centralisées ----------
   const STATIC_ARTICLES = [
@@ -62,7 +62,7 @@
     } catch { return iso; }
   };
 
-  // --------- Styles anti-soulignement (injectés une seule fois) ----------
+  // --------- Styles anti-soulignement ----------
   function ensureNoUnderlineStyle() {
     if (document.getElementById("news-card-style")) return;
     const style = document.createElement("style");
@@ -77,15 +77,20 @@
 
   // --------- Helpers : rendu ----------
   const createCard = (a) => {
-    const isRSS = a._isRSS === true;
     const pageLang = getLang();
-    const meta = isRSS
-      ? `${formatDate(a.date, pageLang)} - PFBC - ${SITE_BRAND}`
-      : `${formatDate(a.date, a.lang)} — ${SITE_BRAND}`;
+    let meta;
+
+    if (a._isRSS && a._sourceTag === "ATIBT") {
+      meta = `${formatDate(a.date, pageLang)} - ATIBT - ${SITE_BRAND}`;
+    } else if (a._isRSS) {
+      meta = `${formatDate(a.date, pageLang)} - PFBC - ${SITE_BRAND}`;
+    } else {
+      meta = `${formatDate(a.date, a.lang)} — ${SITE_BRAND}`;
+    }
 
     const wrapper = document.createElement("div");
     wrapper.innerHTML = `
-      <a href="${a.link}" class="news-card" ${isRSS ? 'target="_blank" rel="noopener noreferrer"' : ""}>
+      <a href="${a.link}" class="news-card" ${a._isRSS ? 'target="_blank" rel="noopener noreferrer"' : ""}>
         <div class="news-image">
           <img src="${a.img || ""}" alt="${a.title}">
         </div>
@@ -99,7 +104,6 @@
     return wrapper.firstElementChild;
   };
 
-  // garde l'image si on en a une, sinon supprime proprement le bloc image
   const createCardSafe = (a) => {
     const el = createCard(a);
     const hasImg = a.img && String(a.img).trim().length > 0;
@@ -121,7 +125,7 @@
     containers.forEach(ctn => clearAndInject(ctn, items, safe));
   };
 
-  // --------- Grille : 4/3/2/1 colonnes ----------
+  // --------- Grille responsive ----------
   function enforceGridColumns(containerList) {
     const apply = () => {
       const ww = window.innerWidth || 1280;
@@ -138,21 +142,15 @@
     window.addEventListener("resize", apply);
   }
 
-  // --------- RSS ----------
-  // ➜ renvoie un tableau de flux (1 ou 2 ou plus)
+  // --------- RSS multi-flux ----------
   const getRSSUrls = () => {
     const urls = [];
-    if (RSS_URL_OVERRIDE_1) urls.push(RSS_URL_OVERRIDE_1);
-    if (RSS_URL_OVERRIDE_2) urls.push(RSS_URL_OVERRIDE_2);
-
-    // éventuellement depuis le HTML
-    const link = document.querySelector('link[rel="alternate"][type="application/rss+xml"]');
-    if (link) urls.push(link.getAttribute("href"));
+    if (RSS_URL_OVERRIDE_1) urls.push({ url: RSS_URL_OVERRIDE_1, tag: "PFBC" });
+    if (RSS_URL_OVERRIDE_2) urls.push({ url: RSS_URL_OVERRIDE_2, tag: "ATIBT" });
     return urls;
   };
 
-  // parseRSS — récupère un flux et renvoie un tableau d’articles
-  const parseRSS = async (url) => {
+  const parseRSS = async (url, tag = "PFBC") => {
     const absUrl = new URL(url, location.href).toString();
     const res = await fetch(absUrl).catch(() => null);
     if (!res || !res.ok) return [];
@@ -163,7 +161,6 @@
     if (xml.querySelector("parsererror")) return [];
 
     const channelLink = xml.querySelector("channel > link")?.textContent?.trim() || absUrl;
-
     const decodeEntities = (s) => { if (!s) return s; const ta = document.createElement("textarea"); ta.innerHTML = s; return ta.value; };
     const toAbsolute = (raw, base) => {
       if (!raw) return null;
@@ -203,32 +200,9 @@
     const items = Array.from(xml.querySelectorAll("item"));
     return items.map((it) => {
       const title = it.querySelector("title")?.textContent?.trim() || "";
-      const linkRaw = it.querySelector("link")?.textContent?.trim() || "";
-      const guidNode = it.querySelector("guid");
-      const guidText = guidNode?.textContent?.trim() || "";
-      const guidIsPermalink = (guidNode?.getAttribute("isPermaLink") || "").toLowerCase() === "true";
-      const contentEncoded = it.getElementsByTagName("content:encoded")?.[0]?.textContent || "";
+      const linkRaw = it.querySelector("link")?.textContent?.trim() || "#";
       const descRaw = it.querySelector("description")?.textContent || "";
-
-      let finalLink = linkRaw && /^https?:\/\//i.test(linkRaw) ? linkRaw.trim() : null;
-      if (!finalLink) {
-        const hrefContent = firstAttrFrom(contentEncoded, "href");
-        const hrefDesc    = firstAttrFrom(descRaw, "href");
-        const linkCandidates = [
-          (guidIsPermalink || /^https?:\/\//i.test(guidText)) ? guidText : null,
-          hrefContent,
-          hrefDesc
-        ].filter(Boolean);
-
-        for (const c of linkCandidates) {
-          const abs = toAbsolute(decodeEntities(c), channelLink);
-          if (abs) { finalLink = abs; break; }
-        }
-      }
-      if (!finalLink) finalLink = "#";
-
       const img = pickImage(it, channelLink);
-
       const pubDate = it.querySelector("pubDate")?.textContent?.trim() || "";
       const dateISO = pubDate ? new Date(pubDate).toISOString().slice(0, 10) : "1970-01-01";
 
@@ -236,49 +210,63 @@
         title,
         description: decodeEntities(descRaw).replace(/<[^>]+>/g, "").trim().slice(0, 300),
         img,
-        link: finalLink,
+        link: linkRaw,
         date: dateISO,
-        _isRSS: true
+        _isRSS: true,
+        _sourceTag: tag
       };
     });
   };
 
-  // ---- Correctif hôtes connus (PFBC) ----
-  function fixKnownHosts(u) {
-    try {
-      const url = new URL(u);
-      if (url.hostname.endsWith("pfbc-cbfp.org")) {
-        if (/^\/fr\/actualites\/detail\//.test(url.pathname)) {
-          url.pathname = url.pathname.replace(
-            "/fr/actualites/detail/",
-            "/fr/actualites/actualites-des-partenaires/detail/"
-          );
-          return url.toString();
-        }
+  // --------- Injection principale ----------
+  const inject = async () => {
+    ensureNoUnderlineStyle();
+    const lang = getLang();
+
+    const previewTargets = findPreviewContainers();
+    const magazineTargets = findMagazineContainers();
+    enforceGridColumns([...previewTargets, ...magazineTargets]);
+
+    const localByLang = STATIC_ARTICLES.filter(a => a.lang === lang).sort((a, b) => (a.date < b.date ? 1 : -1));
+    const localsForPage = isNewsListingPage()
+      ? localByLang.slice(0, NEWS_LOCAL_LIMIT)
+      : localByLang.slice(0, HOME_LOCAL_LIMIT);
+
+    clearAndInjectMultiple(previewTargets, localsForPage, false);
+    clearAndInjectMultiple(magazineTargets, localByLang, false);
+
+    // Chargement multi-flux
+    const rssConfigs = getRSSUrls();
+    if (rssConfigs.length) {
+      try {
+        const allRssArrays = await Promise.all(
+          rssConfigs.map(cfg => parseRSS(cfg.url, cfg.tag).catch(() => []))
+        );
+        let rssItems = allRssArrays.flat();
+
+        const rssForPage = isNewsListingPage()
+          ? rssItems.slice(0, NEWS_RSS_LIMIT)
+          : rssItems.slice(0, HOME_RSS_LIMIT);
+
+        const mergedForPreview = [...rssForPage, ...localsForPage]
+          .sort((a, b) => (a.date < b.date ? 1 : -1));
+
+        clearAndInjectMultiple(previewTargets, mergedForPreview, true);
+      } catch {
+        // fallback : articles statiques uniquement
       }
-      return u;
-    } catch { return u; }
-  }
+    }
+  };
 
-  // --------- Conteneurs : détection robuste + fallback création ----------
+  // --------- Détection conteneurs ----------
   function findPreviewContainers() {
-    const candidates = [
-      "#latest-news-en",
-      "#latest-news",
-      "#news-en",
-      "#news",
-      'section[id*="news" i] .news-grid',
-      'section[id*="latest" i] .news-grid',
-      ".latest-news .news-grid",
-      ".news-section .news-grid",
-      ".news-grid"
+    const selectors = [
+      "#latest-news-en","#latest-news","#news-en","#news",
+      'section[id*="news" i] .news-grid','section[id*="latest" i] .news-grid',
+      ".latest-news .news-grid",".news-section .news-grid",".news-grid"
     ];
-    const found = Array.from(new Set(
-      candidates.map(sel => document.querySelector(sel)).filter(Boolean)
-    ));
-    if (found.length > 0) return found;
-
-    // Fallback : créer un conteneur propre si aucun trouvé
+    const found = selectors.map(sel => document.querySelector(sel)).filter(Boolean);
+    if (found.length) return found;
     const section = document.createElement("section");
     section.className = "news-section";
     section.id = "latest-news";
@@ -290,64 +278,9 @@
   }
 
   function findMagazineContainers() {
-    const candidates = [".articles-container", "#magazine .news-grid", "#articles .news-grid"];
-    return Array.from(new Set(
-      candidates.map(sel => document.querySelector(sel)).filter(Boolean)
-    ));
+    const selectors = [".articles-container", "#magazine .news-grid", "#articles .news-grid"];
+    return selectors.map(sel => document.querySelector(sel)).filter(Boolean);
   }
-
-  // --------- Injection principale ----------
-  const inject = async () => {
-    ensureNoUnderlineStyle();
-
-    const lang = getLang();
-
-    // Conteneurs
-    const previewTargets = findPreviewContainers();   // Accueils + Actualités
-    const magazineTargets = findMagazineContainers(); // Magazine
-
-    // Colonnes (4/3/2/1)
-    enforceGridColumns([...previewTargets, ...magazineTargets]);
-
-    // 1) Tes articles (par langue)
-    const localByLang = STATIC_ARTICLES
-      .filter(a => a.lang === lang)
-      .sort((a, b) => (a.date < b.date ? 1 : -1));
-
-    const localForHome = localByLang.slice(0, HOME_LOCAL_LIMIT);
-    const localForNews = localByLang.slice(0, NEWS_LOCAL_LIMIT);
-    const localsForPage = isNewsListingPage() ? localForNews : localForHome;
-
-    // Injection immédiate : preview & magazine
-    clearAndInjectMultiple(previewTargets, localsForPage, false);
-    clearAndInjectMultiple(magazineTargets, localByLang, false);
-
-    // 2) RSS : charge et fusionne
-    const rssURLs = getRSSUrls();
-    if (rssURLs.length) {
-      try {
-        // on charge tous les flux en parallèle (si l’un échoue → [])
-        const allRssArrays = await Promise.all(
-          rssURLs.map(url => parseRSS(url).catch(() => []))
-        );
-
-        // on aplatit
-        let rssItems = allRssArrays.flat().map(it => ({ ...it, link: fixKnownHosts(it.link) }));
-
-        const rssForHome = rssItems.slice(0, HOME_RSS_LIMIT);
-        const rssForNews = rssItems.slice(0, NEWS_RSS_LIMIT);
-        const rssForPage = isNewsListingPage() ? rssForNews : rssForHome;
-
-        // fusion
-        const mergedForPreview = [...rssForPage, ...localsForPage]
-          .sort((a, b) => (a.date < b.date ? 1 : -1));
-
-        clearAndInjectMultiple(previewTargets, mergedForPreview, true);
-      } catch {
-        // on garde tes articles statiques
-      }
-    }
-  };
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", inject);
