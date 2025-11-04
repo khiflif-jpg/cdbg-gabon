@@ -16,22 +16,6 @@
 
   // --------- Données statiques centralisées ----------
   const STATIC_ARTICLES = [
-    // 🆕 AJOUTS (Octobre 2025)
-    { lang:"fr",
-      title:"Économie du bois au Gabon (2025) – de la coupe au produit fini",
-      description:"Analyse 2025 de la filière bois : transformation locale, marchés, conformité EUDR et performances industrielles.",
-      img:"article4.avif",
-      link:"article-economie-bois-gabon-2025.html",
-      date:"2025-10-31"
-    },
-    { lang:"en",
-      title:"Gabon’s wood economy (2025) – from harvest to finished products",
-      description:"2025 analysis of Gabon’s wood sector: local processing, markets, EUDR compliance, and industrial performance.",
-      img:"article4.avif",
-      link:"article-wood-economy-gabon-2025-en.html",
-      date:"2025-10-31"
-    },
-
     { lang:"fr", title:"Le Gabon renforce sa politique forestière",
       description:"Le Gabon, riche de ses forêts équatoriales, s’impose comme un leader africain dans la gestion durable des ressources forestières.",
       img:"article1.avif", link:"article-full-fr.html", date:"2025-09-12" },
@@ -51,7 +35,16 @@
       img:"nkok.avif", link:"article-full3-fr.html", date:"2025-10-26" },
     { lang:"en", title:"Nkok: showcase of Gabon’s sustainable industrial development",
       description:"The Nkok Special Economic Zone highlights Gabon’s success in combining industrial growth, sustainability, and local employment.",
-      img:"nkok.avif", link:"article-full3-en.html", date:"2025-10-26" }
+      img:"nkok.avif", link:"article-full3-en.html", date:"2025-10-26" },
+
+    /* ✅ AJOUT DU NOUVEL ARTICLE */
+    { lang:"fr", title:"L’économie du bois au Gabon en 2025 : de la coupe au produit fini",
+      description:"Analyse complète de la filière bois gabonaise : exploitation, transformation locale, exportations et durabilité.",
+      img:"article4.avif", link:"article-full4-fr.html", date:"2025-11-04" },
+
+    { lang:"en", title:"Gabon’s Wood Economy in 2025: From Harvest to Finished Products",
+      description:"Comprehensive analysis of Gabon's wood sector: forestry, local processing, exports and sustainability.",
+      img:"article4.avif", link:"article-full4-en.html", date:"2025-11-04" }
   ];
 
   // --------- Helpers : page & langue ----------
