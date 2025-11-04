@@ -16,6 +16,22 @@
 
   // --------- Données statiques centralisées ----------
   const STATIC_ARTICLES = [
+    // 🆕 AJOUTS (Octobre 2025)
+    { lang:"fr",
+      title:"Économie du bois au Gabon (2025) – de la coupe au produit fini",
+      description:"Analyse 2025 de la filière bois : transformation locale, marchés, conformité EUDR et performances industrielles.",
+      img:"article4.avif",
+      link:"article-economie-bois-gabon-2025.html",
+      date:"2025-10-31"
+    },
+    { lang:"en",
+      title:"Gabon’s wood economy (2025) – from harvest to finished products",
+      description:"2025 analysis of Gabon’s wood sector: local processing, markets, EUDR compliance, and industrial performance.",
+      img:"article4.avif",
+      link:"article-wood-economy-gabon-2025-en.html",
+      date:"2025-10-31"
+    },
+
     { lang:"fr", title:"Le Gabon renforce sa politique forestière",
       description:"Le Gabon, riche de ses forêts équatoriales, s’impose comme un leader africain dans la gestion durable des ressources forestières.",
       img:"article1.avif", link:"article-full-fr.html", date:"2025-09-12" },
