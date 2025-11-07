@@ -2145,3 +2145,69 @@ header.hero + section h2:first-child{ margin-top: 0 !important; }
     grid-template-columns: none !important;
   }
 }
+/* =========================================================
+   🛡️ ULTIMATE OVERRIDE — Learn Gabon (DESKTOP)
+   Icônes rondes + texte en dessous, image+texte cliquables
+   (A coller TOUT EN BAS. Ne rien supprimer ailleurs.)
+   ========================================================= */
+@media (min-width: 1024px) {
+  html body #learn-gabon .learn-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+    gap: 2rem !important;
+    justify-items: center !important;
+    align-items: start !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+  }
+
+  /* carte = un seul <a> avec image + texte */
+  html body #learn-gabon .learn-card {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+
+    /* neutralise toutes les anciennes cartes vertes / tailles fixes */
+    background: transparent !important;
+    color: inherit !important;
+    border: none !important;
+    box-shadow: none !important;
+    width: 100% !important;
+    max-width: 180px !important;
+    padding: 0 !important;
+    text-decoration: none !important;
+
+    white-space: normal !important;
+    text-overflow: clip !important;
+    overflow: visible !important;
+
+    transition: transform .15s ease !important;
+  }
+
+  html body #learn-gabon .learn-card:hover {
+    transform: translateY(-2px) !important;
+  }
+
+  /* icône ronde (96px). Mets object-fit: contain si tu ne veux rien rogner */
+  html body #learn-gabon .learn-image {
+    width: 96px !important;
+    height: 96px !important;
+    object-fit: cover !important;   /* option : contain */
+    border-radius: 50% !important;  /* rond */
+    display: block !important;
+    background: transparent !important;
+  }
+
+  /* texte sous l’icône */
+  html body #learn-gabon .learn-card > span {
+    margin-top: 8px !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    line-height: 1.3 !important;
+    color: inherit !important;
+  }
+
+  /* désactive toute ancienne grille forcée (4 colonnes, etc.) */
+  html body .learn-grid { grid-template-columns: none !important; }
+}
