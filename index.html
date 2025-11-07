@@ -261,58 +261,105 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- En savoir plus sur le Gabon -->
 <section class="learn-gabon fade-in" id="learn-gabon">
+
+  <!-- 🔒 OVERRIDE SCOPÉ À CETTE SECTION (DESKTOP SEULEMENT) -->
+  <style>
+    @media (min-width:1024px){
+      /* Spécificité volontairement très élevée */
+      html body section#learn-gabon.learn-gabon.fade-in .learn-grid {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+        gap: 2rem !important;
+        justify-items: center !important;
+        align-items: start !important;
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+      }
+      html body section#learn-gabon.learn-gabon.fade-in .learn-card {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        background: transparent !important;
+        color: inherit !important;
+        border: none !important;
+        box-shadow: none !important;
+        width: 100% !important;
+        max-width: 180px !important;
+        padding: 0 !important;
+        text-decoration: none !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        transition: transform .15s ease !important;
+      }
+      html body section#learn-gabon.learn-gabon.fade-in .learn-card:hover {
+        transform: translateY(-2px) !important;
+      }
+      html body section#learn-gabon.learn-gabon.fade-in .learn-image {
+        width: 96px !important;
+        height: 96px !important;
+        object-fit: cover !important;   /* mets 'contain' si tu veux 0 rognage */
+        border-radius: 50% !important;  /* icône ronde */
+        display: block !important;
+        background: transparent !important;
+      }
+      html body section#learn-gabon.learn-gabon.fade-in .learn-card > span {
+        margin-top: 8px !important;
+        font-size: 0.95rem !important;
+        font-weight: 600 !important;
+        line-height: 1.3 !important;
+        color: inherit !important;
+      }
+      /* Désactive toute vieille grille forcée ailleurs */
+      html body .learn-grid { grid-template-columns: none !important; }
+    }
+  </style>
+
   <h2 class="learn-title">En savoir plus sur le Gabon</h2>
   <div class="learn-grid">
 
-    <!-- 1. Gouvernement (tu dis que ce visuel te va bien) -->
     <a class="learn-card" href="https://www.gouvernement.ga/" rel="noopener noreferrer" target="_blank">
       <img src="gouvernement-gabon.avif" alt="Gouvernement du Gabon" class="learn-image">
       <span>Gouvernement du Gabon</span>
     </a>
 
-    <!-- 2. FSC (tu dis que ce visuel te va bien) -->
     <a class="learn-card" href="https://fsc.org/en/gabon" rel="noopener noreferrer" target="_blank">
       <img src="fsc.avif" alt="FSC au Gabon" class="learn-image">
       <span>FSC au Gabon</span>
     </a>
 
-    <!-- 3. Brainforest (tu dis que ce visuel te va bien) -->
     <a class="learn-card" href="https://brainforest-gabon.org/" rel="noopener noreferrer" target="_blank">
       <img src="brainforest.avif" alt="Brainforest au Gabon" class="learn-image">
       <span>Brainforest au Gabon</span>
     </a>
 
-    <!-- Ministère des Eaux et Forêts -->
     <a class="learn-card" href="https://www.eaux-forets.gouv.ga/" rel="noopener noreferrer" target="_blank">
       <img src="mef.avif" alt="Ministère des Eaux et Forêts" class="learn-image">
       <span>Ministère des Eaux et Forêts</span>
     </a>
 
-    <!-- WWF -->
     <a class="learn-card" href="https://www.wwfgabon.org/" rel="noopener noreferrer" target="_blank">
       <img src="wwf.avif" alt="WWF Gabon" class="learn-image">
       <span>WWF Gabon</span>
     </a>
 
-    <!-- WCS (ton fichier s'appelle wsc.avif à la racine, je garde ce nom) -->
+    <!-- Ton fichier est bien wsc.avif (pas wcs) -->
     <a class="learn-card" href="https://gabon.wcs.org/en-us/" rel="noopener noreferrer" target="_blank">
-      <img src="wcs.avif" alt="WCS Gabon" class="learn-image">
+      <img src="wsc.avif" alt="WCS Gabon" class="learn-image">
       <span>WCS Gabon</span>
     </a>
 
-    <!-- FPBG (correction du nom de fichier: fpbg.avif) -->
     <a class="learn-card" href="https://fpbg.org/" rel="noopener noreferrer" target="_blank">
       <img src="fpbg.avif" alt="FPBG au Gabon" class="learn-image">
       <span>FPBG au Gabon</span>
     </a>
 
-    <!-- Vidéo -->
     <a class="learn-card" href="https://youtu.be/Fd89uelmQ3k?feature=shared" rel="noopener noreferrer" target="_blank">
-      <img src="video.avif" alt="La forêt du Gabon en vidéo" class="learn-image">
-      <span>La forêt du Gabon en vidéo</span>
+      <img src="video.avif" alt="Riche patrimoine naturel du Gabon en vidéo" class="learn-image">
+      <span>Riche patrimoine naturel (vidéo)</span>
     </a>
 
-    <!-- Code forestier du Gabon (PDF) -->
     <a class="learn-card" href="pdf/code-forestier-gabon.pdf" target="_blank" rel="noopener">
       <img src="code-forestier-gabon.avif" alt="Code forestier du Gabon (PDF)" class="learn-image">
       <span>Code forestier du Gabon (PDF)</span>
