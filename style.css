@@ -2089,3 +2089,59 @@ header.hero + section h2:first-child{ margin-top: 0 !important; }
     height: 220px !important;
   }
 }
+/* =========================
+   🔧 FIX DESKTOP DÉFINITIF
+   Section Learn Gabon
+   ========================= */
+@media (min-width: 1024px) {
+  /* 1 carte par ligne, centrée */
+  #learn-gabon .learn-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 2rem !important;
+  }
+
+  /* Lien/carte totalement transparent et large */
+  #learn-gabon .learn-card {
+    display: block !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    width: 100% !important;
+    max-width: 980px !important;
+    padding: 0 !important;
+
+    /* annule les anciens styles gênants */
+    white-space: normal !important;
+    text-overflow: clip !important;
+    overflow: visible !important;
+  }
+
+  /* Image homogène, plein largeur, rognée proprement */
+  #learn-gabon .learn-image {
+    display: block !important;
+    width: 100% !important;
+    height: clamp(260px, 35vw, 420px) !important; /* homogène mais responsive */
+    object-fit: cover !important;
+    border-radius: 12px !important;
+    background: transparent !important;
+  }
+
+  /* Texte sous l'image */
+  #learn-gabon .learn-card > span {
+    display: block !important;
+    margin-top: 10px !important;
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    color: inherit !important;
+  }
+}
+
+/* Neutralise toute mise en grille résiduelle qui imposerait 4 colonnes */
+@media (min-width: 1024px) {
+  .learn-grid {
+    grid-template-columns: none !important;
+  }
+}
