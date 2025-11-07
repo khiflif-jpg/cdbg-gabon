@@ -2211,3 +2211,28 @@ header.hero + section h2:first-child{ margin-top: 0 !important; }
   /* désactive toute ancienne grille forcée (4 colonnes, etc.) */
   html body .learn-grid { grid-template-columns: none !important; }
 }
+  <!-- ✅ AJOUT POUR TABLETTES / IPAD (tous modèles jusqu’à 1200px) -->
+  <style>
+    @media (min-width:768px) and (max-width:1200px) {
+      html body section#learn-gabon.learn-gabon.fade-in .learn-grid {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+      }
+
+      html body section#learn-gabon.learn-gabon.fade-in .learn-card {
+        max-width: 100% !important;
+        text-align: center !important;
+      }
+
+      html body section#learn-gabon.learn-gabon.fade-in .learn-card img {
+        width: 100% !important;
+        height: auto !important;
+        border-radius: 10px !important;
+      }
+
+      html body section#learn-gabon.learn-gabon.fade-in .learn-card h3,
+      html body section#learn-gabon.learn-gabon.fade-in .learn-card p {
+        margin-top: 10px !important;
+      }
+    }
+  </style>
