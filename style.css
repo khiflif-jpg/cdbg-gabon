@@ -1311,73 +1311,55 @@ a.news-card:hover {
     display: none;
   }
 }
-/* ----- Section Learn Gabon ----- */
-.learn-gabon {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 40px 20px;
-}
+/* ==========================================================
+   ✅ FORÇAGE FINAL - Section "Savoir plus sur le Gabon"
+   ========================================================== */
 
-.learn-title {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  color: #222;
-}
-
-/* ----- Grille : une seule carte par ligne ----- */
 .learn-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 2rem !important;
 }
 
-/* ----- Carte cliquable transparente ----- */
 .learn-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  color: inherit;
-  background: transparent;   /* ✅ fond transparent */
-  border: none;
-  box-shadow: none;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  text-decoration: none !important;
+  color: inherit !important;
+  background: transparent !important;    /* ✅ fond totalement transparent */
+  border: none !important;
+  box-shadow: none !important;
+  width: 100% !important;
+  max-width: 900px !important;
+  transition: transform 0.3s ease, opacity 0.3s ease !important;
 }
 
 .learn-card:hover {
-  transform: scale(1.02);
-  opacity: 0.9;
+  transform: scale(1.02) !important;
+  opacity: 0.9 !important;
 }
 
-/* ----- Image homogène ----- */
 .learn-image {
-  width: 100%;
-  height: 320px;             /* ✅ hauteur uniforme pour toutes */
-  object-fit: cover;         /* ✅ rogne proprement sans déformation */
-  display: block;
-  border-radius: 12px;       /* coins doux */
+  width: 100% !important;
+  height: 320px !important;              /* hauteur homogène */
+  object-fit: cover !important;          /* garde le ratio */
+  border-radius: 12px !important;
+  background: transparent !important;
+  display: block !important;
 }
 
-/* ----- Texte sous l'image ----- */
 .learn-card span {
-  display: block;
-  margin-top: 10px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  text-align: center;
+  display: block !important;
+  margin-top: 10px !important;
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  text-align: center !important;
 }
 
-/* ----- Responsive : adapte les images sur mobile ----- */
 @media (max-width: 600px) {
   .learn-image {
-    height: 220px; /* images moins hautes sur petit écran */
-  }
-
-  .learn-title {
-    font-size: 1.6rem;
+    height: 220px !important;
   }
 }
-
-
-
