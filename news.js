@@ -140,8 +140,8 @@
         }
       : {
           lang: "en",
-          title: "Gabon Forest Code (PDF)",
-          description: "Download the Gabonese Forest Code in PDF format (white background, print-ready).",
+          title: "Forestry Code of the Gabonese Republic: Legislative and Regulatory Texts 2001-2025.",
+          description: "The Forestry Code of the Gabonese Republic, with all legislative texts, decrees, orders and ordinances published between 2001 and 2025.",
           img: "https://www.cdbg-gabon.com/code-forestier-gabon.avif",
           link: "https://www.cdbg-gabon.com/code-forestier-gabon.pdf",
           date: "2025-11-08"
