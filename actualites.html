@@ -109,15 +109,17 @@
       </article>
 
       <!-- 🟦 Conteneur dynamique de news.js -->
-      <div id="news-container"></div>
+      <div id="news-container" class="news-grid" style="display: contents;"></div>
     </div>
 
+    <!-- Si ta CSP bloque le <style>, tu as déjà l’inline style ci-dessus -->
     <style>
-      /* Intègre les articles dynamiques dans la même grille */
+      /* Sécurité: au cas où l'inline serait filtré, on garde aussi la règle globale */
       #news-container { display: contents; }
     </style>
   </section>
 </main>
+
 
   <footer>
     <div class="footer-container">
