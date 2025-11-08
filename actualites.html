@@ -79,13 +79,45 @@
       </div>
     </nav>
   </header>
+  
+<main id="main">
+  <section class="news-section fade-in" id="forest-news">
+    <h2 style="margin-top:100px">Actualités</h2>
 
-  <main id="main">
-    <section class="news-section fade-in" id="forest-news">
-      <h2 style="margin-top:100px">Actualités</h2>
-      <div id="news-container" class="news-grid"></div>
-    </section>
-  </main>
+    <!-- Grille des actualités : ton PDF + articles dynamiques -->
+    <div class="news-grid">
+
+      <!-- 🟩 Ton article PDF statique — toujours premier et jamais effacé -->
+      <article class="news-card" style="order:-1;">
+        <a class="news-image" href="code-forestier-gabon.pdf" target="_blank" rel="noopener">
+          <img src="code-forestier-gabon.avif" alt="Code forestier du Gabon (PDF)" loading="lazy">
+        </a>
+        <div class="news-content">
+          <h3 class="news-title">
+            <a href="code-forestier-gabon.pdf" target="_blank" rel="noopener">
+              Code forestier du Gabon (PDF)
+            </a>
+          </h3>
+          <div class="news-meta">
+            <span class="news-date">8 novembre 2025</span>
+            <span class="news-tag">PDF</span>
+          </div>
+          <p class="news-excerpt">
+            Téléchargez le Code forestier de la République gabonaise en PDF (fond blanc, prêt à imprimer).
+          </p>
+        </div>
+      </article>
+
+      <!-- 🟦 Conteneur dynamique de news.js -->
+      <div id="news-container"></div>
+    </div>
+
+    <style>
+      /* Intègre les articles dynamiques dans la même grille */
+      #news-container { display: contents; }
+    </style>
+  </section>
+</main>
 
   <footer>
     <div class="footer-container">
