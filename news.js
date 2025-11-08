@@ -50,14 +50,14 @@
     { lang:"fr",
       title:"Code forestier de la République du Gabon (édition 2025 – CDBG) | Version PDF",
       description:"Version PDF du Code forestier de la République du Gabon (édition 2025 – CDBG).",
-      img:"code-forestier-gabon.avif",
+      img:"code-forestier-pdf.avif",
       link:"article-full5-fr.html",
       date:"2025-11-08"
     },
     { lang:"en",
       title:"Forest Code of the Republic of Gabon (2025 Edition – CDBG) | PDF Version",
       description:"PDF version of the Forest Code of the Republic of Gabon (2025 Edition – CDBG).",
-      img:"code-forestier-gabon.avif",
+      img:"code-forestier-pdf.avif",
       link:"article-full5-en.html",
       date:"2025-11-08"
     }
