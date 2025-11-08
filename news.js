@@ -125,6 +125,46 @@
     return el;
   };
 
+  // --- Injecte le PDF "collant" en première carte sur les pages Actualités/News ---
+  function addStickyPDF(lang) {
+    if (!isNewsListingPage()) return; // uniquement sur actualites*.html
+
+    const data = (lang === "fr")
+      ? {
+          lang: "fr",
+          title: "Code forestier du Gabon (PDF)",
+          description: "Téléchargez le Code forestier de la République gabonaise en PDF (fond blanc, prêt à imprimer).",
+          img: "https://www.cdbg-gabon.com/code-forestier-gabon.avif",
+          link: "https://www.cdbg-gabon.com/code-forestier-gabon.pdf",
+          date: "2025-11-08"
+        }
+      : {
+          lang: "en",
+          title: "Gabon Forest Code (PDF)",
+          description: "Download the Gabonese Forest Code in PDF format (white background, print-ready).",
+          img: "https://www.cdbg-gabon.com/code-forestier-gabon.avif",
+          link: "https://www.cdbg-gabon.com/code-forestier-gabon.pdf",
+          date: "2025-11-08"
+        };
+
+    const containers = findPreviewContainers();
+    containers.forEach((ctn) => {
+      if (!ctn) return;
+      // éviter doublons
+      if (ctn.querySelector('[data-sticky-pdf="1"]')) return;
+
+      // même rendu que les autres
+      const card = createCardSafe(data);
+      // ouvrir en nouvel onglet (createCard ne le fait que pour RSS)
+      card.setAttribute("target", "_blank");
+      card.setAttribute("rel", "noopener");
+      card.setAttribute("data-sticky-pdf", "1");
+
+      // toujours en premier
+      ctn.prepend(card);
+    });
+  }
+
   const clearAndInject = (container, items, safe = false) => {
     if (!container) return;
     container.innerHTML = "";
@@ -244,6 +284,8 @@
     clearAndInjectMultiple(previewTargets, localsForPage, false);
     clearAndInjectMultiple(magazineTargets, localByLang, false);
 
+    addStickyPDF(lang);                 // ★ 1) tout de suite après l’injection “locale”
+
     // Chargement multi-flux
     const rssConfigs = getRSSUrls();
     if (rssConfigs.length) {
@@ -261,8 +303,12 @@
           .sort((a, b) => (a.date < b.date ? 1 : -1));
 
         clearAndInjectMultiple(previewTargets, mergedForPreview, true);
+
+        addStickyPDF(lang);             // ★ 2) après l’injection RSS (reste toujours en premier)
+
       } catch {
         // fallback : articles statiques uniquement
+        addStickyPDF(lang);             // ★ 3) en cas d’échec RSS
       }
     }
   };
