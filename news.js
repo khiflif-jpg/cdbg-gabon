@@ -132,8 +132,8 @@
     const data = (lang === "fr")
       ? {
           lang: "fr",
-          title: "Code forestier du Gabon (PDF)",
-          description: "Téléchargez le Code forestier de la République gabonaise en PDF (fond blanc, prêt à imprimer).",
+          title: "Code forestier de la République gabonaise : Textes législatifs et réglementaires 2001-2025",
+          description: "Le Code forestier de la République gabonaise, avec l’ensemble des textes législatifs, décrets, arrêtés et ordonnances publiés entre 2001 et 2025.",
           img: "https://www.cdbg-gabon.com/code-forestier-gabon.avif",
           link: "https://www.cdbg-gabon.com/code-forestier-gabon.pdf",
           date: "2025-11-08"
