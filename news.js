@@ -44,7 +44,23 @@
 
     { lang:"en", title:"Gabon’s Wood Economy in 2025: From Harvest to Finished Products",
       description:"Comprehensive analysis of Gabon's wood sector: forestry, local processing, exports and sustainability.",
-      img:"article4.avif", link:"article-full4-en.html", date:"2025-11-04" }
+      img:"article4.avif", link:"article-full4-en.html", date:"2025-11-04" },
+
+    /* ✅ AJOUTS demandés (article 5 FR/EN) */
+    { lang:"fr",
+      title:"Code forestier de la République du Gabon (édition 2025 – CDBG) | Version PDF",
+      description:"Version PDF du Code forestier de la République du Gabon (édition 2025 – CDBG).",
+      img:"code-forestier-gabon.avif",
+      link:"article-full5-fr.html",
+      date:"2025-11-08"
+    },
+    { lang:"en",
+      title:"Forest Code of the Republic of Gabon (2025 Edition – CDBG) | PDF Version",
+      description:"PDF version of the Forest Code of the Republic of Gabon (2025 Edition – CDBG).",
+      img:"code-forestier-gabon.avif",
+      link:"article-full5-en.html",
+      date:"2025-11-08"
+    }
   ];
 
   // --------- Helpers : page & langue ----------
