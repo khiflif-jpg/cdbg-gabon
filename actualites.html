@@ -84,17 +84,15 @@
   <section class="news-section fade-in" id="forest-news">
     <h2 style="margin-top:100px">Actualités</h2>
 
-    <!-- Grille des actualités : ton PDF + articles dynamiques -->
     <div class="news-grid">
-
-      <!-- 🟩 Ton article PDF statique — toujours premier et jamais effacé -->
+      <!-- Toujours premier -->
       <article class="news-card" style="order:-1;">
-        <a class="news-image" href="code-forestier-gabon.pdf" target="_blank" rel="noopener">
-          <img src="code-forestier-gabon.avif" alt="Code forestier du Gabon (PDF)" loading="lazy">
+        <a class="news-image" href="https://www.cdbg-gabon.com/code-forestier-gabon.pdf" target="_blank" rel="noopener">
+          <img src="https://www.cdbg-gabon.com/code-forestier-gabon.avif" alt="Code forestier du Gabon (PDF)" loading="lazy">
         </a>
         <div class="news-content">
           <h3 class="news-title">
-            <a href="code-forestier-gabon.pdf" target="_blank" rel="noopener">
+            <a href="https://www.cdbg-gabon.com/code-forestier-gabon.pdf" target="_blank" rel="noopener">
               Code forestier du Gabon (PDF)
             </a>
           </h3>
@@ -108,17 +106,14 @@
         </div>
       </article>
 
-      <!-- 🟦 Conteneur dynamique de news.js -->
-      <div id="news-container" class="news-grid" style="display: contents;"></div>
+      <!-- Contenu injecté par news.js -->
+      <div id="news-container" class="news-grid" style="display:contents;"></div>
     </div>
 
-    <!-- Si ta CSP bloque le <style>, tu as déjà l’inline style ci-dessus -->
-    <style>
-      /* Sécurité: au cas où l'inline serait filtré, on garde aussi la règle globale */
-      #news-container { display: contents; }
-    </style>
+    <style>#news-container{display:contents}</style>
   </section>
 </main>
+
 
 
   <footer>
