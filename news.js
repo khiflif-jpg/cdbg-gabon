@@ -11,8 +11,8 @@
   const SITE_BRAND = "CDBG Magazine";
 
   // ✅ Tes 2 flux RSS
-  const RSS_URL_OVERRIDE_1 = "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml";  // PFBC
-  const RSS_URL_OVERRIDE_2 = "https://rss.app/feeds/NbpOTwjyYzdutyWP.xml";  // ATIBT
+  const RSS_URL_OVERRIDE_1 = "https://rss.app/feeds/StEwzwMzjxl2nHIc.xml";  // PFBC mis à jour
+  const RSS_URL_OVERRIDE_2 = "https://rss.app/feeds/NbpOTwjyYzdutyWP.xml";  // ATIBT direct
 
   // --------- Données statiques centralisées ----------
   const STATIC_ARTICLES = [
@@ -166,17 +166,11 @@
     const containers = findPreviewContainers();
     containers.forEach((ctn) => {
       if (!ctn) return;
-      // éviter doublons
       if (ctn.querySelector('[data-sticky-pdf="1"]')) return;
-
-      // même rendu que les autres
       const card = createCardSafe(data);
-      // ouvrir en nouvel onglet (createCard ne le fait que pour RSS)
       card.setAttribute("target", "_blank");
       card.setAttribute("rel", "noopener");
       card.setAttribute("data-sticky-pdf", "1");
-
-      // toujours en premier
       ctn.prepend(card);
     });
   }
@@ -323,7 +317,6 @@
         addStickyPDF(lang);             // ★ 2) après l’injection RSS (reste toujours en premier)
 
       } catch {
-        // fallback : articles statiques uniquement
         addStickyPDF(lang);             // ★ 3) en cas d’échec RSS
       }
     }
