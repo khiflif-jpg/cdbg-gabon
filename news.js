@@ -1,5 +1,5 @@
 /* ===========================
-   news.js — injection auto d’articles (FR/EN)
+   news.js — injection auto d’articles (FR/EN) avec "Lire la suite"
    =========================== */
 
 (() => {
@@ -84,35 +84,27 @@
     } catch { return iso; }
   };
 
-  // --------- Styles anti-soulignement ----------
-  function ensureNoUnderlineStyle() {
+  // --------- Styles anti-soulignement et "Lire la suite" bleu ----------
+  function ensureStyles() {
     if (document.getElementById("news-card-style")) return;
     const style = document.createElement("style");
     style.id = "news-card-style";
     style.textContent = `
-      .news-card { text-decoration: none !important; color: inherit !important; }
+      .news-card { text-decoration: none !important; color: inherit !important; display: block; margin-bottom: 24px; }
       .news-card:hover, .news-card:focus { text-decoration: none !important; }
       .news-card .news-title, .news-card h3.news-title a { text-decoration: none !important; color: inherit !important; }
-      .read-more { font-weight: bold; }
+      .news-card .news-desc a.read-more { color: blue; text-decoration: underline; margin-left: 4px; font-weight: bold; }
     `;
     document.head.appendChild(style);
   }
 
-  // --------- Helpers : rendu ----------
+  // --------- Création de la carte ----------
   const createCard = (a) => {
     const pageLang = getLang();
-    let meta;
+    let meta = a._isRSS ? `${formatDate(a.date, pageLang)} - ${a._sourceTag} - ${SITE_BRAND}` : `${formatDate(a.date, a.lang)} — ${SITE_BRAND}`;
 
-    if (a._isRSS && a._sourceTag === "ATIBT") {
-      meta = `${formatDate(a.date, pageLang)} - ATIBT - ${SITE_BRAND}`;
-    } else if (a._isRSS) {
-      meta = `${formatDate(a.date, pageLang)} - PFBC - ${SITE_BRAND}`;
-    } else {
-      meta = `${formatDate(a.date, a.lang)} — ${SITE_BRAND}`;
-    }
-
-    const description = a.description ? a.description.slice(0, 300) : "";
-    const readMore = `<span class="read-more"> Lire la suite</span>`;
+    const descText = a.description ? a.description.slice(0,300) : "";
+    const fullDesc = `<span class="desc-text">${descText}</span><a href="${a.link}" class="read-more" target="_blank" rel="noopener noreferrer">Lire la suite</a>`;
 
     const wrapper = document.createElement("div");
     wrapper.innerHTML = `
@@ -122,7 +114,7 @@
         </div>
         <div class="news-content">
           <h3 class="news-title">${a.title}</h3>
-          <p class="news-desc">${description}${readMore}</p>
+          <p class="news-desc">${fullDesc}</p>
           <div class="news-meta">${meta}</div>
         </div>
       </a>
@@ -140,50 +132,6 @@
       if (img) img.src = a.img;
     }
     return el;
-  };
-
-  // --- Injecte le PDF "collant" en première carte sur les pages Actualités/News ---
-  function addStickyPDF(lang) {
-    if (!isNewsListingPage()) return;
-
-    const data = (lang === "fr")
-      ? {
-          lang: "fr",
-          title: "Code forestier de la République gabonaise : Textes législatifs et réglementaires 2001-2025",
-          description: "Le Code forestier de la République gabonaise, avec l’ensemble des textes législatifs, décrets, arrêtés et ordonnances publiés entre 2001 et 2025.",
-          img: "https://www.cdbg-gabon.com/code-forestier-gabon.avif",
-          link: "https://www.cdbg-gabon.com/code-forestier-gabon.pdf",
-          date: "2025-11-08"
-        }
-      : {
-          lang: "en",
-          title: "Forestry Code of the Gabonese Republic: Legislative and Regulatory Texts 2001-2025.",
-          description: "The Forestry Code of the Gabonese Republic, with all legislative texts, decrees, orders and ordinances published between 2001 and 2025.",
-          img: "https://www.cdbg-gabon.com/code-forestier-gabon.avif",
-          link: "https://www.cdbg-gabon.com/code-forestier-gabon.pdf",
-          date: "2025-11-08"
-        };
-
-    const containers = findPreviewContainers();
-    containers.forEach((ctn) => {
-      if (!ctn) return;
-      if (ctn.querySelector('[data-sticky-pdf="1"]')) return;
-
-      const card = createCardSafe(data);
-      card.setAttribute("target", "_blank");
-      card.setAttribute("rel", "noopener");
-      card.setAttribute("data-sticky-pdf", "1");
-      ctn.prepend(card);
-    });
-  }
-
-  const clearAndInject = (container, items, safe = false) => {
-    if (!container) return;
-    container.innerHTML = "";
-    items.forEach((a) => container.appendChild(safe ? createCardSafe(a) : createCard(a)));
-  };
-  const clearAndInjectMultiple = (containers, items, safe = false) => {
-    containers.forEach(ctn => clearAndInject(ctn, items, safe));
   };
 
   // --------- Grille responsive ----------
@@ -262,17 +210,17 @@
     return items.map((it) => {
       const title = it.querySelector("title")?.textContent?.trim() || "";
       const linkRaw = it.querySelector("link")?.textContent?.trim() || "#";
-      const descRaw = it.querySelector("description")?.textContent || "";
-      const contentEncoded = it.getElementsByTagName("content:encoded")?.[0]?.textContent || "";
-      const rawText = descRaw || contentEncoded || "";
-      const description = decodeEntities(rawText).replace(/<[^>]+>/g, "").trim().slice(0, 300);
+      let descRaw = it.querySelector("description")?.textContent || it.querySelector("content\\:encoded")?.textContent || "";
+      descRaw = decodeEntities(descRaw).replace(/<[^>]+>/g, "").trim();
+      if (!descRaw) descRaw = title; // fallback sur le titre si pas de description
+
       const img = pickImage(it, channelLink);
       const pubDate = it.querySelector("pubDate")?.textContent?.trim() || "";
       const dateISO = pubDate ? new Date(pubDate).toISOString().slice(0, 10) : "1970-01-01";
 
       return {
         title,
-        description,
+        description: descRaw,
         img,
         link: linkRaw,
         date: dateISO,
@@ -284,7 +232,7 @@
 
   // --------- Injection principale ----------
   const inject = async () => {
-    ensureNoUnderlineStyle();
+    ensureStyles();
     const lang = getLang();
 
     const previewTargets = findPreviewContainers();
@@ -298,8 +246,6 @@
 
     clearAndInjectMultiple(previewTargets, localsForPage, false);
     clearAndInjectMultiple(magazineTargets, localByLang, false);
-
-    addStickyPDF(lang);
 
     const rssConfigs = getRSSUrls();
     if (rssConfigs.length) {
@@ -317,9 +263,8 @@
           .sort((a, b) => (a.date < b.date ? 1 : -1));
 
         clearAndInjectMultiple(previewTargets, mergedForPreview, true);
-        addStickyPDF(lang);
       } catch {
-        addStickyPDF(lang);
+        // fallback : articles statiques uniquement
       }
     }
   };
