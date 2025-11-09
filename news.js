@@ -44,12 +44,20 @@
       description:"Comprehensive analysis of Gabon's wood sector: forestry, local processing, exports and sustainability.",
       img:"article4.avif", link:"article-full4-en.html", date:"2025-11-04" },
 
-    { lang:"fr", title:"Code forestier de la République du Gabon (édition 2025 – CDBG) | Version PDF",
+    { lang:"fr",
+      title:"Code forestier de la République du Gabon (édition 2025 – CDBG) | Version PDF",
       description:"Version PDF du Code forestier de la République du Gabon (édition 2025 – CDBG).",
-      img:"code-forestier-pdf.avif", link:"article-full5-fr.html", date:"2025-11-08" },
-    { lang:"en", title:"Forest Code of the Republic of Gabon (2025 Edition – CDBG) | PDF Version",
+      img:"code-forestier-pdf.avif",
+      link:"article-full5-fr.html",
+      date:"2025-11-08"
+    },
+    { lang:"en",
+      title:"Forest Code of the Republic of Gabon (2025 Edition – CDBG) | PDF Version",
       description:"PDF version of the Forest Code of the Republic of Gabon (2025 Edition – CDBG).",
-      img:"code-forestier-pdf.avif", link:"article-full5-en.html", date:"2025-11-08" }
+      img:"code-forestier-pdf.avif",
+      link:"article-full5-en.html",
+      date:"2025-11-08"
+    }
   ];
 
   // --------- Helpers : page & langue ----------
@@ -85,8 +93,7 @@
       .news-card { text-decoration: none !important; color: inherit !important; }
       .news-card:hover, .news-card:focus { text-decoration: none !important; }
       .news-card .news-title, .news-card h3.news-title a { text-decoration: none !important; color: inherit !important; }
-      .news-card .news-desc { margin-bottom: 8px; }
-      .news-card .read-more { font-weight: bold; color: #0066cc; text-decoration: underline; display:inline-block; margin-top:4px; }
+      .read-more { font-weight: bold; }
     `;
     document.head.appendChild(style);
   }
@@ -95,12 +102,17 @@
   const createCard = (a) => {
     const pageLang = getLang();
     let meta;
-    if (a._isRSS && a._sourceTag === "ATIBT") meta = `${formatDate(a.date, pageLang)} - ATIBT - ${SITE_BRAND}`;
-    else if (a._isRSS) meta = `${formatDate(a.date, pageLang)} - PFBC - ${SITE_BRAND}`;
-    else meta = `${formatDate(a.date, a.lang)} — ${SITE_BRAND}`;
 
-    const descShort = a.description ? a.description.slice(0, 300) : "";
-    const readMore = a.link ? `<span class="read-more">Lire la suite</span>` : "";
+    if (a._isRSS && a._sourceTag === "ATIBT") {
+      meta = `${formatDate(a.date, pageLang)} - ATIBT - ${SITE_BRAND}`;
+    } else if (a._isRSS) {
+      meta = `${formatDate(a.date, pageLang)} - PFBC - ${SITE_BRAND}`;
+    } else {
+      meta = `${formatDate(a.date, a.lang)} — ${SITE_BRAND}`;
+    }
+
+    const description = a.description ? a.description.slice(0, 300) : "";
+    const readMore = `<span class="read-more"> Lire la suite</span>`;
 
     const wrapper = document.createElement("div");
     wrapper.innerHTML = `
@@ -110,7 +122,7 @@
         </div>
         <div class="news-content">
           <h3 class="news-title">${a.title}</h3>
-          <p class="news-desc">${descShort} ${readMore}</p>
+          <p class="news-desc">${description}${readMore}</p>
           <div class="news-meta">${meta}</div>
         </div>
       </a>
@@ -123,6 +135,10 @@
     const hasImg = a.img && String(a.img).trim().length > 0;
     const imgBlock = el.querySelector(".news-image");
     if (!hasImg && imgBlock) imgBlock.remove();
+    else if (hasImg) {
+      const img = imgBlock?.querySelector("img");
+      if (img) img.src = a.img;
+    }
     return el;
   };
 
@@ -150,7 +166,9 @@
 
     const containers = findPreviewContainers();
     containers.forEach((ctn) => {
-      if (!ctn || ctn.querySelector('[data-sticky-pdf="1"]')) return;
+      if (!ctn) return;
+      if (ctn.querySelector('[data-sticky-pdf="1"]')) return;
+
       const card = createCardSafe(data);
       card.setAttribute("target", "_blank");
       card.setAttribute("rel", "noopener");
@@ -164,7 +182,6 @@
     container.innerHTML = "";
     items.forEach((a) => container.appendChild(safe ? createCardSafe(a) : createCard(a)));
   };
-
   const clearAndInjectMultiple = (containers, items, safe = false) => {
     containers.forEach(ctn => clearAndInject(ctn, items, safe));
   };
@@ -198,6 +215,7 @@
     const absUrl = new URL(url, location.href).toString();
     const res = await fetch(absUrl).catch(() => null);
     if (!res || !res.ok) return [];
+
     const text = await res.text();
     const parser = new DOMParser();
     const xml = parser.parseFromString(text, "text/xml");
@@ -217,6 +235,7 @@
       const m = html.match(rx);
       return m ? m[1] : null;
     };
+
     const pickImage = (it, base) => {
       const mediaContent = it.querySelector("media\\:content, content")?.getAttribute?.("url");
       const mediaThumb   = it.querySelector("media\\:thumbnail, thumbnail")?.getAttribute?.("url");
@@ -244,13 +263,16 @@
       const title = it.querySelector("title")?.textContent?.trim() || "";
       const linkRaw = it.querySelector("link")?.textContent?.trim() || "#";
       const descRaw = it.querySelector("description")?.textContent || "";
+      const contentEncoded = it.getElementsByTagName("content:encoded")?.[0]?.textContent || "";
+      const rawText = descRaw || contentEncoded || "";
+      const description = decodeEntities(rawText).replace(/<[^>]+>/g, "").trim().slice(0, 300);
       const img = pickImage(it, channelLink);
       const pubDate = it.querySelector("pubDate")?.textContent?.trim() || "";
       const dateISO = pubDate ? new Date(pubDate).toISOString().slice(0, 10) : "1970-01-01";
 
       return {
         title,
-        description: decodeEntities(descRaw).replace(/<[^>]+>/g, "").trim(),
+        description,
         img,
         link: linkRaw,
         date: dateISO,
@@ -279,7 +301,6 @@
 
     addStickyPDF(lang);
 
-    // Chargement multi-flux
     const rssConfigs = getRSSUrls();
     if (rssConfigs.length) {
       try {
@@ -296,15 +317,14 @@
           .sort((a, b) => (a.date < b.date ? 1 : -1));
 
         clearAndInjectMultiple(previewTargets, mergedForPreview, true);
-
         addStickyPDF(lang);
-
       } catch {
         addStickyPDF(lang);
       }
     }
   };
 
+  // --------- Détection conteneurs ----------
   function findPreviewContainers() {
     const selectors = [
       "#latest-news-en","#latest-news","#news-en","#news",
