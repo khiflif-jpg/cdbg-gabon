@@ -10,8 +10,8 @@
   const NEWS_RSS_LIMIT   = Infinity;
   const SITE_BRAND = "CDBG Magazine";
 
-  // ✅ Flux RSS à jour (fonctionnels)
-  const RSS_URL_OVERRIDE_1 = "https://rss.app/feeds/StEwzwMzjxl2nHIc.xml";  // PFBC (nouveau flux valide)
+  // ✅ Flux RSS
+  const RSS_URL_OVERRIDE_1 = "https://rss.app/feeds/StEwzwMzjxl2nHIc.xml";  // PFBC
   const RSS_URL_OVERRIDE_2 = "https://rss.app/feeds/NbpOTwjyYzdutyWP.xml";  // ATIBT
 
   // --------- Données statiques centralisées ----------
@@ -44,15 +44,23 @@
       description:"Comprehensive analysis of Gabon's wood sector: forestry, local processing, exports and sustainability.",
       img:"article4.avif", link:"article-full4-en.html", date:"2025-11-04" },
 
-    { lang:"fr", title:"Code forestier de la République du Gabon (édition 2025 – CDBG) | Version PDF",
+    { lang:"fr",
+      title:"Code forestier de la République du Gabon (édition 2025 – CDBG) | Version PDF",
       description:"Version PDF du Code forestier de la République du Gabon (édition 2025 – CDBG).",
-      img:"code-forestier-pdf.avif", link:"article-full5-fr.html", date:"2025-11-08" },
-    { lang:"en", title:"Forest Code of the Republic of Gabon (2025 Edition – CDBG) | PDF Version",
+      img:"code-forestier-pdf.avif",
+      link:"article-full5-fr.html",
+      date:"2025-11-08"
+    },
+    { lang:"en",
+      title:"Forest Code of the Republic of Gabon (2025 Edition – CDBG) | PDF Version",
       description:"PDF version of the Forest Code of the Republic of Gabon (2025 Edition – CDBG).",
-      img:"code-forestier-pdf.avif", link:"article-full5-en.html", date:"2025-11-08" }
+      img:"code-forestier-pdf.avif",
+      link:"article-full5-en.html",
+      date:"2025-11-08"
+    }
   ];
 
-  // --------- Helpers : langue & page ----------
+  // --------- Helpers : page & langue ----------
   const getLang = () => {
     const htmlLang = (document.documentElement.getAttribute("lang") || "").toLowerCase();
     if (htmlLang.startsWith("en")) return "en";
@@ -62,6 +70,13 @@
     return "fr";
   };
 
+  const isHomePage = () => {
+    const p = (location.pathname || "").toLowerCase();
+    return p === "/" || /(?:^|\/)(index|en)\.html$/.test(p);
+  };
+
+  const isNewsListingPage = () => /actualites(-en)?\.html$/i.test(location.pathname);
+
   const formatDate = (iso, lang) => {
     try {
       const d = new Date(iso + "T00:00:00");
@@ -69,7 +84,22 @@
     } catch { return iso; }
   };
 
-  // --------- Génération carte ----------
+  // --------- Styles ----------
+  function ensureStyles() {
+    if (document.getElementById("news-card-style")) return;
+    const style = document.createElement("style");
+    style.id = "news-card-style";
+    style.textContent = `
+      .news-card { text-decoration: none !important; color: inherit !important; display:block; }
+      .news-card:hover, .news-card:focus { text-decoration: none !important; }
+      .news-card .news-title { font-weight:bold; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+      .news-card .news-desc { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin-bottom:0.5em; }
+      .news-card .news-readmore { color: green; text-decoration: underline; display:block; }
+    `;
+    document.head.appendChild(style);
+  }
+
+  // --------- Helpers : rendu ----------
   const createCard = (a) => {
     const pageLang = getLang();
     let meta;
@@ -83,6 +113,13 @@
     }
 
     const wrapper = document.createElement("div");
+
+    // description + Lire la suite
+    const desc = a.description && a.description.trim() !== "" ? a.description.trim().slice(0, 300) : "";
+    const readmore = `<span class="news-readmore">Lire la suite</span>`;
+
+    const descBlock = desc ? `<p class="news-desc">${desc}</p>${readmore}` : readmore;
+
     wrapper.innerHTML = `
       <a href="${a.link}" class="news-card" ${a._isRSS ? 'target="_blank" rel="noopener noreferrer"' : ""}>
         <div class="news-image">
@@ -90,7 +127,7 @@
         </div>
         <div class="news-content">
           <h3 class="news-title">${a.title}</h3>
-          <p class="news-desc">${a.description}</p>
+          ${descBlock}
           <div class="news-meta">${meta}</div>
         </div>
       </a>
@@ -110,47 +147,156 @@
     return el;
   };
 
-  // --------- RSS ----------
-  const getRSSUrls = () => [
-    { url: RSS_URL_OVERRIDE_1, tag: "PFBC" },
-    { url: RSS_URL_OVERRIDE_2, tag: "ATIBT" }
-  ];
-
-  const parseRSS = async (url, tag) => {
-    const res = await fetch(url).catch(() => null);
-    if (!res || !res.ok) return [];
-    const text = await res.text();
-    const xml = new DOMParser().parseFromString(text, "text/xml");
-    const decodeEntities = (s) => { const t = document.createElement("textarea"); t.innerHTML = s; return t.value; };
-
-    return Array.from(xml.querySelectorAll("item")).map(it => ({
-      title: it.querySelector("title")?.textContent?.trim() || "",
-      description: decodeEntities(it.querySelector("description")?.textContent || "").replace(/<[^>]+>/g, "").trim().slice(0, 300),
-      link: it.querySelector("link")?.textContent?.trim() || "#",
-      date: new Date(it.querySelector("pubDate")?.textContent || "").toISOString().slice(0, 10),
-      _isRSS: true,
-      _sourceTag: tag
-    }));
+  // --------- RSS multi-flux ----------
+  const getRSSUrls = () => {
+    const urls = [];
+    if (RSS_URL_OVERRIDE_1) urls.push({ url: RSS_URL_OVERRIDE_1, tag: "PFBC" });
+    if (RSS_URL_OVERRIDE_2) urls.push({ url: RSS_URL_OVERRIDE_2, tag: "ATIBT" });
+    return urls;
   };
 
-  // --------- Injection ----------
-  const inject = async () => {
-    const lang = getLang();
-    const containers = document.querySelectorAll(".news-grid, #latest-news, #news, #news-en");
-    const localByLang = STATIC_ARTICLES.filter(a => a.lang === lang);
+  const parseRSS = async (url, tag = "PFBC") => {
+    const absUrl = new URL(url, location.href).toString();
+    const res = await fetch(absUrl).catch(() => null);
+    if (!res || !res.ok) return [];
 
-    const rssUrls = getRSSUrls();
-    const rssArrays = await Promise.all(rssUrls.map(cfg => parseRSS(cfg.url, cfg.tag).catch(() => [])));
-    const rssItems = rssArrays.flat();
+    const text = await res.text();
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(text, "text/xml");
+    if (xml.querySelector("parsererror")) return [];
 
-    const all = [...localByLang, ...rssItems].sort((a,b) => (a.date < b.date ? 1 : -1));
+    const channelLink = xml.querySelector("channel > link")?.textContent?.trim() || absUrl;
+    const decodeEntities = (s) => { if (!s) return s; const ta = document.createElement("textarea"); ta.innerHTML = s; return ta.value; };
+    const toAbsolute = (raw, base) => {
+      if (!raw) return null;
+      if (/^https?:\/\//i.test(raw)) return raw.trim();
+      if (/^\/\//.test(raw)) return ("https:" + raw).trim();
+      try { return new URL(raw, base).toString(); } catch { return null; }
+    };
+    const firstAttrFrom = (html, attr) => {
+      if (!html) return null;
+      const rx = new RegExp(attr + '\\s*=\\s*"(.*?)"', "i");
+      const m = html.match(rx);
+      return m ? m[1] : null;
+    };
 
-    containers.forEach(c => {
-      c.innerHTML = "";
-      all.forEach(a => c.appendChild(createCardSafe(a)));
+    const pickImage = (it, base) => {
+      const mediaContent = it.querySelector("media\\:content, content")?.getAttribute?.("url");
+      const mediaThumb   = it.querySelector("media\\:thumbnail, thumbnail")?.getAttribute?.("url");
+      const enclosure    = (() => {
+        const enc = it.querySelector("enclosure");
+        if (!enc) return null;
+        const type = (enc.getAttribute("type") || "").toLowerCase();
+        const url  = enc.getAttribute("url");
+        return /^image\//.test(type) ? url : null;
+      })();
+      const contentEncoded = it.getElementsByTagName("content:encoded")?.[0]?.textContent || "";
+      const desc = it.querySelector("description")?.textContent || "";
+      const imgInContent = firstAttrFrom(contentEncoded, "src") || firstAttrFrom(desc, "src");
+
+      const candidates = [mediaContent, mediaThumb, enclosure, imgInContent].filter(Boolean);
+      for (const c of candidates) {
+        const abs = toAbsolute(decodeEntities(c), base);
+        if (abs) return abs;
+      }
+      return "";
+    };
+
+    const items = Array.from(xml.querySelectorAll("item"));
+    return items.map((it) => {
+      const title = it.querySelector("title")?.textContent?.trim() || "";
+      const linkRaw = it.querySelector("link")?.textContent?.trim() || "#";
+      const descRaw = it.querySelector("description")?.textContent || "";
+      const img = pickImage(it, channelLink);
+      const pubDate = it.querySelector("pubDate")?.textContent?.trim() || "";
+      const dateISO = pubDate ? new Date(pubDate).toISOString().slice(0, 10) : "1970-01-01";
+
+      return {
+        title,
+        description: decodeEntities(descRaw).replace(/<[^>]+>/g, "").trim(),
+        img,
+        link: linkRaw,
+        date: dateISO,
+        _isRSS: true,
+        _sourceTag: tag
+      };
     });
   };
 
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", inject);
-  else inject();
+  // --------- Injection principale ----------
+  const inject = async () => {
+    ensureStyles();
+    const lang = getLang();
+
+    const previewTargets = findPreviewContainers();
+    const magazineTargets = findMagazineContainers();
+
+    const localByLang = STATIC_ARTICLES.filter(a => a.lang === lang).sort((a, b) => (a.date < b.date ? 1 : -1));
+    const localsForPage = isNewsListingPage()
+      ? localByLang.slice(0, NEWS_LOCAL_LIMIT)
+      : localByLang.slice(0, HOME_LOCAL_LIMIT);
+
+    clearAndInjectMultiple(previewTargets, localsForPage, false);
+    clearAndInjectMultiple(magazineTargets, localByLang, false);
+
+    // Chargement multi-flux
+    const rssConfigs = getRSSUrls();
+    if (rssConfigs.length) {
+      try {
+        const allRssArrays = await Promise.all(
+          rssConfigs.map(cfg => parseRSS(cfg.url, cfg.tag).catch(() => []))
+        );
+        let rssItems = allRssArrays.flat();
+
+        const rssForPage = isNewsListingPage()
+          ? rssItems.slice(0, NEWS_RSS_LIMIT)
+          : rssItems.slice(0, HOME_RSS_LIMIT);
+
+        const mergedForPreview = [...rssForPage, ...localsForPage]
+          .sort((a, b) => (a.date < b.date ? 1 : -1));
+
+        clearAndInjectMultiple(previewTargets, mergedForPreview, true);
+
+      } catch { /* fallback: articles statiques uniquement */ }
+    }
+  };
+
+  // --------- Détection conteneurs ----------
+  function findPreviewContainers() {
+    const selectors = [
+      "#latest-news-en","#latest-news","#news-en","#news",
+      'section[id*="news" i] .news-grid','section[id*="latest" i] .news-grid',
+      ".latest-news .news-grid",".news-section .news-grid",".news-grid"
+    ];
+    const found = selectors.map(sel => document.querySelector(sel)).filter(Boolean);
+    if (found.length) return found;
+    const section = document.createElement("section");
+    section.className = "news-section";
+    section.id = "latest-news";
+    const grid = document.createElement("div");
+    grid.className = "news-grid";
+    section.appendChild(grid);
+    (document.querySelector("main") || document.body).appendChild(section);
+    return [grid];
+  }
+
+  function findMagazineContainers() {
+    const selectors = [".articles-container", "#magazine .news-grid", "#articles .news-grid"];
+    return selectors.map(sel => document.querySelector(sel)).filter(Boolean);
+  }
+
+  const clearAndInject = (container, items, safe = false) => {
+    if (!container) return;
+    container.innerHTML = "";
+    items.forEach((a) => container.appendChild(safe ? createCardSafe(a) : createCard(a)));
+  };
+  const clearAndInjectMultiple = (containers, items, safe = false) => {
+    containers.forEach(ctn => clearAndInject(ctn, items, safe));
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", inject);
+  } else {
+    inject();
+  }
 })();
