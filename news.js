@@ -11,8 +11,8 @@
   const SITE_BRAND = "CDBG Magazine";
 
   // ✅ Tes 2 flux RSS
-  const RSS_URL_OVERRIDE_1 = "https://rss.app/feeds/StEwzwMzjxl2nHIc.xml";  // PFBC mis à jour
-  const RSS_URL_OVERRIDE_2 = "https://rss.app/feeds/NbpOTwjyYzdutyWP.xml";  // ATIBT direct
+  const RSS_URL_OVERRIDE_1 = "https://rss.app/feeds/StEwzwMzjxl2nHIc.xml";  // PFBC corrigé
+  const RSS_URL_OVERRIDE_2 = "https://rss.app/feeds/NbpOTwjyYzdutyWP.xml";  // ATIBT
 
   // --------- Données statiques centralisées ----------
   const STATIC_ARTICLES = [
@@ -37,7 +37,6 @@
       description:"The Nkok Special Economic Zone highlights Gabon’s success in combining industrial growth, sustainability, and local employment.",
       img:"nkok.avif", link:"article-full3-en.html", date:"2025-10-26" },
 
-    /* ✅ AJOUT DU NOUVEL ARTICLE */
     { lang:"fr", title:"L’économie du bois au Gabon en 2025 : de la coupe au produit fini",
       description:"Analyse complète de la filière bois gabonaise : exploitation, transformation locale, exportations et durabilité.",
       img:"article4.avif", link:"article-full4-fr.html", date:"2025-11-04" },
@@ -46,7 +45,6 @@
       description:"Comprehensive analysis of Gabon's wood sector: forestry, local processing, exports and sustainability.",
       img:"article4.avif", link:"article-full4-en.html", date:"2025-11-04" },
 
-    /* ✅ AJOUTS demandés (article 5 FR/EN) */
     { lang:"fr",
       title:"Code forestier de la République du Gabon (édition 2025 – CDBG) | Version PDF",
       description:"Version PDF du Code forestier de la République du Gabon (édition 2025 – CDBG).",
@@ -87,7 +85,7 @@
     } catch { return iso; }
   };
 
-  // --------- Styles anti-soulignement ----------
+  // --------- Styles anti-soulignement et titres complets ----------
   function ensureNoUnderlineStyle() {
     if (document.getElementById("news-card-style")) return;
     const style = document.createElement("style");
@@ -96,6 +94,21 @@
       .news-card { text-decoration: none !important; color: inherit !important; }
       .news-card:hover, .news-card:focus { text-decoration: none !important; }
       .news-card .news-title, .news-card h3.news-title a { text-decoration: none !important; color: inherit !important; }
+
+      /* titres complets multi-lignes */
+      .news-card .news-title {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        display: -webkit-box;
+        -webkit-line-clamp: unset;
+        -webkit-box-orient: vertical;
+      }
+
+      /* description complète */
+      .news-card .news-desc {
+        white-space: normal;
+      }
     `;
     document.head.appendChild(style);
   }
@@ -143,7 +156,7 @@
 
   // --- Injecte le PDF "collant" en première carte sur les pages Actualités/News ---
   function addStickyPDF(lang) {
-    if (!isNewsListingPage()) return; // uniquement sur actualites*.html
+    if (!isNewsListingPage()) return;
 
     const data = (lang === "fr")
       ? {
@@ -167,10 +180,12 @@
     containers.forEach((ctn) => {
       if (!ctn) return;
       if (ctn.querySelector('[data-sticky-pdf="1"]')) return;
+
       const card = createCardSafe(data);
       card.setAttribute("target", "_blank");
       card.setAttribute("rel", "noopener");
       card.setAttribute("data-sticky-pdf", "1");
+
       ctn.prepend(card);
     });
   }
@@ -267,7 +282,7 @@
 
       return {
         title,
-        description: decodeEntities(descRaw).replace(/<[^>]+>/g, "").trim().slice(0, 300),
+        description: decodeEntities(descRaw).replace(/<[^>]+>/g, "").trim(),
         img,
         link: linkRaw,
         date: dateISO,
@@ -294,9 +309,8 @@
     clearAndInjectMultiple(previewTargets, localsForPage, false);
     clearAndInjectMultiple(magazineTargets, localByLang, false);
 
-    addStickyPDF(lang);                 // ★ 1) tout de suite après l’injection “locale”
+    addStickyPDF(lang);
 
-    // Chargement multi-flux
     const rssConfigs = getRSSUrls();
     if (rssConfigs.length) {
       try {
@@ -314,10 +328,10 @@
 
         clearAndInjectMultiple(previewTargets, mergedForPreview, true);
 
-        addStickyPDF(lang);             // ★ 2) après l’injection RSS (reste toujours en premier)
+        addStickyPDF(lang);
 
       } catch {
-        addStickyPDF(lang);             // ★ 3) en cas d’échec RSS
+        addStickyPDF(lang);
       }
     }
   };
