@@ -3,18 +3,15 @@
    =========================== */
 
 (() => {
-  // --------- Config ----------
   const HOME_LOCAL_LIMIT = 20;
   const HOME_RSS_LIMIT   = Infinity;
   const NEWS_LOCAL_LIMIT = Infinity;
   const NEWS_RSS_LIMIT   = Infinity;
   const SITE_BRAND = "CDBG Magazine";
 
-  // Tes 2 flux RSS
   const RSS_URL_OVERRIDE_1 = "https://rss.app/feeds/StEwzwMzjxl2nHIc.xml";  // PFBC
   const RSS_URL_OVERRIDE_2 = "https://rss.app/feeds/NbpOTwjyYzdutyWP.xml";  // ATIBT
 
-  // --------- Données statiques centralisées ----------
   const STATIC_ARTICLES = [
     { lang:"fr", title:"Le Gabon renforce sa politique forestière",
       description:"Le Gabon, riche de ses forêts équatoriales, s’impose comme un leader africain dans la gestion durable des ressources forestières.",
@@ -25,7 +22,6 @@
     // … autres articles statiques …
   ];
 
-  // --------- Helpers ----------
   const getLang = () => {
     const htmlLang = (document.documentElement.getAttribute("lang") || "").toLowerCase();
     if (htmlLang.startsWith("en")) return "en";
@@ -35,21 +31,8 @@
     return "fr";
   };
 
-  const isHomePage = () => {
-    const p = (location.pathname || "").toLowerCase();
-    return p === "/" || /(?:^|\/)(index|en)\.html$/.test(p);
-  };
-
   const isNewsListingPage = () => /actualites(-en)?\.html$/i.test(location.pathname);
 
-  const formatDate = (iso, lang) => {
-    try {
-      const d = new Date(iso + "T00:00:00");
-      return d.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", { year:"numeric", month:"long", day:"numeric" });
-    } catch { return iso; }
-  };
-
-  // --------- Styles ----------
   function ensureStyles() {
     if (document.getElementById("news-card-style")) return;
     const style = document.createElement("style");
@@ -57,18 +40,22 @@
     style.textContent = `
       .news-card { text-decoration: none !important; color: inherit !important; display: flex; flex-direction: column; }
       .news-card:hover, .news-card:focus { text-decoration: none !important; }
-      .news-card .news-title { overflow: visible !important; white-space: normal !important; }
+      .news-card .news-title { 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+        display: -webkit-box; 
+        -webkit-line-clamp: 2; 
+        -webkit-box-orient: vertical; 
+      }
       .news-card .news-title a { text-decoration: none !important; color: inherit !important; }
       .news-card .news-desc a { color: blue; text-decoration: underline; }
     `;
     document.head.appendChild(style);
   }
 
-  // --------- Création de cartes ----------
   const createCard = (a) => {
     const pageLang = getLang();
-    let meta = a._isRSS ? `${formatDate(a.date, pageLang)} - ${a._sourceTag} - ${SITE_BRAND}` : `${formatDate(a.date, a.lang)} — ${SITE_BRAND}`;
-
+    let meta = a._isRSS ? `${a.date} - ${a._sourceTag} - ${SITE_BRAND}` : `${a.date} — ${SITE_BRAND}`;
     const wrapper = document.createElement("div");
     wrapper.innerHTML = `
       <a href="${a.link}" class="news-card" ${a._isRSS ? 'target="_blank" rel="noopener noreferrer"' : ""}>
@@ -89,20 +76,17 @@
     const el = createCard(a);
     const descEl = el.querySelector(".news-desc");
     let desc = a.description || "";
-    if(desc.length > 200) desc = desc.slice(0, 200);
-    // ajouter "Lire la suite" pour tous les articles
+    if(desc.length > 200) desc = desc.slice(0, 200); // description 200 caractères max
     desc += ` <a href="${a.link}" target="_blank" rel="noopener">Lire la suite</a>`;
     if(descEl) descEl.innerHTML = desc;
     return el;
   };
 
-  // --------- Injection ----------
   const clearAndInject = (container, items) => {
     if(!container) return;
     container.innerHTML = "";
     items.forEach(a => container.appendChild(createCardSafe(a)));
   };
-
   const clearAndInjectMultiple = (containers, items) => containers.forEach(ctn => clearAndInject(ctn, items));
 
   const findPreviewContainers = () => {
@@ -128,7 +112,6 @@
     return selectors.map(sel => document.querySelector(sel)).filter(Boolean);
   };
 
-  // --------- Grille responsive ----------
   const enforceGridColumns = (containerList) => {
     const apply = () => {
       const ww = window.innerWidth || 1280;
@@ -145,7 +128,6 @@
     window.addEventListener("resize", apply);
   };
 
-  // --------- RSS ----------
   const getRSSUrls = () => {
     const urls = [];
     if(RSS_URL_OVERRIDE_1) urls.push({url: RSS_URL_OVERRIDE_1, tag: "PFBC"});
@@ -173,7 +155,6 @@
     });
   };
 
-  // --------- Injection principale ----------
   const inject = async () => {
     ensureStyles();
     const lang = getLang();
@@ -194,9 +175,7 @@
         const rssForPage = isNewsListingPage() ? rssItems.slice(0,NEWS_RSS_LIMIT) : rssItems.slice(0,HOME_RSS_LIMIT);
         const merged = [...rssForPage,...localsForPage].sort((a,b)=>b.date.localeCompare(a.date));
         clearAndInjectMultiple(previewTargets, merged);
-      } catch(e){
-        // fallback : juste articles locaux
-      }
+      } catch(e){}
     }
   };
 
