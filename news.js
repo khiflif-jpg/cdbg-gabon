@@ -20,7 +20,6 @@
 
   // --------- Helpers ----------
   const getLang = () => (document.documentElement.lang || "fr").toLowerCase().startsWith("en") ? "en" : "fr";
-  const isNewsListingPage = () => /actualites(-en)?\.html$/i.test(location.pathname);
   const formatDate = (iso, lang) => new Date(iso + "T00:00:00").toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", { year:"numeric", month:"long", day:"numeric" });
 
   // --------- Styles dynamiques ----------
@@ -29,36 +28,59 @@
     const style = document.createElement("style");
     style.id = "news-style";
     style.textContent = `
-      .news-card { text-decoration:none !important; color:inherit !important; display:block; overflow:hidden; }
-      .news-card .news-title {
+      .news-card {
+        text-decoration:none !important;
+        color:inherit !important;
+        display:block;
+        overflow:hidden;
+        background:#fff;
+        border-radius:6px;
+        transition:transform .2s ease, box-shadow .2s ease;
+      }
+      .news-card:hover {
+        transform:translateY(-3px);
+        box-shadow:0 4px 10px rgba(0,0,0,0.1);
+      }
+      .news-image img {
+        width:100%;
+        height:auto;
+        display:block;
+        border-radius:6px 6px 0 0;
+      }
+      .news-content {
+        padding:12px 14px;
+      }
+      .news-title {
         font-weight:600;
         overflow:hidden;
         text-overflow:ellipsis;
         display:-webkit-box;
         -webkit-box-orient:vertical;
-        -webkit-line-clamp:2; /* limite à 2 lignes */
+        -webkit-line-clamp:2; /* 2 lignes max */
         line-height:1.4em;
         max-height:2.8em;
-        margin-bottom:8px;
+        margin:0 0 8px 0;
+        color:#222;
       }
-      .news-card .news-desc {
+      .news-desc {
         overflow:hidden;
         text-overflow:ellipsis;
         display:-webkit-box;
         -webkit-box-orient:vertical;
-        -webkit-line-clamp:3; /* limite à 3 lignes */
+        -webkit-line-clamp:3; /* 3 lignes max */
         line-height:1.5em;
         max-height:4.5em;
-        margin-bottom:6px;
+        margin:0;
+        color:#444;
       }
-      .news-card .read-more {
+      .read-more {
         color:#007a3d; /* vert CDBG */
         font-weight:500;
         text-decoration:none;
         display:inline-block;
-        margin-top:4px;
+        margin-top:6px;
       }
-      .news-card .read-more:hover {
+      .read-more:hover {
         text-decoration:underline;
       }
     `;
@@ -67,14 +89,12 @@
 
   // --------- Construction cartes ----------
   const createCard = (a) => {
-    const desc = a.description && a.description.trim() !== "" 
-      ? a.description.trim() 
-      : "";
-    const hasDesc = desc.length > 0;
+    const desc = a.description && a.description.trim() !== "" ? a.description.trim().slice(0, 500) : "";
     const readMore = `<a class="read-more" href="${a.link}" target="${a._isRSS ? '_blank' : '_self'}" rel="noopener">Lire la suite</a>`;
-    const descBlock = `<p class="news-desc">${desc}</p>${readMore}`;
+    const descBlock = desc ? `<p class="news-desc">${desc}</p>${readMore}` : `${readMore}`;
 
-    const html = `
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = `
       <a href="${a.link}" class="news-card" ${a._isRSS ? 'target="_blank" rel="noopener noreferrer"' : ""}>
         ${a.img ? `<div class="news-image"><img src="${a.img}" alt="${a.title}"></div>` : ""}
         <div class="news-content">
@@ -83,8 +103,6 @@
         </div>
       </a>
     `.trim();
-    const wrapper = document.createElement("div");
-    wrapper.innerHTML = html;
     return wrapper.firstElementChild;
   };
 
@@ -115,6 +133,7 @@
     const rss1 = await parseRSS(RSS_URL_OVERRIDE_1, "PFBC");
     const rss2 = await parseRSS(RSS_URL_OVERRIDE_2, "ATIBT");
     const all = [...local, ...rss1, ...rss2].sort((a,b)=>a.date<b.date?1:-1);
+
     const containers = document.querySelectorAll(".news-grid, #latest-news, #news");
     containers.forEach(c=>{
       c.innerHTML="";
