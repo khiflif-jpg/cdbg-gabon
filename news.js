@@ -1,173 +1,127 @@
 (() => {
+  // --------- Config ----------
   const HOME_LOCAL_LIMIT = 20;
-  const HOME_RSS_LIMIT   = Infinity;
+  const HOME_RSS_LIMIT = Infinity;
   const NEWS_LOCAL_LIMIT = Infinity;
-  const NEWS_RSS_LIMIT   = Infinity;
+  const NEWS_RSS_LIMIT = Infinity;
   const SITE_BRAND = "CDBG Magazine";
 
-  const RSS_URL_OVERRIDE_1 = "https://rss.app/feeds/StEwzwMzjxl2nHIc.xml";  
-  const RSS_URL_OVERRIDE_2 = "https://rss.app/feeds/NbpOTwjyYzdutyWP.xml";  
+  const RSS_URL_OVERRIDE_1 = "https://rss.app/feeds/StEwzwMzjxl2nHIc.xml"; // PFBC
+  const RSS_URL_OVERRIDE_2 = "https://rss.app/feeds/NbpOTwjyYzdutyWP.xml"; // ATIBT
 
   const STATIC_ARTICLES = [
-    // … tes articles statiques inchangés …
+    { lang:"fr", title:"Le Gabon renforce sa politique forestière", description:"Le Gabon, riche de ses forêts équatoriales, s’impose comme un leader africain dans la gestion durable des ressources forestières.", img:"article1.avif", link:"article-full-fr.html", date:"2025-09-12" },
+    { lang:"en", title:"Gabon strengthens its forest policy", description:"Gabon, rich in its equatorial forests, is becoming a leader in sustainable forest management and biodiversity preservation.", img:"article1.avif", link:"article-full-en.html", date:"2025-09-12" },
+    { lang:"fr", title:"Le secteur du bois au Gabon : pilier de diversification, d’emploi et de compétitivité durable", description:"Panorama des atouts économiques du secteur bois au Gabon, entre transformation locale, emplois et durabilité.", img:"article2.avif", link:"article-full2-fr.html", date:"2025-09-20" },
+    { lang:"en", title:"Gabon’s wood sector: a pillar for diversification, jobs and sustainable competitiveness", description:"Overview of Gabon’s wood industry: local processing, job creation and long-term sustainability.", img:"article2.avif", link:"article-full2-en.html", date:"2025-09-20" },
+    { lang:"fr", title:"Nkok : vitrine du développement industriel durable du Gabon", description:"La Zone Économique Spéciale de Nkok illustre la réussite du modèle gabonais alliant industrialisation, durabilité et emploi local.", img:"nkok.avif", link:"article-full3-fr.html", date:"2025-10-26" },
+    { lang:"en", title:"Nkok: showcase of Gabon’s sustainable industrial development", description:"The Nkok Special Economic Zone highlights Gabon’s success in combining industrial growth, sustainability, and local employment.", img:"nkok.avif", link:"article-full3-en.html", date:"2025-10-26" },
   ];
 
-  const getLang = () => {
-    const htmlLang = (document.documentElement.getAttribute("lang") || "").toLowerCase();
-    if (htmlLang.startsWith("en")) return "en";
-    if (htmlLang.startsWith("fr")) return "fr";
-    const href = (location.href || "").toLowerCase();
-    if (href.includes("-en") || href.endsWith("/en.html") || href.includes("/en.html")) return "en";
-    return "fr";
-  };
-
+  // --------- Helpers ----------
+  const getLang = () => (document.documentElement.lang || "fr").toLowerCase().startsWith("en") ? "en" : "fr";
   const isNewsListingPage = () => /actualites(-en)?\.html$/i.test(location.pathname);
+  const formatDate = (iso, lang) => new Date(iso + "T00:00:00").toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", { year:"numeric", month:"long", day:"numeric" });
 
+  // --------- Styles dynamiques ----------
   function ensureStyles() {
-    if (document.getElementById("news-card-style")) return;
+    if (document.getElementById("news-style")) return;
     const style = document.createElement("style");
-    style.id = "news-card-style";
+    style.id = "news-style";
     style.textContent = `
-      .news-card { text-decoration: none !important; color: inherit !important; display:block; }
-      .news-card:hover, .news-card:focus { text-decoration: none !important; }
-
-      /* Titre tronqué à 2 lignes */
-      .news-title {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
+      .news-card { text-decoration:none !important; color:inherit !important; display:block; overflow:hidden; }
+      .news-card .news-title {
+        font-weight:600;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        display:-webkit-box;
+        -webkit-box-orient:vertical;
+        -webkit-line-clamp:2; /* limite à 2 lignes */
+        line-height:1.4em;
+        max-height:2.8em;
+        margin-bottom:8px;
       }
-
-      /* Description tronquée à 4 lignes */
-      .news-desc {
-        display: -webkit-box;
-        -webkit-line-clamp: 4;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+      .news-card .news-desc {
+        overflow:hidden;
+        text-overflow:ellipsis;
+        display:-webkit-box;
+        -webkit-box-orient:vertical;
+        -webkit-line-clamp:3; /* limite à 3 lignes */
+        line-height:1.5em;
+        max-height:4.5em;
+        margin-bottom:6px;
       }
-
-      /* Lire la suite vert et non souligné */
-      .news-readmore {
-        display: inline-block;
-        color: green;
-        text-decoration: none;
-        font-weight: bold;
-        margin-top: 4px;
+      .news-card .read-more {
+        color:#007a3d; /* vert CDBG */
+        font-weight:500;
+        text-decoration:none;
+        display:inline-block;
+        margin-top:4px;
+      }
+      .news-card .read-more:hover {
+        text-decoration:underline;
       }
     `;
     document.head.appendChild(style);
   }
 
+  // --------- Construction cartes ----------
   const createCard = (a) => {
-    const pageLang = getLang();
-    const meta = a._isRSS
-      ? `${formatDate(a.date, pageLang)} - ${a._sourceTag} - ${SITE_BRAND}`
-      : `${formatDate(a.date, a.lang)} — ${SITE_BRAND}`;
+    const desc = a.description && a.description.trim() !== "" 
+      ? a.description.trim() 
+      : "";
+    const hasDesc = desc.length > 0;
+    const readMore = `<a class="read-more" href="${a.link}" target="${a._isRSS ? '_blank' : '_self'}" rel="noopener">Lire la suite</a>`;
+    const descBlock = `<p class="news-desc">${desc}</p>${readMore}`;
 
-    const desc = a.description || "";
-
-    const wrapper = document.createElement("div");
-    wrapper.innerHTML = `
+    const html = `
       <a href="${a.link}" class="news-card" ${a._isRSS ? 'target="_blank" rel="noopener noreferrer"' : ""}>
-        <div class="news-image">
-          <img src="${a.img || ""}" alt="${a.title}">
-        </div>
+        ${a.img ? `<div class="news-image"><img src="${a.img}" alt="${a.title}"></div>` : ""}
         <div class="news-content">
           <h3 class="news-title">${a.title}</h3>
-          <p class="news-desc">${desc}</p>
-          <a href="${a.link}" class="news-readmore" ${a._isRSS ? 'target="_blank" rel="noopener"' : ''}>Lire la suite</a>
-          <div class="news-meta">${meta}</div>
+          ${descBlock}
         </div>
       </a>
     `.trim();
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = html;
     return wrapper.firstElementChild;
   };
 
-  const createCardSafe = (a) => {
-    const el = createCard(a);
-    const hasImg = a.img && String(a.img).trim().length > 0;
-    const imgBlock = el.querySelector(".news-image");
-    if (!hasImg && imgBlock) imgBlock.remove();
-    return el;
-  };
-
-  const clearAndInject = (container, items) => {
-    if (!container) return;
-    container.innerHTML = "";
-    items.forEach(a => container.appendChild(createCardSafe(a)));
-  };
-  const clearAndInjectMultiple = (containers, items) => containers.forEach(ctn => clearAndInject(ctn, items));
-
-  const inject = async () => {
-    ensureStyles();
-    const lang = getLang();
-    const previewTargets = findPreviewContainers();
-
-    const localByLang = STATIC_ARTICLES.filter(a => a.lang === lang).sort((a,b)=>b.date.localeCompare(a.date));
-    const localsForPage = isNewsListingPage() ? localByLang.slice(0, NEWS_LOCAL_LIMIT) : localByLang.slice(0, HOME_LOCAL_LIMIT);
-
-    clearAndInjectMultiple(previewTargets, localsForPage);
-
-    const rssConfigs = [
-      { url: RSS_URL_OVERRIDE_1, tag:"PFBC" },
-      { url: RSS_URL_OVERRIDE_2, tag:"ATIBT" }
-    ];
-
-    if(rssConfigs.length){
-      try{
-        const allRssArrays = await Promise.all(rssConfigs.map(cfg => parseRSS(cfg.url,cfg.tag).catch(()=>[])));
-        const rssItems = allRssArrays.flat();
-        const rssForPage = isNewsListingPage() ? rssItems.slice(0,NEWS_RSS_LIMIT) : rssItems.slice(0,HOME_RSS_LIMIT);
-        const merged = [...rssForPage, ...localsForPage].sort((a,b)=>b.date.localeCompare(a.date));
-        clearAndInjectMultiple(previewTargets, merged);
-      }catch{}
-    }
-  };
-
-  function findPreviewContainers() {
-    const selectors = ["#latest-news","#latest-news-en","#news","#news-en",".news-grid"];
-    const found = selectors.map(sel => document.querySelector(sel)).filter(Boolean);
-    if(found.length) return found;
-    const section = document.createElement("section");
-    section.className="news-section";
-    const grid = document.createElement("div");
-    grid.className="news-grid";
-    section.appendChild(grid);
-    (document.querySelector("main")||document.body).appendChild(section);
-    return [grid];
+  // --------- Parsing RSS ----------
+  async function parseRSS(url, tag="PFBC") {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) return [];
+      const text = await res.text();
+      const xml = new DOMParser().parseFromString(text, "text/xml");
+      return Array.from(xml.querySelectorAll("item")).map(it => {
+        const title = it.querySelector("title")?.textContent.trim() || "";
+        const desc = it.querySelector("description")?.textContent || "";
+        const link = it.querySelector("link")?.textContent.trim() || "#";
+        const pub = it.querySelector("pubDate")?.textContent.trim() || "1970-01-01";
+        const dateISO = new Date(pub).toISOString().slice(0,10);
+        const imgTag = it.querySelector("enclosure[url]")?.getAttribute("url") || "";
+        return { title, description: desc.replace(/<[^>]+>/g,"").trim(), img: imgTag, link, date: dateISO, _isRSS:true, _sourceTag:tag };
+      });
+    } catch(e) { return []; }
   }
 
-  const formatDate = (iso,lang)=> {
-    try { const d=new Date(iso+"T00:00:00"); return d.toLocaleDateString(lang==="fr"?"fr-FR":"en-US",{year:"numeric",month:"long",day:"numeric"}); }
-    catch{return iso;}
-  };
-
-  const parseRSS=async(url,tag="PFBC")=>{
-    const res=await fetch(url).catch(()=>null);
-    if(!res||!res.ok) return [];
-    const text=await res.text();
-    const parser=new DOMParser();
-    const xml=parser.parseFromString(text,"text/xml");
-    if(xml.querySelector("parsererror")) return [];
-    const channelLink=xml.querySelector("channel > link")?.textContent?.trim()||url;
-    const decodeEntities=s=>{if(!s) return s; const ta=document.createElement("textarea");ta.innerHTML=s;return ta.value;};
-    const toAbsolute=(raw,base)=>{if(!raw) return null;if(/^https?:\/\//i.test(raw)) return raw.trim();if(/^\/\//.test(raw)) return ("https:"+raw).trim();try{return new URL(raw,base).toString();}catch{return null;}};
-    const firstAttrFrom=(html,attr)=>{if(!html) return null;const rx=new RegExp(attr+'\\s*=\\s*"(.*?)"',"i");const m=html.match(rx);return m?m[1]:null;};
-    const pickImage=(it,base)=>{const mediaContent=it.querySelector("media\\:content, content")?.getAttribute?.("url");const mediaThumb=it.querySelector("media\\:thumbnail, thumbnail")?.getAttribute?.("url");const enclosure=(()=>{const enc=it.querySelector("enclosure");if(!enc)return null;const type=(enc.getAttribute("type")||"").toLowerCase();const url=enc.getAttribute("url");return /^image\\//.test(type)?url:null;})();const contentEncoded=it.getElementsByTagName("content:encoded")?.[0]?.textContent||"";const desc=it.querySelector("description")?.textContent||"";const imgInContent=firstAttrFrom(contentEncoded,"src")||firstAttrFrom(desc,"src");const candidates=[mediaContent,mediaThumb,enclosure,imgInContent].filter(Boolean);for(const c of candidates){const abs=toAbsolute(decodeEntities(c),base);if(abs)return abs;}return"";};
-    const items=Array.from(xml.querySelectorAll("item"));
-    return items.map(it=>{
-      const title=it.querySelector("title")?.textContent?.trim()||"";
-      const linkRaw=it.querySelector("link")?.textContent?.trim()||"#";
-      const descRaw=it.querySelector("description")?.textContent||"";
-      const img=pickImage(it,channelLink);
-      const pubDate=it.querySelector("pubDate")?.textContent?.trim()||"";
-      const dateISO=pubDate?new Date(pubDate).toISOString().slice(0,10):"1970-01-01";
-      return {title,description:decodeEntities(descRaw).replace(/<[^>]+>/g,"").trim(),img,link:linkRaw,date:dateISO,_isRSS:true,_sourceTag:tag};
+  // --------- Injection ----------
+  async function inject() {
+    ensureStyles();
+    const lang = getLang();
+    const local = STATIC_ARTICLES.filter(a=>a.lang===lang);
+    const rss1 = await parseRSS(RSS_URL_OVERRIDE_1, "PFBC");
+    const rss2 = await parseRSS(RSS_URL_OVERRIDE_2, "ATIBT");
+    const all = [...local, ...rss1, ...rss2].sort((a,b)=>a.date<b.date?1:-1);
+    const containers = document.querySelectorAll(".news-grid, #latest-news, #news");
+    containers.forEach(c=>{
+      c.innerHTML="";
+      all.forEach(a=>c.appendChild(createCard(a)));
     });
-  };
+  }
 
-  if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",inject);}
-  else{inject();}
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", inject);
+  else inject();
 })();
