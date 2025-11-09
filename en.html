@@ -264,7 +264,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="learn-gabon fade-in" id="learn-gabon">
 
   <!-- 🔒 SCOPED STYLE (DESKTOP ONLY) -->
-  <style>
+<style>
+
+  /* ✅ Correctif titres visibles */
+  #learn-gabon .learn-card,
+  #learn-gabon .learn-card a {
+    color: #1a1a1a !important;
+    -webkit-text-fill-color: #1a1a1a !important;
+    text-decoration: none !important;
+  }
+  #learn-gabon .learn-card > span {
+    display: block !important;
+    margin-top: 8px !important;
+    font-weight: 600 !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+  }
+
+  /* ✅ ensuite tes @media comme d'habitude */
+  @media (min-width:1024px) {
+      ...
+  }
+
+</style>
+
+  
     @media (min-width:1024px){
       html body section#learn-gabon.learn-gabon.fade-in .learn-grid {
         display: grid !important;
@@ -586,5 +610,62 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 </script>
+
+  <script>
+(function(){
+  // Détection (approx.) de vieux Safari/iPad où AVIF/lazy posent souci
+  var ua = navigator.userAgent || "";
+  var isOldWebKit = /OS 1[0-5]_[0-9].*like Mac OS X/.test(ua) || /Version\/1[0-5]\./.test(ua);
+
+  // Cible uniquement la section
+  var imgs = document.querySelectorAll('#learn-gabon img.learn-image');
+
+  imgs.forEach(function(img){
+    // 2) Forcer le chargement immédiat (évite les ratés de lazy sur iOS anciens)
+    img.setAttribute('loading', 'eager');
+    img.setAttribute('decoding', 'auto');
+
+    // 3) En cas d’échec, on retente la MÊME AVIF via blob: (pas de renommage, pas de conversion)
+    var triedBlob = false;
+    img.addEventListener('error', function(){
+      if (triedBlob) return;
+      triedBlob = true;
+
+      var url = img.getAttribute('src');
+      // cache-busting léger pour éviter une 304 foireuse sur vieux caches
+      var bust = (url.indexOf('?')>-1 ? '&' : '?') + 'v=' + Date.now();
+
+      fetch(url + bust, {cache:'no-store'})
+        .then(function(res){
+          if (!res.ok) throw new Error('HTTP '+res.status);
+          return res.blob();
+        })
+        .then(function(blob){
+          // On garde le format AVIF, mais on passe par un blob: URL (contourne certains stricte MIME)
+          var blobURL = URL.createObjectURL(blob);
+          // On écoute une 2e erreur au cas où et on nettoie
+          var onErr = function(){ URL.revokeObjectURL(blobURL); };
+          img.addEventListener('error', onErr, {once:true});
+          img.addEventListener('load', function(){ URL.revokeObjectURL(blobURL); }, {once:true});
+          img.src = blobURL;
+        })
+        .catch(function(e){
+          // Discret : on n’affiche pas d’icône cassée, on laisse le titre visible
+          img.style.display = 'none';
+        });
+    }, {once:false});
+
+    // Petites précautions pour WebKit anciens
+    if (isOldWebKit) {
+      // Forcer un layout clair et stable (évite des 0x0 transitoires)
+      img.style.maxWidth = 'none';
+      img.style.minWidth = '1px';
+      img.style.minHeight = '1px';
+    }
+  });
+})();
+</script>
+
+  
 </body>
 </html>
