@@ -258,29 +258,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 
-
-  <!-- En savoir plus sur le Gabon -->
+<!-- En savoir plus sur le Gabon -->
 <section class="learn-gabon fade-in" id="learn-gabon">
 
-  <!-- 🔒 OVERRIDE SCOPÉ À CETTE SECTION (DESKTOP SEULEMENT) -->
+  <!-- 🔒 OVERRIDE SCOPÉ À CETTE SECTION -->
   <style>
-    
-    <style>
-  /* 1) Titres toujours visibles dans #learn-gabon (neutralise a{color:white} globaux) */
-  #learn-gabon .learn-card,
-  #learn-gabon .learn-card a {
-    color: #1a1a1a !important;
-    -webkit-text-fill-color: #1a1a1a !important; /* vieux WebKit */
-    text-decoration: none !important;
-  }
-  #learn-gabon .learn-card > span {
-    display: block !important;
-    margin-top: 8px !important;
-    font-weight: 600 !important;
-    line-height: 1.3 !important;
-    text-align: center !important;
-  }
-</style>
+    /* 1) Titres toujours visibles dans #learn-gabon (neutralise a{color:white} globaux) */
+    #learn-gabon .learn-card,
+    #learn-gabon .learn-card a {
+      color: #1a1a1a !important;
+      -webkit-text-fill-color: #1a1a1a !important; /* vieux WebKit */
+      text-decoration: none !important;
+    }
+    #learn-gabon .learn-card > span {
+      display: block !important;
+      margin-top: 8px !important;
+      font-weight: 600 !important;
+      line-height: 1.3 !important;
+      text-align: center !important;
+    }
+
+    /* 👉 Mets ensuite tes @media ici, dans la même balise <style> */
+    /* @media (min-width:1024px){ ... } */
+    /* @media only screen and (min-device-width:768px) and (max-device-width:1366px){ ... } */
+  </style>
+
+  <!-- le reste de ta section -->
+
+  
 
     @media (min-width:1024px){
       /* Spécificité volontairement très élevée */
