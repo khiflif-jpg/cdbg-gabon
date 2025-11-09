@@ -597,5 +597,60 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+  <script>
+(function(){
+  // Détection (approx.) de vieux Safari/iPad où AVIF/lazy posent souci
+  var ua = navigator.userAgent || "";
+  var isOldWebKit = /OS 1[0-5]_[0-9].*like Mac OS X/.test(ua) || /Version\/1[0-5]\./.test(ua);
+
+  // Cible uniquement la section
+  var imgs = document.querySelectorAll('#learn-gabon img.learn-image');
+
+  imgs.forEach(function(img){
+    // 2) Forcer le chargement immédiat (évite les ratés de lazy sur iOS anciens)
+    img.setAttribute('loading', 'eager');
+    img.setAttribute('decoding', 'auto');
+
+    // 3) En cas d’échec, on retente la MÊME AVIF via blob: (pas de renommage, pas de conversion)
+    var triedBlob = false;
+    img.addEventListener('error', function(){
+      if (triedBlob) return;
+      triedBlob = true;
+
+      var url = img.getAttribute('src');
+      // cache-busting léger pour éviter une 304 foireuse sur vieux caches
+      var bust = (url.indexOf('?')>-1 ? '&' : '?') + 'v=' + Date.now();
+
+      fetch(url + bust, {cache:'no-store'})
+        .then(function(res){
+          if (!res.ok) throw new Error('HTTP '+res.status);
+          return res.blob();
+        })
+        .then(function(blob){
+          // On garde le format AVIF, mais on passe par un blob: URL (contourne certains stricte MIME)
+          var blobURL = URL.createObjectURL(blob);
+          // On écoute une 2e erreur au cas où et on nettoie
+          var onErr = function(){ URL.revokeObjectURL(blobURL); };
+          img.addEventListener('error', onErr, {once:true});
+          img.addEventListener('load', function(){ URL.revokeObjectURL(blobURL); }, {once:true});
+          img.src = blobURL;
+        })
+        .catch(function(e){
+          // Discret : on n’affiche pas d’icône cassée, on laisse le titre visible
+          img.style.display = 'none';
+        });
+    }, {once:false});
+
+    // Petites précautions pour WebKit anciens
+    if (isOldWebKit) {
+      // Forcer un layout clair et stable (évite des 0x0 transitoires)
+      img.style.maxWidth = 'none';
+      img.style.minWidth = '1px';
+      img.style.minHeight = '1px';
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
