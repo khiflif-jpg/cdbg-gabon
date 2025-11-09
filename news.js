@@ -40,13 +40,12 @@
         text-overflow: ellipsis;
       }
 
-      /* Description tronquée à 3 lignes */
+      /* Description tronquée à 4 lignes */
       .news-desc {
         display: -webkit-box;
-        -webkit-line-clamp: 3;
+        -webkit-line-clamp: 4;
         -webkit-box-orient: vertical;
         overflow: hidden;
-        margin-bottom: 0.3em;
       }
 
       /* Lire la suite vert et non souligné */
@@ -55,7 +54,7 @@
         color: green;
         text-decoration: none;
         font-weight: bold;
-        margin-top: 2px;
+        margin-top: 4px;
       }
     `;
     document.head.appendChild(style);
