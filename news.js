@@ -1,5 +1,5 @@
 /* ===========================
-   news.js — injection auto d’articles (FR/EN) avec "Lire la suite"
+   news.js — injection auto d’articles (FR/EN)
    =========================== */
 
 (() => {
@@ -10,7 +10,7 @@
   const NEWS_RSS_LIMIT   = Infinity;
   const SITE_BRAND = "CDBG Magazine";
 
-  // ✅ Flux RSS
+  // ✅ Tes 2 flux RSS
   const RSS_URL_OVERRIDE_1 = "https://rss.app/feeds/StEwzwMzjxl2nHIc.xml";  // PFBC
   const RSS_URL_OVERRIDE_2 = "https://rss.app/feeds/NbpOTwjyYzdutyWP.xml";  // ATIBT
 
@@ -85,7 +85,8 @@
       .news-card { text-decoration: none !important; color: inherit !important; }
       .news-card:hover, .news-card:focus { text-decoration: none !important; }
       .news-card .news-title, .news-card h3.news-title a { text-decoration: none !important; color: inherit !important; }
-      .news-desc a.read-more { font-weight: bold; text-decoration: underline; margin-left:5px; }
+      .news-card .news-desc { margin-bottom: 8px; }
+      .news-card .read-more { font-weight: bold; color: #0066cc; text-decoration: underline; display:inline-block; margin-top:4px; }
     `;
     document.head.appendChild(style);
   }
@@ -94,16 +95,12 @@
   const createCard = (a) => {
     const pageLang = getLang();
     let meta;
-    if (a._isRSS && a._sourceTag === "ATIBT") {
-      meta = `${formatDate(a.date, pageLang)} - ATIBT - ${SITE_BRAND}`;
-    } else if (a._isRSS) {
-      meta = `${formatDate(a.date, pageLang)} - PFBC - ${SITE_BRAND}`;
-    } else {
-      meta = `${formatDate(a.date, a.lang)} — ${SITE_BRAND}`;
-    }
+    if (a._isRSS && a._sourceTag === "ATIBT") meta = `${formatDate(a.date, pageLang)} - ATIBT - ${SITE_BRAND}`;
+    else if (a._isRSS) meta = `${formatDate(a.date, pageLang)} - PFBC - ${SITE_BRAND}`;
+    else meta = `${formatDate(a.date, a.lang)} — ${SITE_BRAND}`;
 
-    const descText = a.description || "";
-    const descWithLink = `${descText} <a href="${a.link}" class="read-more" target="_blank" rel="noopener noreferrer">Lire la suite</a>`;
+    const descShort = a.description ? a.description.slice(0, 300) : "";
+    const readMore = a.link ? `<span class="read-more">Lire la suite</span>` : "";
 
     const wrapper = document.createElement("div");
     wrapper.innerHTML = `
@@ -113,7 +110,7 @@
         </div>
         <div class="news-content">
           <h3 class="news-title">${a.title}</h3>
-          <p class="news-desc">${descWithLink}</p>
+          <p class="news-desc">${descShort} ${readMore}</p>
           <div class="news-meta">${meta}</div>
         </div>
       </a>
@@ -126,25 +123,34 @@
     const hasImg = a.img && String(a.img).trim().length > 0;
     const imgBlock = el.querySelector(".news-image");
     if (!hasImg && imgBlock) imgBlock.remove();
-    else if (hasImg) {
-      const img = imgBlock?.querySelector("img");
-      if (img) img.src = a.img;
-    }
     return el;
   };
 
-  // --- PDF "collant" ---
+  // --- Injecte le PDF "collant" en première carte sur les pages Actualités/News ---
   function addStickyPDF(lang) {
     if (!isNewsListingPage()) return;
 
     const data = (lang === "fr")
-      ? { lang:"fr", title:"Code forestier de la République gabonaise : Textes législatifs et réglementaires 2001-2025", description:"Le Code forestier de la République gabonaise, avec l’ensemble des textes législatifs, décrets, arrêtés et ordonnances publiés entre 2001 et 2025.", img:"https://www.cdbg-gabon.com/code-forestier-gabon.avif", link:"https://www.cdbg-gabon.com/code-forestier-gabon.pdf", date:"2025-11-08" }
-      : { lang:"en", title:"Forestry Code of the Gabonese Republic: Legislative and Regulatory Texts 2001-2025.", description:"The Forestry Code of the Gabonese Republic, with all legislative texts, decrees, orders and ordinances published between 2001 and 2025.", img:"https://www.cdbg-gabon.com/code-forestier-gabon.avif", link:"https://www.cdbg-gabon.com/code-forestier-gabon.pdf", date:"2025-11-08" };
+      ? {
+          lang: "fr",
+          title: "Code forestier de la République gabonaise : Textes législatifs et réglementaires 2001-2025",
+          description: "Le Code forestier de la République gabonaise, avec l’ensemble des textes législatifs, décrets, arrêtés et ordonnances publiés entre 2001 et 2025.",
+          img: "https://www.cdbg-gabon.com/code-forestier-gabon.avif",
+          link: "https://www.cdbg-gabon.com/code-forestier-gabon.pdf",
+          date: "2025-11-08"
+        }
+      : {
+          lang: "en",
+          title: "Forestry Code of the Gabonese Republic: Legislative and Regulatory Texts 2001-2025.",
+          description: "The Forestry Code of the Gabonese Republic, with all legislative texts, decrees, orders and ordinances published between 2001 and 2025.",
+          img: "https://www.cdbg-gabon.com/code-forestier-gabon.avif",
+          link: "https://www.cdbg-gabon.com/code-forestier-gabon.pdf",
+          date: "2025-11-08"
+        };
 
     const containers = findPreviewContainers();
     containers.forEach((ctn) => {
-      if (!ctn) return;
-      if (ctn.querySelector('[data-sticky-pdf="1"]')) return;
+      if (!ctn || ctn.querySelector('[data-sticky-pdf="1"]')) return;
       const card = createCardSafe(data);
       card.setAttribute("target", "_blank");
       card.setAttribute("rel", "noopener");
@@ -158,6 +164,7 @@
     container.innerHTML = "";
     items.forEach((a) => container.appendChild(safe ? createCardSafe(a) : createCard(a)));
   };
+
   const clearAndInjectMultiple = (containers, items, safe = false) => {
     containers.forEach(ctn => clearAndInject(ctn, items, safe));
   };
@@ -204,18 +211,34 @@
       if (/^\/\//.test(raw)) return ("https:" + raw).trim();
       try { return new URL(raw, base).toString(); } catch { return null; }
     };
-    const firstAttrFrom = (html, attr) => { if (!html) return null; const rx = new RegExp(attr + '\\s*=\\s*"(.*?)"', "i"); const m = html.match(rx); return m ? m[1] : null; };
+    const firstAttrFrom = (html, attr) => {
+      if (!html) return null;
+      const rx = new RegExp(attr + '\\s*=\\s*"(.*?)"', "i");
+      const m = html.match(rx);
+      return m ? m[1] : null;
+    };
     const pickImage = (it, base) => {
       const mediaContent = it.querySelector("media\\:content, content")?.getAttribute?.("url");
       const mediaThumb   = it.querySelector("media\\:thumbnail, thumbnail")?.getAttribute?.("url");
-      const enclosure    = (() => { const enc = it.querySelector("enclosure"); if (!enc) return null; const type = (enc.getAttribute("type") || "").toLowerCase(); const url  = enc.getAttribute("url"); return /^image\//.test(type) ? url : null; })();
+      const enclosure    = (() => {
+        const enc = it.querySelector("enclosure");
+        if (!enc) return null;
+        const type = (enc.getAttribute("type") || "").toLowerCase();
+        const url  = enc.getAttribute("url");
+        return /^image\//.test(type) ? url : null;
+      })();
       const contentEncoded = it.getElementsByTagName("content:encoded")?.[0]?.textContent || "";
       const desc = it.querySelector("description")?.textContent || "";
       const imgInContent = firstAttrFrom(contentEncoded, "src") || firstAttrFrom(desc, "src");
+
       const candidates = [mediaContent, mediaThumb, enclosure, imgInContent].filter(Boolean);
-      for (const c of candidates) { const abs = toAbsolute(decodeEntities(c), base); if (abs) return abs; }
+      for (const c of candidates) {
+        const abs = toAbsolute(decodeEntities(c), base);
+        if (abs) return abs;
+      }
       return "";
     };
+
     const items = Array.from(xml.querySelectorAll("item"));
     return items.map((it) => {
       const title = it.querySelector("title")?.textContent?.trim() || "";
@@ -224,7 +247,16 @@
       const img = pickImage(it, channelLink);
       const pubDate = it.querySelector("pubDate")?.textContent?.trim() || "";
       const dateISO = pubDate ? new Date(pubDate).toISOString().slice(0, 10) : "1970-01-01";
-      return { title, description: decodeEntities(descRaw).replace(/<[^>]+>/g, "").trim().slice(0, 300), img, link: linkRaw, date: dateISO, _isRSS:true, _sourceTag:tag };
+
+      return {
+        title,
+        description: decodeEntities(descRaw).replace(/<[^>]+>/g, "").trim(),
+        img,
+        link: linkRaw,
+        date: dateISO,
+        _isRSS: true,
+        _sourceTag: tag
+      };
     });
   };
 
@@ -232,47 +264,73 @@
   const inject = async () => {
     ensureNoUnderlineStyle();
     const lang = getLang();
+
     const previewTargets = findPreviewContainers();
     const magazineTargets = findMagazineContainers();
     enforceGridColumns([...previewTargets, ...magazineTargets]);
 
-    const localByLang = STATIC_ARTICLES.filter(a => a.lang === lang).sort((a,b)=>a.date<b.date?1:-1);
-    const localsForPage = isNewsListingPage() ? localByLang.slice(0,NEWS_LOCAL_LIMIT) : localByLang.slice(0,HOME_LOCAL_LIMIT);
+    const localByLang = STATIC_ARTICLES.filter(a => a.lang === lang).sort((a, b) => (a.date < b.date ? 1 : -1));
+    const localsForPage = isNewsListingPage()
+      ? localByLang.slice(0, NEWS_LOCAL_LIMIT)
+      : localByLang.slice(0, HOME_LOCAL_LIMIT);
 
-    clearAndInjectMultiple(previewTargets, localsForPage,false);
-    clearAndInjectMultiple(magazineTargets,localByLang,false);
-    addStickyPDF(lang);  // PDF collant
+    clearAndInjectMultiple(previewTargets, localsForPage, false);
+    clearAndInjectMultiple(magazineTargets, localByLang, false);
 
+    addStickyPDF(lang);
+
+    // Chargement multi-flux
     const rssConfigs = getRSSUrls();
     if (rssConfigs.length) {
       try {
-        const allRssArrays = await Promise.all(rssConfigs.map(cfg=>parseRSS(cfg.url,cfg.tag).catch(()=>[])));
+        const allRssArrays = await Promise.all(
+          rssConfigs.map(cfg => parseRSS(cfg.url, cfg.tag).catch(() => []))
+        );
         let rssItems = allRssArrays.flat();
-        const rssForPage = isNewsListingPage() ? rssItems.slice(0,NEWS_RSS_LIMIT) : rssItems.slice(0,HOME_RSS_LIMIT);
-        const mergedForPreview = [...rssForPage, ...localsForPage].sort((a,b)=>a.date<b.date?1:-1);
-        clearAndInjectMultiple(previewTargets, mergedForPreview,true);
-        addStickyPDF(lang); // PDF reste en premier
+
+        const rssForPage = isNewsListingPage()
+          ? rssItems.slice(0, NEWS_RSS_LIMIT)
+          : rssItems.slice(0, HOME_RSS_LIMIT);
+
+        const mergedForPreview = [...rssForPage, ...localsForPage]
+          .sort((a, b) => (a.date < b.date ? 1 : -1));
+
+        clearAndInjectMultiple(previewTargets, mergedForPreview, true);
+
+        addStickyPDF(lang);
+
       } catch {
         addStickyPDF(lang);
       }
     }
   };
 
-  // --------- Détection conteneurs ----------
   function findPreviewContainers() {
-    const selectors = ["#latest-news-en","#latest-news","#news-en","#news",'section[id*="news" i] .news-grid','section[id*="latest" i] .news-grid',".latest-news .news-grid",".news-section .news-grid",".news-grid"];
-    const found = selectors.map(sel=>document.querySelector(sel)).filter(Boolean);
-    if(found.length) return found;
-    const section=document.createElement("section"); section.className="news-section"; section.id="latest-news";
-    const grid=document.createElement("div"); grid.className="news-grid"; section.appendChild(grid);
-    (document.querySelector("main")||document.body).appendChild(section);
+    const selectors = [
+      "#latest-news-en","#latest-news","#news-en","#news",
+      'section[id*="news" i] .news-grid','section[id*="latest" i] .news-grid',
+      ".latest-news .news-grid",".news-section .news-grid",".news-grid"
+    ];
+    const found = selectors.map(sel => document.querySelector(sel)).filter(Boolean);
+    if (found.length) return found;
+    const section = document.createElement("section");
+    section.className = "news-section";
+    section.id = "latest-news";
+    const grid = document.createElement("div");
+    grid.className = "news-grid";
+    section.appendChild(grid);
+    (document.querySelector("main") || document.body).appendChild(section);
     return [grid];
   }
 
   function findMagazineContainers() {
-    const selectors=[".articles-container","#magazine .news-grid","#articles .news-grid"];
-    return selectors.map(sel=>document.querySelector(sel)).filter(Boolean);
+    const selectors = [".articles-container", "#magazine .news-grid", "#articles .news-grid"];
+    return selectors.map(sel => document.querySelector(sel)).filter(Boolean);
   }
 
-  if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",inject);} else{inject();}
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", inject);
+  } else {
+    inject();
+  }
 })();
