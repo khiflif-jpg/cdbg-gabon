@@ -1,3 +1,7 @@
+/* ===========================
+   news.js — injection auto d’articles (FR/EN)
+   =========================== */
+
 (() => {
   // --------- Config ----------
   const HOME_LOCAL_LIMIT = 20;
@@ -6,8 +10,8 @@
   const NEWS_RSS_LIMIT   = Infinity;
   const SITE_BRAND = "CDBG Magazine";
 
-  // ✅ Flux RSS
-  const RSS_URL_OVERRIDE_1 = "/get-rss-pfbc.php";  // PFBC via proxy
+  // ✅ Tes 2 flux RSS
+  const RSS_URL_OVERRIDE_1 = "https://rss.app/feeds/RuxW0ZqEY4lYzC5a.xml";  // PFBC
   const RSS_URL_OVERRIDE_2 = "https://rss.app/feeds/NbpOTwjyYzdutyWP.xml";  // ATIBT
 
   // --------- Données statiques centralisées ----------
@@ -33,13 +37,16 @@
       description:"The Nkok Special Economic Zone highlights Gabon’s success in combining industrial growth, sustainability, and local employment.",
       img:"nkok.avif", link:"article-full3-en.html", date:"2025-10-26" },
 
+    /* ✅ AJOUT DU NOUVEL ARTICLE */
     { lang:"fr", title:"L’économie du bois au Gabon en 2025 : de la coupe au produit fini",
       description:"Analyse complète de la filière bois gabonaise : exploitation, transformation locale, exportations et durabilité.",
       img:"article4.avif", link:"article-full4-fr.html", date:"2025-11-04" },
+
     { lang:"en", title:"Gabon’s Wood Economy in 2025: From Harvest to Finished Products",
       description:"Comprehensive analysis of Gabon's wood sector: forestry, local processing, exports and sustainability.",
       img:"article4.avif", link:"article-full4-en.html", date:"2025-11-04" },
 
+    /* ✅ AJOUTS demandés (article 5 FR/EN) */
     { lang:"fr",
       title:"Code forestier de la République du Gabon (édition 2025 – CDBG) | Version PDF",
       description:"Version PDF du Code forestier de la République du Gabon (édition 2025 – CDBG).",
@@ -134,6 +141,72 @@
     return el;
   };
 
+  // --- Injecte le PDF "collant" en première carte sur les pages Actualités/News ---
+  function addStickyPDF(lang) {
+    if (!isNewsListingPage()) return; // uniquement sur actualites*.html
+
+    const data = (lang === "fr")
+      ? {
+          lang: "fr",
+          title: "Code forestier de la République gabonaise : Textes législatifs et réglementaires 2001-2025",
+          description: "Le Code forestier de la République gabonaise, avec l’ensemble des textes législatifs, décrets, arrêtés et ordonnances publiés entre 2001 et 2025.",
+          img: "https://www.cdbg-gabon.com/code-forestier-gabon.avif",
+          link: "https://www.cdbg-gabon.com/code-forestier-gabon.pdf",
+          date: "2025-11-08"
+        }
+      : {
+          lang: "en",
+          title: "Forestry Code of the Gabonese Republic: Legislative and Regulatory Texts 2001-2025.",
+          description: "The Forestry Code of the Gabonese Republic, with all legislative texts, decrees, orders and ordinances published between 2001 and 2025.",
+          img: "https://www.cdbg-gabon.com/code-forestier-gabon.avif",
+          link: "https://www.cdbg-gabon.com/code-forestier-gabon.pdf",
+          date: "2025-11-08"
+        };
+
+    const containers = findPreviewContainers();
+    containers.forEach((ctn) => {
+      if (!ctn) return;
+      // éviter doublons
+      if (ctn.querySelector('[data-sticky-pdf="1"]')) return;
+
+      // même rendu que les autres
+      const card = createCardSafe(data);
+      // ouvrir en nouvel onglet (createCard ne le fait que pour RSS)
+      card.setAttribute("target", "_blank");
+      card.setAttribute("rel", "noopener");
+      card.setAttribute("data-sticky-pdf", "1");
+
+      // toujours en premier
+      ctn.prepend(card);
+    });
+  }
+
+  const clearAndInject = (container, items, safe = false) => {
+    if (!container) return;
+    container.innerHTML = "";
+    items.forEach((a) => container.appendChild(safe ? createCardSafe(a) : createCard(a)));
+  };
+  const clearAndInjectMultiple = (containers, items, safe = false) => {
+    containers.forEach(ctn => clearAndInject(ctn, items, safe));
+  };
+
+  // --------- Grille responsive ----------
+  function enforceGridColumns(containerList) {
+    const apply = () => {
+      const ww = window.innerWidth || 1280;
+      const cols = ww >= 1280 ? 4 : ww >= 900 ? 3 : ww >= 640 ? 2 : 1;
+      containerList.forEach((ctn) => {
+        if (!ctn) return;
+        ctn.style.display = "grid";
+        ctn.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
+        const style = getComputedStyle(ctn);
+        if (!style.gap || style.gap === "0px") ctn.style.gap = "24px";
+      });
+    };
+    apply();
+    window.addEventListener("resize", apply);
+  }
+
   // --------- RSS multi-flux ----------
   const getRSSUrls = () => {
     const urls = [];
@@ -217,6 +290,7 @@
 
     const previewTargets = findPreviewContainers();
     const magazineTargets = findMagazineContainers();
+    enforceGridColumns([...previewTargets, ...magazineTargets]);
 
     const localByLang = STATIC_ARTICLES.filter(a => a.lang === lang).sort((a, b) => (a.date < b.date ? 1 : -1));
     const localsForPage = isNewsListingPage()
@@ -225,6 +299,8 @@
 
     clearAndInjectMultiple(previewTargets, localsForPage, false);
     clearAndInjectMultiple(magazineTargets, localByLang, false);
+
+    addStickyPDF(lang);                 // ★ 1) tout de suite après l’injection “locale”
 
     // Chargement multi-flux
     const rssConfigs = getRSSUrls();
@@ -244,8 +320,11 @@
 
         clearAndInjectMultiple(previewTargets, mergedForPreview, true);
 
+        addStickyPDF(lang);             // ★ 2) après l’injection RSS (reste toujours en premier)
+
       } catch {
         // fallback : articles statiques uniquement
+        addStickyPDF(lang);             // ★ 3) en cas d’échec RSS
       }
     }
   };
