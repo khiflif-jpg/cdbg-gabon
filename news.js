@@ -13,6 +13,7 @@
   // ✅ Flux RSS
   const RSS_URL_OVERRIDE_1 = "https://rss.app/feeds/StEwzwMzjxl2nHIc.xml";  // PFBC
   const RSS_URL_OVERRIDE_2 = "https://rss.app/feeds/NbpOTwjyYzdutyWP.xml";  // ATIBT
+  const RSS_URL_OVERRIDE_3 = "https://rss.app/feeds/jdDNtI8h4x1ufZXt.xml";  // eaux-forets.gouv.ga
 
   // --------- Données statiques ----------
   const STATIC_ARTICLES = [
@@ -86,7 +87,7 @@
       .news-card:hover, .news-card:focus { text-decoration: none !important; }
       .news-card .news-title, .news-card h3.news-title a { 
           text-decoration: none !important; 
-          color: #3D6B35 !important;  /* Titres verts sur tous les écrans */
+          color: #3D6B35 !important;
           font-weight: 300 !important; 
           display: -webkit-box; 
           -webkit-line-clamp: 2; 
@@ -111,10 +112,9 @@
     const pageLang = getLang();
     let meta;
 
-    if (a._isRSS && a._sourceTag === "ATIBT") {
-      meta = `${formatDate(a.date, pageLang)} - ATIBT - ${SITE_BRAND}`;
-    } else if (a._isRSS) {
-      meta = `${formatDate(a.date, pageLang)} - PFBC - ${SITE_BRAND}`;
+    // ✅ Source correctement affichée selon a._sourceTag
+    if (a._isRSS) {
+      meta = `${formatDate(a.date, pageLang)} - ${a._sourceTag} - ${SITE_BRAND}`;
     } else {
       meta = `${formatDate(a.date, a.lang)} — ${SITE_BRAND}`;
     }
@@ -164,10 +164,11 @@
     clearAndInjectMultiple(previewTargets, localsForPage, false);
     clearAndInjectMultiple(magazineTargets, localByLang, false);
 
-    // Chargement multi-flux
+    // ✅ Chargement multi-flux avec le 3e flux ajouté
     const rssConfigs = [
       { url: RSS_URL_OVERRIDE_1, tag: "PFBC" },
-      { url: RSS_URL_OVERRIDE_2, tag: "ATIBT" }
+      { url: RSS_URL_OVERRIDE_2, tag: "ATIBT" },
+      { url: RSS_URL_OVERRIDE_3, tag: "eaux-forets.gouv.ga" }
     ];
 
     if (rssConfigs.length) {
