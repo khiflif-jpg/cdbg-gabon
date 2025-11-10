@@ -2230,3 +2230,28 @@ header.hero + section h2:first-child{ margin-top: 0 !important; }
   .nav-links{ display:none !important; }
   .nav-links.active{ display:flex !important; }
 }
+/* ✅ FIX GLOBAL : Section Savoir plus / Learn more */
+/* Toujours en grille stable sur mobile & tablette */
+#learn-gabon .learn-grid,
+section.learn-gabon .learn-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+  gap: 20px !important;
+}
+
+/* ✅ Images toujours visibles, taille stable */
+#learn-gabon .learn-image,
+section.learn-gabon .learn-image {
+  width: 100% !important;
+  height: 200px !important;
+  object-fit: cover !important;
+  border-radius: 14px !important;
+  display: block !important;
+}
+
+/* ✅ Texte jamais caché */
+#learn-gabon .learn-card span {
+  text-align: center !important;
+  display: block !important;
+  margin-top: 10px !important;
+}
