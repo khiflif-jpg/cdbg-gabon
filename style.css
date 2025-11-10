@@ -2230,28 +2230,69 @@ header.hero + section h2:first-child{ margin-top: 0 !important; }
   .nav-links{ display:none !important; }
   .nav-links.active{ display:flex !important; }
 }
-/* ✅ FIX GLOBAL : Section Savoir plus / Learn more */
-/* Toujours en grille stable sur mobile & tablette */
-#learn-gabon .learn-grid,
-section.learn-gabon .learn-grid {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
-  gap: 20px !important;
+/* =========================================================
+   SECTION "En savoir plus / Learn more about Gabon"
+   Fix mobile & tablette (portrait → 1 colonne, paysage → max 2)
+   Icônes uniquement, plus jamais les grandes images recadrées
+   ========================================================= */
+
+/* PORTRAIT — 1 colonne */
+@media (max-width: 1024px) and (orientation: portrait) {
+  #learn-gabon .learn-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  #learn-gabon .learn-card {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  #learn-gabon .learn-card img {
+    width: 120px !important;
+    height: 120px !important;
+    object-fit: contain !important;
+    border-radius: 50% !important;
+    margin: 0 auto 10px !important;
+    display: block !important;
+  }
+
+  #learn-gabon .learn-card span {
+    text-align: center !important;
+    display: block !important;
+  }
 }
 
-/* ✅ Images toujours visibles, taille stable */
-#learn-gabon .learn-image,
-section.learn-gabon .learn-image {
-  width: 100% !important;
-  height: 200px !important;
-  object-fit: cover !important;
-  border-radius: 14px !important;
-  display: block !important;
+/* PAYSAGE — max 2 colonnes */
+@media (max-width: 1024px) and (orientation: landscape) {
+  #learn-gabon .learn-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 24px !important;
+  }
+
+  #learn-gabon .learn-card {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  #learn-gabon .learn-card img {
+    width: 120px !important;
+    height: 120px !important;
+    object-fit: contain !important;
+    border-radius: 50% !important;
+    margin: 0 auto 10px !important;
+    display: block !important;
+  }
+
+  #learn-gabon .learn-card span {
+    text-align: center !important;
+    display: block !important;
+  }
 }
 
-/* ✅ Texte jamais caché */
-#learn-gabon .learn-card span {
-  text-align: center !important;
-  display: block !important;
-  margin-top: 10px !important;
-}
