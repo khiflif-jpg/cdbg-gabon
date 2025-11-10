@@ -260,130 +260,125 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- En savoir plus sur le Gabon -->
 <section class="learn-gabon fade-in" id="learn-gabon">
-<!-- 🔒 OVERRIDE SCOPÉ À CETTE SECTION -->
-<style>
-  /* 1) Titres toujours visibles dans #learn-gabon (neutralise a{color:white} globaux) */
-  #learn-gabon .learn-card,
-  #learn-gabon .learn-card a {
-    color: #1a1a1a !important;
-    -webkit-text-fill-color: #1a1a1a !important; /* vieux WebKit */
-    text-decoration: none !important;
-  }
-  #learn-gabon .learn-card > span {
-    display: block !important;
-    margin-top: 8px !important;
-    font-weight: 600 !important;
-    line-height: 1.3 !important;
-    text-align: center !important;
-  }
-
-  /* ✅ DESKTOP */
-  @media (min-width:1024px){
-    /* Spécificité volontairement très élevée */
-    html body section#learn-gabon.learn-gabon.fade-in .learn-grid {
-      display: grid !important;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
-      gap: 2rem !important;
-      justify-items: center !important;
-      align-items: start !important;
-      max-width: 1200px !important;
-      margin: 0 auto !important;
-    }
-    html body section#learn-gabon.learn-gabon.fade-in .learn-card {
-      display: flex !important;
-      flex-direction: column !important;
-      align-items: center !important;
-      text-align: center !important;
-      background: transparent !important;
-      color: inherit !important;
-      border: none !important;
-      box-shadow: none !important;
-      width: 100% !important;
-      max-width: 180px !important;
-      padding: 0 !important;
+  <!-- 🔒 OVERRIDE SCOPÉ À CETTE SECTION -->
+  <style>
+    /* 1) Titres toujours visibles dans #learn-gabon (neutralise a{color:white} globaux) */
+    #learn-gabon .learn-card,
+    #learn-gabon .learn-card a {
+      color: #1a1a1a !important;
+      -webkit-text-fill-color: #1a1a1a !important; /* vieux WebKit */
       text-decoration: none !important;
-      white-space: normal !important;
-      overflow: visible !important;
-      text-overflow: clip !important;
-      transition: transform .15s ease !important;
     }
-    html body section#learn-gabon.learn-gabon.fade-in .learn-card:hover {
-      transform: translateY(-2px) !important;
-    }
-    html body section#learn-gabon.learn-gabon.fade-in .learn-image {
-      width: 96px !important;
-      height: 96px !important;
-      object-fit: cover !important;   /* mets 'contain' si tu veux 0 rognage */
-      border-radius: 50% !important;  /* icône ronde */
+    #learn-gabon .learn-card > span {
       display: block !important;
-      background: transparent !important;
-    }
-    html body section#learn-gabon.learn-gabon.fade-in .learn-card > span {
       margin-top: 8px !important;
-      font-size: 0.95rem !important;
       font-weight: 600 !important;
       line-height: 1.3 !important;
-      color: inherit !important;
-    }
-
-    /* ✅ SCOPÉ : n’affecte plus les autres grilles (Actualités incluse) */
-    html body section#learn-gabon.learn-gabon.fade-in .learn-grid {
-      grid-template-columns: none !important;
-    }
-  }
-
-  /* ✅ TABLETTES / iPad */
-  @media only screen 
-    and (min-device-width: 768px) 
-    and (max-device-width: 1366px)
-    and (-webkit-min-device-pixel-ratio: 1) {
-
-    /* Grille plus espacée, type icônes */
-    html body section#learn-gabon.learn-gabon.fade-in .learn-grid {
-      display: grid !important;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
-      gap: 2rem !important;
-      justify-items: center !important;
-      align-items: start !important;
-      max-width: 1000px !important;
-      margin: 0 auto !important;
-    }
-
-    /* Carte simplifiée façon icône */
-    html body section#learn-gabon.learn-gabon.fade-in .learn-card {
-      display: flex !important;
-      flex-direction: column !important;
-      align-items: center !important;
-      justify-content: flex-start !important;
-      background: transparent !important;
-      border: none !important;
-      box-shadow: none !important;
       text-align: center !important;
-      max-width: 220px !important;
-      padding: 0 !important;
     }
 
-    /* Image centrée et ronde */
-    html body section#learn-gabon.learn-gabon.fade-in .learn-image {
-      width: 110px !important;
-      height: 110px !important;
-      object-fit: cover !important;
-      border-radius: 50% !important;
-      display: block !important;
-      margin: 0 auto 10px auto !important;
+    /* ✅ DESKTOP */
+    @media (min-width:1024px){
+      /* Spécificité volontairement très élevée */
+      html body section#learn-gabon.learn-gabon.fade-in .learn-grid {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+        gap: 2rem !important;
+        justify-items: center !important;
+        align-items: start !important;
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+      }
+      html body section#learn-gabon.learn-gabon.fade-in .learn-card {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        background: transparent !important;
+        color: inherit !important;
+        border: none !important;
+        box-shadow: none !important;
+        width: 100% !important;
+        max-width: 180px !important;
+        padding: 0 !important;
+        text-decoration: none !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        transition: transform .15s ease !important;
+      }
+      html body section#learn-gabon.learn-gabon.fade-in .learn-card:hover {
+        transform: translateY(-2px) !important;
+      }
+      html body section#learn-gabon.learn-gabon.fade-in .learn-image {
+        width: 96px !important;
+        height: 96px !important;
+        object-fit: cover !important;   /* mets 'contain' si tu veux 0 rognage */
+        border-radius: 50% !important;  /* icône ronde */
+        display: block !important;
+        background: transparent !important;
+      }
+      html body section#learn-gabon.learn-gabon.fade-in .learn-card > span {
+        margin-top: 8px !important;
+        font-size: 0.95rem !important;
+        font-weight: 600 !important;
+        line-height: 1.3 !important;
+        color: inherit !important;
+      }
+      /* ⛔️ (supprimé) : grid-template-columns: none !important; */
     }
 
-    /* Titre dessous l'image */
-    html body section#learn-gabon.learn-gabon.fade-in .learn-card > span {
-      margin-top: 8px !important;
-      font-size: 1rem !important;
-      font-weight: 600 !important;
-      text-align: center !important;
-      line-height: 1.3 !important;
-    }
-  }
-</style>
+    /* ✅ TABLETTES / iPad */
+    @media only screen 
+      and (min-device-width: 768px) 
+      and (max-device-width: 1366px)
+      and (-webkit-min-device-pixel-ratio: 1) {
 
+      /* Grille plus espacée, type icônes */
+      html body section#learn-gabon.learn-gabon.fade-in .learn-grid {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+        gap: 2rem !important;
+        justify-items: center !important;
+        align-items: start !important;
+        max-width: 1000px !important;
+        margin: 0 auto !important;
+      }
+
+      /* Carte simplifiée façon icône */
+      html body section#learn-gabon.learn-gabon.fade-in .learn-card {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        text-align: center !important;
+        max-width: 220px !important;
+        padding: 0 !important;
+      }
+
+      /* Image centrée et ronde */
+      html body section#learn-gabon.learn-gabon.fade-in .learn-image {
+        width: 110px !important;
+        height: 110px !important;
+        object-fit: cover !important;
+        border-radius: 50% !important;
+        display: block !important;
+        margin: 0 auto 10px auto !important;
+      }
+
+      /* Titre dessous l'image */
+      html body section#learn-gabon.learn-gabon.fade-in .learn-card > span {
+        margin-top: 8px !important;
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+        text-align: center !important;
+        line-height: 1.3 !important;
+      }
+    }
+  </style>
 
   <h2 class="learn-title">En savoir plus sur le Gabon</h2>
   <div class="learn-grid">
