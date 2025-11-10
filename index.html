@@ -379,6 +379,66 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         line-height: 1.3 !important;
       }
     }
+    /* === MOBILE & PETITES TABLETTES — TOUTES ORIENTATIONS === */
+@media (max-width: 1024px) {
+  /* Grille : 1 colonne par défaut */
+  html body section#learn-gabon.learn-gabon.fade-in .learn-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+    justify-items: center !important;
+    align-items: start !important;
+  }
+
+  /* Pas de “cartes” : juste des icônes + libellé centré */
+  html body section#learn-gabon.learn-gabon.fade-in .learn-card {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    text-decoration: none !important;
+  }
+
+  /* Icônes 100% RONDES et de taille fixe (évite les images géantes) */
+  html body section#learn-gabon.learn-gabon.fade-in .learn-image,
+  html body section#learn-gabon.learn-gabon.fade-in .learn-card img {
+    width: 140px !important;
+    height: 140px !important;
+    object-fit: cover !important;   /* rempli le cercle proprement */
+    border-radius: 50% !important;
+    display: block !important;
+    margin: 0 auto 12px !important;
+    background: transparent !important;
+  }
+
+  html body section#learn-gabon.learn-gabon.fade-in .learn-card > span {
+    display: block !important;
+    margin-top: 6px !important;
+    font-weight: 600 !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+    color: #1a1a1a !important;
+    -webkit-text-fill-color: #1a1a1a !important;
+  }
+}
+
+/* === PAYSAGE — MAX 2 COLONNES (sinon 1) === */
+@media (max-width: 1024px) and (orientation: landscape) {
+  html body section#learn-gabon.learn-gabon.fade-in .learn-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* très petite largeur en paysage (certains iPhone) → repli 1 colonne */
+@media (max-width: 700px) and (orientation: landscape) {
+  html body section#learn-gabon.learn-gabon.fade-in .learn-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
   </style>
 
   <h2 class="learn-title">En savoir plus sur le Gabon</h2>
