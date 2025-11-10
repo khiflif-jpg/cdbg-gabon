@@ -983,13 +983,11 @@ button:focus-visible,
 
 /* --- Overlay flouté pour fond --- */
 .menu-overlay {
-  position: fixed;
-  inset: 0;
+  position: fixed; inset: 0;
   background: rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  opacity: 0;
-  visibility: hidden;
+  opacity: 0; visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
   z-index: 998;
 }
@@ -1715,7 +1713,7 @@ a.news-card:hover {
   .burger{ position: relative; z-index: 10001; } /* clic > overlay */
 }
 /* === Burger : zone cliquable large + priorité au-dessus === */
-.navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 10000; }
+.navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 2147483000; }
 
 .burger{
   width: 44px;
@@ -1726,7 +1724,7 @@ a.news-card:hover {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   position: relative;
-  z-index: 10002;              /* au-dessus de tout dans la navbar */
+  z-index: 2147483647;                 /* au-dessus de tout */
   pointer-events: auto !important;
 }
 .burger > div{
@@ -1736,41 +1734,6 @@ a.news-card:hover {
   margin: 3px 0;
   border-radius: 2px;
 }
-
-@media (min-width: 769px){
-  .burger{ display: none; }
-}
-
-/* Overlay menu : ne pas bloquer quand inactif */
-.menu-overlay{
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,.4);
-  backdrop-filter: blur(8px);
-  opacity: 0; visibility: hidden;
-  pointer-events: none;
-  transition: opacity .3s ease, visibility .3s ease;
-  z-index: 999;                /* sous .navbar */
-}
-.menu-overlay.active{
-  opacity: 1; visibility: visible;
-  pointer-events: all;
-}
-
-/* (Page d'accueil) éviter que la hero-overlay “mange” les taps */
-.hero-overlay{ pointer-events: none; }
-/* === CLiquabilité garantie du burger === */
-.navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 2147483000; }
-
-.burger{
-  width: 44px; height: 44px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  position: relative;
-  z-index: 2147483647;                 /* au-dessus de tout */
-  pointer-events: auto !important;
-}
-.burger > div{ width: 22px; height: 2px; background: #fff; margin: 3px 0; border-radius: 2px; }
 
 @media (min-width: 769px){ .burger{ display: none; } }
 
@@ -2211,28 +2174,3 @@ header.hero + section h2:first-child{ margin-top: 0 !important; }
   /* désactive toute ancienne grille forcée (4 colonnes, etc.) */
   html body .learn-grid { grid-template-columns: none !important; }
 }
-  <!-- ✅ AJOUT POUR TABLETTES / IPAD (tous modèles jusqu’à 1200px) -->
-  <style>
-    @media (min-width:768px) and (max-width:1200px) {
-      html body section#learn-gabon.learn-gabon.fade-in .learn-grid {
-        grid-template-columns: 1fr !important;
-        gap: 2rem !important;
-      }
-
-      html body section#learn-gabon.learn-gabon.fade-in .learn-card {
-        max-width: 100% !important;
-        text-align: center !important;
-      }
-
-      html body section#learn-gabon.learn-gabon.fade-in .learn-card img {
-        width: 100% !important;
-        height: auto !important;
-        border-radius: 10px !important;
-      }
-
-      html body section#learn-gabon.learn-gabon.fade-in .learn-card h3,
-      html body section#learn-gabon.learn-gabon.fade-in .learn-card p {
-        margin-top: 10px !important;
-      }
-    }
-  </style>
