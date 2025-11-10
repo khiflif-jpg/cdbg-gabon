@@ -2226,3 +2226,7 @@ header.hero + section h2:first-child{ margin-top: 0 !important; }
   /* Neutralise d’anciens gabarits éventuels */
   html body .learn-grid{ grid-template-columns: none !important; }
 }
+@media (max-width:768px){
+  .nav-links{ display:none !important; }
+  .nav-links.active{ display:flex !important; }
+}
