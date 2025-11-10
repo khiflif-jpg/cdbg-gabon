@@ -652,6 +652,38 @@ document.addEventListener("DOMContentLoaded", () => {
 })();
 </script>
 
-  
+  <script>
+(function(){
+  function avifSupported(cb){
+    var img = new Image();
+    img.onload = function(){ cb(img.width > 0 && img.height > 0); };
+    img.onerror = function(){ cb(false); };
+    img.src = "data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAG1pZjFhdmlmAAACAG1ldGEAAAAAAAAAIWhkbHIAAAAAAAAAAG1kYXQAAAAB";
+  }
+  function trySwap(img){
+    if (!img || !img.getAttribute) return;
+    var src = img.getAttribute('src') || "";
+    if (!/\.avif(\?|#|$)/i.test(src)) return;
+    var base = src.replace(/\.avif(\?.*)?$/i, "");
+    var list = [base + ".webp", base + ".jpg", base + ".jpeg", base + ".png"];
+    (function next(i){
+      if (i >= list.length) return;
+      var test = new Image();
+      test.onload = function(){ img.src = list[i]; };
+      test.onerror = function(){ next(i+1); };
+      test.src = list[i] + "?v=" + Date.now();
+    })(0);
+  }
+  avifSupported(function(ok){
+    var imgs = document.querySelectorAll('#learn-gabon img.learn-image');
+    for (var i=0; i<imgs.length; i++){
+      imgs[i].setAttribute('loading', 'eager');
+      imgs[i].setAttribute('decoding', ok ? 'auto' : 'sync');
+      if (!ok) trySwap(imgs[i]);
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
