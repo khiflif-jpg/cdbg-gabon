@@ -20,9 +20,6 @@
     { lang:"fr", title:"Le Gabon renforce sa politique forestière",
       description:"Le Gabon, riche de ses forêts équatoriales, s’impose comme un leader africain dans la gestion durable des ressources forestières.",
       img:"article1.avif", link:"article-full-fr.html", date:"2025-09-12" },
-    { lang:"en", title:"Gabon strengthens its forest policy",
-      description:"Gabon, rich in its equatorial forests, is becoming a leader in sustainable forest management and biodiversity preservation.",
-      img:"article1.avif", link:"article-full-en.html", date:"2025-09-12" },
 
     { lang:"fr", title:"Le secteur du bois au Gabon : pilier de diversification, d’emploi et de compétitivité durable",
       description:"Panorama des atouts économiques du secteur bois au Gabon, entre transformation locale, emplois et durabilité.",
@@ -112,7 +109,6 @@
     const pageLang = getLang();
     let meta;
 
-    // ✅ Source correctement affichée selon a._sourceTag
     if (a._isRSS) {
       meta = `${formatDate(a.date, pageLang)} - ${a._sourceTag} - ${SITE_BRAND}`;
     } else {
@@ -164,7 +160,6 @@
     clearAndInjectMultiple(previewTargets, localsForPage, false);
     clearAndInjectMultiple(magazineTargets, localByLang, false);
 
-    // ✅ Chargement multi-flux avec le 3e flux ajouté
     const rssConfigs = [
       { url: RSS_URL_OVERRIDE_1, tag: "PFBC" },
       { url: RSS_URL_OVERRIDE_2, tag: "ATIBT" },
