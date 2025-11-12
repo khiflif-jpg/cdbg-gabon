@@ -2230,5 +2230,9 @@ header.hero + section h2:first-child{ margin-top: 0 !important; }
   .nav-links{ display:none !important; }
   .nav-links.active{ display:flex !important; }
 }
+/* --- Masquage de la ligne méta en bas des articles CDBG --- */
+.meta {
+  display: none !important;
+}
 
 
