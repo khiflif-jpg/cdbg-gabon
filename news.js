@@ -15,40 +15,36 @@
   const RSS_URL_OVERRIDE_2 = "https://rss.app/feeds/NbpOTwjyYzdutyWP.xml";  // ATIBT
   const RSS_URL_OVERRIDE_3 = "https://rss.app/feeds/jdDNtI8h4x1ufZXt.xml";  // eaux-forets.gouv.ga
 
-  // --------- Données statiques ----------
-  const STATIC_ARTICLES = [
-    { lang:"fr", title:"Le Gabon renforce sa politique forestière",
-      description:"Le Gabon, riche de ses forêts équatoriales, s’impose comme un leader africain dans la gestion durable des ressources forestières.",
-      img:"article1.avif", link:"article-full-fr.html", date:"2025-09-12" },
+// --------- Données statiques ----------
+const STATIC_ARTICLES = [
+  { lang:"fr", title:"Le secteur du bois au Gabon : pilier de diversification, d’emploi et de compétitivité durable",
+    description:"Panorama des atouts économiques du secteur bois au Gabon, entre transformation locale, emplois et durabilité.",
+    img:"article2.avif", link:"article-full2-fr.html", date:"2025-09-20" },
+  { lang:"en", title:"Gabon’s wood sector: a pillar for diversification, jobs and sustainable competitiveness",
+    description:"Overview of Gabon’s wood industry: local processing, job creation and long-term sustainability.",
+    img:"article2.avif", link:"article-full2-en.html", date:"2025-09-20" },
 
-    { lang:"fr", title:"Le secteur du bois au Gabon : pilier de diversification, d’emploi et de compétitivité durable",
-      description:"Panorama des atouts économiques du secteur bois au Gabon, entre transformation locale, emplois et durabilité.",
-      img:"article2.avif", link:"article-full2-fr.html", date:"2025-09-20" },
-    { lang:"en", title:"Gabon’s wood sector: a pillar for diversification, jobs and sustainable competitiveness",
-      description:"Overview of Gabon’s wood industry: local processing, job creation and long-term sustainability.",
-      img:"article2.avif", link:"article-full2-en.html", date:"2025-09-20" },
+  { lang:"fr", title:"Nkok : vitrine du développement industriel durable du Gabon",
+    description:"La Zone Économique Spéciale de Nkok illustre la réussite du modèle gabonais alliant industrialisation, durabilité et emploi local.",
+    img:"nkok.avif", link:"article-full3-fr.html", date:"2025-10-26" },
+  { lang:"en", title:"Nkok: showcase of Gabon’s sustainable industrial development",
+    description:"The Nkok Special Economic Zone highlights Gabon’s success in combining industrial growth, sustainability, and local employment.",
+    img:"nkok.avif", link:"article-full3-en.html", date:"2025-10-26" },
 
-    { lang:"fr", title:"Nkok : vitrine du développement industriel durable du Gabon",
-      description:"La Zone Économique Spéciale de Nkok illustre la réussite du modèle gabonais alliant industrialisation, durabilité et emploi local.",
-      img:"nkok.avif", link:"article-full3-fr.html", date:"2025-10-26" },
-    { lang:"en", title:"Nkok: showcase of Gabon’s sustainable industrial development",
-      description:"The Nkok Special Economic Zone highlights Gabon’s success in combining industrial growth, sustainability, and local employment.",
-      img:"nkok.avif", link:"article-full3-en.html", date:"2025-10-26" },
+  { lang:"fr", title:"L’économie du bois au Gabon en 2025 : de la coupe au produit fini",
+    description:"Analyse complète de la filière bois gabonaise : exploitation, transformation locale, exportations et durabilité.",
+    img:"article4.avif", link:"article-full4-fr.html", date:"2025-11-04" },
+  { lang:"en", title:"Gabon’s Wood Economy in 2025: From Harvest to Finished Products",
+    description:"Comprehensive analysis of Gabon's wood sector: forestry, local processing, exports and sustainability.",
+    img:"article4.avif", link:"article-full4-en.html", date:"2025-11-04" },
 
-    { lang:"fr", title:"L’économie du bois au Gabon en 2025 : de la coupe au produit fini",
-      description:"Analyse complète de la filière bois gabonaise : exploitation, transformation locale, exportations et durabilité.",
-      img:"article4.avif", link:"article-full4-fr.html", date:"2025-11-04" },
-    { lang:"en", title:"Gabon’s Wood Economy in 2025: From Harvest to Finished Products",
-      description:"Comprehensive analysis of Gabon's wood sector: forestry, local processing, exports and sustainability.",
-      img:"article4.avif", link:"article-full4-en.html", date:"2025-11-04" },
-
-    { lang:"fr", title:"Code forestier de la République du Gabon (édition 2025 – CDBG) | Version PDF",
-      description:"Version PDF du Code forestier de la République du Gabon (édition 2025 – CDBG).",
-      img:"code-forestier-pdf.avif", link:"article-full5-fr.html", date:"2025-11-08" },
-    { lang:"en", title:"Forest Code of the Republic of Gabon (2025 Edition – CDBG) | PDF Version",
-      description:"PDF version of the Forest Code of the Republic of Gabon (2025 Edition – CDBG).",
-      img:"code-forestier-pdf.avif", link:"article-full5-en.html", date:"2025-11-08" }
-  ];
+  { lang:"fr", title:"Code forestier de la République du Gabon (édition 2025 – CDBG) | Version PDF",
+    description:"Version PDF du Code forestier de la République du Gabon (édition 2025 – CDBG).",
+    img:"code-forestier-pdf.avif", link:"article-full5-fr.html", date:"2025-11-08" },
+  { lang:"en", title:"Forest Code of the Republic of Gabon (2025 Edition – CDBG) | PDF Version",
+    description:"PDF version of the Forest Code of the Republic of Gabon (2025 Edition – CDBG).",
+    img:"code-forestier-pdf.avif", link:"article-full5-en.html", date:"2025-11-08" }
+];
 
   // --------- Helpers : page & langue ----------
   const getLang = () => {
