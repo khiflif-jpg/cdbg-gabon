@@ -167,29 +167,45 @@
   });
   </script>
     
-  <script>
+ <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const badPhrases = [
-    'CDBG Law | Forest Code of the Republic of Gabon',
-    'Gabon’s wood sector: 2023–2025 figures – CDBG',
-    'Le secteur du bois au Gabon : chiffres 2023–2025 – CDBG'
+  // Fonction de normalisation (pour ignorer majuscules/accents)
+  const norm = s => (s||'').toString()
+    .normalize('NFD').replace(/\p{Diacritic}/gu,'')
+    .toLowerCase().trim();
+
+  const pageTitle = norm(document.title);
+
+  // Mots/phrases à retirer, quelle que soit la langue
+  const badSnippets = [
+    'cdbg law | forest code of the republic of gabon',
+    'gabon’s wood sector', 'gabons wood sector',
+    'le secteur du bois au gabon',
+    'code forestier de la republique du gabon',
+    'version pdf – cdbg', 'version pdf - cdbg'
   ];
 
-  // Parcourt tous les noeuds textuels et supprime le conteneur si match
+  const isBadText = (t) => {
+    const n = norm(t);
+    if (!n) return false;
+    if (pageTitle && n.includes(pageTitle)) return true; // supprime tout ce qui reprend le <title>
+    return badSnippets.some(p => n.includes(p));
+  };
+
+  // Balayage du document
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
   const toRemove = new Set();
   let node;
   while ((node = walker.nextNode())) {
-    const txt = node.nodeValue.trim();
-    if (!txt) continue;
-    if (badPhrases.some(p => txt.includes(p))) {
-      // on supprime l’élément bloc parent le plus proche
-      toRemove.add(node.parentElement.closest('p, div, section, footer, li, span') || node.parentElement);
+    if (isBadText(node.nodeValue)) {
+      const block = node.parentElement.closest('p, div, section, footer, li, span') || node.parentElement;
+      if (block) toRemove.add(block);
     }
   }
-  toRemove.forEach(el => el && el.remove());
+  toRemove.forEach(el => el.remove());
 });
 </script>
+
 
 </body>
 </html>
