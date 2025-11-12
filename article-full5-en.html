@@ -174,13 +174,31 @@
     });
   });
   </script>
-    <style>
-.meta,
-.refs,
-.quick-links {
-  display: none !important;
-}
-</style>
+    
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const badPhrases = [
+    'CDBG Law | Forest Code of the Republic of Gabon',
+    'Gabon’s wood sector: 2023–2025 figures – CDBG',
+    'Le secteur du bois au Gabon : chiffres 2023–2025 – CDBG'
+  ];
+
+  // Parcourt tous les noeuds textuels et supprime le conteneur si match
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+  const toRemove = new Set();
+  let node;
+  while ((node = walker.nextNode())) {
+    const txt = node.nodeValue.trim();
+    if (!txt) continue;
+    if (badPhrases.some(p => txt.includes(p))) {
+      // on supprime l’élément bloc parent le plus proche
+      toRemove.add(node.parentElement.closest('p, div, section, footer, li, span') || node.parentElement);
+    }
+  }
+  toRemove.forEach(el => el && el.remove());
+});
+</script>
+
 
 </body>
 </html>
