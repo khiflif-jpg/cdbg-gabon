@@ -2230,5 +2230,12 @@ header.hero + section h2:first-child{ margin-top: 0 !important; }
   .nav-links{ display:none !important; }
   .nav-links.active{ display:flex !important; }
 }
+/* Ajuste la position du menu mobile/tablette/iPad :
+   on aligne les liens en haut du panneau, sous la barre */
+@media (max-width: 1024px) {
+  header .navbar .nav-links {
+    justify-content: flex-start !important;  /* au lieu du centrage vertical */
+  }
+}
 
 
