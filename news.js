@@ -47,17 +47,17 @@ const STATIC_ARTICLES = [
 
   ,{ lang:"fr", title:"Concessions forestières au Gabon : cadre légal et procédure d’attribution",
     description:"Comprendre la propriété d’État des ressources forestières, les titres CFAD et PFA et les étapes pour obtenir une concession forestière au Gabon.",
-    img:"article7.webp", link:"article-full6-fr.html", date:"2025-11-16" },
+    img:"article6.png", link:"article-full6-fr.html", date:"2025-11-16" },
   { lang:"en", title:"Forest concessions in Gabon: legal framework and allocation procedure",
     description:"Discover Gabon’s state ownership of forests, the CFAD and PFA titles and the step‑by‑step procedure to obtain a concession.",
-    img:"article7.webp", link:"article-full6-en.html", date:"2025-11-16" },
+    img:"article6.png", link:"article-full6-en.html", date:"2025-11-16" },
 
   { lang:"fr", title:"Certification forestière au Gabon : levier stratégique pour une gestion durable et une compétitivité accrue",
     description:"Analyse des systèmes de certification FSC et PAFC/PEFC, des obligations légales, des étapes et des coûts de certification, et des avantages pour les entreprises et le Gabon.",
-    img:"article6.png", link:"article-full7-fr.html", date:"2025-11-16" },
+    img:"article7.webp", link:"article-full7-fr.html", date:"2025-11-16" },
   { lang:"en", title:"Forest certification in Gabon: strategic lever for sustainable management and greater competitiveness",
     description:"Learn about the FSC and PAFC/PEFC certification systems, legal requirements, process and costs of certification, and the benefits for companies and Gabon.",
-    img:"article6.png", link:"article-full7-en.html", date:"2025-11-16" }
+    img:"article7.webp", link:"article-full7-en.html", date:"2025-11-16" }
 ];
 
   // --------- Helpers : page & langue ----------
