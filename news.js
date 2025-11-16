@@ -54,10 +54,10 @@ const STATIC_ARTICLES = [
 
   { lang:"fr", title:"Certification forestière au Gabon : levier stratégique pour une gestion durable et une compétitivité accrue",
     description:"Analyse des systèmes de certification FSC et PAFC/PEFC, des obligations légales, des étapes et des coûts de certification, et des avantages pour les entreprises et le Gabon.",
-    img:"elephant_forest_small.webp", link:"article-full7-fr.html", date:"2025-11-16" },
+    img:"article7.webp", link:"article-full7-fr.html", date:"2025-11-16" },
   { lang:"en", title:"Forest certification in Gabon: strategic lever for sustainable management and greater competitiveness",
     description:"Learn about the FSC and PAFC/PEFC certification systems, legal requirements, process and costs of certification, and the benefits for companies and Gabon.",
-    img:"elephant_forest_small.webp", link:"article-full7-en.html", date:"2025-11-16" }
+    img:"article7.webp", link:"article-full7-en.html", date:"2025-11-16" }
 ];
 
   // --------- Helpers : page & langue ----------
