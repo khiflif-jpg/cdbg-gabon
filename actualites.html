@@ -50,22 +50,22 @@
 <header id="hero">
 <nav class="navbar">
 <div class="logo">
-<img alt="CDBG Logo" fetchpriority="high" height="80" src="logo.webp" width="80"/>
+<img alt="CDBG Logo" fetchpriority="high" height="80" loading="lazy" src="logo.webp" width="80"/>
 </div>
 <div class="nav-flags">
 <a href="index.html"><img alt="Français" decoding="async" height="32" loading="lazy" src="fr.png" width="32"/></a>
 <a href="en.html"><img alt="English" decoding="async" height="32" loading="lazy" src="en.png" width="32"/></a>
 </div>
 <ul class="nav-links">
-    <li><a href="#bitam">Bitam</a></li>
-    <li><a href="#about">À propos</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#engagements">Engagements</a></li>
-    <li><a href="#ambition">Ambition</a></li>
-    <li><a href="#partnerships">Partenariats</a></li>
-    <li><a href="#gallery">Galerie</a></li>
-    <li><a href="actualites.html">Actualités</a></li>
-    <li><a href="#contact">Contact</a></li>
+<li><a href="index.html#bitam">Bitam</a></li>
+<li><a href="index.html#about">À propos</a></li>
+<li><a href="index.html#ambition">Ambition</a></li>
+<li><a href="index.html#services">Services</a></li>
+<li><a href="index.html#gallery">Galerie</a></li>
+<li><a href="index.html#engagements">Engagements</a></li>
+<li><a href="index.html#partnerships">Partenariats</a></li>
+<li><a class="active" href="actualites.html">Actualités</a></li>
+<li><a href="index.html#contact">Contact</a></li>
 </ul>
 <div class="burger" id="burger">
 <div></div>
@@ -105,6 +105,7 @@
 <p>© 2025 Compagnie Durable du Bois au Gabon. Tous droits réservés.</p>
 </div>
 </footer>
+<!-- Modales FR -->
 <div class="modal" id="modal-cgu-fr" style="display:none">
 <div class="modal-content">
 <span class="close">×</span>
@@ -148,6 +149,7 @@
 <p>Consentement : en poursuivant la navigation sur ce site, vous acceptez l’utilisation de cookies conformément à la présente politique.</p>
 </div>
 </div>
+<!-- Scripts -->
 <script defer="True" src="menu.js"></script>
 <script defer="True" src="news.js"></script>
 <script>
@@ -172,6 +174,7 @@
       loadRSS({ containerId: "news-container", count: 12, lang: "fr" });
     });
   </script>
+<!-- AUTRES CHOSES DE LA PAGE -->
 <style>
   /* Mobile (iPhone) : retire le padding qui rétrécit les cartes Actualités */
   @media (max-width: 600px) {

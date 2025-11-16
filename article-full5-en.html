@@ -38,7 +38,7 @@
 <header>
 <nav class="navbar">
 <div class="logo">
-<img alt="CDBG Logo" fetchpriority="high" height="80" src="logo.webp" width="80"/>
+<img alt="CDBG Logo" fetchpriority="high" height="80" loading="lazy" src="logo.webp" width="80"/>
 </div>
 <div class="nav-flags">
 <a href="index.html"><img alt="Français" decoding="async" height="32" loading="lazy" src="fr.png" width="32"/></a>
@@ -64,7 +64,7 @@
 <section class="article-content fade-in" style="text-align:justify">
 <picture class="hero-image" style="display:block;margin-top:40px">
 <source srcset="code-forestier-pdf.avif" type="image/avif"/>
-<img alt="Forest Code of the Republic of Gabon – cover" decoding="async" loading="lazy" src="code-forestier-gabon.avif" style="width:100%;height:auto;border-radius:8px"/>
+<img alt="Forest Code of the Republic of Gabon – cover" decoding="async" height="370" loading="lazy" src="code-forestier-gabon.avif" style="width:100%;height:auto;border-radius:8px" width="540"/>
 </picture>
 <p class="meta">
 <span class="badge">CDBG Law</span>  |  Forest Code of the Republic of Gabon (2025 Edition – CDBG)  |  PDF Version
@@ -105,6 +105,7 @@
 <p>© 2025 Compagnie Durable du Bois au Gabon. All rights reserved.</p>
 </div>
 </footer>
+<!-- English Modals -->
 <div aria-labelledby="cgu-title-en" aria-modal="true" class="modal" id="modal-cgu-en" role="dialog">
 <div class="modal-content">
 <span aria-label="Close" class="close">×</span>
@@ -171,7 +172,7 @@
     });
   });
   </script>
-    <script>
+<script>
 document.addEventListener('DOMContentLoaded', () => {
   // Fonction de normalisation (pour ignorer majuscules/accents)
   const norm = s => (s||'').toString()
