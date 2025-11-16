@@ -47,7 +47,7 @@ const STATIC_ARTICLES = [
 
   ,{ lang:"fr", title:"Concessions forestières au Gabon : cadre légal et procédure d’attribution",
     description:"Comprendre la propriété d’État des ressources forestières, les titres CFAD et PFA et les étapes pour obtenir une concession forestière au Gabon.",
-    img:"article.png", link:"article-full6-fr.html", date:"2025-11-16" },
+    img:"article6.png", link:"article-full6-fr.html", date:"2025-11-16" },
   { lang:"en", title:"Forest concessions in Gabon: legal framework and allocation procedure",
     description:"Discover Gabon’s state ownership of forests, the CFAD and PFA titles and the step‑by‑step procedure to obtain a concession.",
     img:"article6.png", link:"article-full6-en.html", date:"2025-11-16" },
