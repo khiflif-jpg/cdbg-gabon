@@ -486,22 +486,33 @@
 <a class="btn btn-primary" href="actualites.html">Voir toutes les actualités</a>
 </div>
 </section>
+<!-- CONTACT (FR) -->
 <section class="contact fade-in" id="contact">
-<h2>Contact</h2>
-<div class="contact-container">
-<form class="contact-form">
-<input placeholder="Nom" type="text"/>
-<input placeholder="Email" type="email"/>
-<input placeholder="Objet" type="text"/>
-<textarea placeholder="Message"></textarea>
-<button class="btn btn-primary" type="submit">Envoyer</button>
-</form>
-<div class="contact-info">
-<p><img alt="Adresse" decoding="async" height="52" loading="lazy" src="adresse.webp" width="52"/> Ancien Sobraga, Libreville<br/>BP 4447, Gabon</p>
-<p><img alt="Téléphone" decoding="async" height="52" loading="lazy" src="tel.webp" width="52"/> +241 77 25 9169</p>
-</div>
-</div>
+    <h2>Contact</h2>
+    <div class="contact-container">
+        <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+            <!-- Configuration Web3Forms -->
+            <input type="hidden" name="access_key" value="62f37d09-718f-42a1-90b9-c5b4a7c33af1">
+            <input type="hidden" name="subject" value="Nouveau message CDBG (Page Française )">
+            <input type="hidden" name="from_name" value="Site CDBG (FR)">
+            <input type="hidden" name="redirect" value="https://www.cdbg-gabon.com/index.html">
+
+            <!-- Champs du formulaire -->
+            <input name="nom" placeholder="Nom" type="text" required />
+            <input name="email" placeholder="Email" type="email" required />
+            <input name="objet" placeholder="Objet" type="text" required />
+            <textarea name="message" placeholder="Message" required></textarea>
+            
+            <button class="btn btn-primary" type="submit">Envoyer</button>
+        </form>
+        <div class="contact-info">
+            <p><img alt="Adresse" decoding="async" height="52" loading="lazy" src="adresse.webp" width="52"/> Ancien Sobraga, Libreville  
+BP 4447, Gabon</p>
+            <p><img alt="Téléphone" decoding="async" height="52" loading="lazy" src="tel.webp" width="52"/> +241 77 25 9169</p>
+        </div>
+    </div>
 </section>
+
 <footer>
 <div class="footer-container">
 <div class="footer-col">
