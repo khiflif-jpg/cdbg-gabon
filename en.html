@@ -695,7 +695,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 })();
 </script>
-<script>
+
+
+    <script>
 (function(){
   function avifSupported(cb){
     var img = new Image();
@@ -703,29 +705,49 @@ document.addEventListener("DOMContentLoaded", () => {
     img.onerror = function(){ cb(false); };
     img.src = "data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAG1pZjFhdmlmAAACAG1ldGEAAAAAAAAAIWhkbHIAAAAAAAAAAG1kYXQAAAAB";
   }
+
   function trySwap(img){
     if (!img || !img.getAttribute) return;
     var src = img.getAttribute('src') || "";
     if (!/\.avif(\?|#|$)/i.test(src)) return;
+
     var base = src.replace(/\.avif(\?.*)?$/i, "");
-    var list = [base + ".webp", base + ".jpg", base + ".jpeg", base + ".png"];
+    var list = [
+      base + ".webp",
+      base + ".jpg",
+      base + ".jpeg",
+      base + ".png"
+    ];
+
     (function next(i){
       if (i >= list.length) return;
+
       var test = new Image();
-      test.onload = function(){ img.src = list[i]; };
-      test.onerror = function(){ next(i+1); };
+      test.onload = function(){
+        img.src = list[i];
+      };
+      test.onerror = function(){
+        next(i + 1);
+      };
       test.src = list[i] + "?v=" + Date.now();
+
     })(0);
   }
+
   avifSupported(function(ok){
     var imgs = document.querySelectorAll('#learn-gabon img.learn-image');
-    for (var i=0; i<imgs.length; i++){
+
+    for (var i = 0; i < imgs.length; i++){
       imgs[i].setAttribute('loading', 'eager');
       imgs[i].setAttribute('decoding', ok ? 'auto' : 'sync');
-      if (!ok) trySwap(imgs[i]);
+
+      if (!ok) {
+        trySwap(imgs[i]);
+      }
     }
   });
 })();
 </script>
-<section aria-label="Voir aussi" class="related-internal-links"><h2 class="sr-only">Voir aussi</h2><ul><li><a href="https://www.cdbg-gabon.com/cdbg-gabon-cdbg-premium/articles-en.html">CDBG – Magazine</a></li><li><a href="https://www.cdbg-gabon.com/cdbg-gabon-cdbg-premium">Compagnie Durable du Bois au Gabon – CDBG</a></li><li><a href="https://www.cdbg-gabon.com/cdbg-gabon-cdbg-premium/article-full2-fr.html">Le secteur du bois au Gabon : chiffres 2023–2025 – CDBG</a></li></ul></section></body>
+
+</body>
 </html>
